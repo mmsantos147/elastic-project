@@ -5,8 +5,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AiSearchController {
-    @GetMapping
+    @GetMapping("/")
     public String hello() {
         return "hello world!!!!!!!!!!!!!!!!!!!!";
+    }
+
+    @GetMapping("/test")
+    public String aaaa() {
+        return "aaaaa";
     }
 }
