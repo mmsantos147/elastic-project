@@ -12,6 +12,6 @@ public class AiSearchController {
 
     @GetMapping("/test")
     public String aaaa() {
-        return "aaaaa";
+        return "ssssssssss";
     }
 }
