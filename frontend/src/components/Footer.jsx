@@ -1,4 +1,5 @@
 import { Layout, Typography } from "antd";
+import COLORS from "../colors";
 
 const { Footer } = Layout;
 const { Text } = Typography;
@@ -8,7 +9,7 @@ const DefaultFooter = () => {
         <Footer
             style={{
             backgroundColor: '#171717',
-            color: '#9aa0a6',
+            color: COLORS.gray,
             textAlign: 'center',
             borderTop: '1px solid #3c4043',
             padding: '20px',
@@ -16,13 +17,13 @@ const DefaultFooter = () => {
         >
             <div style={{ marginBottom: '10px' }}>Brasil</div>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
-            <Text style={{ color: '#9aa0a6', cursor: 'pointer' }}>Sobre</Text>
-            <Text style={{ color: '#9aa0a6', cursor: 'pointer' }}>Publicidade</Text>
-            <Text style={{ color: '#9aa0a6', cursor: 'pointer' }}>Negócios</Text>
-            <Text style={{ color: '#9aa0a6', cursor: 'pointer' }}>Como funciona a Pesquisa</Text>
-            <Text style={{ color: '#9aa0a6', cursor: 'pointer' }}>Privacidade</Text>
-            <Text style={{ color: '#9aa0a6', cursor: 'pointer' }}>Termos</Text>
-            <Text style={{ color: '#9aa0a6', cursor: 'pointer' }}>Configurações</Text>
+            <Text style={{ color: COLORS.gray, cursor: 'pointer' }}>Sobre</Text>
+            <Text style={{ color: COLORS.gray, cursor: 'pointer' }}>Publicidade</Text>
+            <Text style={{ color: COLORS.gray, cursor: 'pointer' }}>Negócios</Text>
+            <Text style={{ color: COLORS.gray, cursor: 'pointer' }}>Como funciona a Pesquisa</Text>
+            <Text style={{ color: COLORS.gray, cursor: 'pointer' }}>Privacidade</Text>
+            <Text style={{ color: COLORS.gray, cursor: 'pointer' }}>Termos</Text>
+            <Text style={{ color: COLORS.gray, cursor: 'pointer' }}>Configurações</Text>
             </div>
       </Footer>
     );

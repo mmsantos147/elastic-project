@@ -1,5 +1,6 @@
 import { Typography } from "antd";
 import { APP_NAME_UPPERCASE } from "../constants";
+import COLORS from "../colors";
 const { Title } = Typography;
 
 
@@ -8,7 +9,7 @@ const AISearch = () => {
     <Title
       level={1}
       style={{
-        color: "#e8eaed",
+        color: COLORS.white,
         fontSize: "60px",
         marginBottom: "40px",
         fontFamily: '"Poppins", sans-serif',

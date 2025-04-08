@@ -5,6 +5,7 @@ import DefaultHeader from "./components/Header";
 import DefaultFooter from "./components/Footer";
 import AISearch from "./components/AISearch";
 import SearchBar from "./components/search/SearchBar";
+import SearchButton from "./components/search/SearchButton";
 
 const { Content } = Layout;
 
@@ -37,18 +38,7 @@ const App = () => {
         <SearchBar />
 
         <Space>
-          <Button
-            style={{
-              borderRadius: "4px",
-              backgroundColor: "#303134",
-              color: "#e8eaed",
-              borderColor: "#5f6368",
-              border: "0px",
-            }}
-            size="middle"
-          >
-            Pesquisa {`${APP_NAME_CAMMEL_CASE}`}
-          </Button>
+          <SearchButton />
         </Space>
       </Content>
 
