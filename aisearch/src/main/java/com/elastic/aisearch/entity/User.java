@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -21,6 +23,8 @@ public class User {
     private String userName;
     private String email;
     private String password;
+    @OneToMany(mappedBy = "user")
+    private List<History> histories;
 
     public User(String userName, String email, String password) {
         this.userName = userName;
