@@ -3,8 +3,8 @@ package com.elastic.aisearch.service;
 import com.elastic.aisearch.dto.UserDTO;
 import com.elastic.aisearch.repository.UserRepository;
 import com.elastic.aisearch.entity.User;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,9 +29,8 @@ public class UserService {
         if (userEmail.isPresent()) {
             throw new IllegalStateException("user already exists");
         }
-
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         userRepository.save(user);
-        System.out.println(user);
     }
 
     public void deleteUser(String email) {
@@ -48,6 +47,6 @@ public class UserService {
         if(user.isEmpty()) {
             throw new IllegalStateException("user with email" + email + "does not exists");
         }
-        return Objects.equals(user.get().getPassword(), password);
+        return BCrypt.checkpw(password, user.get().getPassword());
     }
 }

@@ -20,7 +20,6 @@ public class History {
     private Integer id;
 
     private String prompt;
-    @Column(name = "user")
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
