@@ -1,5 +1,6 @@
 package com.elastic.aisearch.service;
 
+import com.elastic.aisearch.dto.UserDTO;
 import com.elastic.aisearch.repository.UserRepository;
 import com.elastic.aisearch.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -39,5 +41,13 @@ public class UserService {
         }
 
         userRepository.deleteById(userEmail.get().getId());
+    }
+
+    public boolean searchUser(String email, String password) {
+        Optional<User> user = userRepository.findUserByEmail(email);
+        if(user.isEmpty()) {
+            throw new IllegalStateException("user with email" + email + "does not exists");
+        }
+        return Objects.equals(user.get().getPassword(), password);
     }
 }

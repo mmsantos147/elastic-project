@@ -1,5 +1,6 @@
 package com.elastic.aisearch.controller;
 
+import com.elastic.aisearch.dto.UserDTO;
 import com.elastic.aisearch.entity.User;
 import com.elastic.aisearch.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,10 @@ public class UserController {
     @DeleteMapping(path = "{userEmail}")
     public void deleteUser(@PathVariable("userEmail") String email) {
         userService.deleteUser(email);
+    }
+
+    @PostMapping(path = "/login")
+    public boolean verifyUser(@RequestBody UserDTO userDTO) {
+        return userService.searchUser(userDTO.email(), userDTO.password());
     }
 }
