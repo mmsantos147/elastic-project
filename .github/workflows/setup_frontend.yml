@@ -25,6 +25,9 @@ jobs:
         run: |
           npm install
           npm run build
+          
+      - name: Verificar arquivos gerados
+        run: ls -la frontend/dist
 
       - name: Deploy via SCP
         uses: appleboy/scp-action@v0.1.7
