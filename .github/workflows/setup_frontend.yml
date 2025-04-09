@@ -32,7 +32,7 @@ jobs:
       - name: Criar pacote de deploy
         run: |
           cd frontend/dist
-          tar -zcf deploy.tar.gz .
+          tar --warning=no-file-changed -zcf deploy.tar.gz .
 
       - name: Upload do pacote via SCP
         uses: appleboy/scp-action@v0.1.7
