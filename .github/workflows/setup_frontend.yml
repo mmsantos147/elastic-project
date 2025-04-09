@@ -45,6 +45,7 @@ jobs:
           target: "/var/www/uaisearch"
           overwrite: true
           debug: true
+          strip_components: 2
 
       - name: Extrair pacote remotamente
         uses: appleboy/ssh-action@v0.1.7
