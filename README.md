@@ -18,3 +18,15 @@ A elastic search application
 - [ ] Histórico de pesquisa (6~7 últimas pesquisas, apenas)
 - [ ] Registro de usuário
 - [ ] Login de usuário
+
+## TODO List (FRONTEND)
+
+### Telas principais
+- [x] Tela de pesquisa inicial
+- [ ] Tela de pesquisa pós primeiro resultado
+= [ ] Tela de registro
+- [ ] Tela de login
+
+### Componentes principais
+- [ ] Componente de resultado de pesquisa
+- [ ] Lógica de paginação
