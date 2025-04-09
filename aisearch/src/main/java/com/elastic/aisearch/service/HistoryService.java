@@ -2,19 +2,18 @@ package com.elastic.aisearch.service;
 
 import com.elastic.aisearch.entity.History;
 import com.elastic.aisearch.repository.HistoryRepository;
+
+import lombok.AllArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class HistoryService {
     private final HistoryRepository historyRepository;
-
-    @Autowired
-    public HistoryService(HistoryRepository historyRepository) {
-        this.historyRepository = historyRepository;
-    }
 
     public List<History> getRecentHistory(Integer userId) {
         return historyRepository.findMostRecentHistory(userId);

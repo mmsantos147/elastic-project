@@ -4,22 +4,20 @@ import com.elastic.aisearch.dto.UserDTO;
 import com.elastic.aisearch.entity.User;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.UserService;
+
+import lombok.AllArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping(path = "api/user")
 public class UserController {
     private final UserService userService;
     private final UserSession userSession;
-
-    @Autowired
-    public UserController(UserService userService, UserSession userSession) {
-        this.userService = userService;
-        this.userSession = userSession;
-    }
 
     @GetMapping
     public List<User> getUser() {
