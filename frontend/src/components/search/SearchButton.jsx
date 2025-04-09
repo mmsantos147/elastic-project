@@ -1,5 +1,6 @@
 import { Button } from "antd";
 import { APP_NAME_CAMMEL_CASE } from "../../constants";
+import COLORS from "../../colors";
 
 const SearchButton = () => {
   return (
@@ -7,7 +8,7 @@ const SearchButton = () => {
       style={{
         borderRadius: "4px",
         backgroundColor: "#303134",
-        color: "#e8eaed",
+        color: COLORS.white,
         borderColor: "#5f6368",
         border: "0px",
       }}
