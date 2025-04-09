@@ -25,19 +25,34 @@ jobs:
         run: |
           npm install
           npm run build
-          
+
       - name: Verificar arquivos gerados
         run: ls -la frontend/dist
 
-      - name: Deploy via SCP
+      - name: Criar pacote de deploy
+        run: |
+          cd frontend/dist
+          tar -zcf deploy.tar.gz .
+
+      - name: Upload do pacote via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_IP }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASS }}
           port: 22
-          source: "frontend/dist"
-          strip_components: 1
+          source: "frontend/dist/deploy.tar.gz"
           target: "/var/www/uaisearch"
           overwrite: true
           debug: true
+
+      - name: Extrair pacote remotamente
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_IP }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          port: 22
+          script: |
+            tar --no-same-owner --no-same-permissions -zxvf /var/www/uaisearch/deploy.tar.gz -C /var/www/uaisearch
+            rm -f /var/www/uaisearch/deploy.tar.gz
