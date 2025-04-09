@@ -36,7 +36,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASS }}
           port: 22
-          source: "frontend/dist/*"
+          source: "frontend/dist"
+          strip_components: 1
           target: "/var/www/uaisearch"
           overwrite: true
           debug: true
