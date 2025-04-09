@@ -38,4 +38,5 @@ jobs:
           port: 22
           source: "frontend/dist/*"
           target: "/var/www/uaisearch"
+          overwrite: true
           debug: true
