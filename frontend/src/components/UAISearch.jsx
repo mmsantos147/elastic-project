@@ -1,10 +1,10 @@
 import { Typography } from "antd";
-import { APP_NAME_UPPERCASE } from "../constants";
 import COLORS from "../colors";
 const { Title } = Typography;
+import uaiSearchLogo from '../assets/uaisearch.svg'
 
 
-const AISearch = () => {
+const UAISearch = () => {
   return (
     <Title
       level={1}
@@ -15,9 +15,9 @@ const AISearch = () => {
         fontFamily: '"Poppins", sans-serif',
       }}
     >
-      {`${APP_NAME_UPPERCASE}`}
+      <img src={uaiSearchLogo} width="380px"/>
     </Title>
   );
 };
 
-export default AISearch;
+export default UAISearch;

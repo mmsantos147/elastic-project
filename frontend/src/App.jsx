@@ -3,7 +3,7 @@ import { Layout, Button, Space } from "antd";
 import { APP_NAME_CAMMEL_CASE } from "./constants";
 import DefaultHeader from "./components/Header";
 import DefaultFooter from "./components/Footer";
-import AISearch from "./components/AISearch";
+import UAISearch from "./components/UAISearch";
 import SearchBar from "./components/search/SearchBar";
 import SearchButton from "./components/search/SearchButton";
 
@@ -33,7 +33,7 @@ const App = () => {
             textAlign: "center",
           }}
         >
-          <AISearch />
+          <UAISearch />
         </div>
         <SearchBar />
 
