@@ -1,46 +1,24 @@
 import React from "react";
-import { Layout, Button, Space } from "antd";
-import { APP_NAME_CAMMEL_CASE } from "./constants";
-import DefaultHeader from "./components/Header";
+import { Layout } from "antd";
+import DefaultHeader from "./components/DefaultHeader";
 import DefaultFooter from "./components/Footer";
-import UAISearch from "./components/UAISearch";
-import SearchBar from "./components/search/SearchBar";
-import SearchButton from "./components/search/SearchButton";
 
-const { Content } = Layout;
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Main from "./view/Main";
+import Search from "./view/Search";
+
 
 const App = () => {
   return (
     <Layout style={{ minHeight: "100vh", backgroundColor: "#202124" }}>
-      <DefaultHeader />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/search" element={<Search />} />
+        </Routes>
+      </BrowserRouter>
 
-      <Content
-        style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: "calc(50% - 180px)",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-          }}
-        >
-          <UAISearch />
-        </div>
-        <SearchBar />
-
-        <Space>
-          <SearchButton />
-        </Space>
-      </Content>
+      
 
       <DefaultFooter />
     </Layout>
