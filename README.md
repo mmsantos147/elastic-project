@@ -23,7 +23,7 @@ A elastic search application
 
 ### Telas principais
 - [x] Tela de pesquisa inicial
-- [ ] Tela de pesquisa pós primeiro resultado
+- [x] Tela de pesquisa pós primeiro resultado
 - [ ] Tela de registro
 - [ ] Tela de login
 
