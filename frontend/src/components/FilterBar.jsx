@@ -93,7 +93,7 @@ const FilterBar = () => {
         <Filter items={orderBy} selectedKeys={["1"]} name={"Ordenar por"} />
       </Col>
       <Col style={{ marginRight: "40px" }}>
-        <Filter items={itensPerPage} selectedKeys={["1"]} name={"Itens por página"} />
+        <Filter items={itensPerPage} selectedKeys={["0"]} name={"Itens por página"} />
       </Col>
       <Col style={{ marginRight: "40px" }}>
         <Filter items={readTime} name={"Tempo de leitura"} />

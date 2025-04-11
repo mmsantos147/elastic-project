@@ -34,9 +34,13 @@ const NavigationBar = ({ onClickShowTools }) => {
         <NavLinks>Todos os resultados</NavLinks>
       </Col>
       <Col flex="auto" />
-      <Col>
-        <ToolsButton onClick={() => {onClickShowTools()}} >Ferramentas</ToolsButton>
-      </Col>
+      <ToolsButton
+        onClick={() => {
+          onClickShowTools();
+        }}
+      >
+        Ferramentas
+      </ToolsButton>
     </Row>
   );
 };
