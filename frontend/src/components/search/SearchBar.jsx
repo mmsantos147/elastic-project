@@ -8,8 +8,15 @@ import { useEffect, useRef, useState } from "react";
 import SearchHistory from "./SearchHistory";
 import COLORS from "../../colors";
 import Draggable from "react-draggable";
+import styled from "styled-components";
 
-const SearchBar = () => {
+const StyledInput = styled(Input)`
+  ::placeholder {
+    color: #9aa0a6;
+  }
+`;
+
+const SearchBar = ( { className, children } ) => {
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [historyVisibile, setHistoryVisible] = useState(false);
@@ -31,19 +38,19 @@ const SearchBar = () => {
 
   return (
     <div
+      className={className}
       ref={inputRef}
       style={{
-        width: "40%",
-        maxWidth: "600px",
-        minWidth: "300px",
-        marginBottom: "30px",
+        width: "100%",
+        maxWidth: "700px",
+        minWidth: "600px",
         position: "relative",
       }}
       onClick={() => {
         setHistoryVisible(true);
       }}
     >
-      <Input
+      <StyledInput
         size="large"
         placeholder={`Pesquise no ${APP_NAME_CAMMEL_CASE} ou digite uma URL`}
         value={inputValue}
@@ -89,6 +96,8 @@ const SearchBar = () => {
         
       />
       <SearchHistory visible={historyVisibile} />
+
+        {children}
 
       {showKeyboard && (
         <Draggable nodeRef={keyboardRef}>
