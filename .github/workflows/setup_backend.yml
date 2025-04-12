@@ -24,6 +24,7 @@ jobs:
       - name: Build Spring Boot app
         working-directory: aisearch
         run: |
+          chmod +x mvnw
           ./mvnw clean package -DskipTests
 
       - name: Upload via SCP
@@ -33,7 +34,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASS }}
           port: 22
-          source: "elastic-search/target/*.jar"
+          source: "aisearch/target/*.jar"
           target: "/var/www/springboot-uaisearch"
           overwrite: true
 
@@ -46,6 +47,4 @@ jobs:
           port: 22
           script: |
             pkill -f 'java -jar' || true
-            nohup java -Xmx1g -Xms512m -jar /var/www/springboot/*.jar > /var/www/springboot/log.txt 2>&1 &
-
-
+            nohup java -Xmx1g -Xms512m -jar /var/www/springboot-uaisearch/*.jar > /var/www/springboot/log.txt 2>&1 &
