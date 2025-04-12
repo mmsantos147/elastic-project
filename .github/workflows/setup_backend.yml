@@ -37,6 +37,7 @@ jobs:
           source: "aisearch/target/*.jar"
           target: "/var/www/springboot-uaisearch"
           overwrite: true
+          strip_components: 2
 
       - name: Restart App on Host
         uses: appleboy/ssh-action@v0.1.7
