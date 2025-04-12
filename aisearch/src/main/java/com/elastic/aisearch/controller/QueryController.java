@@ -11,8 +11,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.elastic.aisearch.queryUnit.ParseException;
 import com.elastic.aisearch.queryUnit.QueryParser;
 
+import lombok.AllArgsConstructor;
+
 @Controller
+@AllArgsConstructor
 public class QueryController {
+
+    // private final SearchService searchService;
+
+    // @GetMapping("/query")
+    // public ResponseEntity<?> search(@RequestParam String q) {
+    //     try {
+    //         SearchResponse<JsonData> response = searchService.search(q);
+    //         return ResponseEntity.ok(response.hits().hits());
+    //     } catch (Exception e) {
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    //     }
+    // }
 
     @GetMapping("/queryDebug")
     public ResponseEntity<String> parseQueryDebug(@RequestParam("q") String query) {

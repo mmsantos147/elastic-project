@@ -1,0 +1,132 @@
+package com.elastic.aisearch.service;
+
+import com.elastic.aisearch.dto.SearchResultDTO;
+import com.elastic.aisearch.elastic.QueryBuilderFactory;
+import com.elastic.aisearch.queryUnit.QueryParser;
+import com.elastic.aisearch.queryUnit.QueryParser.QueryNode;
+
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class ElasticsearchService {
+
+    @Autowired
+    @Qualifier("customRestHighLevelClient")
+    private final RestHighLevelClient elasticsearchClient;
+    
+    @Value("${elasticsearch.index.name:wikipedia}")
+    private String indexName;
+    
+    @Value("${elasticsearch.search.size:20}")
+    private int searchSize;
+
+    /**
+     * Executa uma busca no Elasticsearch baseada em uma string de consulta.
+     * 
+     * @param queryString A string de consulta
+     * @return Lista de resultados da busca
+     * @throws Exception Se ocorrer um erro durante o parsing ou a busca
+     */
+    public List<SearchResultDTO> search(String queryString) throws Exception {
+        // Cria um parser para a string de consulta
+        QueryParser parser = new QueryParser(new StringReader(queryString));
+        
+        // Parseia a string para obter um QueryNode
+        QueryNode queryNode = parser.parseQuery(queryString);
+        
+        // Usa o QueryBuilderFactory para construir uma query do Elasticsearch
+        QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode);
+        
+        // Cria uma requisição de busca com a query
+        SearchRequest searchRequest = new SearchRequest(indexName);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(queryBuilder);
+        searchSourceBuilder.size(searchSize);
+        searchRequest.source(searchSourceBuilder);
+        
+        // Executa a busca
+        log.debug("Executando consulta: {}", searchSourceBuilder);
+        
+        SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
+        
+        // Processa os resultados
+        return processSearchResults(searchResponse);
+    }
+    
+    
+    /**
+     * Processa os resultados da busca e converte para objetos do domínio.
+     * 
+     * @param searchResponse A resposta da busca do Elasticsearch
+     * @return Lista de resultados processados
+     */
+    private List<SearchResultDTO> processSearchResults(SearchResponse searchResponse) {
+        List<SearchResultDTO> results = new ArrayList<>();
+        
+        for (SearchHit hit : searchResponse.getHits().getHits()) {
+            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            
+            SearchResultDTO searchResultDTO = new SearchResultDTO(getStringValue(sourceAsMap, "content"));
+
+            // SearchResult result = SearchResult.builder()
+            //     .id(hit.getId())
+            //     .score(hit.getScore())
+            //     .title(getStringValue(sourceAsMap, "title"))
+            //     .content(getStringValue(sourceAsMap, "content"))
+            //     .creationDate(getStringValue(sourceAsMap, "dt_creation"))
+            //     .readingTime(getIntegerValue(sourceAsMap, "reading_time"))
+            //     .build();
+            
+            results.add(searchResultDTO);
+        }
+        
+        return results;
+    }
+    
+    /**
+     * Extrai um valor de String de um mapa com segurança.
+     */
+    private String getStringValue(Map<String, Object> map, String key) {
+        return map.containsKey(key) && map.get(key) != null ? map.get(key).toString() : "";
+    }
+    
+    /**
+     * Extrai um valor de Integer de um mapa com segurança.
+     */
+    private Integer getIntegerValue(Map<String, Object> map, String key) {
+        if (map.containsKey(key) && map.get(key) != null) {
+            try {
+                if (map.get(key) instanceof Integer) {
+                    return (Integer) map.get(key);
+                } else {
+                    return Integer.parseInt(map.get(key).toString());
+                }
+            } catch (NumberFormatException e) {
+                log.warn("Não foi possível converter '{}' para Integer", map.get(key));
+                return 0;
+            }
+        }
+        return 0;
+    }
+}
