@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: 22
           source: "elastic-search/target/*.jar"
-          target: "/var/www/springboot"
+          target: "/var/www/springboot-uaisearch"
           overwrite: true
 
       - name: Restart App on Host
