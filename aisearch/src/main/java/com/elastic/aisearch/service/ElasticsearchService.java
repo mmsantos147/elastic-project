@@ -5,7 +5,6 @@ import com.elastic.aisearch.elastic.QueryBuilderFactory;
 import com.elastic.aisearch.queryUnit.QueryParser;
 import com.elastic.aisearch.queryUnit.QueryParser.QueryNode;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.search.SearchRequest;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
