@@ -11,6 +11,7 @@ import { BsStars } from "react-icons/bs";
 import { FiLink2 } from "react-icons/fi";
 import IAVision from "../components/results/IAVision";
 import SearchIndex from "../components/results/SearchIndex";
+import { GrNext, GrPrevious } from "react-icons/gr";
 
 const { Content, Text } = Layout;
 const { Title } = Typography;
@@ -39,7 +40,7 @@ const Search = () => {
           style={{
             display: "flex",
             alignItems: "center",
-            minWidth: "600px"
+            minWidth: "600px",
           }}
         >
           <div
@@ -70,9 +71,16 @@ const Search = () => {
 
       {toolsVisible && <FilterBar />}
 
-      <Content style={{ paddingLeft: "220px", marginTop: "30px", color: COLORS.white, maxWidth: "950px" }}>
-        <IAVision style={{marginBottom: "50px"}} />
-        <Divider style={{borderColor: COLORS.gray }} />
+      <Content
+        style={{
+          paddingLeft: "220px",
+          marginTop: "30px",
+          color: COLORS.white,
+          maxWidth: "950px",
+        }}
+      >
+        <IAVision style={{ marginBottom: "50px" }} />
+        <Divider style={{ borderColor: COLORS.gray }} />
         <Row>
           <SearchIndex />
           <SearchIndex />
@@ -83,7 +91,54 @@ const Search = () => {
           <SearchIndex />
           <SearchIndex />
           <SearchIndex />
+        </Row>
 
+        <Row
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "50px",
+            marginBottom: "50px",
+            flexDirection: "column", // isso é chave!
+          }}
+        >
+          <div
+            style={{
+              marginBottom: "20px",
+              fontSize: "20px",
+              fontWeight: "bold",
+              display: "flex"
+            }}
+          >
+            <UAISearch logoWidth={"200px"}/> 
+          </div>
+
+          <Row style={{ display: "flex", justifyContent: "center" }}>
+              <Col style={{marginRight: "14px"}}>
+              < GrPrevious /> 
+              </Col>
+              <Col style={{ marginRight: "14px" }}>
+                <b>1</b>
+              </Col>
+              <Col style={{ marginRight: "14px", color: COLORS.purple}}>
+                2
+              </Col>
+              <Col style={{ marginRight: "14px", color: COLORS.purple}}>
+                3
+              </Col>
+              <Col style={{ marginRight: "14px", color: COLORS.purple}}>
+                4
+              </Col>
+              <Col style={{marginRight: "14px", color: COLORS.purple}}>
+                5
+              </Col>
+              <Col>
+              < GrNext />
+              </Col>
+            
+          </Row>
         </Row>
       </Content>
     </>
