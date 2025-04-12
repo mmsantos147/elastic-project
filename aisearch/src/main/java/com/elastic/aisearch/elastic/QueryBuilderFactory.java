@@ -1,7 +1,7 @@
 package com.elastic.aisearch.elastic;
 
 
-import com.elastic.aisearch.queryUnit.QueryParser.QueryNode;
+import com.elastic.aisearch.parser.QueryParser.QueryNode;
 import static com.elastic.aisearch.utils.DateUtils.toElasticDate; 
 
 import org.elasticsearch.index.query.*;;

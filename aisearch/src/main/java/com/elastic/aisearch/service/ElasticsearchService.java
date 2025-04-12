@@ -2,8 +2,8 @@ package com.elastic.aisearch.service;
 
 import com.elastic.aisearch.dto.SearchResultDTO;
 import com.elastic.aisearch.elastic.QueryBuilderFactory;
-import com.elastic.aisearch.queryUnit.QueryParser;
-import com.elastic.aisearch.queryUnit.QueryParser.QueryNode;
+import com.elastic.aisearch.parser.QueryParser;
+import com.elastic.aisearch.parser.QueryParser.QueryNode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

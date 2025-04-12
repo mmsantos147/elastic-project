@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.elastic.aisearch.queryUnit.ParseException;
-import com.elastic.aisearch.queryUnit.QueryParser;
+import com.elastic.aisearch.parser.ParseException;
+import com.elastic.aisearch.parser.QueryParser;
 
 import lombok.AllArgsConstructor;
 

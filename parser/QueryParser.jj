@@ -4,7 +4,7 @@ options {
 }
 
 PARSER_BEGIN(QueryParser)
-package com.elastic.aisearch.queryUnit;
+package com.elastic.aisearch.parser;
 
 import java.io.StringReader;
 import java.util.*;
