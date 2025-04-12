@@ -22,7 +22,7 @@ jobs:
           java-version: '17'
 
       - name: Build Spring Boot app
-        working-directory: elastic-search
+        working-directory: aisearch
         run: |
           ./mvnw clean package -DskipTests
 
