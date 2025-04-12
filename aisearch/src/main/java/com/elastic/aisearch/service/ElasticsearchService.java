@@ -63,12 +63,8 @@ public class ElasticsearchService {
         searchSourceBuilder.size(searchSize);
         searchRequest.source(searchSourceBuilder);
         
-        // Executa a busca
-        log.debug("Executando consulta: {}", searchSourceBuilder);
         
         SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
-        
-        // Processa os resultados
         return processSearchResults(searchResponse);
     }
     
