@@ -3,18 +3,15 @@ import UAISearch from "../components/UAISearch";
 import SearchBar from "../components/search/SearchBar";
 import styled from "styled-components";
 import Layout from "antd/es/layout/layout";
-import { Col, Row, Space, Button, Typography, Divider } from "antd";
+import { Col, Row, Space, Button, Divider } from "antd";
 import NavigationBar from "../components/NavigationBar";
 import COLORS from "../colors";
 import FilterBar from "../components/FilterBar";
-import { BsStars } from "react-icons/bs";
-import { FiLink2 } from "react-icons/fi";
 import IAVision from "../components/results/IAVision";
 import SearchIndex from "../components/results/SearchIndex";
 import { GrNext, GrPrevious } from "react-icons/gr";
 
-const { Content, Text } = Layout;
-const { Title } = Typography;
+const { Content } = Layout;
 
 const Search = () => {
   const [toolsVisible, setToolsVisible] = useState(false);
@@ -81,16 +78,9 @@ const Search = () => {
       >
         <IAVision style={{ marginBottom: "50px" }} />
         <Divider style={{ borderColor: COLORS.gray }} />
+        
         <Row>
-          <SearchIndex />
-          <SearchIndex />
-          <SearchIndex />
-          <SearchIndex />
-          <SearchIndex />
-          <SearchIndex />
-          <SearchIndex />
-          <SearchIndex />
-          <SearchIndex />
+          <SearchIndex url={"a"} title={"a"} content={"a"} readingTime={"3"} date={"3"} />
         </Row>
 
         <Row
@@ -101,7 +91,7 @@ const Search = () => {
             alignItems: "center",
             marginTop: "50px",
             marginBottom: "50px",
-            flexDirection: "column", // isso é chave!
+            flexDirection: "column", 
           }}
         >
           <div

@@ -1,11 +1,12 @@
 import { Row, Col } from "antd";
 import { FaClock, FaCalendar } from "react-icons/fa";
+import { SlOptionsVertical } from "react-icons/sl";
 import wikipediaLogo from "../../assets/wikipedia_icon.png";
 import COLORS from "../../colors";
 
-const SearchIndex = (props) => {
+const SearchIndex = ({url, title, content, readingTime, date}) => {
   return (
-    <div style={{ marginBottom: "50px" }}>
+    <div style={{ marginBottom: "50px", width: "100%" }}>
       <Row style={{ marginBottom: "7px"}}>
         <Col>
           <img src={wikipediaLogo} height={37} style={{marginRight: "10px"}} />
@@ -13,12 +14,15 @@ const SearchIndex = (props) => {
         <Col>
           <Row style={{ marginBottom: "3px", fontSize: "16px" }}>Wikipédia</Row>
           <Row style={{ marginBottom: "6px", fontSize: "12px"}}>
-            https://lorem.com.br
+            <div style={{marginRight: "20px"}}>
+            {url}
+            </div>
+            < SlOptionsVertical />
           </Row>
         </Col>
       </Row>
       <Row style={{ fontSize: "22px", marginBottom: "5px", color: COLORS.purple }}>
-        Lorem ipsum dolor sit amet
+        {title}
       </Row>
 
       <Row>
@@ -28,23 +32,21 @@ const SearchIndex = (props) => {
             lineHeight: "25px",
             marginBottom: "12px",
             textAlign: "justify",
+            width: "100%"
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod corrupti
-          ex voluptatum rem, repudiandae nostrum ad vitae recusandae temporibus!
-          Modi sed deleniti ullam, nostrum nemo dolores eligendi nihil
-          recusandae dicta? ...
+          {content} ...
         </p>
       </Row>
       <Row>
         <Col style={{ fontSize: "15px" }}>
           <FaCalendar style={{ verticalAlign: "middle", marginRight: "8px" }} />
-          01/01/2024
+          {date}
         </Col>
         <Col flex="auto" />
         <Col style={{ fontSize: "15px" }}>
           <FaClock style={{ verticalAlign: "middle", marginRight: "8px" }} />
-          aprox. 5 minutos
+          aprox. {readingTime} minutos
         </Col>
       </Row>
     </div>
