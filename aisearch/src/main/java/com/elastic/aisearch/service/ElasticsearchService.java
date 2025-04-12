@@ -85,16 +85,15 @@ public class ElasticsearchService {
         for (SearchHit hit : searchResponse.getHits().getHits()) {
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();
             
-            SearchResultDTO searchResultDTO = new SearchResultDTO(getStringValue(sourceAsMap, "content"));
-
-            // SearchResult result = SearchResult.builder()
-            //     .id(hit.getId())
-            //     .score(hit.getScore())
-            //     .title(getStringValue(sourceAsMap, "title"))
-            //     .content(getStringValue(sourceAsMap, "content"))
-            //     .creationDate(getStringValue(sourceAsMap, "dt_creation"))
-            //     .readingTime(getIntegerValue(sourceAsMap, "reading_time"))
-            //     .build();
+            SearchResultDTO searchResultDTO = new SearchResultDTO(
+                hit.getId(),
+                hit.getScore(),
+                getStringValue(sourceAsMap, "url"),
+                getStringValue(sourceAsMap, "title"),
+                getStringValue(sourceAsMap, "content"),
+                getIntegerValue(sourceAsMap, "reading_time"),
+                getStringValue(sourceAsMap, "dt_creation")
+            );
             
             results.add(searchResultDTO);
         }

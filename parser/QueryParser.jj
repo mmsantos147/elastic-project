@@ -30,8 +30,6 @@ public class QueryParser {
         private String maxReadingTime = "";
         private String eqReadingTime = "";
 
-
-
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
@@ -101,6 +99,8 @@ TOKEN : {
     | < NOT_IN_TITLE: "-in_title:" >
     | < GT: ">" >
     | < LT: "<" >
+    | < NEGATED_QUOTED: "-" "\"" (~["\""])* "\"" >
+    | < NEGATED_WORD: "-" (["a"-"z", "A"-"Z", "0"-"9", "_", "-", "/"])+ >
     | < RANGE_DOTS: ".." >
     | < NUMBER: (["0"-"9"])+ >
     | < DATE: (["0"-"9"]){2} "/" (["0"-"9"]){2} "/" (["0"-"9"]){4} >     
@@ -123,6 +123,15 @@ void Start() : { Token word, quoted; }
     | word = < NUMBER > 
         {
             this.node.shouldContent += word.image + " ";
+        }
+    | word = < NEGATED_WORD >
+        {
+            this.node.mustNotContent.add(word.image.substring(1));
+        }
+    | word = < NEGATED_QUOTED >
+        {
+            String quotedValue = word.image.substring(1);
+            this.node.mustNotContent.add(quotedValue);
         }
     )+
 }

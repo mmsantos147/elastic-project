@@ -26,8 +26,6 @@ public class QueryParser implements QueryParserConstants {
         private String maxReadingTime = "";
         private String eqReadingTime = "";
 
-
-
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
@@ -105,6 +103,17 @@ this.node.mustInContent.add(quoted.image);
 this.node.shouldContent += word.image + " ";
         break;
         }
+      case NEGATED_WORD:{
+        word = jj_consume_token(NEGATED_WORD);
+this.node.mustNotContent.add(word.image.substring(1));
+        break;
+        }
+      case NEGATED_QUOTED:{
+        word = jj_consume_token(NEGATED_QUOTED);
+String quotedValue = word.image.substring(1);
+            this.node.mustNotContent.add(quotedValue);
+        break;
+        }
       default:
         jj_la1[0] = jj_gen;
         jj_consume_token(-1);
@@ -115,6 +124,8 @@ this.node.shouldContent += word.image + " ";
       case CREATED_AT:
       case IN_TITLE:
       case NOT_IN_TITLE:
+      case NEGATED_QUOTED:
+      case NEGATED_WORD:
       case NUMBER:
       case WORD:
       case QUOTED:{
@@ -277,7 +288,7 @@ if (must)
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x346c0,0x346c0,0x6c0,0x2000,0x9800,0x2000,0x5800,0x30000,};
+	   jj_la1_0 = new int[] {0xd66c0,0xd66c0,0x6c0,0x8000,0x21800,0x8000,0x11800,0xc0000,};
 	}
 
   /** Constructor with InputStream. */
@@ -402,7 +413,7 @@ if (must)
   /** Generate ParseException. */
   public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[18];
+	 boolean[] la1tokens = new boolean[20];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -416,7 +427,7 @@ if (must)
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 18; i++) {
+	 for (int i = 0; i < 20; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;
