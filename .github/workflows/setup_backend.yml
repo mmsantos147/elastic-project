@@ -49,3 +49,5 @@ jobs:
           script: |
             pkill -f 'java -jar' || true
             nohup java -Xmx1g -Xms512m -jar /var/www/springboot-uaisearch/*.jar > /var/www/springboot/log.txt 2>&1 &
+            sleep 5
+            exit 0
