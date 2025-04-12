@@ -3,6 +3,7 @@
 package com.elastic.aisearch.queryUnit;
 import java.io.StringReader;
 import java.util.*;
+import lombok.Getter;
 
 /** Token Manager. */
 @SuppressWarnings ("unused")

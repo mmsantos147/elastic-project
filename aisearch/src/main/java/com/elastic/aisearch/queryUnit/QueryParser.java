@@ -4,9 +4,11 @@ package com.elastic.aisearch.queryUnit;
 
 import java.io.StringReader;
 import java.util.*;
+import lombok.Getter;
 
 public class QueryParser implements QueryParserConstants {
 
+    @Getter
     public class QueryNode {
         private String shouldContent = "";
 
@@ -23,6 +25,8 @@ public class QueryParser implements QueryParserConstants {
         private String minReadingTime = "";
         private String maxReadingTime = "";
         private String eqReadingTime = "";
+
+
 
         @Override
         public String toString() {
