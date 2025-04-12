@@ -48,6 +48,7 @@ public class QueryBuilderFactory {
 
             if (!queryNode.getMinReadingTime().isEmpty()) range.gte(Integer.parseInt(queryNode.getMinReadingTime()));
             if (!queryNode.getMaxReadingTime().isEmpty()) range.lte(Integer.parseInt(queryNode.getMaxReadingTime()));
+            boolQuery.filter(range);
         }
 
         return boolQuery;
