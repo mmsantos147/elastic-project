@@ -48,10 +48,5 @@ jobs:
           port: 22
           script: |
             sudo rm -f /var/www/springboot-uaisearch/backend.jar
-            JAR_FILE=$(sudo ls /var/www/springboot-uaisearch/*.jar 2>/dev/null | head -n 1)
-            if [ -z "$JAR_FILE" ]; then
-              echo "Nenhum arquivo .jar encontrado em /var/www/springboot-uaisearch"
-              exit 1
-            fi
-            sudo mv "$JAR_FILE" /var/www/springboot-uaisearch/backend.jar
+            sudo mv /var/www/springboot-uaisearch/aisearch-0.0.1-SNAPSHOT.jar /var/www/springboot-uaisearch/backend.jar
             sudo systemctl restart uaisearch-backend.service
