@@ -39,7 +39,7 @@ jobs:
           overwrite: true
           strip_components: 2
 
-      - name: Restart App on Host
+      - name: Renomear arquivo e reiniciar serviço
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.SSH_IP }}
@@ -47,7 +47,11 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           port: 22
           script: |
-            pkill -f 'java -jar' || true
-            nohup java -Xmx1g -Xms512m -jar /var/www/springboot-uaisearch/*.jar > /var/www/springboot/log.txt 2>&1 &
-            sleep 5
-            exit 0
+            sudo rm -f /var/www/springboot-uaisearch/backend.jar
+            JAR_FILE=$(sudo ls /var/www/springboot-uaisearch/*.jar 2>/dev/null | head -n 1)
+            if [ -z "$JAR_FILE" ]; then
+              echo "Nenhum arquivo .jar encontrado em /var/www/springboot-uaisearch"
+              exit 1
+            fi
+            sudo mv "$JAR_FILE" /var/www/springboot-uaisearch/backend.jar
+            sudo systemctl restart uaisearch-backend.service
