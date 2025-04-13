@@ -14,4 +14,10 @@ public class AiSearchController {
     public String aaaa() {
         return "ssssssssss";
     }
+
+
+    @GetMapping("/cicd")
+    public String cicdTesting() {
+        return "CI/CD WORKING FINE!";
+    }
 }
