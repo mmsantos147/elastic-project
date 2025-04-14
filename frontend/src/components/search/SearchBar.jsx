@@ -26,6 +26,7 @@ const SearchBar = ( { className, children, setSearchResults } ) => {
 
   const doSearch = async () => {
     const response = await searchApi.search(inputValue);
+    console.log(response.data);
     setSearchResults(response.data);
   }
 
