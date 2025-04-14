@@ -15,6 +15,7 @@ const { Content } = Layout;
 
 const Search = () => {
   const [toolsVisible, setToolsVisible] = useState(false);
+  const [searchResult, setSearchResults] = useState([]);
 
   const StyledSearchBar = styled(SearchBar)`
     line-height: 0px;
@@ -43,7 +44,7 @@ const Search = () => {
           <div
             style={{ width: "100%", display: "flex", flexDirection: "column" }}
           >
-            <StyledSearchBar />
+            <StyledSearchBar setSearchResults={setSearchResults} />
             <div style={{ marginTop: "20px" }}>
               <NavigationBar
                 onClickShowTools={() => {
@@ -78,9 +79,18 @@ const Search = () => {
       >
         <IAVision style={{ marginBottom: "50px" }} />
         <Divider style={{ borderColor: COLORS.gray }} />
-        
+
         <Row>
-          <SearchIndex url={"a"} title={"a"} content={"a"} readingTime={"3"} date={"3"} />
+          {searchResult.map((result, index) => (
+            <SearchIndex
+              key={result.id}
+              url={result.url}
+              title={result.title}
+              content={result.content}
+              readingTime={result.reading_time}
+              date={result.datetime}
+            />
+          ))}
         </Row>
 
         <Row
@@ -91,7 +101,7 @@ const Search = () => {
             alignItems: "center",
             marginTop: "50px",
             marginBottom: "50px",
-            flexDirection: "column", 
+            flexDirection: "column",
           }}
         >
           <div
@@ -99,35 +109,26 @@ const Search = () => {
               marginBottom: "20px",
               fontSize: "20px",
               fontWeight: "bold",
-              display: "flex"
+              display: "flex",
             }}
           >
-            <UAISearch logoWidth={"200px"}/> 
+            <UAISearch logoWidth={"200px"} />
           </div>
 
           <Row style={{ display: "flex", justifyContent: "center" }}>
-              <Col style={{marginRight: "14px"}}>
-              < GrPrevious /> 
-              </Col>
-              <Col style={{ marginRight: "14px" }}>
-                <b>1</b>
-              </Col>
-              <Col style={{ marginRight: "14px", color: COLORS.purple}}>
-                2
-              </Col>
-              <Col style={{ marginRight: "14px", color: COLORS.purple}}>
-                3
-              </Col>
-              <Col style={{ marginRight: "14px", color: COLORS.purple}}>
-                4
-              </Col>
-              <Col style={{marginRight: "14px", color: COLORS.purple}}>
-                5
-              </Col>
-              <Col>
-              < GrNext />
-              </Col>
-            
+            <Col style={{ marginRight: "14px" }}>
+              <GrPrevious />
+            </Col>
+            <Col style={{ marginRight: "14px" }}>
+              <b>1</b>
+            </Col>
+            <Col style={{ marginRight: "14px", color: COLORS.purple }}>2</Col>
+            <Col style={{ marginRight: "14px", color: COLORS.purple }}>3</Col>
+            <Col style={{ marginRight: "14px", color: COLORS.purple }}>4</Col>
+            <Col style={{ marginRight: "14px", color: COLORS.purple }}>5</Col>
+            <Col>
+              <GrNext />
+            </Col>
           </Row>
         </Row>
       </Content>

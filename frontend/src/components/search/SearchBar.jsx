@@ -9,6 +9,7 @@ import SearchHistory from "./SearchHistory";
 import COLORS from "../../colors";
 import Draggable from "react-draggable";
 import styled from "styled-components";
+import searchApi from "../../api/search.api";
 
 const StyledInput = styled(Input)`
   ::placeholder {
@@ -16,12 +17,17 @@ const StyledInput = styled(Input)`
   }
 `;
 
-const SearchBar = ( { className, children } ) => {
+const SearchBar = ( { className, children, setSearchResults } ) => {
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [historyVisibile, setHistoryVisible] = useState(false);
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);
+
+  const doSearch = () => {
+    const responses = searchApi.search(inputValue);
+    setSearchResults(responses);
+  }
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -51,6 +57,7 @@ const SearchBar = ( { className, children } ) => {
       }}
     >
       <StyledInput
+        onPressEnter={() => doSearch()}
         size="large"
         placeholder={`Pesquise no ${APP_NAME_CAMMEL_CASE} ou digite uma URL`}
         value={inputValue}
