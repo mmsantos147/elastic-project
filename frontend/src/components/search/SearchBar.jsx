@@ -25,9 +25,18 @@ const SearchBar = ( { className, children, setSearchResults } ) => {
   const keyboardRef = useRef(null);
 
   const doSearch = async () => {
-    const response = await searchApi.search(inputValue);
-    console.log(response.data);
-    setSearchResults(response.data);
+    try {
+      // Verifica se inputValue está definido
+      if (!inputValue) {
+        console.warn("inputValue está vazio ou undefined");
+        return;
+      }
+      const response = await searchApi.search(inputValue);
+      console.log("Resposta da busca:", response.data);
+      setSearchResults(response.data);
+    } catch (error) {
+      console.error("Erro na busca:", error);
+    }
   }
 
   useEffect(() => {
