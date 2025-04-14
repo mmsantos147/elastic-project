@@ -26,14 +26,13 @@ const SearchBar = ( { className, children, setSearchResults } ) => {
 
   const doSearch = async () => {
     try {
-      // Verifica se inputValue está definido
       if (!inputValue) {
         console.warn("inputValue está vazio ou undefined");
         return;
       }
       const response = await searchApi.search(inputValue);
-      console.log("Resposta da busca:", response.data);
-      setSearchResults(response.data);
+      console.log("Resposta da busca:", response);
+      setSearchResults(response);
     } catch (error) {
       console.error("Erro na busca:", error);
     }
