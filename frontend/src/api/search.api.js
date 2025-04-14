@@ -7,3 +7,5 @@ const search = async (content) => {
 const fetchHistory = async (content) => {
     await makeRequest('post', 'history', content);
 }
+
+export default { search, fetchHistory };

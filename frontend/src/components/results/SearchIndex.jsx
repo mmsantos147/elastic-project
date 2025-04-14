@@ -4,7 +4,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import wikipediaLogo from "../../assets/wikipedia_icon.png";
 import COLORS from "../../colors";
 
-const SearchIndex = ({url, title, content, readingTime, date}) => {
+const SearchIndex = ({key, url, title, content, readingTime, date}) => {
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
       <Row style={{ marginBottom: "7px"}}>
