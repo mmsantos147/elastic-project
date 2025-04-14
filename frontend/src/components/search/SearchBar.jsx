@@ -25,8 +25,8 @@ const SearchBar = ( { className, children, setSearchResults } ) => {
   const keyboardRef = useRef(null);
 
   const doSearch = () => {
-    const responses = searchApi.search(inputValue);
-    setSearchResults(responses);
+    const response = searchApi.search(inputValue);
+    setSearchResults(response.data);
   }
 
   useEffect(() => {
