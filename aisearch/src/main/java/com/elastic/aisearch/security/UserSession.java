@@ -16,4 +16,8 @@ public class UserSession {
     private String userEmail;
     private String userName;
     private List<String> userHistory;
+
+    public void addUserHistory(String history) {
+        this.userHistory.add(history);
+    }
 }

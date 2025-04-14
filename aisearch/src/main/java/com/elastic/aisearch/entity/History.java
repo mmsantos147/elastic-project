@@ -24,7 +24,7 @@ public class History {
     @JoinColumn(name = "userId")
     private User user;
 
-    public History(String prompt, LocalDate date, User user) {
+    public History(String prompt, User user) {
         this.prompt = prompt;
         this.user = user;
     }

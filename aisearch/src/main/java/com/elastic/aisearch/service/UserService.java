@@ -20,13 +20,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void addNewUser(User user) {
+    public String addNewUser(User user) {
         Optional<User> userEmail = userRepository.findUserByEmail(user.getEmail());
         if (userEmail.isPresent()) {
             throw new IllegalStateException("user already exists");
         }
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         userRepository.save(user);
+        return "User Registered Successfully";
     }
 
     public void deleteUser(String email) {
@@ -38,6 +39,9 @@ public class UserService {
         userRepository.deleteById(userEmail.get().getId());
     }
 
+    public User searchUserId(Integer userId) {
+        return userRepository.findById(userId).get();
+    }
     public boolean searchUser(String email, String password) {
         Optional<User> user = userRepository.findUserByEmail(email);
         if(user.isEmpty()) {
