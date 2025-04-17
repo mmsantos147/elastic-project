@@ -2,47 +2,73 @@ import { Col, Row } from "antd";
 import Filter from "./Filter";
 import styled from "styled-components";
 import COLORS from "../colors";
+import { useState } from "react";
 
-const FilterBar = () => {
-  const ResponsiveResults = styled(Col)`
-    color: ${COLORS.gray};
+const ResponsiveResults = styled(Col)`
+  color: ${COLORS.gray};
 
-    @media (max-width: 1200px) {
-      display: none;
-    }
-  `;
+  @media (max-width: 1200px) {
+    display: none;
+  }
+`;
+
+const FilterBar = ({ setFormData }) => {
+  const [orderByState, setOrderByState] = useState("scoreDecreasing");
+  const [itensByPageState, setItensByPageState] = useState("10");
+  const [readingTimeState, setReadingTimeState] = useState(undefined);
+  const [searchForState, setSearchForState] = useState("allResults");
+
+  const handleOrderByChange = (e) => {
+    setFormData((prev) => ({...prev, orderBy: e.key}))
+    setOrderByState(e.key);
+  };
+
+  const handleItensByPageChange = (e) => {
+    setFormData((prev) => ({...prev, resultsPerPage: Number(e.key)}))
+    setItensByPageState(e.key);
+  };
+
+  const handleReadingTimeChange = (e) => {
+    setFormData((prev) => ({...prev, maxReadTime: Number(e.key)}))
+    setReadingTimeState(e.key);
+  };
+
+  const handleSearchForChange = (e) => {
+    setFormData((prev) => ({...prev, searchFor: e.key}))
+    setSearchForState(e.key);
+  };
 
   const orderBy = [
     {
-      label: "Relevância crescente",
-      key: "0",
+      label: "Relevância decrescente",
+      key: "scoreDecreasing",
     },
     {
-      label: "Relevância decrescente",
-      key: "1",
+      label: "Relevância crescente",
+      key: "scoreIncreasing",
     },
     {
       label: "Tempo de leitura crescente",
-      key: "3",
+      key: "readingTimeIncreasing",
     },
     {
       label: "Tempo de leitura decrescente",
-      key: "4",
+      key: "readingTimeDecreasing",
     },
   ];
 
   const itensPerPage = [
     {
       label: "10",
-      key: "0",
+      key: 10,
     },
     {
       label: "20",
-      key: "1",
+      key: 20,
     },
     {
       label: "30",
-      key: "3",
+      key: 30,
     },
     {
       type: "divider",
@@ -56,15 +82,15 @@ const FilterBar = () => {
   const readTime = [
     {
       label: "Rápido (<3 min)",
-      key: "0",
+      key: 3,
     },
     {
       label: "Médio (<5 min)",
-      key: "1",
+      key: 5,
     },
     {
       label: "Longo (<10 min)",
-      key: "3",
+      key: 10,
     },
     {
       type: "divider",
@@ -78,11 +104,11 @@ const FilterBar = () => {
   const searchFor = [
     {
       label: "Todos os resultados",
-      key: "0",
+      key: "allResults",
     },
     {
       label: "Correspondência exata",
-      key: "1",
+      key: "exactSearch",
     },
   ];
 
@@ -90,16 +116,36 @@ const FilterBar = () => {
     <Row style={{ marginTop: "13px" }}>
       <Col style={{ width: "220px" }} />
       <Col style={{ marginRight: "40px" }}>
-        <Filter items={orderBy} selectedKeys={["1"]} name={"Ordenar por"} />
+        <Filter
+          items={orderBy}
+          selectedKeys={orderByState}
+          name={"Ordenar por"}
+          onClick={handleOrderByChange}
+        />
       </Col>
       <Col style={{ marginRight: "40px" }}>
-        <Filter items={itensPerPage} selectedKeys={["0"]} name={"Itens por página"} />
+        <Filter
+          items={itensPerPage}
+          selectedKeys={itensByPageState}
+          name={"Itens por página"}
+          onClick={handleItensByPageChange}
+        />
       </Col>
       <Col style={{ marginRight: "40px" }}>
-        <Filter items={readTime} name={"Tempo de leitura"} />
+        <Filter
+          items={readTime}
+          name={"Tempo de leitura"}
+          selectedKeys={readingTimeState}
+          onClick={handleReadingTimeChange}
+        />
       </Col>
       <Col>
-        <Filter items={searchFor} selectedKeys={["0"]} name={"Pesquisar por"} />
+        <Filter
+          items={searchFor}
+          selectedKeys={searchForState}
+          name={"Pesquisar por"}
+          onClick={handleSearchForChange}
+        />
       </Col>
       <Col flex="auto" />
       <ResponsiveResults style={{ marginRight: "40px" }}>

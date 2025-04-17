@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UAISearch from "../components/UAISearch";
 import SearchBar from "../components/search/SearchBar";
 import styled from "styled-components";
@@ -10,16 +10,36 @@ import FilterBar from "../components/FilterBar";
 import IAVision from "../components/results/IAVision";
 import SearchIndex from "../components/results/SearchIndex";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import searchApi from "../api/search.api";
 
 const { Content } = Layout;
+
+const StyledSearchBar = styled(SearchBar)`
+  line-height: 0px;
+`;
 
 const Search = () => {
   const [toolsVisible, setToolsVisible] = useState(false);
   const [searchResult, setSearchResults] = useState([]);
+  const [formData, setFormData] = useState({
+    search: "",
+    page: 1,
+    resultsPerPage: "",
+    orderBy: "",
+    maxReadTime: "",
+    searchFor: ""
+  });
 
-  const StyledSearchBar = styled(SearchBar)`
-    line-height: 0px;
-  `;
+  const setSearchValue = (value) => {
+    setFormData(prev => ({...prev, search:value}))
+  }
+
+  const searchSubmit = async (value) => {
+    const formContent = { ...formData, search: value };
+    setFormData(formContent);
+    const response = await searchApi.search(formContent)
+    setSearchResults(response)
+  };
 
   return (
     <>
@@ -44,7 +64,7 @@ const Search = () => {
           <div
             style={{ width: "100%", display: "flex", flexDirection: "column" }}
           >
-            <StyledSearchBar setSearchResults={setSearchResults} />
+            <StyledSearchBar setSearchValue={setSearchValue} onEnterEvent={searchSubmit} />
             <div style={{ marginTop: "20px" }}>
               <NavigationBar
                 onClickShowTools={() => {
@@ -67,7 +87,7 @@ const Search = () => {
         </Col>
       </Row>
 
-      {toolsVisible && <FilterBar />}
+      {toolsVisible && <FilterBar setFormData={setFormData} />}
 
       <Content
         style={{
@@ -81,7 +101,7 @@ const Search = () => {
         <Divider style={{ borderColor: COLORS.gray }} />
 
         <Row>
-          {searchResult.map((result, index) => (
+          {searchResult.map((result) => (
             <SearchIndex
               key={result.id}
               url={result.url}

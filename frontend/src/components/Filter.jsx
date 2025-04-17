@@ -29,11 +29,11 @@ const GlobalDropdownStyle = createGlobalStyle`
   }
 `;
 
-const Filter = ({ name, items, selectedKeys, onMenuClick }) => {
+const Filter = ({ name, items, selectedKeys, onClick }) => {
   return (
     <>
       <GlobalDropdownStyle />
-      <Dropdown menu={{ items, selectedKeys, onMenuClick }} trigger={["click"]}>
+      <Dropdown menu={{ items, selectedKeys, onClick }} trigger={["click"]}>
         <a href="#" onClick={(e) => e.preventDefault()}>
           <Space style={{ color: COLORS.gray }}>
             {name}

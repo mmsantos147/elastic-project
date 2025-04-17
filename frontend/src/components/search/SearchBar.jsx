@@ -9,7 +9,6 @@ import SearchHistory from "./SearchHistory";
 import COLORS from "../../colors";
 import Draggable from "react-draggable";
 import styled from "styled-components";
-import searchApi from "../../api/search.api";
 
 const StyledInput = styled(Input)`
   ::placeholder {
@@ -17,26 +16,12 @@ const StyledInput = styled(Input)`
   }
 `;
 
-const SearchBar = ( { className, children, setSearchResults } ) => {
+const SearchBar = ({ className, children, onEnterEvent, setSearchValue }) => {
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [historyVisibile, setHistoryVisible] = useState(false);
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);
-
-  const doSearch = async () => {
-    try {
-      if (!inputValue) {
-        console.warn("inputValue está vazio ou undefined");
-        return;
-      }
-      const response = await searchApi.search(inputValue);
-      console.log("Resposta da busca:", response);
-      setSearchResults(response);
-    } catch (error) {
-      console.error("Erro na busca:", error);
-    }
-  }
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -66,7 +51,7 @@ const SearchBar = ( { className, children, setSearchResults } ) => {
       }}
     >
       <StyledInput
-        onPressEnter={() => doSearch()}
+        onPressEnter={(e) => {onEnterEvent(e.target.value)}}
         size="large"
         placeholder={`Pesquise no ${APP_NAME_CAMMEL_CASE} ou digite uma URL`}
         value={inputValue}
@@ -100,7 +85,10 @@ const SearchBar = ( { className, children, setSearchResults } ) => {
             />
           </>
         }
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          setSearchValue(e.target.value);
+        }}
         style={{
           borderRadius: historyVisibile ? "30px 30px 0 0px" : "999px",
           backgroundColor: "#303134",
@@ -109,11 +97,10 @@ const SearchBar = ( { className, children, setSearchResults } ) => {
           padding: "10px",
           transition: "none",
         }}
-        
       />
       <SearchHistory visible={historyVisibile} />
 
-        {children}
+      {children}
 
       {showKeyboard && (
         <Draggable nodeRef={keyboardRef}>
@@ -129,7 +116,9 @@ const SearchBar = ( { className, children, setSearchResults } ) => {
             }}
           >
             <Keyboard
-              onChange={(input) => setInputValue(input)}
+              onChange={(input) => {
+                setInputValue(input);
+              }}
               theme={"hg-theme-default myTheme"}
               layoutName="default"
             />

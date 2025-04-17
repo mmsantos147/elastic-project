@@ -1,7 +1,7 @@
 import { makeRequest } from "./makeRequest"
 
 const search = async (content) => {
-    return await makeRequest('get', `search?query=${content}`);
+    return await makeRequest('get', `search`, content);
 }
 
 const fetchHistory = async (content) => {

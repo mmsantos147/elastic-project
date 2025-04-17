@@ -2,15 +2,6 @@ import { Row, Col, Button } from "antd";
 import styled from "styled-components";
 import COLORS from "../colors";
 
-// Container da barra de navegação
-const StyledNavigationBar = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: ${COLORS.gray};
-  margin-bottom: 2px;
-`;
 
 const NavLinks = styled.div`
   display: flex;
