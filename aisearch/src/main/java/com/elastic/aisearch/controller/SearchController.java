@@ -24,7 +24,7 @@ public class SearchController {
      * @param query A string de consulta a ser processada
      * @return Lista de resultados da busca
      */
-    @GetMapping
+    @PostMapping
     public ResponseEntity<List<SearchResultDTO>> search(@RequestParam SearchDTO searchDTO) {
         /*
          * TODO: SearchDTO contém todas as informações necessárias para a consulta.
