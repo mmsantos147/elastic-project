@@ -48,13 +48,13 @@ const FilterBar = ({ setFormData }) => {
       key: "scoreIncreasing",
     },
     {
-      label: "Tempo de leitura crescente",
-      key: "readingTimeIncreasing",
-    },
-    {
       label: "Tempo de leitura decrescente",
       key: "readingTimeDecreasing",
     },
+    {
+      label: "Tempo de leitura crescente",
+      key: "readingTimeIncreasing",
+    }
   ];
 
   const itensPerPage = [
