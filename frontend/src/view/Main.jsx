@@ -7,7 +7,7 @@ import styled from "styled-components";
 const { Content } = Layout;
 
 const MarginBottomSearchBar = styled(SearchBar)`
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 `;
 
 const Main = () => {
@@ -36,7 +36,6 @@ const Main = () => {
           <UAISearch logoWidth={"400px"} />
         </div>
         <MarginBottomSearchBar />
-
         <Space>
           <SearchButton />
         </Space>
