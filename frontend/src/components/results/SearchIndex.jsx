@@ -3,8 +3,13 @@ import { FaClock, FaCalendar } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
 import wikipediaLogo from "../../assets/wikipedia_icon.png";
 import COLORS from "../../colors";
+import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
-const SearchIndex = ({ key, url, title, content, readingTime, date }) => {
+const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
+  const text = content.replace(/<\/?som\d+>/g, "$");
+
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
       <Row style={{ marginBottom: "7px" }}>
@@ -17,20 +22,28 @@ const SearchIndex = ({ key, url, title, content, readingTime, date }) => {
         </Col>
         <Col>
           <a href={url}>
-            <Row style={{color: COLORS.white, marginBottom: "3px", fontSize: "16px" }}>
+            <Row
+              style={{
+                color: COLORS.white,
+                marginBottom: "3px",
+                fontSize: "16px",
+              }}
+            >
               Wikipédia
             </Row>
             <Row style={{ marginBottom: "6px", fontSize: "12px" }}>
-              <div style={{color: COLORS.white, marginRight: "20px" }}>{url}</div>
-              <SlOptionsVertical style={{color: COLORS.white }}/>
+              <div style={{ color: COLORS.white, marginRight: "20px" }}>
+                {url}
+              </div>
+              <SlOptionsVertical style={{ color: COLORS.white }} />
             </Row>
           </a>
         </Col>
       </Row>
-      <Row
-        style={{ fontSize: "22px", marginBottom: "5px" }}
-      >
-        <a style={{color: COLORS.purple}} href={ url }>{title}</a>
+      <Row style={{ fontSize: "22px", marginBottom: "5px" }}>
+        <a style={{ color: COLORS.purple }} href={url}>
+          {title}
+        </a>
       </Row>
 
       <Row>
@@ -43,7 +56,12 @@ const SearchIndex = ({ key, url, title, content, readingTime, date }) => {
             width: "100%",
           }}
         >
-          {content} ...
+          <ReactMarkdown
+            remarkPlugins={[remarkMath]}
+            rehypePlugins={[rehypeKatex]}
+          >
+            {text + " ..."}
+          </ReactMarkdown>
         </p>
       </Row>
       <Row>

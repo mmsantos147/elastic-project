@@ -130,7 +130,7 @@ const Search = () => {
           <Row>
             {searchResult.map((result) => (
               <SearchIndex
-                key={result.id}
+                id={result.id}
                 url={result.url}
                 title={result.title}
                 content={result.content}
@@ -142,10 +142,10 @@ const Search = () => {
         )}
 
         {/* <SearchIndex
-          key={1} 
+          id={1} 
           url={"https://wikipedia.com/"}
           title={"um titulo aleatorio"}
-          content={"um conteudo aleatorio bla bla bla"}
+          content={"Time-dependent variational Monte Carlo The time-dependent variational Monte Carlo (t-VMC) method is a quantum Monte Carlo approach to study the dynamics of closed, non-relativistic quantum systems in the context of the quantum many-body problem. It is an extension of the variational Monte Carlo method, in which a time-dependent pure quantum state is encoded by some variational wave function, generally parametrized as <som1>\\Psi(X,t) = \\exp \\left ( \\sum_k a_k(t) O_k(X) \\right )</som1> where the c ..."}
           readingTime={10}
           date={"10/10/10"}
         /> */}
