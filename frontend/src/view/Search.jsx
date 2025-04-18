@@ -119,7 +119,7 @@ const Search = () => {
         <IAVision style={{ marginBottom: "50px" }} />
         <Divider style={{ borderColor: COLORS.gray }} />
 
-        {searchResult.length === 0 && processingRequest ? (
+        {/* {searchResult.length === 0 && processingRequest ? (
           <>
             <SearchIndexSkeleton />
             <SearchIndexSkeleton />
@@ -138,16 +138,16 @@ const Search = () => {
               />
             ))}
           </Row>
-        )}
+        )} */}
 
-        {/* <SearchIndex
+        <SearchIndex
           key={1} 
           url={"https://wikipedia.com/"}
           title={"um titulo aleatorio"}
           content={"um conteudo aleatorio bla bla bla"}
           readingTime={10}
           date={"10/10/10"}
-        /> */}
+        />
 
         <Row
           style={{

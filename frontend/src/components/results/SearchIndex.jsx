@@ -16,7 +16,7 @@ const SearchIndex = ({ key, url, title, content, readingTime, date }) => {
           />
         </Col>
         <Col>
-          <a href={{url}}>
+          <a href={url}>
             <Row style={{color: COLORS.white, marginBottom: "3px", fontSize: "16px" }}>
               Wikipédia
             </Row>
@@ -30,7 +30,7 @@ const SearchIndex = ({ key, url, title, content, readingTime, date }) => {
       <Row
         style={{ fontSize: "22px", marginBottom: "5px" }}
       >
-        <a style={{color: COLORS.purple}} href={{ url }}>{title}</a>
+        <a style={{color: COLORS.purple}} href={ url }>{title}</a>
       </Row>
 
       <Row>
