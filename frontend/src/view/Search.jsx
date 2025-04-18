@@ -53,7 +53,7 @@ const Search = () => {
     setProcessingRequest(true);
     const response = await searchApi.search(formContent);
     setSearchResults(response);
-    setProcessingRequest(true);
+    setProcessingRequest(false);
   };
 
   return (
