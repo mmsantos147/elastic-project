@@ -11,6 +11,7 @@ import IAVision from "../components/results/IAVision";
 import SearchIndex from "../components/results/SearchIndex";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import searchApi from "../api/search.api";
+import { useLocation } from "react-router-dom";
 
 const { Content } = Layout;
 
@@ -19,26 +20,36 @@ const StyledSearchBar = styled(SearchBar)`
 `;
 
 const Search = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialSearch = queryParams.get("q") || "";
+  
   const [toolsVisible, setToolsVisible] = useState(false);
   const [searchResult, setSearchResults] = useState([]);
   const [formData, setFormData] = useState({
-    search: "",
+    search: initialSearch,
     page: 1,
     resultsPerPage: "",
     orderBy: "",
     maxReadTime: "",
-    searchFor: ""
+    searchFor: "",
   });
 
+  useEffect(() => {
+    if (initialSearch) {
+      searchSubmit(initialSearch);
+    }
+  }, [initialSearch]);
+
   const setSearchValue = (value) => {
-    setFormData(prev => ({...prev, search:value}))
-  }
+    setFormData((prev) => ({ ...prev, search: value }));
+  };
 
   const searchSubmit = async (value) => {
     const formContent = { ...formData, search: value };
     setFormData(formContent);
-    const response = await searchApi.search(formContent)
-    setSearchResults(response)
+    const response = await searchApi.search(formContent);
+    setSearchResults(response);
   };
 
   return (
@@ -64,7 +75,11 @@ const Search = () => {
           <div
             style={{ width: "100%", display: "flex", flexDirection: "column" }}
           >
-            <StyledSearchBar setSearchValue={setSearchValue} onEnterEvent={searchSubmit} />
+            <StyledSearchBar
+              setSearchValue={setSearchValue}
+              onEnterEvent={searchSubmit}
+              initialSearch={initialSearch}
+            />
             <div style={{ marginTop: "20px" }}>
               <NavigationBar
                 onClickShowTools={() => {

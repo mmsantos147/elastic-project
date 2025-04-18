@@ -16,9 +16,9 @@ const StyledInput = styled(Input)`
   }
 `;
 
-const SearchBar = ({ className, children, onEnterEvent, setSearchValue }) => {
+const SearchBar = ({ className, children, onEnterEvent, setSearchValue, initialSearch }) => {
   const [showKeyboard, setShowKeyboard] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(initialSearch);
   const [historyVisibile, setHistoryVisible] = useState(false);
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);

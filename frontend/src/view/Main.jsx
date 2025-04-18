@@ -4,6 +4,7 @@ import SearchBar from "../components/search/SearchBar";
 import SearchButton from "../components/search/SearchButton";
 import DefaultHeader from "../components/DefaultHeader";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 const { Content } = Layout;
 
 const MarginBottomSearchBar = styled(SearchBar)`
@@ -11,6 +12,11 @@ const MarginBottomSearchBar = styled(SearchBar)`
 `;
 
 const Main = () => {
+  const navigate = useNavigate();
+  const searchSubmit = async (value) => {
+    navigate(`/search?q=${value}`);
+  };
+
   return (
     <>
       <DefaultHeader />
@@ -35,7 +41,7 @@ const Main = () => {
         >
           <UAISearch logoWidth={"400px"} />
         </div>
-        <MarginBottomSearchBar />
+        <MarginBottomSearchBar onEnterEvent={searchSubmit} />
         <Space>
           <SearchButton />
         </Space>
