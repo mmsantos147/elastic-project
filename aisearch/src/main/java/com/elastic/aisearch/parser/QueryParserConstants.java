@@ -37,9 +37,9 @@ public interface QueryParserConstants {
   /** RegularExpression Id. */
   int DATE = 17;
   /** RegularExpression Id. */
-  int WORD = 18;
+  int QUOTED = 18;
   /** RegularExpression Id. */
-  int QUOTED = 19;
+  int WORD = 19;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -64,8 +64,8 @@ public interface QueryParserConstants {
     "\"..\"",
     "<NUMBER>",
     "<DATE>",
-    "<WORD>",
     "<QUOTED>",
+    "<WORD>",
   };
 
 }

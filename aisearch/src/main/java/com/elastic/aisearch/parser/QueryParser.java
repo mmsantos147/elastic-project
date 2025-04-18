@@ -127,8 +127,8 @@ String quotedValue = word.image.substring(1);
       case NEGATED_QUOTED:
       case NEGATED_WORD:
       case NUMBER:
-      case WORD:
-      case QUOTED:{
+      case QUOTED:
+      case WORD:{
         ;
         break;
         }
