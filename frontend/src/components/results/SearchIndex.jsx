@@ -4,25 +4,33 @@ import { SlOptionsVertical } from "react-icons/sl";
 import wikipediaLogo from "../../assets/wikipedia_icon.png";
 import COLORS from "../../colors";
 
-const SearchIndex = ({key, url, title, content, readingTime, date}) => {
+const SearchIndex = ({ key, url, title, content, readingTime, date }) => {
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
-      <Row style={{ marginBottom: "7px"}}>
+      <Row style={{ marginBottom: "7px" }}>
         <Col>
-          <img src={wikipediaLogo} height={37} style={{marginRight: "10px"}} />
+          <img
+            src={wikipediaLogo}
+            height={37}
+            style={{ marginRight: "10px" }}
+          />
         </Col>
         <Col>
-          <Row style={{ marginBottom: "3px", fontSize: "16px" }}>Wikipédia</Row>
-          <Row style={{ marginBottom: "6px", fontSize: "12px"}}>
-            <div style={{marginRight: "20px"}}>
-            {url}
-            </div>
-            < SlOptionsVertical />
-          </Row>
+          <a href={{url}}>
+            <Row style={{color: COLORS.purple, marginBottom: "3px", fontSize: "16px" }}>
+              Wikipédia
+            </Row>
+            <Row style={{ marginBottom: "6px", fontSize: "12px" }}>
+              <div style={{color: COLORS.purple, marginRight: "20px" }}>{url}</div>
+              <SlOptionsVertical style={{color: COLORS.white }}/>
+            </Row>
+          </a>
         </Col>
       </Row>
-      <Row style={{ fontSize: "22px", marginBottom: "5px", color: COLORS.purple }}>
-        {title}
+      <Row
+        style={{ fontSize: "22px", marginBottom: "5px" }}
+      >
+        <a style={{color: COLORS.purple}} href={{ url }}>{title}</a>
       </Row>
 
       <Row>
@@ -32,7 +40,7 @@ const SearchIndex = ({key, url, title, content, readingTime, date}) => {
             lineHeight: "25px",
             marginBottom: "12px",
             textAlign: "justify",
-            width: "100%"
+            width: "100%",
           }}
         >
           {content} ...
