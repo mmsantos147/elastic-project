@@ -17,11 +17,11 @@ const SearchIndex = ({ key, url, title, content, readingTime, date }) => {
         </Col>
         <Col>
           <a href={{url}}>
-            <Row style={{color: COLORS.purple, marginBottom: "3px", fontSize: "16px" }}>
+            <Row style={{color: COLORS.white, marginBottom: "3px", fontSize: "16px" }}>
               Wikipédia
             </Row>
             <Row style={{ marginBottom: "6px", fontSize: "12px" }}>
-              <div style={{color: COLORS.purple, marginRight: "20px" }}>{url}</div>
+              <div style={{color: COLORS.white, marginRight: "20px" }}>{url}</div>
               <SlOptionsVertical style={{color: COLORS.white }}/>
             </Row>
           </a>
