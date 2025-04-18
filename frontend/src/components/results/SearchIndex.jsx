@@ -8,13 +8,20 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
 const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
-  const text = content.replace(/<\/?math>/gi, "$")
-  .replace(/\{\{math\|([^{}]+?)\}\}/gi, (_, expr) => `$${expr}$`)
-  .replace(/<\/?som\d+>/g, "$")
-  .replace(/<\/?Math>/g, "$")
-  .replace(/\{\{[^{}]*\|([^{}|]+?)\}\}/g, (_, expr) => expr)
-  .replace(/\$\s+/g, "$")
-  .replace(/\s+\$/g, "$");
+  const text = content
+  .replace(/<math[^>]*>([\s\S]*?)<\/math>/gi, (_, expr) => `$$${expr.trim()}$$`)
+  .replace(/<som\d+>([\s\S]*?)<\/som\d+>/gi, (_, expr) => `$${expr.trim()}$`)
+  .replace(/\{\{math\|([\s\S]+?)\}\}/gi, (_, expr) => `$${expr.trim()}$`)
+  .replace(/\{\{sqrt\|([\s\S]+?)\}\}/gi, (_, expr) => `\\sqrt{${expr.trim()}}`)
+  .replace(/\{\{mvar\|([\s\S]+?)\}\}/gi, (_, expr) => `${expr.trim()}`)
+  .replace(/\[\[([^|\]]+)\|([^|\]]+)\]\]/g, (_, page, text) => text)
+  .replace(/\[\[([^|\]]+)\]\]/g, (_, page) => page)
+  .replace(/'''''(.*?)'''''/g, '***$1***')  
+  .replace(/'''(.*?)'''/g, '**$1**')
+  .replace(/''(.*?)''/g, '*$1*')
+  .replace(/\{\{[^}]+\}\}/g, '')
+  .replace(/^\s+|\s+$/g, '')
+  ;
 
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
