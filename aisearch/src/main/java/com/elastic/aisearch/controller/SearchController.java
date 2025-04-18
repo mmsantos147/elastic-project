@@ -51,6 +51,8 @@ public class SearchController {
              * e a quantidade de tempo que demorou para realizar a consulta
              * 
              * Obs: a quantidade de resultados deve ser um numero arredondado.
+             * Além disso, também precisa retornar a quantidade de páginas que terá (baseado na
+             * contagem de resultados)
              */
             List<SearchResultDTO> results = elasticsearchService.search(searchDTO.search());
             return ResponseEntity.ok(results);
