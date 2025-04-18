@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "api/history")
+@RequestMapping("/history")
 public class HistoryController {
     private final HistoryService historyService;
     private final UserSession userSession;
+
+    /**
+     * TODO: Fazer um endpoint get para retornar os 10 ultimas pesquisas
+     * no histórico do usuário
+     */
 
     @DeleteMapping(path = "/all")
     public void deleteAllById() {

@@ -40,6 +40,9 @@ public class SearchController {
          * - As consultas podem ser
          *   - allResults : o que já está implementado
          *   - exactSearch: fazer uma nova consulta, que manda tuda a consulta para o must
+         * 
+         * Também é necessário adicionar a pesquisa que ele fez no histório do usuário logado.
+         * Se o usuário não estiver logado, então adiciona somente na sessão do usuário
          */
         
          
