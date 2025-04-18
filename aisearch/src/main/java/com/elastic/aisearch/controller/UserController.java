@@ -13,7 +13,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "api/user")
+@RequestMapping(path = "user")
 public class UserController {
     private final UserService userService;
     private final UserSession userSession;
