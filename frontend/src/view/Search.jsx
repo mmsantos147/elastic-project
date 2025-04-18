@@ -12,6 +12,7 @@ import SearchIndex from "../components/results/SearchIndex";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import searchApi from "../api/search.api";
 import { useLocation } from "react-router-dom";
+import SearchIndexSkeleton from "../components/results/SearchIndexSkeleton";
 
 const { Content } = Layout;
 
@@ -115,18 +116,26 @@ const Search = () => {
         <IAVision style={{ marginBottom: "50px" }} />
         <Divider style={{ borderColor: COLORS.gray }} />
 
-        <Row>
-          {searchResult.map((result) => (
-            <SearchIndex
-              key={result.id}
-              url={result.url}
-              title={result.title}
-              content={result.content}
-              readingTime={result.reading_time}
-              date={result.datetime}
-            />
-          ))}
-        </Row>
+        {searchResult.length === 0 ? (
+  <>
+    <SearchIndexSkeleton />
+    <SearchIndexSkeleton />
+    <SearchIndexSkeleton />
+  </>
+) : (
+  <Row>
+    {searchResult.map((result) => (
+      <SearchIndex
+        key={result.id}
+        url={result.url}
+        title={result.title}
+        content={result.content}
+        readingTime={result.reading_time}
+        date={result.datetime}
+      />
+    ))}
+  </Row>
+)}
 
         <Row
           style={{
