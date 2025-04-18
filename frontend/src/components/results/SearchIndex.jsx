@@ -4,7 +4,6 @@ import { SlOptionsVertical } from "react-icons/sl";
 import wikipediaLogo from "../../assets/wikipedia_icon.png";
 import COLORS from "../../colors";
 
-wtf.extend(htmlPlugin);
 
 const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
 
