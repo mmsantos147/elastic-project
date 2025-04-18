@@ -24,9 +24,10 @@ const Search = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const initialSearch = queryParams.get("q") || "";
-  
+
   const [toolsVisible, setToolsVisible] = useState(false);
   const [searchResult, setSearchResults] = useState([]);
+  const [processingRequest, setProcessingRequest] = useState(false);
   const [formData, setFormData] = useState({
     search: initialSearch,
     page: 1,
@@ -49,8 +50,10 @@ const Search = () => {
   const searchSubmit = async (value) => {
     const formContent = { ...formData, search: value };
     setFormData(formContent);
+    setProcessingRequest(true);
     const response = await searchApi.search(formContent);
     setSearchResults(response);
+    setProcessingRequest(true);
   };
 
   return (
@@ -116,26 +119,26 @@ const Search = () => {
         <IAVision style={{ marginBottom: "50px" }} />
         <Divider style={{ borderColor: COLORS.gray }} />
 
-        {searchResult.length === 0 ? (
-  <>
-    <SearchIndexSkeleton />
-    <SearchIndexSkeleton />
-    <SearchIndexSkeleton />
-  </>
-) : (
-  <Row>
-    {searchResult.map((result) => (
-      <SearchIndex
-        key={result.id}
-        url={result.url}
-        title={result.title}
-        content={result.content}
-        readingTime={result.reading_time}
-        date={result.datetime}
-      />
-    ))}
-  </Row>
-)}
+        {searchResult.length === 0 && processingRequest ? (
+          <>
+            <SearchIndexSkeleton />
+            <SearchIndexSkeleton />
+            <SearchIndexSkeleton />
+          </>
+        ) : (
+          <Row>
+            {searchResult.map((result) => (
+              <SearchIndex
+                key={result.id}
+                url={result.url}
+                title={result.title}
+                content={result.content}
+                readingTime={result.reading_time}
+                date={result.datetime}
+              />
+            ))}
+          </Row>
+        )}
 
         <Row
           style={{
