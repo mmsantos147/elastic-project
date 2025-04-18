@@ -3,25 +3,10 @@ import { FaClock, FaCalendar } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
 import wikipediaLogo from "../../assets/wikipedia_icon.png";
 import COLORS from "../../colors";
-import ReactMarkdown from "react-markdown";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
+
+wtf.extend(htmlPlugin);
 
 const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
-  const text = content
-  .replace(/<math[^>]*>([\s\S]*?)<\/math>/gi, (_, expr) => `$$${expr.trim()}$$`)
-  .replace(/<som\d+>([\s\S]*?)<\/som\d+>/gi, (_, expr) => `$${expr.trim()}$`)
-  .replace(/\{\{math\|([\s\S]+?)\}\}/gi, (_, expr) => `$${expr.trim()}$`)
-  .replace(/\{\{sqrt\|([\s\S]+?)\}\}/gi, (_, expr) => `\\sqrt{${expr.trim()}}`)
-  .replace(/\{\{mvar\|([\s\S]+?)\}\}/gi, (_, expr) => `${expr.trim()}`)
-  .replace(/\[\[([^|\]]+)\|([^|\]]+)\]\]/g, (_, page, text) => text)
-  .replace(/\[\[([^|\]]+)\]\]/g, (_, page) => page)
-  .replace(/'''''(.*?)'''''/g, '***$1***')  
-  .replace(/'''(.*?)'''/g, '**$1**')
-  .replace(/''(.*?)''/g, '*$1*')
-  .replace(/\{\{[^}]+\}\}/g, '')
-  .replace(/^\s+|\s+$/g, '')
-  ;
 
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
@@ -69,12 +54,7 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
             width: "100%",
           }}
         >
-          <ReactMarkdown
-            remarkPlugins={[remarkMath]}
-            rehypePlugins={[rehypeKatex]}
-          >
-            {text + " ..."}
-          </ReactMarkdown>
+          {content}
         </p>
       </Row>
       <Row>
