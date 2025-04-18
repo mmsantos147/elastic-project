@@ -3,7 +3,7 @@ import COLORS from "../../colors";
 
 const IAVisionAbstract = ( {children, href} ) => {
   return (
-    <span style={{ fontSize: "18px", lineHeight: "30px" }}>
+    <span style={{ fontSize: "18px", lineHeight: "30px", textAlign: "justify" }}>
       {children}
       <a href={href}>
         <FiLink2
