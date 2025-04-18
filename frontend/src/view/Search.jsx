@@ -48,6 +48,7 @@ const Search = () => {
   };
 
   const searchSubmit = async (value) => {
+    setSearchResults([]);
     const formContent = { ...formData, search: value };
     setFormData(formContent);
     setProcessingRequest(true);
