@@ -20,7 +20,7 @@ const ToolsButton = styled.div`
 
 const NavigationBar = ({ onClickShowTools }) => {
   return (
-    <Row style={{ maxWidth: "700px", minWidth: "600px" }}>
+    <Row style={{ maxWidth: "730px", minWidth: "600px" }}>
       <Col>
         <NavLinks>Todos os resultados</NavLinks>
       </Col>

@@ -74,7 +74,7 @@ const Search = () => {
           style={{
             display: "flex",
             alignItems: "center",
-            minWidth: "600px",
+            minWidth: "730px",
           }}
         >
           <div

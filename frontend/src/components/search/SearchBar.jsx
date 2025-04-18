@@ -42,7 +42,7 @@ const SearchBar = ({ className, children, onEnterEvent, setSearchValue, initialS
       ref={inputRef}
       style={{
         width: "100%",
-        maxWidth: "700px",
+        maxWidth: "730px",
         minWidth: "600px",
         position: "relative",
       }}
