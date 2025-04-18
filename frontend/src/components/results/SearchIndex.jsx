@@ -8,7 +8,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
 const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
-  const text = content.replace(/<\/?som\d+>/g, "$");
+  const text = content.replace(/<\/?som\d+>/g, "$").replace(/<\/?math>/gi, "$");
 
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
