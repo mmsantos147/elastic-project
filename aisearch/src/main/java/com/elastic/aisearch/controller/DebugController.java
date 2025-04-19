@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.elastic.aisearch.parser.ParseException;
 import com.elastic.aisearch.parser.QueryParser;
+import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.ChatGptService;
 
 import lombok.AllArgsConstructor;
@@ -18,9 +19,10 @@ import lombok.AllArgsConstructor;
 @Controller
 @RequestMapping("/debug")
 @AllArgsConstructor
-public class AiSearchController {
+public class DebugController {
 
     private final ChatGptService chatGptService;
+    private UserSession userSession;
 
     @GetMapping("/")
     public String hello() {
@@ -43,6 +45,12 @@ public class AiSearchController {
     @GetMapping("/gpt")
     public ResponseEntity<String> chat(@RequestParam("message") String userInput) {
         String response = chatGptService.makeAiResume(userInput).block();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/session")
+    public ResponseEntity<String> session() {
+        String response = userSession.toString();
         return ResponseEntity.ok(response);
     }
 }

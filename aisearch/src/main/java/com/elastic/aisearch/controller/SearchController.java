@@ -71,10 +71,13 @@ public class SearchController {
             List<SearchResultDTO> top3 = results.stream()
                     .limit(3)
                     .toList();
-                    
+            log.info("Sessao do usuario [1]: {}", session.getStreamId());
             CompletableFuture.runAsync(() -> {
+                log.info("Sessao do usuario [2]: {}", session.getStreamId());
                 String aiResume = chatGptService.makeAiResume(top3.toString()).block();
+                log.info("Resumo gerado {}", aiResume);
                 streamService.sendAiAbstractToUser(session.getStreamId(), aiResume);
+                log.info("Resumo enviado");
             });
 
             return ResponseEntity.ok(results);
