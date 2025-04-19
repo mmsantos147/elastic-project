@@ -14,6 +14,7 @@ import searchApi from "../api/search.api";
 import { useLocation } from "react-router-dom";
 import SearchIndexSkeleton from "../components/results/SearchIndexSkeleton";
 import { API_PREFIX, ROOT_URL } from "../constants";
+import IAVisionAbstractSkeleton from "../components/results/IAVisionSkeleton";
 
 const { Content } = Layout;
 
@@ -29,7 +30,7 @@ const Search = () => {
   const [toolsVisible, setToolsVisible] = useState(false);
   const [searchResult, setSearchResults] = useState([]);
   const [processingRequest, setProcessingRequest] = useState(false);
-  const [aiAbstract, setAiAbstract] = useState([])
+  const [aiAbstract, setAiAbstract] = useState({});
   const [formData, setFormData] = useState({
     search: initialSearch,
     page: 1,
@@ -135,7 +136,12 @@ const Search = () => {
           maxWidth: "950px",
         }}
       >
-        <IAVision style={{ marginBottom: "50px" }} />
+        {!processingRequest && Object.keys(aiAbstract).length > 0 ? (
+          <IAVision aiAbstract={aiAbstract} style={{ marginBottom: "50px" }} />
+        ) : (
+          <IAVisionAbstractSkeleton style={{ marginBottom: "50px" }} />
+        )}
+
         <Divider style={{ borderColor: COLORS.gray }} />
 
         {searchResult.length === 0 && processingRequest ? (
