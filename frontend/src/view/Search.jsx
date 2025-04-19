@@ -13,6 +13,7 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 import searchApi from "../api/search.api";
 import { useLocation } from "react-router-dom";
 import SearchIndexSkeleton from "../components/results/SearchIndexSkeleton";
+import { API_PREFIX, ROOT_URL } from "../constants";
 
 const { Content } = Layout;
 
@@ -28,6 +29,7 @@ const Search = () => {
   const [toolsVisible, setToolsVisible] = useState(false);
   const [searchResult, setSearchResults] = useState([]);
   const [processingRequest, setProcessingRequest] = useState(false);
+  const [aiAbstract, setAiAbstract] = useState([])
   const [formData, setFormData] = useState({
     search: initialSearch,
     page: 1,
@@ -42,6 +44,21 @@ const Search = () => {
       searchSubmit(initialSearch);
     }
   }, [initialSearch]);
+
+  useEffect(() => {
+    const es = new EventSource(`${ROOT_URL}/${API_PREFIX}/stream`);
+
+    es.addEventListener("AiAbstract", (evt) => {
+      try {
+        const data = JSON.parse(evt.data);
+        setAiAbstract(data);
+      } catch (err) {
+        console.error("Erro parseando SSE:", err);
+      }
+    });
+
+    return () => es.close();
+  }, []);
 
   const setSearchValue = (value) => {
     setFormData((prev) => ({ ...prev, search: value }));
