@@ -1,7 +1,7 @@
 import { makeRequest } from "./makeRequest";
 
 const initSession = async () => {
-    return await makeRequest('post', 'init')
+    return await makeRequest('post', 'user/init')
 }
 
 const register = async (content) => {
