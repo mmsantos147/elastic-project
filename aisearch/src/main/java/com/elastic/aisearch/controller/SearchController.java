@@ -7,6 +7,7 @@ import com.elastic.aisearch.service.ChatGptService;
 import com.elastic.aisearch.service.ElasticsearchService;
 import com.elastic.aisearch.service.StreamService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +23,12 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class SearchController {
 
-    private final UserSession session;
+    private final UserSession userSession;
     private final ElasticsearchService elasticsearchService;
     private final ChatGptService chatGptService;
     private final StreamService streamService;
+
+    private final HttpServletRequest request;
 
     /**
      * Endpoint para realizar buscas usando o parser de consultas personalizado.
@@ -35,6 +38,7 @@ public class SearchController {
      */
     @PostMapping
     public ResponseEntity<List<SearchResultDTO>> search(@RequestBody SearchDTO searchDTO) {
+        request.getSession(true);
         /*
          * TODO: SearchDTO contém todas as informações necessárias para a consulta.
          * É necessário utilizá-las para fazer uma consulta funcional. Implementar
@@ -72,13 +76,19 @@ public class SearchController {
             List<SearchResultDTO> top3 = results.stream()
                     .limit(3)
                     .toList();
-            log.info("Sessao do usuario [1]: {}", session.getStreamId());
+            String top3Str = top3.toString();
+            log.info("Sessao do usuario [1]: {}", userSession.getStreamId());
+            log.info("Entrando na execução assíncrona...");
+            String streamId = userSession.getStreamId();
             CompletableFuture.runAsync(() -> {
-                log.info("Sessao do usuario [2]: {}", session.getStreamId());
-                String aiResume = chatGptService.makeAiResume(top3.toString()).block();
+                log.info("Sessao do usuario [2]: {}", streamId);
+                String aiResume = chatGptService.makeAiResume(top3Str).block();
                 log.info("Resumo gerado {}", aiResume);
-                streamService.sendAiAbstractToUser(session.getStreamId(), aiResume);
+                streamService.sendAiAbstractToUser(streamId, aiResume);
                 log.info("Resumo enviado");
+            }).exceptionally(ex -> {
+                log.error("Erro na thread async: {}", ex.getMessage(), ex);
+                return null;
             });
 
             return ResponseEntity.ok(results);
