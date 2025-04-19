@@ -19,6 +19,7 @@ const makeRequest = async (method, endpoint, data = null) => {
       method,
       url,
       data,
+      withCredentials: true
     });
 
     const responseData = response.data || {};

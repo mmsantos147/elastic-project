@@ -7,6 +7,7 @@ import com.elastic.aisearch.service.ChatGptService;
 import com.elastic.aisearch.service.ElasticsearchService;
 import com.elastic.aisearch.service.StreamService;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,11 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/search")
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Slf4j
 public class SearchController {
 
-    private UserSession session;
+    private final UserSession session;
     private final ElasticsearchService elasticsearchService;
     private final ChatGptService chatGptService;
     private final StreamService streamService;
