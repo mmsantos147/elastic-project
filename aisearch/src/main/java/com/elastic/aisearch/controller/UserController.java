@@ -5,8 +5,11 @@ import com.elastic.aisearch.entity.User;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,10 +17,24 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping(path = "user")
+@Slf4j
 public class UserController {
     private final UserService userService;
     private final UserSession userSession;
 
+    @PostMapping("/init")
+    public ResponseEntity<String> createFirstSession(HttpSession session) {
+        
+        if (session.isNew()) {
+            log.info("Nova sessão criada!");
+        } else {
+            log.info("A sessão já existia!");
+        }
+
+        return ResponseEntity.ok("");
+    } 
+    
+    
     @GetMapping
     public List<User> getUser() {
         return userService.getUser();

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ConfigProvider, Layout } from "antd";
 import DefaultFooter from "./components/Footer";
 
@@ -6,17 +6,26 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./view/Main";
 import Search from "./view/Search";
 import VLibras from "@djpfs/react-vlibras";
+import authorizationApi from './api/authorization.api'
 
 const App = () => {
+  useEffect(() => {
+    const initializeSession = async () => {
+      authorizationApi.initSession()
+    };
+
+    initializeSession();
+  }, []);
+
   return (
     <ConfigProvider
       theme={{
         components: {
           Skeleton: {
             gradientFromColor: "rgb(54, 54, 54)",
-            gradientToColor: "rgba(85, 85, 85, 0)"
-          }
-        }
+            gradientToColor: "rgba(85, 85, 85, 0)",
+          },
+        },
       }}
     >
       <Layout style={{ minHeight: "100vh", backgroundColor: "#202124" }}>
