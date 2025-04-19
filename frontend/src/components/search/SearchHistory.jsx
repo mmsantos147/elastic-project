@@ -1,22 +1,40 @@
 import { Divider } from "antd";
 import HistoryElement from "./HistoryElement";
 import COLORS from "../../colors";
-import SearchButton from "./SearchButton";
+import { useEffect } from "react";
+import historyApi from "../../api/history.api";
 
-const example = [
-  "Como fazer bolo de cenoura",
-  "Qual é o teorema de pitagoras?",
-  "Quem veio primeiro, ovo ou a galinha?",
-  "Como calcular a area de um triangulo?",
-  "Classificação morfológica de ornitorrincos",
-  "Deuses da grécia antiga",
-  "Quem é carlos stri?",
-];
+const SearchHistory = ({
+  visible,
+  historyContent,
+  setHistoryContent,  
+}) => {
+  useEffect(() => {
+    const loadHistory = async () => {
+      try {
+        const data = await historyApi.fetchHistory();
+        setHistoryContent(data);
+      } catch {
+        setHistoryContent([]); 
+      }
+    };
+    loadHistory();
+  }, [setHistoryContent]);
 
-const SearchHistory = ({ visible }) => {
+  const deleteFromHistory = async (id) => {
+    setHistoryContent((prev) => prev.filter((item) => item.id !== id));
+    try {
+      await historyApi.deleteItemFromHistory(id);
+    } catch {
+      setHistoryContent([]); 
+    }
+  };
+
+  if (!visible || historyContent.length === 0) return null;
+
   const historyStyle = {
     width: "100%",
-    display: visible ? "block" : "none",
+    display: "block",
     backgroundColor: "rgb(48, 49, 52)",
     zIndex: "9999",
     position: "absolute",
@@ -30,15 +48,20 @@ const SearchHistory = ({ visible }) => {
       <Divider
         orientation="left"
         style={{
-          marginTop: "0px",
+          marginTop: 0,
           borderColor: COLORS.gray,
           color: COLORS.gray,
         }}
       >
         Pesquisas recentes
       </Divider>
-      {example.map((query, index) => (
-        <HistoryElement key={index} id={index} query={query} />
+      {historyContent.map((query) => (
+        <HistoryElement
+          key={query.id}
+          id={query.id}
+          query={query.content}
+          deleteFromHistory={deleteFromHistory}
+        />
       ))}
     </div>
   );

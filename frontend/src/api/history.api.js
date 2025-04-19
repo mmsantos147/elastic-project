@@ -1,7 +1,11 @@
 import { makeRequest } from "./makeRequest";
 
-const deleteHistoryItem = async (id) => {
+const deleteItemFromHistory = async (id) => {
     return await makeRequest('delete', `/history/${id}`)
 }
 
-export default deleteHistoryItem;
+const fetchHistory = async () => {
+    return await makeRequest('get', '/history')
+}
+
+export default { deleteItemFromHistory, fetchHistory };

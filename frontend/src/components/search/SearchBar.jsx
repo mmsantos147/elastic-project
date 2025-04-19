@@ -16,10 +16,18 @@ const StyledInput = styled(Input)`
   }
 `;
 
-const SearchBar = ({ className, children, onEnterEvent, setSearchValue, initialSearch }) => {
+const SearchBar = ({
+  className,
+  children,
+  onEnterEvent,
+  setSearchValue,
+  initialSearch,
+}) => {
+  const [historyContent, setHistoryContent] = useState([]);
+
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState(initialSearch);
-  const [historyVisibile, setHistoryVisible] = useState(false);
+  const [historyVisible, setHistoryVisible] = useState(false);
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);
 
@@ -29,12 +37,14 @@ const SearchBar = ({ className, children, onEnterEvent, setSearchValue, initialS
         setHistoryVisible(false);
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
+    return () =>
       document.removeEventListener("mousedown", handleClickOutside);
-    };
   }, []);
+
+  const borderRadius = historyVisible && historyContent.length > 0
+    ? "30px 30px 0 0"
+    : "999px";
 
   return (
     <div
@@ -46,12 +56,10 @@ const SearchBar = ({ className, children, onEnterEvent, setSearchValue, initialS
         minWidth: "600px",
         position: "relative",
       }}
-      onClick={() => {
-        setHistoryVisible(true);
-      }}
+      onClick={() => setHistoryVisible(true)}
     >
       <StyledInput
-        onPressEnter={(e) => {onEnterEvent(e.target.value)}}
+        onPressEnter={(e) => onEnterEvent(e.target.value)}
         size="large"
         placeholder={`Pesquise no ${APP_NAME_CAMMEL_CASE} ou digite uma URL`}
         value={inputValue}
@@ -72,9 +80,7 @@ const SearchBar = ({ className, children, onEnterEvent, setSearchValue, initialS
                 paddingRight: "7px",
                 fontSize: "25px",
               }}
-              onClick={() => {
-                setShowKeyboard(!showKeyboard);
-              }}
+              onClick={() => setShowKeyboard(!showKeyboard)}
             />
             <FaMicrophone
               style={{
@@ -90,7 +96,7 @@ const SearchBar = ({ className, children, onEnterEvent, setSearchValue, initialS
           setSearchValue(e.target.value);
         }}
         style={{
-          borderRadius: historyVisibile ? "30px 30px 0 0px" : "999px",
+          borderRadius,
           backgroundColor: "#303134",
           color: "#e8eaed",
           border: "0px",
@@ -98,7 +104,12 @@ const SearchBar = ({ className, children, onEnterEvent, setSearchValue, initialS
           transition: "none",
         }}
       />
-      <SearchHistory visible={historyVisibile} />
+
+      <SearchHistory
+        visible={historyVisible}
+        historyContent={historyContent}
+        setHistoryContent={setHistoryContent}
+      />
 
       {children}
 
@@ -116,9 +127,7 @@ const SearchBar = ({ className, children, onEnterEvent, setSearchValue, initialS
             }}
           >
             <Keyboard
-              onChange={(input) => {
-                setInputValue(input);
-              }}
+              onChange={(input) => setInputValue(input)}
               theme={"hg-theme-default myTheme"}
               layoutName="default"
             />
