@@ -11,10 +11,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.elastic.aisearch.parser.ParseException;
 import com.elastic.aisearch.parser.QueryParser;
+import com.elastic.aisearch.service.ChatGptService;
+
+import lombok.AllArgsConstructor;
 
 @Controller
 @RequestMapping("/debug")
+@AllArgsConstructor
 public class AiSearchController {
+
+    private final ChatGptService chatGptService;
+
     @GetMapping("/")
     public String hello() {
         return "Hello world!";
@@ -31,5 +38,11 @@ public class AiSearchController {
         } catch (ParseException e) {
             return new ResponseEntity<>("Erro no parser: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/gpt")
+    public ResponseEntity<String> chat(@RequestParam("message") String userInput) {
+        String response = chatGptService.makeAiResume(userInput).block();
+        return ResponseEntity.ok(response);
     }
 }

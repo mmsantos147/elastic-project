@@ -2,13 +2,18 @@ package com.elastic.aisearch.controller;
 
 import com.elastic.aisearch.dto.SearchDTO;
 import com.elastic.aisearch.dto.SearchResultDTO;
+import com.elastic.aisearch.security.UserSession;
+import com.elastic.aisearch.service.ChatGptService;
 import com.elastic.aisearch.service.ElasticsearchService;
+import com.elastic.aisearch.service.StreamService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/search")
@@ -16,7 +21,10 @@ import java.util.List;
 @Slf4j
 public class SearchController {
 
+    private UserSession session;
     private final ElasticsearchService elasticsearchService;
+    private final ChatGptService chatGptService;
+    private final StreamService streamService;
 
     /**
      * Endpoint para realizar buscas usando o parser de consultas personalizado.
@@ -33,31 +41,42 @@ public class SearchController {
          * - Paginação
          * - Mostrar x resultados por página
          * - Ordenar por
-         *   - scoreDecreasing (default)
-         *   - scoreIncreasing
-         *   - readingTimeDecreasing
-         *   - readingTimeIncreasing
+         * - scoreDecreasing (default)
+         * - scoreIncreasing
+         * - readingTimeDecreasing
+         * - readingTimeIncreasing
          * - As consultas podem ser
-         *   - allResults : o que já está implementado
-         *   - exactSearch: fazer uma nova consulta, que manda tuda a consulta para o must
+         * - allResults : o que já está implementado
+         * - exactSearch: fazer uma nova consulta, que manda tuda a consulta para o must
          * 
-         * Também é necessário adicionar a pesquisa que ele fez no histório do usuário logado.
+         * Também é necessário adicionar a pesquisa que ele fez no histório do usuário
+         * logado.
          * Se o usuário não estiver logado, então adiciona somente na sessão do usuário
          */
-        
-         
+
         try {
             log.info("Recebida consulta: {}", searchDTO.search());
-            
+
             /**
-             * TODO: O SearchResultDTO também precisa retornar a quantidade de resultados 
+             * TODO: O SearchResultDTO também precisa retornar a quantidade de resultados
              * e a quantidade de tempo que demorou para realizar a consulta
              * 
              * Obs: a quantidade de resultados deve ser um numero arredondado.
-             * Além disso, também precisa retornar a quantidade de páginas que terá (baseado na
+             * Além disso, também precisa retornar a quantidade de páginas que terá (baseado
+             * na
              * contagem de resultados)
              */
             List<SearchResultDTO> results = elasticsearchService.search(searchDTO.search());
+
+            List<SearchResultDTO> top3 = results.stream()
+                    .limit(3)
+                    .toList();
+                    
+            CompletableFuture.runAsync(() -> {
+                String aiResume = chatGptService.makeAiResume(top3.toString()).block();
+                streamService.sendAiAbstractToUser(session.getStreamId(), aiResume);
+            });
+
             return ResponseEntity.ok(results);
         } catch (Exception e) {
             log.error("Erro ao processar consulta: {}", e.getMessage(), e);

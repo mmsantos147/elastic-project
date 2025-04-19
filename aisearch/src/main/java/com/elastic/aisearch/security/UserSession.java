@@ -12,6 +12,7 @@ import java.util.List;
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserSession {
+    private String streamId;
     private Integer userId;
     private String userEmail;
     private String userName;
