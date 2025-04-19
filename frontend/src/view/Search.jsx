@@ -68,6 +68,7 @@ const Search = () => {
 
   const searchSubmit = async (value) => {
     setSearchResults([]);
+    setAiAbstract({});
     const formContent = { ...formData, search: value };
     setFormData(formContent);
     setProcessingRequest(true);
