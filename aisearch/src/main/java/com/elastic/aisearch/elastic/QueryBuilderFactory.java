@@ -4,7 +4,8 @@ package com.elastic.aisearch.elastic;
 import com.elastic.aisearch.parser.QueryParser.QueryNode;
 import static com.elastic.aisearch.utils.DateUtils.toElasticDate; 
 
-import org.elasticsearch.index.query.*;;
+import org.elasticsearch.index.query.*;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;;
 
 public class QueryBuilderFactory {
 
@@ -50,6 +51,7 @@ public class QueryBuilderFactory {
             if (!queryNode.getMaxReadingTime().isEmpty()) range.lte(Integer.parseInt(queryNode.getMaxReadingTime()));
             boolQuery.filter(range);
         }
+
 
         return boolQuery;
     }

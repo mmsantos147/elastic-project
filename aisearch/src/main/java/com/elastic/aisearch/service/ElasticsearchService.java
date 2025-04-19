@@ -14,6 +14,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,10 +33,10 @@ public class ElasticsearchService {
     @Autowired
     @Qualifier("customRestHighLevelClient")
     private final RestHighLevelClient elasticsearchClient;
-    
+
     @Value("${elasticsearch.index.name:wikipedia}")
     private String indexName;
-    
+
     @Value("${elasticsearch.search.size:20}")
     private int searchSize;
 
@@ -49,26 +50,33 @@ public class ElasticsearchService {
     public List<SearchResultDTO> search(String queryString) throws Exception {
         // Cria um parser para a string de consulta
         QueryParser parser = new QueryParser(new StringReader(queryString));
-        
+
         // Parseia a string para obter um QueryNode
         QueryNode queryNode = parser.parseQuery(queryString);
-        
+
         // Usa o QueryBuilderFactory para construir uma query do Elasticsearch
         QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode);
-        
+
         // Cria uma requisição de busca com a query
         SearchRequest searchRequest = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(queryBuilder);
         searchSourceBuilder.size(searchSize);
+
+        // Adiciona um highligther para a query
+        HighlightBuilder highlightBuilder = new HighlightBuilder();
+        highlightBuilder.field("content")
+                .preTags("<strong>")
+                .postTags("</strong>");
+        highlightBuilder.field("title");
+        searchSourceBuilder.highlighter(highlightBuilder);
+
         searchRequest.source(searchSourceBuilder);
-        
-        
+
         SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
         return processSearchResults(searchResponse);
     }
-    
-    
+
     /**
      * Processa os resultados da busca e converte para objetos do domínio.
      * 
@@ -77,33 +85,32 @@ public class ElasticsearchService {
      */
     private List<SearchResultDTO> processSearchResults(SearchResponse searchResponse) {
         List<SearchResultDTO> results = new ArrayList<>();
-        
+
         for (SearchHit hit : searchResponse.getHits().getHits()) {
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-            
+
             SearchResultDTO searchResultDTO = new SearchResultDTO(
-                hit.getId(),
-                hit.getScore(),
-                getStringValue(sourceAsMap, "url"),
-                getStringValue(sourceAsMap, "title"),
-                getStringValue(sourceAsMap, "content"),
-                getIntegerValue(sourceAsMap, "reading_time"),
-                getStringValue(sourceAsMap, "dt_creation")
-            );
-            
+                    hit.getId(),
+                    hit.getScore(),
+                    getStringValue(sourceAsMap, "url"),
+                    getStringValue(sourceAsMap, "title"),
+                    getStringValue(sourceAsMap, "content"),
+                    getIntegerValue(sourceAsMap, "reading_time"),
+                    getStringValue(sourceAsMap, "dt_creation"));
+
             results.add(searchResultDTO);
         }
-        
+
         return results;
     }
-    
+
     /**
      * Extrai um valor de String de um mapa com segurança.
      */
     private String getStringValue(Map<String, Object> map, String key) {
         return map.containsKey(key) && map.get(key) != null ? map.get(key).toString() : "";
     }
-    
+
     /**
      * Extrai um valor de Integer de um mapa com segurança.
      */

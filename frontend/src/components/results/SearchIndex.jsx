@@ -4,9 +4,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import wikipediaLogo from "../../assets/wikipedia_icon.png";
 import COLORS from "../../colors";
 
-
 const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
-
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
       <Row style={{ marginBottom: "7px" }}>
@@ -39,7 +37,10 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
       </Row>
       <Row style={{ fontSize: "22px", marginBottom: "5px" }}>
         <a style={{ color: COLORS.purple }} href={url}>
-          {title}
+          <div
+            style={{ fontSize: "22px", marginBottom: "5px" }}
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
         </a>
       </Row>
 
@@ -52,9 +53,8 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
             textAlign: "justify",
             width: "100%",
           }}
-        >
-          {content}
-        </p>
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       </Row>
       <Row>
         <Col style={{ fontSize: "15px" }}>
