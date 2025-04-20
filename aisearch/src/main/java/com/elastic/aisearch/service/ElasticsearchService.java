@@ -59,34 +59,11 @@ public class ElasticsearchService {
         // Usa o QueryBuilderFactory para construir uma query do Elasticsearch
         QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode);
 
-        SearchRequest searchRequest = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(queryBuilder);
         searchSourceBuilder.size(searchSize);
 
-        HighlightBuilder highlightBuilder = new HighlightBuilder()
-                .preTags("<strong>")
-                .postTags("</strong>")
-                .numOfFragments(1)
-                .fragmentSize(400);
-
-        BoolQueryBuilder highlightBool = QueryBuilders.boolQuery();
-        for (String phrase : queryNode.getMustInContent()) {
-            highlightBool.should(
-                    QueryBuilders.matchPhraseQuery("content", stripQuotes(phrase))
-                            .slop(1));
-        }
-
-        highlightBool.should(
-                QueryBuilders.matchPhraseQuery("content", stripQuotes(queryNode.getShouldContent()))
-                        .slop(1));
-
-        HighlightBuilder.Field contentField = new HighlightBuilder.Field("content")
-                .highlightQuery(highlightBool);
-
-        highlightBuilder.field(contentField);
-
-        searchSourceBuilder.highlighter(highlightBuilder);
+        SearchRequest searchRequest = new SearchRequest(indexName);
         searchRequest.source(searchSourceBuilder);
 
         log.info("Query gerada nesse contexto: {}", searchRequest.toString());
