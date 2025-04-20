@@ -50,52 +50,41 @@ public class ElasticsearchService {
      * @throws Exception Se ocorrer um erro durante o parsing ou a busca
      */
     public List<SearchResultDTO> search(String queryString) throws Exception {
-        // Cria um parser e gera o QueryNode
+        // Cria um parser para a string de consulta
         QueryParser parser = new QueryParser(new StringReader(queryString));
+
+        // Parseia a string para obter um QueryNode
         QueryNode queryNode = parser.parseQuery(queryString);
 
-        // Query principal
+        // Usa o QueryBuilderFactory para construir uma query do Elasticsearch
         QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode);
 
-        // Monta o SearchSourceBuilder
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
-                .query(queryBuilder)
-                .size(searchSize);
+        // Cria uma requisição de busca com a query
+        SearchRequest searchRequest = new SearchRequest(indexName);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(queryBuilder);
+        searchSourceBuilder.size(searchSize);
 
-        // Cria um bool só para o highlight (match_phrase nas frases mustInContent)
         BoolQueryBuilder highlightBool = QueryBuilders.boolQuery();
         for (String phrase : queryNode.getMustInContent()) {
             highlightBool.should(
-                    QueryBuilders.matchPhraseQuery("content", stripQuotes(phrase))
-                            .slop(1) // se quiser permitir pequenas distâncias
-            );
-        }
-        // (Opcional) incluir shouldContent também, se fizer sentido
-        if (!queryNode.getShouldContent().isEmpty()) {
-            highlightBool.should(
-                    QueryBuilders.matchPhraseQuery("content", queryNode.getShouldContent().trim()));
+                    QueryBuilders.matchPhraseQuery("content", stripQuotes(phrase)));
         }
 
-        // Configura o field de highlight com highlight_query customizado
-        HighlightBuilder.Field contentField = new HighlightBuilder.Field("content")
-                .preTags("<strong>")
-                .postTags("</strong>")
-                .numOfFragments(1)
-                .fragmentSize(400)
-                .highlightQuery(highlightBool);
+        // HighlightBuilder highlightBuilder = new HighlightBuilder();
+        // highlightBuilder.preTags("<strong>")
+        //         .postTags("</strong>")
+        //         .numOfFragments(1)
+        //         .fragmentSize(400)
+        //         .field("content");
 
-        // Monta o HighlightBuilder e adiciona o field
-        HighlightBuilder highlightBuilder = new HighlightBuilder()
-                .field(contentField);
 
-        // Adiciona ao source e monta o request
-        searchSourceBuilder.highlighter(highlightBuilder);
-        SearchRequest searchRequest = new SearchRequest(indexName)
-                .source(searchSourceBuilder);
+        // searchSourceBuilder.highlighter(highlightBuilder);
 
-        log.info("Query gerada nesse contexto: {}", searchRequest.source().toString());
+        searchRequest.source(searchSourceBuilder);
 
-        // Executa e processa
+        log.info("Query gerada nesse contexto: {}", searchRequest.toString());
+
         SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
         return processSearchResults(searchResponse);
     }
