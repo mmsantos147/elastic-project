@@ -17,6 +17,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -59,16 +61,11 @@ public class ElasticsearchService {
         // Usa o QueryBuilderFactory para construir uma query do Elasticsearch
         QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode);
 
-        SearchRequest searchRequest = new SearchRequest(indexName);
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(queryBuilder);
-        searchSourceBuilder.size(searchSize);
-
         HighlightBuilder highlightBuilder = new HighlightBuilder()
                 .preTags("<strong>")
                 .postTags("</strong>")
                 .numOfFragments(1)
-                .fragmentSize(400);
+                .fragmentSize(1000);
 
         BoolQueryBuilder highlightBool = QueryBuilders.boolQuery();
         for (String phrase : queryNode.getMustInContent()) {
@@ -86,7 +83,12 @@ public class ElasticsearchService {
 
         highlightBuilder.field(contentField);
 
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(queryBuilder);
+        searchSourceBuilder.size(searchSize);
         searchSourceBuilder.highlighter(highlightBuilder);
+
+        SearchRequest searchRequest = new SearchRequest(indexName);
         searchRequest.source(searchSourceBuilder);
 
         log.info("Query gerada nesse contexto: {}", searchRequest.toString());
@@ -107,12 +109,21 @@ public class ElasticsearchService {
         for (SearchHit hit : searchResponse.getHits().getHits()) {
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();
 
+            String content;
+            HighlightField hf = hit.getHighlightFields().get("content");
+
+            if (!Objects.isNull(hf)) {
+                content = hf.getFragments()[0].toString();
+            } else {
+                content = getStringValue(sourceAsMap, "content");
+            }
+
             SearchResultDTO searchResultDTO = new SearchResultDTO(
                     hit.getId(),
                     hit.getScore(),
                     getStringValue(sourceAsMap, "url"),
                     getStringValue(sourceAsMap, "title"),
-                    getStringValue(sourceAsMap, "content"),
+                    content,
                     getIntegerValue(sourceAsMap, "reading_time"),
                     getStringValue(sourceAsMap, "dt_creation"));
 
