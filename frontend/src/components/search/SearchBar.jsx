@@ -10,6 +10,7 @@ import COLORS from "../../colors";
 import Draggable from "react-draggable";
 import styled from "styled-components";
 import searchApi from "../../api/search.api";
+import SearchSuggestions from "./SearchSuggestions";
 
 const StyledInput = styled(Input)`
   ::placeholder {
@@ -27,9 +28,9 @@ const SearchBar = ({
   const [historyContent, setHistoryContent] = useState([]);
 
   const [showKeyboard, setShowKeyboard] = useState(false);
-  const [inputValue, setInputValue] = useState(initialSearch);
-  const [historyVisible, setHistoryVisible] = useState(false);
-  const [suggestions, setSuggestions] = useState([]);
+  const [inputValue, setInputValue] = useState(initialSearch || "");
+  const [extensionVisible, setextensionVisible] = useState(false);
+  const [suggestions, setSuggestions] = useState(["aaa", "bbb"]);
   
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);
@@ -37,7 +38,7 @@ const SearchBar = ({
   useEffect(() => {
     function handleClickOutside(event) {
       if (inputRef.current && !inputRef.current.contains(event.target)) {
-        setHistoryVisible(false);
+        setextensionVisible(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -51,7 +52,7 @@ const SearchBar = ({
   }
 
   const borderRadius =
-    historyVisible && historyContent.length > 0 ? "30px 30px 0 0" : "999px";
+    extensionVisible && (historyContent.length > 0 || suggestions.length > 0) ? "30px 30px 0 0" : "999px";
 
   return (
     <div
@@ -63,7 +64,7 @@ const SearchBar = ({
         minWidth: "600px",
         position: "relative",
       }}
-      onClick={() => setHistoryVisible(true)}
+      onClick={() => setextensionVisible(true)}
     >
       <StyledInput
         onPressEnter={(e) => onEnterEvent(e.target.value)}
@@ -101,7 +102,7 @@ const SearchBar = ({
         onChange={(e) => {
           setInputValue(e.target.value);
           setSearchValue(e.target.value);
-          updateSugestions(e.target.value);
+          // updateSugestions(e.target.value);
         }}
         style={{
           borderRadius,
@@ -114,9 +115,14 @@ const SearchBar = ({
       />
 
       <SearchHistory
-        visible={historyVisible}
+        visible={extensionVisible && inputValue.length == 0 && suggestions.length == 0}
         historyContent={historyContent}
         setHistoryContent={setHistoryContent}
+      />
+
+      <SearchSuggestions 
+        visible={extensionVisible && suggestions.length > 0}
+        suggestions={suggestions}
       />
 
       {children}
