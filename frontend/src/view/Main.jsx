@@ -13,6 +13,7 @@ const MarginBottomSearchBar = styled(SearchBar)`
 
 const Main = () => {
   const navigate = useNavigate();
+  const setSearchValue = (e) => {}
   const searchSubmit = async (value) => {
     navigate(`/search?q=${value}`);
   };
@@ -41,7 +42,7 @@ const Main = () => {
         >
           <UAISearch logoWidth={"400px"} />
         </div>
-        <MarginBottomSearchBar onEnterEvent={searchSubmit} />
+        <MarginBottomSearchBar onEnterEvent={searchSubmit} setSearchValue={setSearchValue} />
         <Space>
           <SearchButton />
         </Space>
