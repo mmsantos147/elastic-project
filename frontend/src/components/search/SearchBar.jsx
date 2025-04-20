@@ -99,9 +99,13 @@ const SearchBar = ({
           </>
         }
         onChange={(e) => {
+          console.log(1);
           setInputValue(e.target.value);
+          console.log(2);
           setSearchValue(e.target.value);
+          console.log(3);
           updateSugestions(e.target.value);
+          console.log(4);
         }}
         style={{
           borderRadius,
