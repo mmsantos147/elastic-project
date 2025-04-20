@@ -59,30 +59,32 @@ public class ElasticsearchService {
         // Usa o QueryBuilderFactory para construir uma query do Elasticsearch
         QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode);
 
-        // Cria uma requisição de busca com a query
         SearchRequest searchRequest = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(queryBuilder);
         searchSourceBuilder.size(searchSize);
 
-        // 1) Cria seu bool só para o highlight
-        BoolQueryBuilder highlightBool = QueryBuilders.boolQuery();
-        highlightBool.should(
-                QueryBuilders.matchPhraseQuery("content", stripQuotes("quantum"))
-                        .slop(1));
-        // (adicione mais shoulds conforme precisar)
-
-        // 2) Monte um HighlightBuilder.Field customizado
-        HighlightBuilder.Field contentField = new HighlightBuilder.Field("content")
+        HighlightBuilder highlightBuilder = new HighlightBuilder()
                 .preTags("<strong>")
                 .postTags("</strong>")
                 .numOfFragments(1)
-                .fragmentSize(400)
-                .highlightQuery(highlightBool); // <<< aqui você injeta o bool
+                .fragmentSize(400);
 
-        // 3) Use esse Field no seu highlightBuilder
-        HighlightBuilder highlightBuilder = new HighlightBuilder()
-                .field(contentField);
+        BoolQueryBuilder highlightBool = QueryBuilders.boolQuery();
+        for (String phrase : queryNode.getMustInContent()) {
+            highlightBool.should(
+                    QueryBuilders.matchPhraseQuery("content", stripQuotes(phrase))
+                            .slop(1));
+        }
+
+        highlightBool.should(
+                QueryBuilders.matchPhraseQuery("content", stripQuotes(queryNode.getShouldContent()))
+                        .slop(1));
+
+        HighlightBuilder.Field contentField = new HighlightBuilder.Field("content")
+                .highlightQuery(highlightBool);
+
+        highlightBuilder.field(contentField);
 
         searchSourceBuilder.highlighter(highlightBuilder);
         searchRequest.source(searchSourceBuilder);
