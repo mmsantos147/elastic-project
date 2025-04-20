@@ -102,7 +102,7 @@ const SearchBar = ({
         onChange={(e) => {
           setInputValue(e.target.value);
           setSearchValue(e.target.value);
-          updateSugestions(e.target.value);
+          //updateSugestions(e.target.value);
         }}
         style={{
           borderRadius,

@@ -3,19 +3,16 @@ import HistoryElement from "./HistoryElement";
 import COLORS from "../../colors";
 import { useEffect } from "react";
 import historyApi from "../../api/history.api";
+import SearchButtonExtension from "./SearchButtonExtension";
 
-const SearchHistory = ({
-  visible,
-  historyContent,
-  setHistoryContent,  
-}) => {
+const SearchHistory = ({ visible, historyContent, setHistoryContent }) => {
   useEffect(() => {
     const loadHistory = async () => {
       try {
         const data = await historyApi.fetchHistory();
         setHistoryContent(data);
       } catch {
-        setHistoryContent([]); 
+        setHistoryContent([]);
       }
     };
     loadHistory();
@@ -26,7 +23,7 @@ const SearchHistory = ({
     try {
       await historyApi.deleteItemFromHistory(id);
     } catch {
-      setHistoryContent([]); 
+      setHistoryContent([]);
     }
   };
 
@@ -39,7 +36,6 @@ const SearchHistory = ({
     zIndex: "9999",
     position: "absolute",
     textAlign: "left",
-    padding: "20px",
     borderRadius: "0 0 20px 20px",
   };
 
@@ -51,6 +47,8 @@ const SearchHistory = ({
           marginTop: 0,
           borderColor: COLORS.gray,
           color: COLORS.gray,
+          paddingLeft: "20px",
+          paddingRight: "20px",
         }}
       >
         Pesquisas recentes
@@ -63,6 +61,7 @@ const SearchHistory = ({
           deleteFromHistory={deleteFromHistory}
         />
       ))}
+      <SearchButtonExtension />
     </div>
   );
 };

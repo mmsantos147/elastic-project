@@ -1,9 +1,9 @@
-import { Divider } from "antd";
+import { Button, Col, Divider, Row } from "antd";
 import COLORS from "../../colors";
 import SuggestionElement from "./SuggestionElement";
+import SearchButtonExtension from "./SearchButtonExtension";
 
 const SearchSuggestions = ({ visible, suggestions }) => {
-
   if (!visible || suggestions.length === 0) return null;
 
   const historyStyle = {
@@ -13,7 +13,6 @@ const SearchSuggestions = ({ visible, suggestions }) => {
     zIndex: "9999",
     position: "absolute",
     textAlign: "left",
-    padding: "20px",
     borderRadius: "0 0 20px 20px",
   };
 
@@ -25,6 +24,8 @@ const SearchSuggestions = ({ visible, suggestions }) => {
           marginTop: 0,
           borderColor: COLORS.gray,
           color: COLORS.gray,
+          paddingLeft: "20px",
+          paddingRight: "20px",
         }}
       >
         Pesquisas sugeridas
@@ -32,6 +33,8 @@ const SearchSuggestions = ({ visible, suggestions }) => {
       {suggestions.map((query) => (
         <SuggestionElement query={query} />
       ))}
+
+      <SearchButtonExtension />
     </div>
   );
 };

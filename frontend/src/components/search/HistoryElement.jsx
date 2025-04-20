@@ -1,30 +1,52 @@
+import styled from "styled-components";
 import COLORS from "../../colors";
 import { CloseOutlined, SearchOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+
+const HistoryWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: ${COLORS.white};
+  font-size: 16px;
+  width: 100%;
+  margin-top: 25px;
+  padding: 8px 20px 15px 20px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgb(44, 44, 44);
+    border-radius: 5px;
+  }
+`;
+
+const HistoryContent = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const CloseIcon = styled(CloseOutlined)`
+  color: ${COLORS.gray};
+  padding-left: 15px;
+  cursor: pointer;
+`;
 
 const HistoryElement = ({ id, query, deleteFromHistory }) => {
+  const navigate = useNavigate();
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        color: COLORS.white,
-        fontSize: "16px",
-        width: "100%",
-        marginTop: "25px",
+    <HistoryWrapper
+      onClick={() => {
+        navigate(`/search?q=${query}`);
       }}
     >
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <HistoryContent>
         <SearchOutlined style={{ color: COLORS.gray, paddingRight: "15px" }} />
         {query}
-      </div>
-      <CloseOutlined
-        style={{ color: COLORS.gray, paddingLeft: "15px", cursor: "pointer" }}
-        onClick={() => {
-          deleteFromHistory(id);
-        }}
-      />
-    </div>
+      </HistoryContent>
+      <CloseIcon onClick={() => deleteFromHistory(id)} />
+    </HistoryWrapper>
   );
 };
 
