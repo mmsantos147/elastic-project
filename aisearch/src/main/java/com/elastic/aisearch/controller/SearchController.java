@@ -1,5 +1,7 @@
 package com.elastic.aisearch.controller;
 
+import com.elastic.aisearch.dto.QueryDTO;
+import com.elastic.aisearch.dto.SearchAsYouTypeDTO;
 import com.elastic.aisearch.dto.SearchDTO;
 import com.elastic.aisearch.dto.SearchResultDTO;
 import com.elastic.aisearch.security.UserSession;
@@ -9,7 +11,6 @@ import com.elastic.aisearch.service.StreamService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,16 +77,13 @@ public class SearchController {
             List<SearchResultDTO> top3 = results.stream()
                     .limit(3)
                     .toList();
+
             String top3Str = top3.toString();
-            log.info("Sessao do usuario [1]: {}", userSession.getStreamId());
-            log.info("Entrando na execução assíncrona...");
             String streamId = userSession.getStreamId();
+
             CompletableFuture.runAsync(() -> {
-                log.info("Sessao do usuario [2]: {}", streamId);
                 String aiResume = chatGptService.makeAiResume(top3Str).block();
-                log.info("Resumo gerado {}", aiResume);
                 streamService.sendAiAbstractToUser(streamId, aiResume);
-                log.info("Resumo enviado");
             }).exceptionally(ex -> {
                 log.error("Erro na thread async: {}", ex.getMessage(), ex);
                 return null;
@@ -96,5 +94,16 @@ public class SearchController {
             log.error("Erro ao processar consulta: {}", e.getMessage(), e);
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<SearchAsYouTypeDTO> searchAsYouType(@RequestBody QueryDTO query) {
+        SearchAsYouTypeDTO suggestion;
+        try {
+            suggestion = elasticsearchService.searchAsYouType(query.query());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(suggestion);
     }
 }

@@ -1,5 +1,6 @@
 package com.elastic.aisearch.service;
 
+import com.elastic.aisearch.dto.SearchAsYouTypeDTO;
 import com.elastic.aisearch.dto.SearchResultDTO;
 import com.elastic.aisearch.elastic.QueryBuilderFactory;
 import com.elastic.aisearch.parser.QueryParser;
@@ -12,6 +13,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -97,6 +99,27 @@ public class ElasticsearchService {
         return processSearchResults(searchResponse);
     }
 
+    public SearchAsYouTypeDTO searchAsYouType(String query) throws Exception {
+        SearchRequest searchRequest = new SearchRequest("wikipedia");
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+        sourceBuilder.fetchSource(new String[] { "title" }, null);
+        sourceBuilder.size(5);
+
+        MultiMatchQueryBuilder multiMatchQuery = QueryBuilders
+                .multiMatchQuery(query)
+                .type(MultiMatchQueryBuilder.Type.BOOL_PREFIX)
+                .field("title")
+                .field("title._2gram")
+                .field("title._3gram");
+
+        sourceBuilder.query(multiMatchQuery);
+        searchRequest.source(sourceBuilder);
+
+        SearchResponse response = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
+        return processSearchAsYouTypeDTO(response);
+    }
+
     /**
      * Processa os resultados da busca e converte para objetos do domínio.
      * 
@@ -131,6 +154,20 @@ public class ElasticsearchService {
         }
 
         return results;
+    }
+
+    private SearchAsYouTypeDTO processSearchAsYouTypeDTO(SearchResponse searchResponse) {
+        List<String> suggestions = new ArrayList<>();
+
+        for (SearchHit hit : searchResponse.getHits().getHits()) {
+            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            String title = (String) sourceAsMap.get("title");
+            if (title != null) {
+                suggestions.add(title);
+            }
+        }
+
+        return new SearchAsYouTypeDTO(suggestions);
     }
 
     /**
