@@ -65,22 +65,26 @@ public class ElasticsearchService {
         searchSourceBuilder.query(queryBuilder);
         searchSourceBuilder.size(searchSize);
 
+        // 1) Cria seu bool só para o highlight
         BoolQueryBuilder highlightBool = QueryBuilders.boolQuery();
-        for (String phrase : queryNode.getMustInContent()) {
-            highlightBool.should(
-                    QueryBuilders.matchPhraseQuery("content", stripQuotes(phrase)));
-        }
+        highlightBool.should(
+                QueryBuilders.matchPhraseQuery("content", stripQuotes("quantum"))
+                        .slop(1));
+        // (adicione mais shoulds conforme precisar)
 
-        // HighlightBuilder highlightBuilder = new HighlightBuilder();
-        // highlightBuilder.preTags("<strong>")
-        //         .postTags("</strong>")
-        //         .numOfFragments(1)
-        //         .fragmentSize(400)
-        //         .field("content");
+        // 2) Monte um HighlightBuilder.Field customizado
+        HighlightBuilder.Field contentField = new HighlightBuilder.Field("content")
+                .preTags("<strong>")
+                .postTags("</strong>")
+                .numOfFragments(1)
+                .fragmentSize(400)
+                .highlightQuery(highlightBool); // <<< aqui você injeta o bool
 
+        // 3) Use esse Field no seu highlightBuilder
+        HighlightBuilder highlightBuilder = new HighlightBuilder()
+                .field(contentField);
 
-        // searchSourceBuilder.highlighter(highlightBuilder);
-
+        searchSourceBuilder.highlighter(highlightBuilder);
         searchRequest.source(searchSourceBuilder);
 
         log.info("Query gerada nesse contexto: {}", searchRequest.toString());
