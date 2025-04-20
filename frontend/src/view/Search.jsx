@@ -87,7 +87,7 @@ const Search = () => {
         }}
       >
         <Col>
-          <UAISearch logoWidth="150px" style={{ margin: "12px 0 20px 0" }} />
+          <a href="/" ><UAISearch logoWidth="150px" style={{ margin: "12px 0 20px 0" }} /></a>
         </Col>
         <Col
           sm={10}
