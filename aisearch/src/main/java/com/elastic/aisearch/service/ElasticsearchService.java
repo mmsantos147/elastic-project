@@ -67,11 +67,15 @@ public class ElasticsearchService {
         HighlightBuilder highlightBuilder = new HighlightBuilder();
         highlightBuilder.field("content")
                 .preTags("<strong>")
-                .postTags("</strong>");
-        highlightBuilder.field("title");
+                .postTags("</strong>")
+                .numOfFragments(1)
+                .fragmentSize(400);
+
         searchSourceBuilder.highlighter(highlightBuilder);
 
         searchRequest.source(searchSourceBuilder);
+
+        log.info("Query gerada nesse contexto: {}", searchRequest.toString());
 
         SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
         return processSearchResults(searchResponse);
