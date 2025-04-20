@@ -30,7 +30,7 @@ const SearchBar = ({
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState(initialSearch || "");
   const [extensionVisible, setextensionVisible] = useState(false);
-  const [suggestions, setSuggestions] = useState(["aaa", "bbb"]);
+  const [suggestions, setSuggestions] = useState([]);
   
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);
@@ -102,7 +102,7 @@ const SearchBar = ({
         onChange={(e) => {
           setInputValue(e.target.value);
           setSearchValue(e.target.value);
-          // updateSugestions(e.target.value);
+          updateSugestions(e.target.value);
         }}
         style={{
           borderRadius,
