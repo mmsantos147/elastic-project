@@ -96,7 +96,7 @@ public class SearchController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/suggestions")
     public ResponseEntity<SearchAsYouTypeDTO> searchAsYouType(@RequestBody QueryDTO query) {
         SearchAsYouTypeDTO suggestion;
         try {
