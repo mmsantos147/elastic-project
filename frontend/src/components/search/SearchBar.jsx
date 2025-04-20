@@ -9,6 +9,7 @@ import SearchHistory from "./SearchHistory";
 import COLORS from "../../colors";
 import Draggable from "react-draggable";
 import styled from "styled-components";
+import searchApi from "../../api/search.api";
 
 const StyledInput = styled(Input)`
   ::placeholder {
@@ -28,6 +29,8 @@ const SearchBar = ({
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState(initialSearch);
   const [historyVisible, setHistoryVisible] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);
 
@@ -38,13 +41,17 @@ const SearchBar = ({
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const borderRadius = historyVisible && historyContent.length > 0
-    ? "30px 30px 0 0"
-    : "999px";
+  const updateSugestions = async (value) => {
+    const response = await searchApi.suggestions(value)
+    console.log(response)
+    setSuggestions(response.suggestions)
+  }
+
+  const borderRadius =
+    historyVisible && historyContent.length > 0 ? "30px 30px 0 0" : "999px";
 
   return (
     <div
@@ -94,6 +101,7 @@ const SearchBar = ({
         onChange={(e) => {
           setInputValue(e.target.value);
           setSearchValue(e.target.value);
+          updateSugestions(e.target.value);
         }}
         style={{
           borderRadius,
