@@ -11,7 +11,9 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -48,35 +50,52 @@ public class ElasticsearchService {
      * @throws Exception Se ocorrer um erro durante o parsing ou a busca
      */
     public List<SearchResultDTO> search(String queryString) throws Exception {
-        // Cria um parser para a string de consulta
+        // Cria um parser e gera o QueryNode
         QueryParser parser = new QueryParser(new StringReader(queryString));
-
-        // Parseia a string para obter um QueryNode
         QueryNode queryNode = parser.parseQuery(queryString);
 
-        // Usa o QueryBuilderFactory para construir uma query do Elasticsearch
+        // Query principal
         QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode);
 
-        // Cria uma requisição de busca com a query
-        SearchRequest searchRequest = new SearchRequest(indexName);
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(queryBuilder);
-        searchSourceBuilder.size(searchSize);
+        // Monta o SearchSourceBuilder
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
+                .query(queryBuilder)
+                .size(searchSize);
 
-        // Adiciona um highligther para a query
-        HighlightBuilder highlightBuilder = new HighlightBuilder();
-        highlightBuilder.field("content")
+        // Cria um bool só para o highlight (match_phrase nas frases mustInContent)
+        BoolQueryBuilder highlightBool = QueryBuilders.boolQuery();
+        for (String phrase : queryNode.getMustInContent()) {
+            highlightBool.should(
+                    QueryBuilders.matchPhraseQuery("content", stripQuotes(phrase))
+                            .slop(1) // se quiser permitir pequenas distâncias
+            );
+        }
+        // (Opcional) incluir shouldContent também, se fizer sentido
+        if (!queryNode.getShouldContent().isEmpty()) {
+            highlightBool.should(
+                    QueryBuilders.matchPhraseQuery("content", queryNode.getShouldContent().trim()));
+        }
+
+        // Configura o field de highlight com highlight_query customizado
+        HighlightBuilder.Field contentField = new HighlightBuilder.Field("content")
                 .preTags("<strong>")
                 .postTags("</strong>")
                 .numOfFragments(1)
-                .fragmentSize(400);
+                .fragmentSize(400)
+                .highlightQuery(highlightBool);
 
+        // Monta o HighlightBuilder e adiciona o field
+        HighlightBuilder highlightBuilder = new HighlightBuilder()
+                .field(contentField);
+
+        // Adiciona ao source e monta o request
         searchSourceBuilder.highlighter(highlightBuilder);
+        SearchRequest searchRequest = new SearchRequest(indexName)
+                .source(searchSourceBuilder);
 
-        searchRequest.source(searchSourceBuilder);
+        log.info("Query gerada nesse contexto: {}", searchRequest.source().toString());
 
-        log.info("Query gerada nesse contexto: {}", searchRequest.toString());
-
+        // Executa e processa
         SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
         return processSearchResults(searchResponse);
     }
@@ -132,5 +151,9 @@ public class ElasticsearchService {
             }
         }
         return 0;
+    }
+
+    private static String stripQuotes(String s) {
+        return s.replaceAll("^\"|\"$", "");
     }
 }
