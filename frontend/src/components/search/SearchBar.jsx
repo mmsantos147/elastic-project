@@ -45,7 +45,7 @@ const SearchBar = ({
   }, []);
 
   const updateSugestions = async (value) => {
-    const response = await searchApi.suggestions(value)
+    const response = await searchApi.searchAsYouType(value)
     console.log(response)
     setSuggestions(response.suggestions)
   }
