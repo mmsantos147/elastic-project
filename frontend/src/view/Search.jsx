@@ -35,7 +35,7 @@ const Search = () => {
     hits: 0,
     pages: 0,
     timeTaken: 0.0,
-    results: []
+    results: [],
   });
   const [processingRequest, setProcessingRequest] = useState(false);
   const [aiAbstract, setAiAbstract] = useState({});
@@ -76,7 +76,12 @@ const Search = () => {
   };
 
   const searchSubmit = async (value) => {
-    setSearchResults([]);
+    setSearchResults({
+      hits: 0,
+      pages: 0,
+      timeTaken: 0.0,
+      results: [],
+    });
     setAiAbstract({});
     const formContent = { ...formData, search: value };
     setFormData(formContent);
@@ -148,7 +153,7 @@ const Search = () => {
           maxWidth: "950px",
         }}
       >
-        {searchResult.results.length > 0 && !processingRequest ? (
+        {searchResult.results.length > 0 || processingRequest ? (
           <>
             <SearchResults
               processingRequest={processingRequest}
