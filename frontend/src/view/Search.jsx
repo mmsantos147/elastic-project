@@ -31,7 +31,12 @@ const Search = () => {
   const initialSearch = queryParams.get("q") || "";
 
   const [toolsVisible, setToolsVisible] = useState(false);
-  const [searchResult, setSearchResults] = useState({});
+  const [searchResult, setSearchResults] = useState({
+    hits: 0,
+    pages: 0,
+    timeTaken: 0.0,
+    results: []
+  });
   const [processingRequest, setProcessingRequest] = useState(false);
   const [aiAbstract, setAiAbstract] = useState({});
   const [formData, setFormData] = useState({
