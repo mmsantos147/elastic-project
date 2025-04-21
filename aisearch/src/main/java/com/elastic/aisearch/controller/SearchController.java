@@ -46,14 +46,16 @@ public class SearchController {
          * funcionalidades tais como:
          * - Paginação
          * - Mostrar x resultados por página
-         * - Ordenar por
-         * - scoreDecreasing (default)
-         * - scoreIncreasing
-         * - readingTimeDecreasing
-         * - readingTimeIncreasing
+         * - Ordenar por:
+         * - - scoreDecreasing (default)
+         * - - scoreIncreasing
+         * - - readingTimeDecreasing
+         * - - readingTimeIncreasing
+         * - - newFirst
+         * - - oldFirst
          * - As consultas podem ser
          * - allResults : o que já está implementado
-         * - exactSearch: fazer uma nova consulta, que manda tuda a consulta para o must
+         * - exactSearch: fazer uma nova consulta, que manda *tudo* a consulta para o must
          * 
          * Também é necessário adicionar a pesquisa que ele fez no histório do usuário
          * logado.

@@ -61,6 +61,14 @@ const FilterBar = ({ setFormData }) => {
       label: "Tempo de leitura crescente",
       key: "readingTimeIncreasing",
     },
+    {
+      label: "Mais novos primeiro",
+      key: "newFirst"
+    },
+    {
+      label: "Mais velhos primeiro",
+      key: "oldFirst"
+    }
   ];
 
   const itensPerPage = [

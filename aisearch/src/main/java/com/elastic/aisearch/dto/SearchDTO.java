@@ -6,5 +6,6 @@ public record SearchDTO(
     Integer resultsPerPage,
     String orderBy,
     Integer maxReadTime,
-    String searchFor
+    String searchFor,
+    String minDateTime
 ) {}
