@@ -7,7 +7,7 @@ import { useState } from "react";
 const ResponsiveResults = styled(Col)`
   color: ${COLORS.gray};
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1400px) {
     display: none;
   }
 `;
@@ -17,26 +17,32 @@ const FilterBar = ({ setFormData }) => {
   const [itensByPageState, setItensByPageState] = useState("10");
   const [readingTimeState, setReadingTimeState] = useState(undefined);
   const [searchForState, setSearchForState] = useState("allResults");
+  const [minDateTimeState, setMinDateTimeState] = useState(undefined);
 
   const handleOrderByChange = (e) => {
-    setFormData((prev) => ({...prev, orderBy: e.key}))
+    setFormData((prev) => ({ ...prev, orderBy: e.key }));
     setOrderByState(e.key);
   };
 
   const handleItensByPageChange = (e) => {
-    setFormData((prev) => ({...prev, resultsPerPage: Number(e.key)}))
+    setFormData((prev) => ({ ...prev, resultsPerPage: Number(e.key) }));
     setItensByPageState(e.key);
   };
 
   const handleReadingTimeChange = (e) => {
-    setFormData((prev) => ({...prev, maxReadTime: Number(e.key)}))
+    setFormData((prev) => ({ ...prev, maxReadTime: Number(e.key) }));
     setReadingTimeState(e.key);
   };
 
   const handleSearchForChange = (e) => {
-    setFormData((prev) => ({...prev, searchFor: e.key}))
+    setFormData((prev) => ({ ...prev, searchFor: e.key }));
     setSearchForState(e.key);
   };
+
+  const handleMinDateTimeChange = (e) => {
+    setFormData((prev) => ({...prev, minDateTime: e.key}));
+    setMinDateTimeState(e.key);
+  }
 
   const orderBy = [
     {
@@ -54,7 +60,7 @@ const FilterBar = ({ setFormData }) => {
     {
       label: "Tempo de leitura crescente",
       key: "readingTimeIncreasing",
-    }
+    },
   ];
 
   const itensPerPage = [
@@ -101,6 +107,28 @@ const FilterBar = ({ setFormData }) => {
     },
   ];
 
+  const publisedDate = [
+    {
+      label: "Depois de 2020",
+      key: "2020-01-01",
+    },
+    {
+      label: "Depois de 2010",
+      key: "2010-01-01",
+    },
+    {
+      label: "Depois de 2005",
+      key: "2005-01-01",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: "Definir",
+      key: "4",
+    },
+  ];
+
   const searchFor = [
     {
       label: "Todos os resultados",
@@ -137,6 +165,14 @@ const FilterBar = ({ setFormData }) => {
           name={"Tempo de leitura"}
           selectedKeys={readingTimeState}
           onClick={handleReadingTimeChange}
+        />
+      </Col>
+      <Col style={{ marginRight: "40px" }}>
+        <Filter
+          items={publisedDate}
+          name={"Data de publicacação"}
+          selectedKeys={minDateTimeState}
+          onClick={handleMinDateTimeChange}
         />
       </Col>
       <Col>

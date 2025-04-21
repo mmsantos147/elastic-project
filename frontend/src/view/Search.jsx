@@ -38,6 +38,7 @@ const Search = () => {
     orderBy: "",
     maxReadTime: "",
     searchFor: "",
+    minDateTime: ""
   });
 
   useEffect(() => {
