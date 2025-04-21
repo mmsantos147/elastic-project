@@ -53,7 +53,7 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
             textAlign: "justify",
             width: "100%",
           }}
-          dangerouslySetInnerHTML={{ __html: content }}
+          dangerouslySetInnerHTML={{ __html: content + "..." }} 
         />
       </Row>
       <Row>
