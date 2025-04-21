@@ -1,0 +1,49 @@
+import { Col, Row } from "antd";
+import UAISearch from "../UAISearch";
+import { GrPrevious } from "react-icons/gr";
+import COLORS from "../../colors";
+
+const PageSelect = () => {
+  return (
+    <Row
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "50px",
+        marginBottom: "50px",
+        flexDirection: "column",
+      }}
+    >
+      <div
+        style={{
+          marginBottom: "20px",
+          fontSize: "20px",
+          fontWeight: "bold",
+          display: "flex",
+        }}
+      >
+        <UAISearch logoWidth={"200px"} />
+      </div>
+
+      <Row style={{ display: "flex", justifyContent: "center" }}>
+        <Col style={{ marginRight: "14px" }}>
+          <GrPrevious />
+        </Col>
+        <Col style={{ marginRight: "14px" }}>
+          <b>1</b>
+        </Col>
+        <Col style={{ marginRight: "14px", color: COLORS.purple }}>2</Col>
+        <Col style={{ marginRight: "14px", color: COLORS.purple }}>3</Col>
+        <Col style={{ marginRight: "14px", color: COLORS.purple }}>4</Col>
+        <Col style={{ marginRight: "14px", color: COLORS.purple }}>5</Col>
+        <Col>
+          <GrNext />
+        </Col>
+      </Row>
+    </Row>
+  );
+};
+
+export default PageSelect;

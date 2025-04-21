@@ -15,6 +15,9 @@ import { useLocation } from "react-router-dom";
 import SearchIndexSkeleton from "../components/results/SearchIndexSkeleton";
 import { API_PREFIX, ROOT_URL } from "../constants";
 import IAVisionAbstractSkeleton from "../components/results/IAVisionSkeleton";
+import SearchResults from "../components/search/SeachResults";
+import PageSelect from "../components/search/PageSelect";
+import EmptyResults from "../components/search/EmptyResults";
 
 const { Content } = Layout;
 
@@ -38,7 +41,7 @@ const Search = () => {
     orderBy: "",
     maxReadTime: "",
     searchFor: "",
-    minDateTime: ""
+    minDateTime: "",
   });
 
   useEffect(() => {
@@ -88,7 +91,9 @@ const Search = () => {
         }}
       >
         <Col>
-          <a href="/" ><UAISearch logoWidth="150px" style={{ margin: "12px 0 20px 0" }} /></a>
+          <a href="/">
+            <UAISearch logoWidth="150px" style={{ margin: "12px 0 20px 0" }} />
+          </a>
         </Col>
         <Col
           sm={10}
@@ -138,33 +143,17 @@ const Search = () => {
           maxWidth: "950px",
         }}
       >
-        {!processingRequest && Object.keys(aiAbstract).length > 0 ? (
-          <IAVision aiAbstract={aiAbstract} style={{ marginBottom: "50px" }} />
-        ) : (
-          <IAVisionAbstractSkeleton style={{ marginBottom: "50px" }} />
-        )}
-
-        <Divider style={{ borderColor: COLORS.gray }} />
-
-        {searchResult.length === 0 && processingRequest ? (
+        {searchResult.length > 0 ? (
           <>
-            <SearchIndexSkeleton />
-            <SearchIndexSkeleton />
-            <SearchIndexSkeleton />
+            <SearchResults
+              processingRequest={processingRequest}
+              aiAbstract={aiAbstract}
+              searchResult={searchResult}
+            />
+            <PageSelect />
           </>
         ) : (
-          <Row>
-            {searchResult.map((result) => (
-              <SearchIndex
-                id={result.id}
-                url={result.url}
-                title={result.title}
-                content={result.content}
-                readingTime={result.reading_time}
-                date={result.datetime}
-              />
-            ))}
-          </Row>
+          <EmptyResults />
         )}
 
         {/* <SearchIndex
@@ -175,45 +164,6 @@ const Search = () => {
           readingTime={10}
           date={"10/10/10"}
         /> */}
-
-        <Row
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "50px",
-            marginBottom: "50px",
-            flexDirection: "column",
-          }}
-        >
-          <div
-            style={{
-              marginBottom: "20px",
-              fontSize: "20px",
-              fontWeight: "bold",
-              display: "flex",
-            }}
-          >
-            <UAISearch logoWidth={"200px"} />
-          </div>
-
-          <Row style={{ display: "flex", justifyContent: "center" }}>
-            <Col style={{ marginRight: "14px" }}>
-              <GrPrevious />
-            </Col>
-            <Col style={{ marginRight: "14px" }}>
-              <b>1</b>
-            </Col>
-            <Col style={{ marginRight: "14px", color: COLORS.purple }}>2</Col>
-            <Col style={{ marginRight: "14px", color: COLORS.purple }}>3</Col>
-            <Col style={{ marginRight: "14px", color: COLORS.purple }}>4</Col>
-            <Col style={{ marginRight: "14px", color: COLORS.purple }}>5</Col>
-            <Col>
-              <GrNext />
-            </Col>
-          </Row>
-        </Row>
       </Content>
     </>
   );
