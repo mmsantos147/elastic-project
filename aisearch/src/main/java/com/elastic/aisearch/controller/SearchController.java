@@ -3,6 +3,7 @@ package com.elastic.aisearch.controller;
 import com.elastic.aisearch.dto.QueryDTO;
 import com.elastic.aisearch.dto.SearchAsYouTypeDTO;
 import com.elastic.aisearch.dto.SearchDTO;
+import com.elastic.aisearch.dto.SearchResponseDTO;
 import com.elastic.aisearch.dto.SearchResultDTO;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.ChatGptService;
@@ -38,7 +39,7 @@ public class SearchController {
      * @return Lista de resultados da busca
      */
     @PostMapping
-    public ResponseEntity<List<SearchResultDTO>> search(@RequestBody SearchDTO searchDTO) {
+    public ResponseEntity<SearchResponseDTO> search(@RequestBody SearchDTO searchDTO) {
         request.getSession(true);
         /*
          * TODO: SearchDTO contém todas as informações necessárias para a consulta.
@@ -91,7 +92,9 @@ public class SearchController {
                 return null;
             });
 
-            return ResponseEntity.ok(results);
+            SearchResponseDTO response = new SearchResponseDTO(1, 1, 1F, results);
+
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Erro ao processar consulta: {}", e.getMessage(), e);
             return ResponseEntity.badRequest().build();
