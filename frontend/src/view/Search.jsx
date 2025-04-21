@@ -31,7 +31,7 @@ const Search = () => {
   const initialSearch = queryParams.get("q") || "";
 
   const [toolsVisible, setToolsVisible] = useState(false);
-  const [searchResult, setSearchResults] = useState([]);
+  const [searchResult, setSearchResults] = useState({});
   const [processingRequest, setProcessingRequest] = useState(false);
   const [aiAbstract, setAiAbstract] = useState({});
   const [formData, setFormData] = useState({
@@ -143,12 +143,12 @@ const Search = () => {
           maxWidth: "950px",
         }}
       >
-        {searchResult.length > 0 ? (
+        {searchResult.results.length > 0 && !processingRequest ? (
           <>
             <SearchResults
               processingRequest={processingRequest}
               aiAbstract={aiAbstract}
-              searchResult={searchResult}
+              searchResult={searchResult.results}
             />
             <PageSelect />
           </>
