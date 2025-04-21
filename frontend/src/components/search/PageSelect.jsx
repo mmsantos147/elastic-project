@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import UAISearch from "../UAISearch";
-import { GrPrevious } from "react-icons/gr";
+import { GrNext, GrPrevious } from "react-icons/gr";
 import COLORS from "../../colors";
 
 const PageSelect = () => {
