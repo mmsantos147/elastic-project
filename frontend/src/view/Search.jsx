@@ -3,18 +3,13 @@ import UAISearch from "../components/UAISearch";
 import SearchBar from "../components/search/SearchBar";
 import styled from "styled-components";
 import Layout from "antd/es/layout/layout";
-import { Col, Row, Space, Button, Divider } from "antd";
+import { Col, Row, Space, Button, message } from "antd";
 import NavigationBar from "../components/NavigationBar";
 import COLORS from "../colors";
 import FilterBar from "../components/FilterBar";
-import IAVision from "../components/results/IAVision";
-import SearchIndex from "../components/results/SearchIndex";
-import { GrNext, GrPrevious } from "react-icons/gr";
 import searchApi from "../api/search.api";
 import { useLocation } from "react-router-dom";
-import SearchIndexSkeleton from "../components/results/SearchIndexSkeleton";
 import { API_PREFIX, ROOT_URL } from "../constants";
-import IAVisionAbstractSkeleton from "../components/results/IAVisionSkeleton";
 import SearchResults from "../components/search/SeachResults";
 import PageSelect from "../components/search/PageSelect";
 import EmptyResults from "../components/search/EmptyResults";
@@ -60,10 +55,12 @@ const Search = () => {
 
     es.addEventListener("AiAbstract", (evt) => {
       try {
+        console.log(data);
         const data = JSON.parse(evt.data);
         console.log(data);
         setAiAbstract(data);
       } catch (err) {
+        message.error("Um erro aconteceu com a inteligência artificial!")
         console.error("Erro parseando SSE:", err);
       }
     });
