@@ -25,9 +25,17 @@ public class ChatGptService {
                                 "Responda em formato JSON, com o campo 'title' (para o resumo), uma lista de 3 paragrafos, cada um tendo o campo 'content' e" + 
                                 "'url'. O campo 'content' você deve colocar o resumo do conteudo da 'url' que você pegou. Segue abaixo o resultado das três " +
                                 "primeiras pesquisas. A resposta deve estar em formato JSON puro, sem blocos de código, sem markdown e sem crases (`)." + 
-                                "Retorne apenas o JSON direto, sem explicações.." + 
-                                "Coloque no formato {'title': 'TITULO', 'paragraphs': [{'content': 'RESUMO', 'url': 'URL'},{'content': 'RESUMO', 'url': 'URL" +
-                                "'},{'content': 'RESUMO', 'url': 'URL'}]}. Certifique-se de que a estrutura do JSON é válida."),
+                                "Retorne apenas o JSON direto, sem explicações." + 
+                                "Sua resposta deve ser um objeto JSON com esta estrutura:\n" + 
+                                "{\n" + 
+                                "  \"title\": \"...\",\n" + 
+                                "  \"paragraphs\": [\n" + 
+                                "    { \"content\": \"...\", \"url\": \"...\" },\n" + 
+                                "    { \"content\": \"...\", \"url\": \"...\" },\n" + 
+                                "    { \"content\": \"...\", \"url\": \"...\" }\n" + 
+                                "  ]\n" + 
+                                "}\n" + 
+                                "Não adicione chaves a mais no final. Responda com um único objeto JSON."),
                         Map.of("role", "user", "content", searchResults)));
 
         return openAiWebClient.post()
