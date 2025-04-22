@@ -17,5 +17,4 @@ public class UserSession {
     private String userEmail;
     private String userName;
     private List<String> userHistory;
-    private Integer userPages;
 }
