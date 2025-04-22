@@ -6,6 +6,7 @@ import com.elastic.aisearch.elastic.QueryBuilderFactory;
 import com.elastic.aisearch.parser.QueryParser;
 import com.elastic.aisearch.parser.QueryParser.QueryNode;
 
+import com.elastic.aisearch.utils.Filters;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.search.SearchRequest;
@@ -26,10 +27,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +45,8 @@ public class ElasticsearchService {
     @Value("${elasticsearch.search.size:20}")
     private int searchSize;
 
+    private Filters filters;
+
     /**
      * Executa uma busca no Elasticsearch baseada em uma string de consulta.
      * 
@@ -53,7 +54,7 @@ public class ElasticsearchService {
      * @return Lista de resultados da busca
      * @throws Exception Se ocorrer um erro durante o parsing ou a busca
      */
-    public List<SearchResultDTO> search(String queryString) throws Exception {
+    public List<SearchResultDTO> search(String queryString, Integer filter) throws Exception {
         // Cria um parser para a string de consulta
         QueryParser parser = new QueryParser(new StringReader(queryString));
 
@@ -96,7 +97,7 @@ public class ElasticsearchService {
         log.info("Query gerada nesse contexto: {}", searchRequest.toString());
 
         SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
-        return processSearchResults(searchResponse);
+        return processSearchResults(searchResponse, filter);
     }
 
     public SearchAsYouTypeDTO searchAsYouType(String query) throws Exception {
@@ -122,11 +123,12 @@ public class ElasticsearchService {
 
     /**
      * Processa os resultados da busca e converte para objetos do domínio.
-     * 
+     *
      * @param searchResponse A resposta da busca do Elasticsearch
+     * @param filter
      * @return Lista de resultados processados
      */
-    private List<SearchResultDTO> processSearchResults(SearchResponse searchResponse) {
+    private List<SearchResultDTO> processSearchResults(SearchResponse searchResponse, Integer filter) {
         List<SearchResultDTO> results = new ArrayList<>();
 
         for (SearchHit hit : searchResponse.getHits().getHits()) {
@@ -153,9 +155,30 @@ public class ElasticsearchService {
             results.add(searchResultDTO);
         }
 
-        return results;
+        return processSearchResultsFilter(results, filter);
     }
 
+    private List<SearchResultDTO> processSearchResultsFilter(List<SearchResultDTO> results, Integer filter) {
+        if (filter == Filters.NONE.ordinal() || filter == Filters.SCORE_ASC.ordinal())
+            return results;
+
+        if (filter == Filters.SCORE_DESC.ordinal())
+            return results.reversed();
+
+        if (filter == Filters.DATE_ASC.ordinal())
+            return results.stream().sorted(Comparator.comparing(SearchResultDTO::datetime)).collect(Collectors.toList());
+
+        if (filter == Filters.DATE_DESC.ordinal())
+            return results.stream().sorted(Comparator.comparing(SearchResultDTO::datetime).reversed()).collect(Collectors.toList());
+
+        if (filter == Filters.READ_TIME_ASC.ordinal())
+            return results.stream().sorted(Comparator.comparing(SearchResultDTO::reading_time)).collect(Collectors.toList());
+
+        if (filter == Filters.READ_TIME_DESC.ordinal())
+            return results.stream().sorted(Comparator.comparing(SearchResultDTO::reading_time).reversed()).collect(Collectors.toList());
+
+        return results;
+    }
     private SearchAsYouTypeDTO processSearchAsYouTypeDTO(SearchResponse searchResponse) {
         List<String> suggestions = new ArrayList<>();
 

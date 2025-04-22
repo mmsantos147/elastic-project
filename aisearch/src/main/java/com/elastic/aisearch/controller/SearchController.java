@@ -8,6 +8,7 @@ import com.elastic.aisearch.dto.SearchResultDTO;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.ChatGptService;
 import com.elastic.aisearch.service.ElasticsearchService;
+import com.elastic.aisearch.service.HistoryService;
 import com.elastic.aisearch.service.StreamService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,8 +30,9 @@ public class SearchController {
     private final ElasticsearchService elasticsearchService;
     private final ChatGptService chatGptService;
     private final StreamService streamService;
-
+    private final HistoryService historyService;
     private final HttpServletRequest request;
+
 
     /**
      * Endpoint para realizar buscas usando o parser de consultas personalizado.
@@ -40,6 +42,7 @@ public class SearchController {
      */
     @PostMapping
     public ResponseEntity<SearchResponseDTO> search(@RequestBody SearchDTO searchDTO) {
+        Integer page = 1;
         request.getSession(true);
         /*
          * TODO: SearchDTO contém todas as informações necessárias para a consulta.
@@ -75,7 +78,8 @@ public class SearchController {
              * na
              * contagem de resultados)
              */
-            List<SearchResultDTO> results = elasticsearchService.search(searchDTO.search());
+            Integer filter = 0;
+            List<SearchResultDTO> results = elasticsearchService.search(searchDTO.search(), filter);
 
             List<SearchResultDTO> top3 = results.stream()
                     .limit(3)
@@ -92,7 +96,8 @@ public class SearchController {
                 return null;
             });
 
-            SearchResponseDTO response = new SearchResponseDTO(1, 1, 1F, results);
+            SearchResponseDTO response = new SearchResponseDTO(1, page, 1F, results);
+            userSession.setUserPages(page);
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
