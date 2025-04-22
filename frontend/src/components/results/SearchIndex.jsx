@@ -53,13 +53,17 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
             textAlign: "justify",
             width: "100%",
           }}
-          dangerouslySetInnerHTML={{ __html: content + "..." }} 
+          dangerouslySetInnerHTML={{ __html: content + "..." }}
         />
       </Row>
       <Row>
         <Col style={{ fontSize: "15px" }}>
           <FaCalendar style={{ verticalAlign: "middle", marginRight: "8px" }} />
-          {date}
+          {new Date(date).toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}
         </Col>
         <Col flex="auto" />
         <Col style={{ fontSize: "15px" }}>
