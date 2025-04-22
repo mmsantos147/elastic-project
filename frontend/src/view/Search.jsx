@@ -56,7 +56,7 @@ const Search = () => {
     es.addEventListener("AiAbstract", (evt) => {
       try {
         console.log("===================================================")
-        console.log(data);
+        console.log(evt.data);
         const data = JSON.parse(evt.data);
         console.log(data);
         setAiAbstract(data);
