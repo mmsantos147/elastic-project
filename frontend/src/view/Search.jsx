@@ -3,7 +3,7 @@ import UAISearch from "../components/UAISearch";
 import SearchBar from "../components/search/SearchBar";
 import styled from "styled-components";
 import Layout from "antd/es/layout/layout";
-import { Col, Row, Space, Button, message } from "antd";
+import { Col, Row, Space, Button  , message } from "antd";
 import NavigationBar from "../components/NavigationBar";
 import COLORS from "../colors";
 import FilterBar from "../components/FilterBar";
@@ -55,6 +55,7 @@ const Search = () => {
 
     es.addEventListener("AiAbstract", (evt) => {
       try {
+        console.log("===================================================")
         console.log(data);
         const data = JSON.parse(evt.data);
         console.log(data);
