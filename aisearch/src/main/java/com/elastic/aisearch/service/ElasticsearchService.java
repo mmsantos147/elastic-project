@@ -93,29 +93,33 @@ public class ElasticsearchService {
         return processSearchResults(searchResponse);
     }
 
+    public Integer fromCalc(Integer page, Integer resultsPerPage) {
+        return resultsPerPage * (page-1);
+    }
+
     public SearchRequest searchFilters(SearchDTO searchDTO, SearchRequest searchRequest, QueryBuilder queryBuilder,HighlightBuilder highlightBuilder) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .query(queryBuilder)
-                .from(20)
+                .from(fromCalc(searchDTO.page(),searchDTO.resultsPerPage()))
                 .size(searchDTO.resultsPerPage())
                 .highlighter(highlightBuilder);
 
-        if (searchDTO.orderBy() == Filters.DATE_ASC) {
+        if (searchDTO.orderBy().equals(Filters.DATE_ASC)) {
             searchSourceBuilder
                     .sort("dt_creation", SortOrder.ASC);                    ;
         }
 
-        if (searchDTO.orderBy() == Filters.DATE_DESC) {
+        if (searchDTO.orderBy().equals(Filters.DATE_DESC)) {
             searchSourceBuilder
                     .sort("dt_creation", SortOrder.DESC);
         }
 
-        if (searchDTO.orderBy() == Filters.READ_TIME_ASC) {
+        if (searchDTO.orderBy().equals(Filters.READ_TIME_ASC) ) {
             searchSourceBuilder
                     .sort("reading_time", SortOrder.ASC);
         }
 
-        if (searchDTO.orderBy() == Filters.READ_TIME_DESC) {
+        if (searchDTO.orderBy().equals(Filters.READ_TIME_DESC)) {
             searchSourceBuilder
                     .sort("reading_time", SortOrder.DESC);
         }
