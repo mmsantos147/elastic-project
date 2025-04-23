@@ -14,7 +14,7 @@ const ResponsiveResults = styled(Col)`
 
 const FilterBar = ({ setFormData }) => {
   const [orderByState, setOrderByState] = useState("scoreDecreasing");
-  const [itensByPageState, setItensByPageState] = useState("10");
+  const [itensByPageState, setItensByPageState] = useState(10);
   const [readingTimeState, setReadingTimeState] = useState(undefined);
   const [searchForState, setSearchForState] = useState("allResults");
   const [minDateTimeState, setMinDateTimeState] = useState(undefined);

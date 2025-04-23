@@ -37,9 +37,9 @@ const Search = () => {
   const [formData, setFormData] = useState({
     search: initialSearch,
     page: 1,
-    resultsPerPage: "",
+    resultsPerPage: 10,
     orderBy: "SCORE_DESC",
-    maxReadTime: "",
+    maxReadTime: null,
     searchFor: "",
     minDateTime: "",
   });
