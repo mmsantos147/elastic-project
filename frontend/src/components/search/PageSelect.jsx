@@ -4,6 +4,11 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 import COLORS from "../../colors";
 
 const PageSelect = ({ setFormData }) => {
+  const handlePageSelect = (number) => {
+    setFormData((prev) => ({...prev, page:number}));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
   return (
     <Row
       style={{
@@ -41,7 +46,7 @@ const PageSelect = ({ setFormData }) => {
             cursor: "pointer",
           }}
           onClick={() => {
-            setFormData((prev) => ({ ...prev, page: 2 }));
+            handlePageSelect(2)
           }}
         >
           2
@@ -53,7 +58,7 @@ const PageSelect = ({ setFormData }) => {
             cursor: "pointer",
           }}
           onClick={() => {
-            setFormData((prev) => ({ ...prev, page: 3 }));
+            handlePageSelect(3)
           }}
         >
           3
@@ -65,7 +70,7 @@ const PageSelect = ({ setFormData }) => {
             cursor: "pointer",
           }}
           onClick={() => {
-            setFormData((prev) => ({ ...prev, page: 4 }));
+            handlePageSelect(4)
           }}
         >
           4
@@ -77,7 +82,7 @@ const PageSelect = ({ setFormData }) => {
             cursor: "pointer",
           }}
           onClick={() => {
-            setFormData((prev) => ({ ...prev, page: 5 }));
+            handlePageSelect(5)
           }}
         >
           5
