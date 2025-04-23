@@ -4,12 +4,14 @@ import UAISearch from "../UAISearch";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import COLORS from "../../colors";
 
-const PageNumber = styled(Col)`
+const PageNumber = styled(Col).attrs(() => ({
+  role: "button",
+}))`
   margin-right: 14px;
-  cursor: ${({ active }) => (active ? "default" : "pointer")};
-  font-weight: ${({ active }) => (active ? "bold" : "normal")};
-  color: ${({ active }) => (active ? COLORS.purple : "inherit")};
-  pointer-events: ${({ active }) => (active ? "none" : "auto")};
+  cursor: ${({ $active }) => ($active ? "default" : "pointer")};
+  font-weight: ${({ $active }) => ($active ? "bold" : "normal")};
+  color: ${({ $active }) => ($active ? COLORS.purple : "inherit")};
+  pointer-events: ${({ $active }) => ($active ? "none" : "auto")};
 `;
 
 const PageSelect = ({ setFormData, currentPage }) => {
@@ -20,7 +22,7 @@ const PageSelect = ({ setFormData, currentPage }) => {
     }
   };
 
-  const totalPages = 5; 
+  const totalPages = 5;
 
   return (
     <Row
@@ -55,7 +57,7 @@ const PageSelect = ({ setFormData, currentPage }) => {
           return (
             <PageNumber
               key={pageNumber}
-              active={pageNumber === currentPage}
+              $active={pageNumber === currentPage}
               onClick={() => handlePageSelect(pageNumber)}
             >
               {pageNumber}
