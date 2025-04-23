@@ -38,7 +38,7 @@ const Search = () => {
     search: initialSearch,
     page: 1,
     resultsPerPage: "",
-    orderBy: "",
+    orderBy: "SCORE_DESC",
     maxReadTime: "",
     searchFor: "",
     minDateTime: "",
