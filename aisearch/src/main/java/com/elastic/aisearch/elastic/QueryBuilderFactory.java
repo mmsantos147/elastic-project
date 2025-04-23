@@ -63,7 +63,7 @@ public class QueryBuilderFactory {
         } else {
             RangeQueryBuilder range;
             if (!Objects.isNull(searchDTO.maxReadTime())) {
-                range = QueryBuilders.rangeQuery("reading_time").gte(searchDTO.maxReadTime());
+                range = QueryBuilders.rangeQuery("reading_time").lte(searchDTO.maxReadTime());
             } else {
                 range = QueryBuilders.rangeQuery("reading_time");
             }
