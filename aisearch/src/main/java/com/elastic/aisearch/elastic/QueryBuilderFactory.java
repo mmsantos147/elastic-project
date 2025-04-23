@@ -6,7 +6,7 @@ import com.elastic.aisearch.parser.QueryParser.QueryNode;
 import static com.elastic.aisearch.utils.DateUtils.toElasticDate; 
 
 import org.elasticsearch.index.query.*;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;;import java.util.Objects;
 
 public class QueryBuilderFactory {
 
@@ -36,31 +36,37 @@ public class QueryBuilderFactory {
         if (!queryNode.getEqDate().isEmpty()) {
             boolQuery.filter(QueryBuilders.termQuery("dt_creation", toElasticDate(queryNode.getEqDate())));
         } else if (!queryNode.getMinDate().isEmpty() || !queryNode.getMaxDate().isEmpty()) {
-                RangeQueryBuilder range;
+                RangeQueryBuilder range = QueryBuilders.rangeQuery("dt_creation");
+
+            if (!queryNode.getMinDate().isEmpty()) range.gte(toElasticDate(queryNode.getMinDate()));
+            if (!queryNode.getMaxDate().isEmpty()) range.lte(toElasticDate(queryNode.getMaxDate()));
+            boolQuery.filter(range);
+        } else {
+            RangeQueryBuilder range;
             if (!searchDTO.minDateTime().isEmpty()) {
                 range = QueryBuilders.rangeQuery("dt_creation").gte(searchDTO.minDateTime());
             } else {
                 range = QueryBuilders.rangeQuery("dt_creation");
             }
-
-            if (!queryNode.getMinDate().isEmpty()) range.gte(toElasticDate(queryNode.getMinDate()));
-            if (!queryNode.getMaxDate().isEmpty()) range.lte(toElasticDate(queryNode.getMaxDate()));
             boolQuery.filter(range);
         }
 
         if (!queryNode.getEqReadingTime().isEmpty()) {
             boolQuery.filter(QueryBuilders.termQuery("reading_time", queryNode.getEqReadingTime()));
         } else if (!queryNode.getMinReadingTime().isEmpty() || !queryNode.getMaxReadingTime().isEmpty()) {
-            RangeQueryBuilder range;
-            if (!searchDTO.minDateTime().isEmpty()) {
-                range = QueryBuilders.rangeQuery("reading_time").lte(searchDTO.minDateTime());
-            } else {
-                range = QueryBuilders.rangeQuery("reading_time");
-            }
+            RangeQueryBuilder range = QueryBuilders.rangeQuery("reading_time");
 
 
             if (!queryNode.getMinReadingTime().isEmpty()) range.gte(Integer.parseInt(queryNode.getMinReadingTime()));
             if (!queryNode.getMaxReadingTime().isEmpty()) range.lte(Integer.parseInt(queryNode.getMaxReadingTime()));
+            boolQuery.filter(range);
+        } else {
+            RangeQueryBuilder range;
+            if (!Objects.isNull(searchDTO.maxReadTime())) {
+                range = QueryBuilders.rangeQuery("reading_time").gte(searchDTO.maxReadTime());
+            } else {
+                range = QueryBuilders.rangeQuery("reading_time");
+            }
             boolQuery.filter(range);
         }
 
