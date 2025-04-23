@@ -110,12 +110,8 @@ TOKEN : {
 
 void Start() : { Token word, quoted; }
 {
-    (
-       word = < WORD > 
-        {
-            this.node.shouldContent += word.image + " ";
-        }
-    | quoted = < QUOTED > 
+    (     
+    quoted = < QUOTED > 
         {
             this.node.mustInContent.add(quoted.image);
         }
@@ -132,6 +128,10 @@ void Start() : { Token word, quoted; }
         {
             String quotedValue = word.image.substring(1);
             this.node.mustNotContent.add(quotedValue);
+        }
+    | word = < WORD > 
+        {
+            this.node.shouldContent += word.image + " ";
         }
     )+
 }

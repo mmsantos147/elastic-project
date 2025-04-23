@@ -81,11 +81,6 @@ public class QueryParser implements QueryParserConstants {
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case WORD:{
-        word = jj_consume_token(WORD);
-this.node.shouldContent += word.image + " ";
-        break;
-        }
       case QUOTED:{
         quoted = jj_consume_token(QUOTED);
 this.node.mustInContent.add(quoted.image);
@@ -112,6 +107,11 @@ this.node.mustNotContent.add(word.image.substring(1));
         word = jj_consume_token(NEGATED_QUOTED);
 String quotedValue = word.image.substring(1);
             this.node.mustNotContent.add(quotedValue);
+        break;
+        }
+      case WORD:{
+        word = jj_consume_token(WORD);
+this.node.shouldContent += word.image + " ";
         break;
         }
       default:

@@ -24,6 +24,8 @@ public class DebugController {
     private final ChatGptService chatGptService;
     private UserSession userSession;
 
+    
+
     @GetMapping("/")
     public String hello() {
         return "Hello world!";
@@ -53,4 +55,5 @@ public class DebugController {
         String response = userSession.toString();
         return ResponseEntity.ok(response);
     }
+
 }
