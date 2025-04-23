@@ -3,7 +3,7 @@ import UAISearch from "../UAISearch";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import COLORS from "../../colors";
 
-const PageSelect = () => {
+const PageSelect = ({ setFormData, searchSubmit }) => {
   return (
     <Row
       style={{
@@ -34,10 +34,43 @@ const PageSelect = () => {
         <Col style={{ marginRight: "14px" }}>
           <b>1</b>
         </Col>
-        <Col style={{ marginRight: "14px", color: COLORS.purple }}>2</Col>
-        <Col style={{ marginRight: "14px", color: COLORS.purple }}>3</Col>
-        <Col style={{ marginRight: "14px", color: COLORS.purple }}>4</Col>
-        <Col style={{ marginRight: "14px", color: COLORS.purple }}>5</Col>
+        <Col
+          style={{ marginRight: "14px", color: COLORS.purple }}
+          onClick={setFormData((prev) => {
+            ({ ...prev, page: 2 });
+            searchSubmit();
+
+          })}
+        >
+          2
+        </Col>
+        <Col
+          style={{ marginRight: "14px", color: COLORS.purple }}
+          onClick={setFormData((prev) => {
+            ({ ...prev, page: 2 });
+            searchSubmit();
+          })}
+        >
+          3
+        </Col>
+        <Col
+          style={{ marginRight: "14px", color: COLORS.purple }}
+          onClick={setFormData((prev) => {
+            ({ ...prev, page: 2 });
+            searchSubmit();
+          })}
+        >
+          4
+        </Col>
+        <Col
+          style={{ marginRight: "14px", color: COLORS.purple }}
+          onClick={setFormData((prev) => {
+            ({ ...prev, page: 2 });
+            searchSubmit();
+          })}
+        >
+          5
+        </Col>
         <Col>
           <GrNext />
         </Col>

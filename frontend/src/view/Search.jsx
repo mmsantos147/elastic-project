@@ -158,7 +158,7 @@ const Search = () => {
               aiAbstract={aiAbstract}
               searchResult={searchResult.results}
             />
-            <PageSelect />
+            <PageSelect setFormData={setFormData} searchSubmit={searchSubmit} />
           </>
         ) : (
           <EmptyResults />
