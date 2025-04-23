@@ -96,6 +96,7 @@ public class ElasticsearchService {
     public SearchRequest searchFilters(SearchDTO searchDTO, SearchRequest searchRequest, QueryBuilder queryBuilder,HighlightBuilder highlightBuilder) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .query(queryBuilder)
+                .from(20)
                 .size(searchDTO.resultsPerPage())
                 .highlighter(highlightBuilder);
 
