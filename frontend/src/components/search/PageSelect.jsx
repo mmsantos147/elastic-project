@@ -63,8 +63,9 @@ const PageSelect = ({ setFormData }) => {
         <Col
           style={{
             marginRight: "14px",
-            color: pageSelected === 1 ? "#ccc" : "black",
+            color: "#ccc",
             cursor: pageSelected === 1 ? "default" : "pointer",
+            visibility: pageSelected == 1 ? "hidden" : "visible"
           }}
           onClick={() => handlePageSelect(pageSelected - 1)}
         >
@@ -77,9 +78,9 @@ const PageSelect = ({ setFormData }) => {
         <PageNumber page={5} />
         <Col
           style={{
-            marginLeft: "14px",
-            color: pageSelected === totalPages ? "#ccc" : "black",
+            color: "#ccc",
             cursor: pageSelected === totalPages ? "default" : "pointer",
+            visibility: pageSelected == totalPages ? "hidden" : "visible"
           }}
           onClick={() => handlePageSelect(pageSelected + 1)}
         >
