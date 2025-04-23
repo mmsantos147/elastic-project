@@ -6,7 +6,7 @@ import COLORS from "../../colors";
 const PageSelect = ({ setFormData }) => {
   const handlePageSelect = (number) => {
     setFormData((prev) => ({...prev, page:number}));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0 });
   }
   
   return (
