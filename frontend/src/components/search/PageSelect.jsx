@@ -35,36 +35,68 @@ const PageSelect = ({ setFormData, searchSubmit }) => {
           <b>1</b>
         </Col>
         <Col
-          style={{ marginRight: "14px", color: COLORS.purple, cursor: "pointer" }}
+          style={{
+            marginRight: "14px",
+            color: COLORS.purple,
+            cursor: "pointer",
+          }}
           onClick={() => {
-            setFormData((prev) => ({ ...prev, page: 2 }));
+            setFormData((prev) => {
+              const newForm = { ...prev, page: 2 };
+              searchSubmit(newForm.search);
+              return newForm;
+            });
             searchSubmit();
           }}
         >
           2
         </Col>
         <Col
-          style={{ marginRight: "14px", color: COLORS.purple, cursor: "pointer" }}
+          style={{
+            marginRight: "14px",
+            color: COLORS.purple,
+            cursor: "pointer",
+          }}
           onClick={() => {
-            setFormData((prev) => ({ ...prev, page: 3 }));
+            setFormData((prev) => {
+              const newForm = { ...prev, page: 2 };
+              searchSubmit(newForm.search);
+              return newForm;
+            });
             searchSubmit();
           }}
         >
           3
         </Col>
         <Col
-          style={{ marginRight: "14px", color: COLORS.purple, cursor: "pointer" }}
+          style={{
+            marginRight: "14px",
+            color: COLORS.purple,
+            cursor: "pointer",
+          }}
           onClick={() => {
-            setFormData((prev) => ({ ...prev, page: 4 }));
+            setFormData((prev) => {
+              const newForm = { ...prev, page: 2 };
+              searchSubmit(newForm.search);
+              return newForm;
+            });
             searchSubmit();
           }}
         >
           4
         </Col>
         <Col
-          style={{ marginRight: "14px", color: COLORS.purple, cursor: "pointer" }}
+          style={{
+            marginRight: "14px",
+            color: COLORS.purple,
+            cursor: "pointer",
+          }}
           onClick={() => {
-            setFormData((prev) => ({ ...prev, page: 5 }));
+            setFormData((prev) => {
+              const newForm = { ...prev, page: 2 };
+              searchSubmit(newForm.search);
+              return newForm;
+            });
             searchSubmit();
           }}
         >
