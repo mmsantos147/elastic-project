@@ -13,7 +13,7 @@ const ResponsiveResults = styled(Col)`
 `;
 
 const FilterBar = ({ setFormData }) => {
-  const [orderByState, setOrderByState] = useState("scoreDecreasing");
+  const [orderByState, setOrderByState] = useState("SCORE_DESC");
   const [itensByPageState, setItensByPageState] = useState(10);
   const [readingTimeState, setReadingTimeState] = useState(undefined);
   const [searchForState, setSearchForState] = useState("allResults");
