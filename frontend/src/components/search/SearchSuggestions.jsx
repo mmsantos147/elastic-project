@@ -5,9 +5,10 @@ import SearchButtonExtension from "./SearchButtonExtension";
 import { useTranslation } from "react-i18next";
 
 const SearchSuggestions = ({ visible, suggestions }) => {
-  //const { t } = useTranslation()
+  const { t } = useTranslation()
   
   if (!visible || suggestions.length === 0) return null;
+
 
   const historyStyle = {
     width: "100%",
