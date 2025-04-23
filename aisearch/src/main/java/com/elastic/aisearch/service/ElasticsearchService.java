@@ -1,25 +1,25 @@
 package com.elastic.aisearch.service;
 
 import com.elastic.aisearch.dto.SearchAsYouTypeDTO;
+import com.elastic.aisearch.dto.SearchDTO;
 import com.elastic.aisearch.dto.SearchResultDTO;
 import com.elastic.aisearch.elastic.QueryBuilderFactory;
 import com.elastic.aisearch.parser.QueryParser;
 import com.elastic.aisearch.parser.QueryParser.QueryNode;
 
+import com.elastic.aisearch.utils.Filters;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.MultiMatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,25 +43,20 @@ public class ElasticsearchService {
     @Value("${elasticsearch.index.name:wikipedia}")
     private String indexName;
 
-    @Value("${elasticsearch.search.size:20}")
-    private int searchSize;
-
     /**
      * Executa uma busca no Elasticsearch baseada em uma string de consulta.
      * 
-     * @param queryString A string de consulta
+     * @param searchDTO A string de consulta
      * @return Lista de resultados da busca
      * @throws Exception Se ocorrer um erro durante o parsing ou a busca
      */
-    public List<SearchResultDTO> search(String queryString) throws Exception {
+    public List<SearchResultDTO> search(SearchDTO searchDTO) throws Exception {
+
         // Cria um parser para a string de consulta
-        QueryParser parser = new QueryParser(new StringReader(queryString));
+        QueryParser parser = new QueryParser(new StringReader(searchDTO.search()));
 
         // Parseia a string para obter um QueryNode
-        QueryNode queryNode = parser.parseQuery(queryString);
-
-        // Usa o QueryBuilderFactory para construir uma query do Elasticsearch
-        QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode);
+        QueryNode queryNode = parser.parseQuery(searchDTO.search());
 
         HighlightBuilder highlightBuilder = new HighlightBuilder()
                 .preTags("<strong>")
@@ -85,18 +80,46 @@ public class ElasticsearchService {
 
         highlightBuilder.field(contentField);
 
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(queryBuilder);
-        searchSourceBuilder.size(searchSize);
-        searchSourceBuilder.highlighter(highlightBuilder);
-
+        // Usa o QueryBuilderFactory para construir uma query do Elasticsearch
+        QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode);
         SearchRequest searchRequest = new SearchRequest(indexName);
-        searchRequest.source(searchSourceBuilder);
+
+        // Aplica Filtros na pesquisa
+        searchRequest = searchFilters(searchDTO, searchRequest, queryBuilder, highlightBuilder);
 
         log.info("Query gerada nesse contexto: {}", searchRequest.toString());
 
         SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
         return processSearchResults(searchResponse);
+    }
+
+    public SearchRequest searchFilters(SearchDTO searchDTO, SearchRequest searchRequest, QueryBuilder queryBuilder,HighlightBuilder highlightBuilder) {
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
+                .query(queryBuilder)
+                .size(searchDTO.resultsPerPage())
+                .highlighter(highlightBuilder);
+
+        if (searchDTO.orderBy() == Filters.DATE_ASC) {
+            searchSourceBuilder
+                    .sort("dt_creation", SortOrder.ASC);                    ;
+        }
+
+        if (searchDTO.orderBy() == Filters.DATE_DESC) {
+            searchSourceBuilder
+                    .sort("dt_creation", SortOrder.DESC);
+        }
+
+        if (searchDTO.orderBy() == Filters.READ_TIME_ASC) {
+            searchSourceBuilder
+                    .sort("reading_time", SortOrder.ASC);
+        }
+
+        if (searchDTO.orderBy() == Filters.READ_TIME_DESC) {
+            searchSourceBuilder
+                    .sort("reading_time", SortOrder.DESC);
+        }
+
+        return searchRequest.source(searchSourceBuilder);
     }
 
     public SearchAsYouTypeDTO searchAsYouType(String query) throws Exception {

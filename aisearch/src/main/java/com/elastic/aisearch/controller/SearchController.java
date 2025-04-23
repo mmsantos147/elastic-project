@@ -75,7 +75,7 @@ public class SearchController {
              * na
              * contagem de resultados)
              */
-            List<SearchResultDTO> results = elasticsearchService.search(searchDTO.search());
+            List<SearchResultDTO> results = elasticsearchService.search(searchDTO);
 
             List<SearchResultDTO> top3 = results.stream()
                     .limit(3)
