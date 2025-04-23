@@ -1,28 +1,40 @@
-import styled from "styled-components";
 import { Col, Row } from "antd";
 import UAISearch from "../UAISearch";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import COLORS from "../../colors";
+import { useState } from "react";
 
-const PageNumber = styled(Col).attrs(() => ({
-  role: "button",
-}))`
-  margin-right: 14px;
-  cursor: ${({ $active }) => ($active ? "default" : "pointer")};
-  font-weight: ${({ $active }) => ($active ? "bold" : "normal")};
-  color: ${({ $active }) => ($active ? COLORS.purple : "inherit")};
-  pointer-events: ${({ $active }) => ($active ? "none" : "auto")};
-`;
+const PageSelect = ({ setFormData }) => {
+  const [pageSelected, setPageSelected] = useState(1);
+  const totalPages = 5;
 
-const PageSelect = ({ setFormData, currentPage }) => {
   const handlePageSelect = (number) => {
-    if (number !== currentPage) {
-      setFormData((prev) => ({ ...prev, page: number }));
-      window.scrollTo({ top: 0 });
-    }
+    if (number < 1 || number > totalPages) return;
+    setPageSelected(number);
+    setFormData((prev) => ({ ...prev, page: number }));
+    window.scrollTo({ top: 0 });
   };
 
-  const totalPages = 5;
+  const PageNumber = ({ page }) => {
+    return page == pageSelected ? (
+      <Col style={{ marginRight: "14px" }}>
+        <b>{page}</b>
+      </Col>
+    ) : (
+      <Col
+        style={{
+          marginRight: "14px",
+          color: COLORS.purple,
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          handlePageSelect(page);
+        }}
+      >
+        {page}
+      </Col>
+    );
+  };
 
   return (
     <Row
@@ -48,24 +60,29 @@ const PageSelect = ({ setFormData, currentPage }) => {
       </div>
 
       <Row style={{ display: "flex", justifyContent: "center" }}>
-        <Col style={{ marginRight: "14px" }}>
+        <Col
+          style={{
+            marginRight: "14px",
+            color: pageSelected === 1 ? "#ccc" : "black",
+            cursor: pageSelected === 1 ? "default" : "pointer",
+          }}
+          onClick={() => handlePageSelect(pageSelected - 1)}
+        >
           <GrPrevious />
         </Col>
-
-        {[...Array(totalPages)].map((_, index) => {
-          const pageNumber = index + 1;
-          return (
-            <PageNumber
-              key={pageNumber}
-              $active={pageNumber === currentPage}
-              onClick={() => handlePageSelect(pageNumber)}
-            >
-              {pageNumber}
-            </PageNumber>
-          );
-        })}
-
-        <Col>
+        <PageNumber page={1} />
+        <PageNumber page={2} />
+        <PageNumber page={3} />
+        <PageNumber page={4} />
+        <PageNumber page={5} />
+        <Col
+          style={{
+            marginLeft: "14px",
+            color: pageSelected === totalPages ? "#ccc" : "black",
+            cursor: pageSelected === totalPages ? "default" : "pointer",
+          }}
+          onClick={() => handlePageSelect(pageSelected + 1)}
+        >
           <GrNext />
         </Col>
       </Row>
