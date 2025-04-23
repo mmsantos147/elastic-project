@@ -36,38 +36,37 @@ const PageSelect = ({ setFormData, searchSubmit }) => {
         </Col>
         <Col
           style={{ marginRight: "14px", color: COLORS.purple }}
-          onClick={setFormData((prev) => {
-            ({ ...prev, page: 2 });
-            searchSubmit();
-
-          })}
+          // onClick={setFormData((prev) => {
+          //   ({ ...prev, page: 2 });
+          //   searchSubmit();
+          // })}
         >
           2
         </Col>
         <Col
           style={{ marginRight: "14px", color: COLORS.purple }}
-          onClick={setFormData((prev) => {
-            ({ ...prev, page: 2 });
-            searchSubmit();
-          })}
+          // onClick={setFormData((prev) => {
+          //   ({ ...prev, page: 2 });
+          //   searchSubmit();
+          // })}
         >
           3
         </Col>
         <Col
           style={{ marginRight: "14px", color: COLORS.purple }}
-          onClick={setFormData((prev) => {
-            ({ ...prev, page: 2 });
-            searchSubmit();
-          })}
+          // onClick={setFormData((prev) => {
+          //   ({ ...prev, page: 2 });
+          //   searchSubmit();
+          // })}
         >
           4
         </Col>
         <Col
           style={{ marginRight: "14px", color: COLORS.purple }}
-          onClick={setFormData((prev) => {
-            ({ ...prev, page: 2 });
-            searchSubmit();
-          })}
+          // onClick={setFormData((prev) => {
+          //   ({ ...prev, page: 2 });
+          //   searchSubmit();
+          // })}
         >
           5
         </Col>
