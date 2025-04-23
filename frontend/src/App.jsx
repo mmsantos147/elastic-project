@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { ConfigProvider, Layout } from "antd";
 import DefaultFooter from "./components/Footer";
-import './utils/i18n';
+import i18n from './utils/i18n';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./view/Main";
 import Search from "./view/Search";
@@ -19,6 +19,7 @@ const App = () => {
   }, []);
 
   return (
+    <I18nextProvider i18n={i18n}>
     <ConfigProvider
       theme={{
         components: {
@@ -44,6 +45,7 @@ const App = () => {
         <DefaultFooter />
       </Layout>
     </ConfigProvider>
+    </I18nextProvider>
   );
 };
 
