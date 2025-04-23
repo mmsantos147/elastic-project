@@ -96,6 +96,7 @@ const Search = () => {
   const setSearchValue = (value) => {
     setFormData((prev) => ({ ...prev, search: value }));
   };
+  
 
   const searchSubmit = async (value) => {
   //   setSearchResults({
@@ -139,7 +140,7 @@ const Search = () => {
           >
             <StyledSearchBar
               setSearchValue={setSearchValue}
-              onEnterEvent={searchSubmit}
+              onEnterEvent={setSearchValue}
               initialSearch={initialSearch}
             />
             <div style={{ marginTop: "20px" }}>

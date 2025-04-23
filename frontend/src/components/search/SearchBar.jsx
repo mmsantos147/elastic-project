@@ -11,6 +11,7 @@ import Draggable from "react-draggable";
 import styled from "styled-components";
 import searchApi from "../../api/search.api";
 import SearchSuggestions from "./SearchSuggestions";
+import { useNavigate } from 'react-router-dom';
 
 const StyledInput = styled(Input)`
   ::placeholder {
@@ -21,7 +22,7 @@ const StyledInput = styled(Input)`
 const SearchBar = ({
   className,
   children,
-  setSearchValue,
+  onEnterEvent,
   initialSearch,
 }) => {
   const [historyContent, setHistoryContent] = useState([]);
@@ -33,6 +34,7 @@ const SearchBar = ({
   
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);
+  const navigate = useNavigate()
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -48,10 +50,6 @@ const SearchBar = ({
     const response = await searchApi.searchAsYouType({query: value})
     console.log(response)
     setSuggestions(response.suggestions)
-  }
-
-  const onEnterEvent = (value) => {
-    setSearchValue((prev) => ({...prev, query: value}));
   }
 
   const borderRadius =
