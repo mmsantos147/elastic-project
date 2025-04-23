@@ -4,10 +4,13 @@ import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { BsStars } from "react-icons/bs";
 import COLORS from "../../colors";
 import IAVisionAbstract from "./IAVisionAbstract";
+import { useTranslation } from "react-i18next";
 
 const { Title } = Typography;
 
 const IAVision = (props) => {
+  const { t } = useTranslation();
+  
   const [expanded, setExpanded] = useState(false);
   const { aiAbstract } = props;
   return (
@@ -17,7 +20,7 @@ const IAVision = (props) => {
           <BsStars style={{ color: COLORS.purple, fontSize: "30px" }} />
         </Col>
         <Col style={{ display: "flex", alignItems: "center" }}>
-          <b>Visão gerada por IA</b>
+          <b>{t("artificial_intelligence_vision")}</b>
         </Col>
       </Row>
 
@@ -81,11 +84,11 @@ const IAVision = (props) => {
       >
         {expanded ? (
           <>
-            Mostrar menos <UpOutlined />
+            {t("show_less")} <UpOutlined />
           </>
         ) : (
           <>
-            Mostrar mais <DownOutlined />
+            {t("show_more")} <DownOutlined />
           </>
         )}
       </Button>
