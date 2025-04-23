@@ -20,7 +20,7 @@ const SearchButtonExtension = () => {
             }}
             size="middle"
           >
-            Pesquisar
+            {t("search")}
           </Button>
         </Col>
       </Row>

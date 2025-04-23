@@ -12,6 +12,7 @@ import styled from "styled-components";
 import searchApi from "../../api/search.api";
 import SearchSuggestions from "./SearchSuggestions";
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 const StyledInput = styled(Input)`
   ::placeholder {
@@ -35,6 +36,7 @@ const SearchBar = ({
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);
   const navigate = useNavigate()
+  const { t } = useTranslation();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -70,7 +72,7 @@ const SearchBar = ({
       <StyledInput
         onPressEnter={(e) => onEnterEvent(e.target.value)}
         size="large"
-        placeholder={`Pesquise no ${APP_NAME_CAMMEL_CASE} ou digite uma URL`}
+        placeholder={t("search_default")}
         value={inputValue}
         prefix={
           <SearchOutlined

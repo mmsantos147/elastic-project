@@ -3,6 +3,7 @@ import Filter from "./Filter";
 import styled from "styled-components";
 import COLORS from "../colors";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const ResponsiveResults = styled(Col)`
   color: ${COLORS.gray};
@@ -13,6 +14,7 @@ const ResponsiveResults = styled(Col)`
 `;
 
 const FilterBar = ({ setFormData }) => {
+  const [ t ] = useTranslation();
   const [orderByState, setOrderByState] = useState("SCORE_DESC");
   const [itensByPageState, setItensByPageState] = useState(10);
   const [readingTimeState, setReadingTimeState] = useState(undefined);
@@ -46,27 +48,27 @@ const FilterBar = ({ setFormData }) => {
 
   const orderBy = [
     {
-      label: "Relevância decrescente",
+      label: t("score_desc"),
       key: "SCORE_DESC",
     },
     {
-      label: "Relevância crescente",
+      label: t("score_asc"),
       key: "SCORE_ASC",
     },
     {
-      label: "Tempo de leitura decrescente",
+      label: t("read_time_desc"),
       key: "READ_TIME_DESC",
     },
     {
-      label: "Tempo de leitura crescente",
+      label: t("read_time_asc"),
       key: "READ_TIME_ASC",
     },
     {
-      label: "Mais novos primeiro",
+      label: t("date_desc"),
       key: "DATE_DESC"
     },
     {
-      label: "Mais velhos primeiro",
+      label: t("date_asc"),
       key: "DATE_ASC"
     }
   ];
@@ -88,62 +90,62 @@ const FilterBar = ({ setFormData }) => {
       type: "divider",
     },
     {
-      label: "Definir",
+      label: t("define"),
       key: "4",
     },
   ];
 
   const readTime = [
     {
-      label: "Rápido (<3 min)",
+      label: `${t("fast")} (<3 ${t("minute_abbreviation")})`,
       key: 3,
     },
     {
-      label: "Médio (<5 min)",
+      label: `${t("medium")} (<5 ${t("minute_abbreviation")})`,
       key: 5,
     },
     {
-      label: "Longo (<10 min)",
+      label: `${t("high")} (<10 ${t("minute_abbreviation")})`,
       key: 10,
     },
     {
       type: "divider",
     },
     {
-      label: "Definir",
+      label: `${t("define")}`,
       key: "4",
     },
   ];
 
   const publisedDate = [
     {
-      label: "Depois de 2020",
+      label: `${t("after_")} 2020`,
       key: "2020-01-01",
     },
     {
-      label: "Depois de 2010",
-      key: "2010-01-01",
+      label: `${t("after_")} 2010`,
+      key: `2010-01-01`,
     },
     {
-      label: "Depois de 2005",
-      key: "2005-01-01",
+      label: `${t("after_")} 2005`,
+      key: `2005-01-01`,
     },
     {
-      type: "divider",
+      type: `divider`,
     },
     {
-      label: "Definir",
+      label: `${t("define")}`,
       key: "4",
     },
   ];
 
   const searchFor = [
     {
-      label: "Todos os resultados",
+      label: t("all_results_search"),
       key: "allResults",
     },
     {
-      label: "Correspondência exata",
+      label: t("exact_result"),
       key: "exactSearch",
     },
   ];
@@ -155,7 +157,7 @@ const FilterBar = ({ setFormData }) => {
         <Filter
           items={orderBy}
           selectedKeys={orderByState}
-          name={"Ordenar por"}
+          name={t('order_by')}
           onClick={handleOrderByChange}
         />
       </Col>
@@ -163,14 +165,14 @@ const FilterBar = ({ setFormData }) => {
         <Filter
           items={itensPerPage}
           selectedKeys={itensByPageState}
-          name={"Itens por página"}
+          name={t('itens_per_page')}
           onClick={handleItensByPageChange}
         />
       </Col>
       <Col style={{ marginRight: "40px" }}>
         <Filter
           items={readTime}
-          name={"Tempo de leitura"}
+          name={t('reading_time')}
           selectedKeys={readingTimeState}
           onClick={handleReadingTimeChange}
         />
@@ -178,7 +180,7 @@ const FilterBar = ({ setFormData }) => {
       <Col style={{ marginRight: "40px" }}>
         <Filter
           items={publisedDate}
-          name={"Data de publicacação"}
+          name={t('publish_date')}
           selectedKeys={minDateTimeState}
           onClick={handleMinDateTimeChange}
         />
@@ -187,13 +189,13 @@ const FilterBar = ({ setFormData }) => {
         <Filter
           items={searchFor}
           selectedKeys={searchForState}
-          name={"Pesquisar por"}
+          name={t('search_for')}
           onClick={handleSearchForChange}
         />
       </Col>
       <Col flex="auto" />
       <ResponsiveResults style={{ marginRight: "40px" }}>
-        Aproximadamente 9.000 resultados (0,24 segundos)
+        {t('near')} 9.000 {t('results')} (0,24 {t('seconds')})
       </ResponsiveResults>
     </Row>
   );

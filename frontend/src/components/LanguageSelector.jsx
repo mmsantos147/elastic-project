@@ -2,6 +2,7 @@ import { Menu, Dropdown } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import ReactCountryFlag from "react-country-flag";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 
 const languages = [
   { code: "pt", name: "Português", countryCode: "BR" },
@@ -28,6 +29,14 @@ const languages = [
 
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(() =>
+    languages.find((l) => l.code === i18n.language) || languages[0]
+  );
+
+  useEffect(() => {
+    const selected = languages.find((l) => l.code === i18n.language);
+    if (selected) setCurrentLang(selected);
+  }, [i18n.language]);
 
   const handleMenuClick = ({ key }) => {
     i18n.changeLanguage(key);
@@ -52,16 +61,12 @@ const LanguageSelector = () => {
     </Menu>
   );
 
-  const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
-
   return (
     <Dropdown
       overlay={menu}
       trigger={["click"]}
-      dropdownRender={menu => (
-        <div style={{ maxHeight: "250px", overflowY: "auto" }}>
-          {menu}
-        </div>
+      dropdownRender={(menu) => (
+        <div style={{ maxHeight: "250px", overflowY: "auto" }}>{menu}</div>
       )}
     >
       <div style={{ cursor: "pointer", display: "flex", alignItems: "center" }}>

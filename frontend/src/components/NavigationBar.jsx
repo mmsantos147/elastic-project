@@ -1,6 +1,7 @@
 import { Row, Col, Button } from "antd";
 import styled from "styled-components";
 import COLORS from "../colors";
+import { useTranslation } from "react-i18next";
 
 
 const NavLinks = styled.div`
@@ -19,10 +20,12 @@ const ToolsButton = styled.div`
 `;
 
 const NavigationBar = ({ onClickShowTools }) => {
+  const { t } = useTranslation()
+  
   return (
     <Row style={{ maxWidth: "730px", minWidth: "600px" }}>
       <Col>
-        <NavLinks>Todos os resultados</NavLinks>
+        <NavLinks>{t("all_results")}</NavLinks>
       </Col>
       <Col flex="auto" />
       <ToolsButton
@@ -30,7 +33,7 @@ const NavigationBar = ({ onClickShowTools }) => {
           onClickShowTools();
         }}
       >
-        Ferramentas
+        {t("tools")}
       </ToolsButton>
     </Row>
   );

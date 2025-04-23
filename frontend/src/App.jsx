@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { ConfigProvider, Layout } from "antd";
 import DefaultFooter from "./components/Footer";
-
+import './utils/i18n';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./view/Main";
 import Search from "./view/Search";
 import VLibras from "@djpfs/react-vlibras";
 import authorizationApi from './api/authorization.api'
+import COLORS from "./colors";
 
 const App = () => {
   useEffect(() => {
@@ -25,6 +26,10 @@ const App = () => {
             gradientFromColor: "rgb(54, 54, 54)",
             gradientToColor: "rgba(85, 85, 85, 0)",
           },
+          Dropdown: {
+            colorBgElevated: "rgb(48, 49, 52)",
+            colorText: COLORS.white
+          }
         },
       }}
     >

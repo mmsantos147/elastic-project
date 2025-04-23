@@ -4,8 +4,11 @@ import COLORS from "../../colors";
 import { useEffect } from "react";
 import historyApi from "../../api/history.api";
 import SearchButtonExtension from "./SearchButtonExtension";
+import { useTranslation } from "react-i18next";
 
 const SearchHistory = ({ visible, historyContent, setHistoryContent }) => {
+  const { t } = useTranslation();
+  
   useEffect(() => {
     const loadHistory = async () => {
       try {
@@ -51,7 +54,7 @@ const SearchHistory = ({ visible, historyContent, setHistoryContent }) => {
           paddingRight: "20px",
         }}
       >
-        Pesquisas recentes
+        {t("recent_searches")}
       </Divider>
       {historyContent.map((query) => (
         <HistoryElement

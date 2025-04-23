@@ -1,8 +1,10 @@
 import { Button } from "antd";
-import { APP_NAME_CAMMEL_CASE } from "../../constants";
 import COLORS from "../../colors";
+import { useTranslation } from "react-i18next";
 
 const SearchButton = () => {
+  const { t } = useTranslation();
+  
   return (
     <Button
       style={{
@@ -14,7 +16,7 @@ const SearchButton = () => {
       }}
       size="middle"
     >
-      Pesquisa {`${APP_NAME_CAMMEL_CASE}`}
+      {t("search_on_brand")}
     </Button>
   );
 };

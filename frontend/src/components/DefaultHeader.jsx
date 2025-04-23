@@ -3,11 +3,14 @@ import { Layout, Button, Space, Typography } from "antd";
 import { DownOutlined, SunOutlined } from "@ant-design/icons";
 import ReactCountryFlag from "react-country-flag";
 import LanguageSelector from "./LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 const { Header } = Layout;
 const { Text } = Typography;
 
 const DefaultHeader = ({ children }) => {
+  const { t } = useTranslation();
+  
   return (
     <Header
       style={{
@@ -40,7 +43,7 @@ const DefaultHeader = ({ children }) => {
           type="primary"
           style={{ padding: "18px", borderRadius: "999px" }}
         >
-          <b>Fazer login</b>
+          <b>{t("make_login")}</b>
         </Button>
       </Space>
     </Header>

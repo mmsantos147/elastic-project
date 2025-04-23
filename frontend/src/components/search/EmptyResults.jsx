@@ -3,6 +3,7 @@ import { MdOutlineSearchOff } from "react-icons/md";
 import COLORS from "../../colors";
 import { SearchOutlined } from "@ant-design/icons";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const SuggestionLink = styled.a`
   display: flex;
@@ -22,6 +23,8 @@ const SuggestionLink = styled.a`
 `;
 
 const EmptyResults = () => {
+  const { t } = useTranslation();
+  
   return (
     <>
       <Row>
@@ -41,10 +44,10 @@ const EmptyResults = () => {
           </div>
         </Col>
         <Col>
-            <h2>Sua pesquisa não encontrou nenhum documento correspondente</h2>
-            <strong>Precisa de ajuda?</strong> Confira outras <a href="/tips">dicas</a> para pesquisar no uAISearch.
+            <h2>{t('your_search_dont_find_any_docs')}</h2>
+            <strong>{t('need_help_ask')}</strong> {t("check_out_other")} <a href="/tips"> {t("tips")} </a> {t("to_search_on_brand")}.
             <Row style={{marginTop: "30px"}}>
-                Você também pode tentar fazer estas pesquisas:
+                {t("you_can_try_these_searches")}:
             </Row>
             <Divider style={{ borderColor: COLORS.gray }}/>
             <Row align="middle" style={{ display: "flex" }}>

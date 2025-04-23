@@ -2,8 +2,11 @@ import { Button, Col, Divider, Row } from "antd";
 import COLORS from "../../colors";
 import SuggestionElement from "./SuggestionElement";
 import SearchButtonExtension from "./SearchButtonExtension";
+import { useTranslation } from "react-i18next";
 
 const SearchSuggestions = ({ visible, suggestions }) => {
+  const { t } = useTranslation()
+  
   if (!visible || suggestions.length === 0) return null;
 
   const historyStyle = {
@@ -28,7 +31,7 @@ const SearchSuggestions = ({ visible, suggestions }) => {
           paddingRight: "20px",
         }}
       >
-        Pesquisas sugeridas
+        {t("search_suggested")}
       </Divider>
       {suggestions.map((query) => (
         <SuggestionElement query={query} />
