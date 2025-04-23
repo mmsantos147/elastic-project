@@ -32,7 +32,7 @@ const SearchSuggestions = ({ visible, suggestions }) => {
           paddingRight: "20px",
         }}
       >
-        DEBUUUG
+        {t("search_suggested")}
       </Divider>
       {suggestions.map((query) => (
         <SuggestionElement query={query} />
