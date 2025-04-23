@@ -1,6 +1,7 @@
 package com.elastic.aisearch.elastic;
 
 
+import com.elastic.aisearch.dto.SearchDTO;
 import com.elastic.aisearch.parser.QueryParser.QueryNode;
 import static com.elastic.aisearch.utils.DateUtils.toElasticDate; 
 
@@ -9,7 +10,7 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;;
 
 public class QueryBuilderFactory {
 
-    public static QueryBuilder buildQuery(QueryNode queryNode) {
+    public static QueryBuilder buildQuery(QueryNode queryNode, SearchDTO searchDTO) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
 
         if(!queryNode.getShouldContent().isEmpty()) {
@@ -35,8 +36,13 @@ public class QueryBuilderFactory {
         if (!queryNode.getEqDate().isEmpty()) {
             boolQuery.filter(QueryBuilders.termQuery("dt_creation", toElasticDate(queryNode.getEqDate())));
         } else if (!queryNode.getMinDate().isEmpty() || !queryNode.getMaxDate().isEmpty()) {
-            RangeQueryBuilder range = QueryBuilders.rangeQuery("dt_creation");
-            
+                RangeQueryBuilder range;
+            if (!searchDTO.minDateTime().isEmpty()) {
+                range = QueryBuilders.rangeQuery("dt_creation").gte(searchDTO.minDateTime());
+            } else {
+                range = QueryBuilders.rangeQuery("dt_creation");
+            }
+
             if (!queryNode.getMinDate().isEmpty()) range.gte(toElasticDate(queryNode.getMinDate()));
             if (!queryNode.getMaxDate().isEmpty()) range.lte(toElasticDate(queryNode.getMaxDate()));
             boolQuery.filter(range);
@@ -45,7 +51,13 @@ public class QueryBuilderFactory {
         if (!queryNode.getEqReadingTime().isEmpty()) {
             boolQuery.filter(QueryBuilders.termQuery("reading_time", queryNode.getEqReadingTime()));
         } else if (!queryNode.getMinReadingTime().isEmpty() || !queryNode.getMaxReadingTime().isEmpty()) {
-            RangeQueryBuilder range = QueryBuilders.rangeQuery("reading_time");
+            RangeQueryBuilder range;
+            if (!searchDTO.minDateTime().isEmpty()) {
+                range = QueryBuilders.rangeQuery("reading_time").lte(searchDTO.minDateTime());
+            } else {
+                range = QueryBuilders.rangeQuery("reading_time");
+            }
+
 
             if (!queryNode.getMinReadingTime().isEmpty()) range.gte(Integer.parseInt(queryNode.getMinReadingTime()));
             if (!queryNode.getMaxReadingTime().isEmpty()) range.lte(Integer.parseInt(queryNode.getMaxReadingTime()));

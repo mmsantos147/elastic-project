@@ -81,7 +81,7 @@ public class ElasticsearchService {
         highlightBuilder.field(contentField);
 
         // Usa o QueryBuilderFactory para construir uma query do Elasticsearch
-        QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode);
+        QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode, searchDTO);
         SearchRequest searchRequest = new SearchRequest(indexName);
 
         // Aplica Filtros na pesquisa
