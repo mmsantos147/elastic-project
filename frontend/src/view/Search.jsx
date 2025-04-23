@@ -69,24 +69,47 @@ const Search = () => {
     return () => es.close();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setSearchResults({
+          hits: 0,
+          pages: 0,
+          timeTaken: 0.0,
+          results: [],
+        });
+  
+        setProcessingRequest(true);
+  
+        const response = await searchApi.search(formData);
+        setSearchResults(response);
+      } catch (error) {
+        console.error("Erro ao buscar resultados:", error);
+      } finally {
+        setProcessingRequest(false);
+      }
+    };
+  
+    fetchData(); 
+  }, [formData]);
+
   const setSearchValue = (value) => {
     setFormData((prev) => ({ ...prev, search: value }));
   };
 
   const searchSubmit = async (value) => {
-    setSearchResults({
-      hits: 0,
-      pages: 0,
-      timeTaken: 0.0,
-      results: [],
-    });
-    setAiAbstract({});
-    const formContent = { ...formData, search: value };
-    setFormData(formContent);
-    setProcessingRequest(true);
-    const response = await searchApi.search(formContent);
-    setSearchResults(response);
-    setProcessingRequest(false);
+  //   setSearchResults({
+  //     hits: 0,
+  //     pages: 0,
+  //     timeTaken: 0.0,
+  //     results: [],
+  //   });
+  //   const formContent = { ...formData, search: value };
+  //   setFormData(formContent);
+  //   setProcessingRequest(true);
+  //   const response = await searchApi.search(formContent);
+  //   setSearchResults(response);
+  //   setProcessingRequest(false);
   };
 
   return (
