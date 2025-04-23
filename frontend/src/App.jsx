@@ -8,6 +8,7 @@ import Search from "./view/Search";
 import VLibras from "@djpfs/react-vlibras";
 import authorizationApi from './api/authorization.api'
 import COLORS from "./colors";
+import { I18nextProvider } from "react-i18next";
 
 const App = () => {
   useEffect(() => {
