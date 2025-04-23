@@ -41,12 +41,12 @@ const PageSelect = ({ setFormData, searchSubmit }) => {
             cursor: "pointer",
           }}
           onClick={() => {
+            const newPage = 2;
             setFormData((prev) => {
-              const newForm = { ...prev, page: 2 };
-              searchSubmit(newForm.search);
+              const newForm = { ...prev, page: newPage };
+              searchSubmit(newForm.search); 
               return newForm;
             });
-            searchSubmit();
           }}
         >
           2
@@ -58,12 +58,12 @@ const PageSelect = ({ setFormData, searchSubmit }) => {
             cursor: "pointer",
           }}
           onClick={() => {
+            const newPage = 3;
             setFormData((prev) => {
-              const newForm = { ...prev, page: 2 };
-              searchSubmit(newForm.search);
+              const newForm = { ...prev, page: newPage };
+              searchSubmit(newForm.search); 
               return newForm;
             });
-            searchSubmit();
           }}
         >
           3
@@ -75,12 +75,12 @@ const PageSelect = ({ setFormData, searchSubmit }) => {
             cursor: "pointer",
           }}
           onClick={() => {
+            const newPage = 4;
             setFormData((prev) => {
-              const newForm = { ...prev, page: 2 };
-              searchSubmit(newForm.search);
+              const newForm = { ...prev, page: newPage };
+              searchSubmit(newForm.search); 
               return newForm;
             });
-            searchSubmit();
           }}
         >
           4
@@ -92,12 +92,12 @@ const PageSelect = ({ setFormData, searchSubmit }) => {
             cursor: "pointer",
           }}
           onClick={() => {
+            const newPage = 5;
             setFormData((prev) => {
-              const newForm = { ...prev, page: 2 };
-              searchSubmit(newForm.search);
+              const newForm = { ...prev, page: newPage };
+              searchSubmit(newForm.search); 
               return newForm;
             });
-            searchSubmit();
           }}
         >
           5
