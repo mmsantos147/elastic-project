@@ -5,7 +5,7 @@ import SearchButtonExtension from "./SearchButtonExtension";
 import { useTranslation } from "react-i18next";
 
 const SearchSuggestions = ({ visible, suggestions }) => {
-  const { t } = useTranslation()
+  //const { t } = useTranslation()
   
   if (!visible || suggestions.length === 0) return null;
 
@@ -31,7 +31,7 @@ const SearchSuggestions = ({ visible, suggestions }) => {
           paddingRight: "20px",
         }}
       >
-        {t("search_suggested")}
+        DEBUUUG
       </Divider>
       {suggestions.map((query) => (
         <SuggestionElement query={query} />
