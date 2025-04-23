@@ -21,7 +21,6 @@ const StyledInput = styled(Input)`
 const SearchBar = ({
   className,
   children,
-  onEnterEvent,
   setSearchValue,
   initialSearch,
 }) => {
@@ -49,6 +48,10 @@ const SearchBar = ({
     const response = await searchApi.searchAsYouType({query: value})
     console.log(response)
     setSuggestions(response.suggestions)
+  }
+
+  const onEnterEvent = (value) => {
+    setSearchValue((prev) => ({...prev, query: value}));
   }
 
   const borderRadius =
@@ -101,7 +104,6 @@ const SearchBar = ({
         }
         onChange={(e) => {
           setInputValue(e.target.value);
-          setSearchValue(e.target.value);
           updateSugestions(e.target.value);
         }}
         style={{

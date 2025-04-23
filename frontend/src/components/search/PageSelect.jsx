@@ -3,7 +3,7 @@ import UAISearch from "../UAISearch";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import COLORS from "../../colors";
 
-const PageSelect = ({ setFormData, searchSubmit }) => {
+const PageSelect = ({ setFormData }) => {
   return (
     <Row
       style={{
@@ -41,12 +41,7 @@ const PageSelect = ({ setFormData, searchSubmit }) => {
             cursor: "pointer",
           }}
           onClick={() => {
-            const newPage = 2;
-            setFormData((prev) => {
-              const newForm = { ...prev, page: newPage };
-              searchSubmit(newForm.search); 
-              return newForm;
-            });
+            setFormData((prev) => ({ ...prev, page: 2 }));
           }}
         >
           2
@@ -58,12 +53,7 @@ const PageSelect = ({ setFormData, searchSubmit }) => {
             cursor: "pointer",
           }}
           onClick={() => {
-            const newPage = 3;
-            setFormData((prev) => {
-              const newForm = { ...prev, page: newPage };
-              searchSubmit(newForm.search); 
-              return newForm;
-            });
+            setFormData((prev) => ({ ...prev, page: 3 }));
           }}
         >
           3
@@ -75,12 +65,7 @@ const PageSelect = ({ setFormData, searchSubmit }) => {
             cursor: "pointer",
           }}
           onClick={() => {
-            const newPage = 4;
-            setFormData((prev) => {
-              const newForm = { ...prev, page: newPage };
-              searchSubmit(newForm.search); 
-              return newForm;
-            });
+            setFormData((prev) => ({ ...prev, page: 4 }));
           }}
         >
           4
@@ -92,12 +77,7 @@ const PageSelect = ({ setFormData, searchSubmit }) => {
             cursor: "pointer",
           }}
           onClick={() => {
-            const newPage = 5;
-            setFormData((prev) => {
-              const newForm = { ...prev, page: newPage };
-              searchSubmit(newForm.search); 
-              return newForm;
-            });
+            setFormData((prev) => ({ ...prev, page: 5 }));
           }}
         >
           5
