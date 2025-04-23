@@ -47,27 +47,27 @@ const FilterBar = ({ setFormData }) => {
   const orderBy = [
     {
       label: "Relevância decrescente",
-      key: "scoreDecreasing",
+      key: "SCORE_DESC",
     },
     {
       label: "Relevância crescente",
-      key: "scoreIncreasing",
+      key: "SCORE_ASC",
     },
     {
       label: "Tempo de leitura decrescente",
-      key: "readingTimeDecreasing",
+      key: "READ_TIME_DESC",
     },
     {
       label: "Tempo de leitura crescente",
-      key: "readingTimeIncreasing",
+      key: "READ_TIME_ASC",
     },
     {
       label: "Mais novos primeiro",
-      key: "newFirst"
+      key: "DATE_DESC"
     },
     {
       label: "Mais velhos primeiro",
-      key: "oldFirst"
+      key: "DATE_ASC"
     }
   ];
 
