@@ -3,7 +3,7 @@ import COLORS from "../../colors";
 import SuggestionElement from "./SuggestionElement";
 import SearchButtonExtension from "./SearchButtonExtension";
 
-const SearchSuggestions = ({ visible, suggestions }) => {
+const SearchSuggestions = ({ visible, suggestions, highlightedIndex, setInputValue }) => {
   if (!visible || suggestions.length === 0) return null;
 
   const historyStyle = {
@@ -30,8 +30,8 @@ const SearchSuggestions = ({ visible, suggestions }) => {
       >
         Pesquisas sugeridas
       </Divider>
-      {suggestions.map((query) => (
-        <SuggestionElement query={query} />
+      {suggestions.map((query, index) => (
+        <SuggestionElement query={query} key={index} isHighlighted={index === highlightedIndex} setInputValue={setInputValue} />
       ))}
 
       <SearchButtonExtension />

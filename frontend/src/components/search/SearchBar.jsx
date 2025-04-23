@@ -11,7 +11,7 @@ import Draggable from "react-draggable";
 import styled from "styled-components";
 import searchApi from "../../api/search.api";
 import SearchSuggestions from "./SearchSuggestions";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const StyledInput = styled(Input)`
   ::placeholder {
@@ -19,22 +19,18 @@ const StyledInput = styled(Input)`
   }
 `;
 
-const SearchBar = ({
-  className,
-  children,
-  onEnterEvent,
-  initialSearch,
-}) => {
+const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
   const [historyContent, setHistoryContent] = useState([]);
 
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState(initialSearch || "");
   const [extensionVisible, setextensionVisible] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
-  
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -47,13 +43,15 @@ const SearchBar = ({
   }, []);
 
   const updateSugestions = async (value) => {
-    const response = await searchApi.searchAsYouType({query: value})
-    console.log(response)
-    setSuggestions(response.suggestions)
-  }
+    const response = await searchApi.searchAsYouType({ query: value });
+    console.log(response);
+    setSuggestions(response.suggestions);
+  };
 
   const borderRadius =
-    extensionVisible && (historyContent.length > 0 || suggestions.length > 0) ? "30px 30px 0 0" : "999px";
+    extensionVisible && (historyContent.length > 0 || suggestions.length > 0)
+      ? "30px 30px 0 0"
+      : "999px";
 
   return (
     <div
@@ -68,6 +66,21 @@ const SearchBar = ({
       onClick={() => setextensionVisible(true)}
     >
       <StyledInput
+        onKeyDown={(e) => {
+          if (suggestions.length > 0) {
+            if (e.key === "ArrowDown") {
+              setHighlightedIndex((prev) =>
+                Math.min(prev + 1, suggestions.length - 1)
+              );
+            } else if (e.key === "ArrowUp") {
+              setHighlightedIndex((prev) => Math.max(prev - 1, 0));
+            } else if (e.key === "Enter" && highlightedIndex >= 0) {
+              const selectedSuggestion = suggestions[highlightedIndex];
+              setInputValue(selectedSuggestion);
+              onEnterEvent(selectedSuggestion);
+            }
+          }
+        }}
         onPressEnter={(e) => onEnterEvent(e.target.value)}
         size="large"
         placeholder={`Pesquise no ${APP_NAME_CAMMEL_CASE} ou digite uma URL`}
@@ -103,6 +116,7 @@ const SearchBar = ({
         onChange={(e) => {
           setInputValue(e.target.value);
           updateSugestions(e.target.value);
+          setHighlightedIndex(-1);
         }}
         style={{
           borderRadius,
@@ -115,14 +129,18 @@ const SearchBar = ({
       />
 
       <SearchHistory
-        visible={extensionVisible && inputValue.length == 0 && suggestions.length == 0}
+        visible={
+          extensionVisible && inputValue.length == 0 && suggestions.length == 0
+        }
         historyContent={historyContent}
         setHistoryContent={setHistoryContent}
       />
 
-      <SearchSuggestions 
+      <SearchSuggestions
         visible={extensionVisible && suggestions.length > 0}
         suggestions={suggestions}
+        highlightedIndex={highlightedIndex}
+        setInputValue={setInputValue}
       />
 
       {children}

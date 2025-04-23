@@ -11,14 +11,15 @@ const SuggestionWrapper = styled.div`
   font-size: 16px;
   width: 100%;
   padding: 8px 20px 15px 20px;
-  background-color: transparent;
+  background-color: ${({ highlighted }) => highlighted ? "rgb(44, 44, 44)" : "transparent"};
   cursor: pointer;
+  border-radius: ${({ highlighted }) => highlighted ? "5px" : "0"};
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color:rgb(44, 44, 44); /* ou use uma cor do seu theme, tipo COLORS.darkGray */
+    background-color: rgb(44, 44, 44);
     border-radius: 5px;
-    }
+  }
 `;
 
 const SuggestionContent = styled.div`
