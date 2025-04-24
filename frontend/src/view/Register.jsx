@@ -126,9 +126,9 @@ const Register = () => {
                     }}
                   >
                     <b>
-                      <a style={{ color: COLORS.purple }} onClick={() => {navigate("/login")}}>
+                      <Link to="/login" style={{ color: COLORS.purple }}>
                         {t("already_have_a_account")}
-                      </a>
+                      </Link>
                     </b>
                   </Col>
                   <Col>

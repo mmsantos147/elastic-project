@@ -12,7 +12,7 @@ import { FaCloudSun } from "react-icons/fa";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
 import weatherApi from "../api/weather.api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -68,14 +68,14 @@ const DefaultHeader = ({ children }) => {
         <div>
           <LanguageSelector />
         </div>
-        <a onClick={() => {navigate("/login")}}>
+        <Link to="/login">
           <Button
             type="primary"
             style={{ padding: "18px", borderRadius: "999px", boxShadow: "none" }}
           >
             <b>{t("make_login")}</b>
           </Button>
-        </a>
+        </Link>
       </Space>
     </Header>
   );

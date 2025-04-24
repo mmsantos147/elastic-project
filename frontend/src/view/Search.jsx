@@ -8,7 +8,7 @@ import NavigationBar from "../components/NavigationBar";
 import COLORS from "../colors";
 import FilterBar from "../components/FilterBar";
 import searchApi from "../api/search.api";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { API_PREFIX, ROOT_URL } from "../constants";
 import SearchResults from "../components/search/SeachResults";
 import PageSelect from "../components/search/PageSelect";
@@ -113,9 +113,9 @@ const Search = () => {
         }}
       >
         <Col>
-          <a onClick={()=>{navigate("/")}}>
+          <Link to="/">
             <UAISearch logoWidth="150px" style={{ margin: "12px 0 20px 0" }} />
-          </a>
+          </Link>
         </Col>
         <Col
           sm={10}
@@ -145,7 +145,7 @@ const Search = () => {
         <Col flex="auto" />
         <Col>
           <Space size="large">
-            <a onClick={()=>{navigate("/login")}}>
+            <Link to="/login" >
               <Button
                 type="primary"
                 style={{
@@ -156,7 +156,7 @@ const Search = () => {
               >
                 <b>{t("make_login")}</b>
               </Button>
-            </a>
+            </Link>
           </Space>
         </Col>
       </Row>

@@ -5,7 +5,7 @@ import COLORS from "../colors";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -53,7 +53,7 @@ const Login = () => {
               </h1>
             </Row>
             <Row>
-              <a style={{ color: COLORS.white}} onClick={() => {navigate("/")}}> <IoMdArrowRoundBack /> {t("go_back_to_search")}</a>
+              <Link style={{ color: COLORS.white}} to="/"> <IoMdArrowRoundBack /> {t("go_back_to_search")}</Link>
             </Row>
           </Col>
           <Col
@@ -122,9 +122,9 @@ const Login = () => {
           }}
         >
           <b>
-            <a style={{ color: COLORS.purple }} onClick={() => {navigate("/register")}}>
+            <Link style={{ color: COLORS.purple }} to="/register">
               {t("register")}
-            </a>
+            </Link>
           </b>
           <Button
             type="primary"
