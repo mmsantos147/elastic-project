@@ -2,10 +2,13 @@ package com.elastic.aisearch.controller;
 
 import java.io.StringReader;
 
+import com.elastic.aisearch.dto.WeatherDTO;
+import com.elastic.aisearch.service.WeatherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,6 +26,7 @@ public class DebugController {
 
     private final ChatGptService chatGptService;
     private UserSession userSession;
+    private final WeatherService weatherService;
 
     
 
@@ -53,6 +57,12 @@ public class DebugController {
     @GetMapping("/session")
     public ResponseEntity<String> session() {
         String response = userSession.toString();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("{/city}")
+    public ResponseEntity<String> getWeather(@PathVariable String city) {
+        String response = weatherService.getWeather(city).toString();
         return ResponseEntity.ok(response);
     }
 
