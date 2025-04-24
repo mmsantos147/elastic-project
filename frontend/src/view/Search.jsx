@@ -13,6 +13,7 @@ import { API_PREFIX, ROOT_URL } from "../constants";
 import SearchResults from "../components/search/SeachResults";
 import PageSelect from "../components/search/PageSelect";
 import EmptyResults from "../components/search/EmptyResults";
+import { useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 
@@ -24,7 +25,7 @@ const Search = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const initialSearch = queryParams.get("q") || "";
-
+  const navigate = useNavigate();
   const [toolsVisible, setToolsVisible] = useState(false);
   const [searchResult, setSearchResults] = useState({
     hits: 0,
@@ -83,6 +84,7 @@ const Search = () => {
   
         const response = await searchApi.search(formData);
         setSearchResults(response);
+        navigate(`/search?q=${formData.search}`, { replace: true })
       } catch (error) {
         console.error("Erro ao buscar resultados:", error);
       } finally {
