@@ -70,6 +70,7 @@ public class DebugController {
     @GetMapping("/weather/ip")
     public ResponseEntity<WeatherDTO> weatherIp(HttpServletRequest request) {
         String ipAddress = request.getHeader("X-Forwarded-For");
+
         if (ipAddress == null || ipAddress.isEmpty() || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getRemoteAddr();
         }
@@ -79,6 +80,7 @@ public class DebugController {
         JsonNode location = restTemplate.getForObject(url, JsonNode.class);
 
         String city = location.path("city").asText();
+        System.out.println(city);
         WeatherDTO weatherDTO = weatherService.getWeather(city);
         return ResponseEntity.ok(weatherDTO);
     }
