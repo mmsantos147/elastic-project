@@ -77,7 +77,7 @@ const Search = () => {
         });
 
         setProcessingRequest(true);
-
+        setAiAbstract({});
         const response = await searchApi.search(formData);
         setSearchResults(response);
         navigate(`/search?q=${formData.search}`, { replace: true });
