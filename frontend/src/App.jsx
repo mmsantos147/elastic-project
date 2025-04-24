@@ -9,6 +9,8 @@ import VLibras from "@djpfs/react-vlibras";
 import authorizationApi from './api/authorization.api'
 import COLORS from "./colors";
 import { I18nextProvider } from "react-i18next";
+import Login from "./view/Login";
+import Register from "./view/Register";
 
 const App = () => {
   useEffect(() => {
@@ -23,6 +25,10 @@ const App = () => {
     <I18nextProvider i18n={i18n}>
     <ConfigProvider
       theme={{
+        token: {
+          colorBgContainer: COLORS.dark_gray,
+          colorTextPlaceholder: "white"
+        },
         components: {
           Skeleton: {
             gradientFromColor: "rgb(54, 54, 54)",
@@ -31,6 +37,13 @@ const App = () => {
           Dropdown: {
             colorBgElevated: "rgb(48, 49, 52)",
             colorText: COLORS.white
+          },
+          Input: {
+            activeBg: COLORS.dark_gray,
+            hoverBg: COLORS.dark_gray,
+            activeBorderColor: COLORS.purple,
+            hoverBorderColor: COLORS.purple
+            
           }
         },
       }}
@@ -41,6 +54,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </BrowserRouter>
         <DefaultFooter />

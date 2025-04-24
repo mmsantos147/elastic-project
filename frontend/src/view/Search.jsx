@@ -84,7 +84,7 @@ const Search = () => {
   
         const response = await searchApi.search(formData);
         setSearchResults(response);
-        navigate(`/search?q=${formData.search}`, { replace: true })
+        navigate(`/search?q=${formData.search}`, { replace: true     })
       } catch (error) {
         console.error("Erro ao buscar resultados:", error);
       } finally {
