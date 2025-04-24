@@ -1,10 +1,13 @@
 import { Skeleton, Row, Col, Typography } from "antd";
 import { BsStars } from "react-icons/bs";
 import COLORS from "../../colors";
+import { useTranslation } from "react-i18next";
 
 const { Title } = Typography;
 
 const IAVisionAbstractSkeleton = (props) => {
+  const { t } = useTranslation();
+  
   return (
     <div style={props.style}>
       <Row>
@@ -12,7 +15,7 @@ const IAVisionAbstractSkeleton = (props) => {
           <BsStars style={{ color: COLORS.purple, fontSize: "30px" }} />
         </Col>
         <Col style={{ display: "flex", alignItems: "center" }}>
-          <b>Visão gerada por IA</b>
+          <b>{t("artificial_intelligence_vision")}</b>
         </Col>
       </Row>
 

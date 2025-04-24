@@ -1,10 +1,10 @@
 {
-  "search_default": "uAISearch'te ara veya bir URL girin",
+  "search_default": "uAISearch'te arama yapın veya bir URL girin",
   "tools": "Araçlar",
   "all_results": "Tüm sonuçlar",
   "about": "Hakkında",
   "advertisement": "Reklam",
-  "business": "İş",
+  "business": "İşletmeler",
   "how_search_works": "Aramanın nasıl çalıştığı",
   "privacy": "Gizlilik",
   "terms": "Şartlar",
@@ -42,7 +42,9 @@
   "tips": "ipuçları",
   "to_search_on_brand": "uAISearch'te aramak için",
   "you_can_try_these_searches": "Bu aramaları da deneyebilirsiniz",
-  "artificial_intelligence_vision": "Yapay zeka vizyonu",
+  "artificial_intelligence_vision": "Yapay zeka tarafından üretilen görünüm",
   "show_more": "Daha fazla göster",
-  "show_less": "Daha az göster"
+  "show_less": "Daha az göster",
+  "approximate_small": "Yaklaş.",
+  "minutes": "dakika"
 }

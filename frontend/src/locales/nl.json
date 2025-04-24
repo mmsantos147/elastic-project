@@ -42,7 +42,9 @@
   "tips": "tips",
   "to_search_on_brand": "om te zoeken in uAISearch",
   "you_can_try_these_searches": "U kunt ook proberen deze zoekopdrachten uit te voeren",
-  "artificial_intelligence_vision": "AI-visie",
+  "artificial_intelligence_vision": "Door AI gegenereerde visie",
   "show_more": "Meer tonen",
-  "show_less": "Minder tonen"
+  "show_less": "Minder tonen",
+  "approximate_small": "Ongeveer",
+  "minutes": "minuten"
 }

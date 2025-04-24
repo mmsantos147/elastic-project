@@ -42,7 +42,9 @@
   "tips": "tips",
   "to_search_on_brand": "för att söka på uAISearch",
   "you_can_try_these_searches": "Du kan också försöka med dessa sökningar",
-  "artificial_intelligence_vision": "AI:s vision",
+  "artificial_intelligence_vision": "AI-genererad vision",
   "show_more": "Visa mer",
-  "show_less": "Visa mindre"
+  "show_less": "Visa mindre",
+  "approximate_small": "Ca.",
+  "minutes": "minuter"
 }

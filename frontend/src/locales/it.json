@@ -36,13 +36,15 @@
   "recent_searches": "Ricerche recenti",
   "search": "Cerca",
   "search_on_brand": "Cerca nel uAISearch",
-  "your_search_dont_find_any_docs": "La tua ricerca non ha trovato alcun documento corrispondente",
+  "your_search_dont_find_any_docs": "La tua ricerca non ha trovato documenti corrispondenti",
   "need_help_ask": "Hai bisogno di aiuto?",
   "check_out_other": "Controlla altri",
   "tips": "consigli",
   "to_search_on_brand": "per cercare nel uAISearch",
   "you_can_try_these_searches": "Puoi anche provare a fare queste ricerche",
-  "artificial_intelligence_vision": "Visione dell'IA",
+  "artificial_intelligence_vision": "Visione generata da IA",
   "show_more": "Mostra di più",
-  "show_less": "Mostra di meno"
+  "show_less": "Mostra di meno",
+  "approximate_small": "Circa.",
+  "minutes": "minuti"
 }

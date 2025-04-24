@@ -3,7 +3,7 @@
   "tools": "Werkzeuge",
   "all_results": "Alle Ergebnisse",
   "about": "Über",
-  "advertisement": "Anzeige",
+  "advertisement": "Werbung",
   "business": "Geschäfte",
   "how_search_works": "Wie die Suche funktioniert",
   "privacy": "Datenschutz",
@@ -42,7 +42,9 @@
   "tips": "Tipps",
   "to_search_on_brand": "um bei uAISearch zu suchen",
   "you_can_try_these_searches": "Sie können auch versuchen, diese Suchen durchzuführen",
-  "artificial_intelligence_vision": "KI-Vison",
+  "artificial_intelligence_vision": "Von KI generierte Vision",
   "show_more": "Mehr anzeigen",
-  "show_less": "Weniger anzeigen"
+  "show_less": "Weniger anzeigen",
+  "approximate_small": "Ungef.",
+  "minutes": "Minuten"
 }

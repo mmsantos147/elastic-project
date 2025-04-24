@@ -3,8 +3,11 @@ import { FaClock, FaCalendar } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
 import wikipediaLogo from "../../assets/wikipedia_icon.png";
 import COLORS from "../../colors";
+import { useTranslation } from "react-i18next";
 
 const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
+  const { t } = useTranslation();
+  
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
       <Row style={{ marginBottom: "7px" }}>
@@ -68,7 +71,7 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
         <Col flex="auto" />
         <Col style={{ fontSize: "15px" }}>
           <FaClock style={{ verticalAlign: "middle", marginRight: "8px" }} />
-          aprox. {readingTime} minutos
+          {t("approximate_small")}. {readingTime} {t("minutes")}
         </Col>
       </Row>
     </div>

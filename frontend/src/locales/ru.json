@@ -18,7 +18,7 @@
   "define": "Определить",
   "fast": "Быстрый",
   "medium": "Средний",
-  "high": "Долгий",
+  "high": "Длинный",
   "minute_abbreviation": "мин",
   "after_": "После",
   "all_results_search": "Все результаты",
@@ -42,7 +42,9 @@
   "tips": "советы",
   "to_search_on_brand": "для поиска в uAISearch",
   "you_can_try_these_searches": "Вы также можете попробовать выполнить эти поиски",
-  "artificial_intelligence_vision": "Видение ИИ",
+  "artificial_intelligence_vision": "Видение, созданное ИИ",
   "show_more": "Показать больше",
-  "show_less": "Показать меньше"
+  "show_less": "Показать меньше",
+  "approximate_small": "Прибл.",
+  "minutes": "минуты"
 }

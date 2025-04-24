@@ -2,8 +2,8 @@
   "search_default": "חפש ב-uAISearch או הקלד כתובת URL",
   "tools": "כלים",
   "all_results": "כל התוצאות",
-  "about": "אודות",
-  "advertisement": "פרסום",
+  "about": "על",
+  "advertisement": "פרסומת",
   "business": "עסקים",
   "how_search_works": "איך עובד החיפוש",
   "privacy": "פרטיות",
@@ -27,7 +27,7 @@
   "itens_per_page": "פריטים לדף",
   "reading_time": "זמן קריאה",
   "publish_date": "תאריך פרסום",
-  "search_for": "חפש לפי",
+  "search_for": "חפש עבור",
   "near": "בערך",
   "results": "תוצאות",
   "seconds": "שניות",
@@ -42,7 +42,9 @@
   "tips": "טיפים",
   "to_search_on_brand": "כדי לחפש ב-uAISearch",
   "you_can_try_these_searches": "אתה יכול גם לנסות את החיפושים האלה",
-  "artificial_intelligence_vision": "חזון של אינטליגנציה מלאכותית",
+  "artificial_intelligence_vision": "חזון שנוצר על ידי IA",
   "show_more": "הצג עוד",
-  "show_less": "הצג פחות"
+  "show_less": "הצג פחות",
+  "approximate_small": "בערך",
+  "minutes": "דקות"
 }

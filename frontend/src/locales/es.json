@@ -1,5 +1,5 @@
 {
-  "search_default": "Busque en uAISearch o ingrese una URL",
+  "search_default": "Busque en uAISearch o escriba una URL",
   "tools": "Herramientas",
   "all_results": "Todos los resultados",
   "about": "Acerca de",
@@ -42,7 +42,9 @@
   "tips": "consejos",
   "to_search_on_brand": "para buscar en uAISearch",
   "you_can_try_these_searches": "También puede intentar hacer estas búsquedas",
-  "artificial_intelligence_vision": "Visión de IA",
+  "artificial_intelligence_vision": "Visión generada por IA",
   "show_more": "Mostrar más",
-  "show_less": "Mostrar menos"
+  "show_less": "Mostrar menos",
+  "approximate_small": "Aprox.",
+  "minutes": "minutos"
 }

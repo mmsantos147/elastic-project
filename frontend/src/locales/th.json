@@ -7,7 +7,7 @@
   "business": "ธุรกิจ",
   "how_search_works": "การค้นหาทำงานอย่างไร",
   "privacy": "ความเป็นส่วนตัว",
-  "terms": "ข้อกำหนด",
+  "terms": "เงื่อนไข",
   "settings": "การตั้งค่า",
   "score_desc": "ความเกี่ยวข้องลดลง",
   "score_asc": "ความเกี่ยวข้องเพิ่มขึ้น",
@@ -27,7 +27,7 @@
   "itens_per_page": "รายการต่อหน้า",
   "reading_time": "เวลาอ่าน",
   "publish_date": "วันที่เผยแพร่",
-  "search_for": "ค้นหาสำหรับ",
+  "search_for": "ค้นหา",
   "near": "ประมาณ",
   "results": "ผลลัพธ์",
   "seconds": "วินาที",
@@ -41,8 +41,10 @@
   "check_out_other": "ตรวจสอบอื่น ๆ",
   "tips": "เคล็ดลับ",
   "to_search_on_brand": "เพื่อค้นหาใน uAISearch",
-  "you_can_try_these_searches": "คุณยังสามารถลองทำการค้นหาเหล่านี้",
-  "artificial_intelligence_vision": "วิสัยทัศน์ของ AI",
+  "you_can_try_these_searches": "คุณยังสามารถลองค้นหาเหล่านี้",
+  "artificial_intelligence_vision": "วิสัยทัศน์ที่สร้างโดย AI",
   "show_more": "แสดงเพิ่มเติม",
-  "show_less": "แสดงน้อยลง"
+  "show_less": "แสดงน้อยลง",
+  "approximate_small": "ประมาณ",
+  "minutes": "นาที"
 }

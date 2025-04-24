@@ -42,7 +42,9 @@
   "tips": "conseils",
   "to_search_on_brand": "pour rechercher sur uAISearch",
   "you_can_try_these_searches": "Vous pouvez également essayer ces recherches",
-  "artificial_intelligence_vision": "Vision de l'IA",
+  "artificial_intelligence_vision": "Vision générée par IA",
   "show_more": "Afficher plus",
-  "show_less": "Afficher moins"
+  "show_less": "Afficher moins",
+  "approximate_small": "Env.",
+  "minutes": "minutes"
 }
