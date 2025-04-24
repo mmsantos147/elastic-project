@@ -5,6 +5,7 @@ import COLORS from "../colors";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const { t } = useTranslation();
@@ -50,10 +51,10 @@ const Register = () => {
               </h1>
             </Row>
             <Row>
-              <a style={{ color: COLORS.white }} onClick={() => {navigate("/")}}>
+              <Link to="/" style={{ color: COLORS.white }} >
                 {" "}
                 <IoMdArrowRoundBack /> {t("go_back_to_search")}
-              </a>
+              </Link>
             </Row>
           </Col>
           <Col
