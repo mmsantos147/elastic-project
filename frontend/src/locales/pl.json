@@ -27,7 +27,7 @@
   "itens_per_page": "Elementy na stronę",
   "reading_time": "Czas czytania",
   "publish_date": "Data publikacji",
-  "search_for": "Szukaj za",
+  "search_for": "Szukaj",
   "near": "Około",
   "results": "wyniki",
   "seconds": "sekundy",
@@ -50,5 +50,12 @@
   "bachelors_degree_in_computer_science": "Licencjat z Informatyki",
   "federal_university_of_alfenas": "Federalna Uniwersytet w Alfenas",
   "brazil": "Brazylia",
-  "teacher_dr": "Profesor Dr."
+  "teacher_dr": "Profesor Dr.",
+  "insert_your_username": "Wprowadź swoją nazwę użytkownika",
+  "please_insert_your_username": "Proszę, wprowadź swoją nazwę użytkownika",
+  "insert_your_password": "Wprowadź swoje hasło",
+  "please_insert_your_password": "Proszę, wprowadź swoje hasło!",
+  "register": "Zarejestruj się",
+  "login": "Zaloguj",
+  "go_back_to_search": "Wróć do wyszukiwania"
 }

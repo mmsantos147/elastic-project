@@ -32,7 +32,7 @@
   "results": "结果",
   "seconds": "秒",
   "make_login": "登录",
-  "search_suggested": "推荐搜索",
+  "search_suggested": "建议搜索",
   "recent_searches": "最近搜索",
   "search": "搜索",
   "search_on_brand": "在uAISearch中搜索",
@@ -42,7 +42,7 @@
   "tips": "提示",
   "to_search_on_brand": "在uAISearch中搜索",
   "you_can_try_these_searches": "您也可以尝试这些搜索",
-  "artificial_intelligence_vision": "人工智能生成的视觉",
+  "artificial_intelligence_vision": "人工智能生成的视图",
   "show_more": "显示更多",
   "show_less": "显示更少",
   "approximate_small": "大约",
@@ -50,5 +50,12 @@
   "bachelors_degree_in_computer_science": "计算机科学学士学位",
   "federal_university_of_alfenas": "阿尔费纳斯联邦大学",
   "brazil": "巴西",
-  "teacher_dr": "教授博士"
+  "teacher_dr": "教授博士",
+  "insert_your_username": "输入您的用户名",
+  "please_insert_your_username": "请输入您的用户名",
+  "insert_your_password": "输入您的密码",
+  "please_insert_your_password": "请输入您的密码！",
+  "register": "注册",
+  "login": "登录",
+  "go_back_to_search": "返回搜索"
 }

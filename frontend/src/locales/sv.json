@@ -17,7 +17,7 @@
   "date_asc": "Äldst först",
   "define": "Definiera",
   "fast": "Snabb",
-  "medium": "Medium",
+  "medium": "Mellan",
   "high": "Lång",
   "minute_abbreviation": "min",
   "after_": "Efter",
@@ -50,5 +50,12 @@
   "bachelors_degree_in_computer_science": "Kandidatexamen i datavetenskap",
   "federal_university_of_alfenas": "Federala universitetet i Alfenas",
   "brazil": "Brasilien",
-  "teacher_dr": "Professor Dr."
+  "teacher_dr": "Professor Dr.",
+  "insert_your_username": "Ange ditt användarnamn",
+  "please_insert_your_username": "Vänligen ange ditt användarnamn",
+  "insert_your_password": "Ange ditt lösenord",
+  "please_insert_your_password": "Vänligen ange ditt lösenord!",
+  "register": "Registrera",
+  "login": "Logga in",
+  "go_back_to_search": "Gå tillbaka till sökningen"
 }

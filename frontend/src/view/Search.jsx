@@ -14,6 +14,7 @@ import SearchResults from "../components/search/SeachResults";
 import PageSelect from "../components/search/PageSelect";
 import EmptyResults from "../components/search/EmptyResults";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const { Content } = Layout;
 
@@ -33,6 +34,7 @@ const Search = () => {
     timeTaken: 0.0,
     results: [],
   });
+  const { t } = useTranslation();
   const [processingRequest, setProcessingRequest] = useState(false);
   const [aiAbstract, setAiAbstract] = useState({});
   const [formData, setFormData] = useState({

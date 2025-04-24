@@ -41,7 +41,7 @@
   "check_out_other": "ตรวจสอบอื่น ๆ",
   "tips": "เคล็ดลับ",
   "to_search_on_brand": "เพื่อค้นหาใน uAISearch",
-  "you_can_try_these_searches": "คุณยังสามารถลองค้นหาเหล่านี้",
+  "you_can_try_these_searches": "คุณยังสามารถลองทำการค้นหาเหล่านี้",
   "artificial_intelligence_vision": "วิสัยทัศน์ที่สร้างโดย AI",
   "show_more": "แสดงเพิ่มเติม",
   "show_less": "แสดงน้อยลง",
@@ -50,5 +50,12 @@
   "bachelors_degree_in_computer_science": "ปริญญาตรีด้านวิทยาการคอมพิวเตอร์",
   "federal_university_of_alfenas": "มหาวิทยาลัยรัฐบาลแห่งอัลเฟนาส",
   "brazil": "บราซิล",
-  "teacher_dr": "อาจารย์ ดร."
+  "teacher_dr": "อาจารย์ ดร.",
+  "insert_your_username": "ใส่ชื่อผู้ใช้ของคุณ",
+  "please_insert_your_username": "กรุณาใส่ชื่อผู้ใช้ของคุณ",
+  "insert_your_password": "ใส่รหัสผ่านของคุณ",
+  "please_insert_your_password": "กรุณาใส่รหัสผ่านของคุณ!",
+  "register": "ลงทะเบียน",
+  "login": "เข้าสู่ระบบ",
+  "go_back_to_search": "กลับไปที่การค้นหา"
 }

@@ -3,10 +3,11 @@ import { Content } from "antd/es/layout/layout";
 import UAISearch from "../components/UAISearch";
 import COLORS from "../colors";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import LanguageSelector from "../components/LanguageSelector";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
+  const { t } = useTranslation();
   const onFinish = (values) => {
     console.log("Dados enviados:", values);
   };
@@ -46,11 +47,11 @@ const Login = () => {
                   marginBottom: "0px",
                 }}
               >
-                Fazer login
+                {t("make_login")}
               </h1>
             </Row>
             <Row>
-              <a style={{ color: COLORS.white}} href="/"> <IoMdArrowRoundBack /> Voltar para a pesquisa</a>
+              <a style={{ color: COLORS.white}} href="/"> <IoMdArrowRoundBack /> {t("go_back_to_search")}</a>
             </Row>
           </Col>
           <Col
@@ -76,12 +77,12 @@ const Login = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Por favor, insira seu usuário!",
+                    message: t("please_insert_your_username"),
                   },
                 ]}
               >
                 <Input
-                  placeholder="Insira seu usuário ou e-mail"
+                  placeholder={t("insert_your_username")}
                   style={{ color: "white", padding: "14px" }}
                 />
               </Form.Item>
@@ -89,11 +90,11 @@ const Login = () => {
               <Form.Item
                 name="password"
                 rules={[
-                  { required: true, message: "Por favor, insira sua senha!" },
+                  { required: true, message: t("please_insert_your_password")},
                 ]}
               >
                 <Input.Password
-                  placeholder="Senha"
+                  placeholder={t("insert_your_password")}
                   style={{ color: "white", padding: "14px" }}
                   iconRender={(visible) =>
                     visible ? (
@@ -120,7 +121,7 @@ const Login = () => {
         >
           <b>
             <a style={{ color: COLORS.purple }} href="/register">
-              Registrar
+              {t("register")}
             </a>
           </b>
           <Button
@@ -132,7 +133,7 @@ const Login = () => {
               backgroundColor: COLORS.purple,
             }}
           >
-            <b>Logar</b>
+            <b>{t("login")}</b>
           </Button>
         </div>
       </Card>

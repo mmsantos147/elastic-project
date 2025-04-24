@@ -50,5 +50,12 @@
   "bachelors_degree_in_computer_science": "Licence en Informatique",
   "federal_university_of_alfenas": "Université Fédérale d'Alfenas",
   "brazil": "Brésil",
-  "teacher_dr": "Professeur Dr."
+  "teacher_dr": "Professeur Dr.",
+  "insert_your_username": "Insérez votre nom d'utilisateur",
+  "please_insert_your_username": "Veuillez insérer votre nom d'utilisateur",
+  "insert_your_password": "Insérez votre mot de passe",
+  "please_insert_your_password": "Veuillez insérer votre mot de passe !",
+  "register": "S'inscrire",
+  "login": "Se connecter",
+  "go_back_to_search": "Retourner à la recherche"
 }

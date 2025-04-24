@@ -50,5 +50,12 @@
   "bachelors_degree_in_computer_science": "Bachelor's degree in Computer Science",
   "federal_university_of_alfenas": "Federal University of Alfenas",
   "brazil": "Brazil",
-  "teacher_dr": "Professor Dr."
+  "teacher_dr": "Professor Dr.",
+  "insert_your_username": "Insert your username",
+  "please_insert_your_username": "Please insert your username",
+  "insert_your_password": "Insert your password",
+  "please_insert_your_password": "Please insert your password!",
+  "register": "Register",
+  "login": "Log in",
+  "go_back_to_search": "Go back to search"
 }

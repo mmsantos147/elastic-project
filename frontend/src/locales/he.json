@@ -50,5 +50,12 @@
   "bachelors_degree_in_computer_science": "תואר ראשון במדעי המחשב",
   "federal_university_of_alfenas": "האוניברסיטה הפדרלית של אלפנס",
   "brazil": "ברזיל",
-  "teacher_dr": "מורה דר"
+  "teacher_dr": "מורה ד\"ר",
+  "insert_your_username": "הכנס את שם המשתמש שלך",
+  "please_insert_your_username": "אנא הכנס את שם המשתמש שלך",
+  "insert_your_password": "הכנס את הסיסמה שלך",
+  "please_insert_your_password": "אנא הכנס את הסיסמה שלך!",
+  "register": "להירשם",
+  "login": "להתחבר",
+  "go_back_to_search": "חזור לחיפוש"
 }

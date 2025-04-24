@@ -32,8 +32,8 @@
   "results": "نتائج",
   "seconds": "ثواني",
   "make_login": "تسجيل الدخول",
-  "search_suggested": "عمليات البحث المقترحة",
-  "recent_searches": "عمليات البحث الأخيرة",
+  "search_suggested": "البحث المقترح",
+  "recent_searches": "البحث الأخير",
   "search": "بحث",
   "search_on_brand": "ابحث في uAISearch",
   "your_search_dont_find_any_docs": "لم تجد بحثك أي مستندات مطابقة",
@@ -41,7 +41,7 @@
   "check_out_other": "تحقق من أخرى",
   "tips": "نصائح",
   "to_search_on_brand": "للبحث في uAISearch",
-  "you_can_try_these_searches": "يمكنك أيضًا تجربة هذه البحث",
+  "you_can_try_these_searches": "يمكنك أيضًا محاولة إجراء هذه البحث",
   "artificial_intelligence_vision": "رؤية مولدة بواسطة الذكاء الاصطناعي",
   "show_more": "عرض المزيد",
   "show_less": "عرض أقل",
@@ -50,5 +50,12 @@
   "bachelors_degree_in_computer_science": "بكالوريوس في علوم الحاسوب",
   "federal_university_of_alfenas": "الجامعة الفيدرالية في ألفيناس",
   "brazil": "البرازيل",
-  "teacher_dr": "أستاذ د."
+  "teacher_dr": "أستاذ دكتور",
+  "insert_your_username": "أدخل اسم المستخدم الخاص بك",
+  "please_insert_your_username": "يرجى إدخال اسم المستخدم الخاص بك",
+  "insert_your_password": "أدخل كلمة المرور الخاصة بك",
+  "please_insert_your_password": "يرجى إدخال كلمة المرور الخاصة بك!",
+  "register": "تسجيل",
+  "login": "تسجيل الدخول",
+  "go_back_to_search": "العودة إلى البحث"
 }

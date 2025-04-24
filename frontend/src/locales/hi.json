@@ -9,9 +9,9 @@
   "privacy": "गोपनीयता",
   "terms": "शर्तें",
   "settings": "सेटिंग्स",
-  "score_desc": "घटती प्रासंगिकता",
+  "score_desc": "कम होती प्रासंगिकता",
   "score_asc": "बढ़ती प्रासंगिकता",
-  "read_time_desc": "घटता पढ़ने का समय",
+  "read_time_desc": "कम होता पढ़ने का समय",
   "read_time_asc": "बढ़ता पढ़ने का समय",
   "date_desc": "नवीनतम पहले",
   "date_asc": "पुराने पहले",
@@ -50,5 +50,12 @@
   "bachelors_degree_in_computer_science": "कंप्यूटर विज्ञान में स्नातक डिग्री",
   "federal_university_of_alfenas": "अल्फेना की संघीय विश्वविद्यालय",
   "brazil": "ब्राज़ील",
-  "teacher_dr": "प्रोफेसर डॉ."
+  "teacher_dr": "प्रोफेसर डॉ.",
+  "insert_your_username": "अपना उपयोगकर्ता नाम डालें",
+  "please_insert_your_username": "कृपया अपना उपयोगकर्ता नाम डालें",
+  "insert_your_password": "अपना पासवर्ड डालें",
+  "please_insert_your_password": "कृपया अपना पासवर्ड डालें!",
+  "register": "पंजीकरण करें",
+  "login": "लॉगिन करें",
+  "go_back_to_search": "खोज पर वापस जाएं"
 }

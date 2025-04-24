@@ -5,6 +5,7 @@ import COLORS from "../colors";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 const Register = () => {
+  const { t } = useTranslation();
   const onFinish = (values) => {
     console.log("Dados enviados:", values);
   };

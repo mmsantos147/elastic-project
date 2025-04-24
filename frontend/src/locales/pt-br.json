@@ -50,5 +50,12 @@
     "bachelors_degree_in_computer_science": "Bacharelado em Ciência da Computação",
     "federal_university_of_alfenas": "Universidade Federal de Alfenas",
     "brazil": "Brasil",
-    "teacher_dr": "Professor Dr."
+    "teacher_dr": "Professor Dr.",
+    "insert_your_username": "Insira seu usuário",
+    "please_insert_your_username": "Por favor, insira seu usuário",
+    "insert_your_password": "Insira sua senha",
+    "please_insert_your_password": "Por favor, insira sua senha!",
+    "register": "Registrar",
+    "login": "Logar",
+    "go_back_to_search": "Voltar para a pesquisa"
 }

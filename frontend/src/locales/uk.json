@@ -42,7 +42,7 @@
   "tips": "поради",
   "to_search_on_brand": "щоб шукати в uAISearch",
   "you_can_try_these_searches": "Ви також можете спробувати ці пошуки",
-  "artificial_intelligence_vision": "Згенероване ІІ зображення",
+  "artificial_intelligence_vision": "Зображення, згенероване ШІ",
   "show_more": "Показати більше",
   "show_less": "Показати менше",
   "approximate_small": "Прибл.",
@@ -50,5 +50,12 @@
   "bachelors_degree_in_computer_science": "Ступінь бакалавра з комп'ютерних наук",
   "federal_university_of_alfenas": "Федеральний університет Альфенас",
   "brazil": "Бразилія",
-  "teacher_dr": "Професор д-р."
+  "teacher_dr": "Професор д-р.",
+  "insert_your_username": "Введіть ваше ім'я користувача",
+  "please_insert_your_username": "Будь ласка, введіть ваше ім'я користувача",
+  "insert_your_password": "Введіть ваш пароль",
+  "please_insert_your_password": "Будь ласка, введіть ваш пароль!",
+  "register": "Зареєструватися",
+  "login": "Увійти",
+  "go_back_to_search": "Повернутися до пошуку"
 }
