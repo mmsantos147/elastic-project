@@ -21,6 +21,10 @@ import uk from "../locales/uk.json";
 import he from "../locales/he.json";
 import vi from "../locales/vi.json";
 import th from "../locales/th.json";
+import Cookies from "js-cookie";
+
+
+const savedLanguage = Cookies.get("language") || "pt";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -45,7 +49,7 @@ i18n.use(initReactI18next).init({
     vi: { translation: vi },
     th: { translation: th },
   },
-  lng: "pt", 
+  lng: savedLanguage, 
   fallbackLng: "pt", 
   interpolation: {
     escapeValue: false, 

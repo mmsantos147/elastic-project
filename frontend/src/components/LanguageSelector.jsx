@@ -3,6 +3,7 @@ import { DownOutlined } from "@ant-design/icons";
 import ReactCountryFlag from "react-country-flag";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 const languages = [
   { code: "pt", name: "Português", countryCode: "BR" },
@@ -36,6 +37,7 @@ const LanguageSelector = () => {
   useEffect(() => {
     const selected = languages.find((l) => l.code === i18n.language);
     if (selected) setCurrentLang(selected);
+    Cookies.set("language", i18n.language, { expires: 365 });
   }, [i18n.language]);
 
   const handleMenuClick = ({ key }) => {
