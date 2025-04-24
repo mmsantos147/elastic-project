@@ -15,6 +15,7 @@ import PageSelect from "../components/search/PageSelect";
 import EmptyResults from "../components/search/EmptyResults";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 
 const { Content } = Layout;
 
@@ -23,9 +24,11 @@ const StyledSearchBar = styled(SearchBar)`
 `;
 
 const Search = () => {
+  const [searchParamsReactive] = useSearchParams();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const initialSearch = queryParams.get("q") || "";
+  const paramQ = searchParamsReactive.get("q");
   const navigate = useNavigate();
   const [toolsVisible, setToolsVisible] = useState(false);
   const [searchResult, setSearchResults] = useState({
@@ -90,6 +93,10 @@ const Search = () => {
 
     fetchData();
   }, [formData]);
+
+  useEffect(() => {
+    setFormData((prev) => ({...prev, search: paramQ}))
+  }, [paramQ]);
 
   const setSearchValue = (value) => {
     setFormData((prev) => ({ ...prev, search: value }));
