@@ -4,9 +4,11 @@ import UAISearch from "../components/UAISearch";
 import COLORS from "../colors";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Dados enviados:", values);
   };
@@ -48,7 +50,7 @@ const Register = () => {
               </h1>
             </Row>
             <Row>
-              <a style={{ color: COLORS.white }} href="/">
+              <a style={{ color: COLORS.white }} onClick={() => {navigate("/")}}>
                 {" "}
                 <IoMdArrowRoundBack /> {t("go_back_to_search")}
               </a>
@@ -123,7 +125,7 @@ const Register = () => {
                     }}
                   >
                     <b>
-                      <a href="/login" style={{ color: COLORS.purple }}>
+                      <a style={{ color: COLORS.purple }} onClick={() => {navigate("/login")}}>
                         {t("already_have_a_account")}
                       </a>
                     </b>

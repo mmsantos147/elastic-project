@@ -5,9 +5,11 @@ import COLORS from "../colors";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Dados enviados:", values);
   };
@@ -51,7 +53,7 @@ const Login = () => {
               </h1>
             </Row>
             <Row>
-              <a style={{ color: COLORS.white}} href="/"> <IoMdArrowRoundBack /> {t("go_back_to_search")}</a>
+              <a style={{ color: COLORS.white}} onClick={() => {navigate("/")}}> <IoMdArrowRoundBack /> {t("go_back_to_search")}</a>
             </Row>
           </Col>
           <Col
@@ -120,7 +122,7 @@ const Login = () => {
           }}
         >
           <b>
-            <a style={{ color: COLORS.purple }} href="/register">
+            <a style={{ color: COLORS.purple }} onClick={() => {navigate("/register")}}>
               {t("register")}
             </a>
           </b>
