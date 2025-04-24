@@ -48,12 +48,6 @@ const Search = () => {
   });
 
   useEffect(() => {
-    if (initialSearch) {
-      searchSubmit(initialSearch);
-    }
-  }, [initialSearch]);
-
-  useEffect(() => {
     const es = new EventSource(`${ROOT_URL}/${API_PREFIX}/stream`);
 
     es.addEventListener("AiAbstract", (evt) => {
