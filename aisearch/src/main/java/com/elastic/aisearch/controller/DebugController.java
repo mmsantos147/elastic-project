@@ -60,8 +60,8 @@ public class DebugController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("{/city}")
-    public ResponseEntity<String> getWeather(@PathVariable String city) {
+    @GetMapping("{/weather/city}")
+    public ResponseEntity<String> weather(@PathVariable String city) {
         String response = weatherService.getWeather(city).toString();
         return ResponseEntity.ok(response);
     }
