@@ -21,7 +21,7 @@ public class WeatherController {
 
     @GetMapping("")
     public WeatherDTO getWeather(HttpServletRequest request) {
-        String ipAddress = request.getHeader("X-Forwarded-For");
+        String ipAddress = request.getHeader("X-Real-IP");
         if (ipAddress == null || ipAddress.isEmpty() || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getRemoteAddr();
         }
