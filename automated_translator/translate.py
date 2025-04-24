@@ -17,7 +17,8 @@ def translate_to(texto: str, idioma_destino: str) -> str:
                 "O JSON deve ser IDENTICO ao JSON original, com excessao da tradução,"
                 "que deverá corresponder ao input do usuário. Coloque todo o texto"
                 "(chaves e valores) entre aspas duplas, não aspas simples. Não escape "
-                "aspas simples com \\ (contra barra)."
+                "aspas simples com \\ (contra barra). Caso a linguagem use aspas duplas"
+                "(\"), não a coloque no texto."
             )
         },
         {
