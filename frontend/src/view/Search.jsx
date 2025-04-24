@@ -49,6 +49,7 @@ const Search = () => {
     searchFor: "",
     minDateTime: "",
   });
+  const updatesInAiAbstract = 0;
 
   useEffect(() => {
     const es = new EventSource(`${ROOT_URL}/${API_PREFIX}/stream`);
@@ -64,6 +65,7 @@ const Search = () => {
         message.error("Um erro aconteceu com a inteligência artificial!");
         console.error("Erro parseando SSE:", err);
       }
+      updatesInAiAbstract -= 1;
     });
 
     return () => es.close();
@@ -90,7 +92,7 @@ const Search = () => {
         setProcessingRequest(false);
       }
     };
-
+    updatesInAiAbstract += 1
     fetchData();
   }, [formData]);
 
@@ -177,6 +179,7 @@ const Search = () => {
               processingRequest={processingRequest}
               aiAbstract={aiAbstract}
               searchResult={searchResult.results}
+              updatesInAiAbstract={updatesInAiAbstract}
             />
             <PageSelect setFormData={setFormData} />
           </>
