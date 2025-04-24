@@ -41,8 +41,8 @@
   "check_out_other": "Bekijk andere",
   "tips": "tips",
   "to_search_on_brand": "om te zoeken in uAISearch",
-  "you_can_try_these_searches": "U kunt ook proberen deze zoekopdrachten uit te voeren",
-  "artificial_intelligence_vision": "Visie gegenereerd door AI",
+  "you_can_try_these_searches": "U kunt ook deze zoekopdrachten proberen",
+  "artificial_intelligence_vision": "Door AI gegenereerde visie",
   "show_more": "Meer tonen",
   "show_less": "Minder tonen",
   "approximate_small": "Ongeveer",
@@ -55,7 +55,14 @@
   "please_insert_your_username": "Voer alstublieft uw gebruikersnaam in",
   "insert_your_password": "Voer uw wachtwoord in",
   "please_insert_your_password": "Voer alstublieft uw wachtwoord in!",
+  "please_confirm_your_password": "Bevestig alstublieft uw wachtwoord!",
+  "confirm_password": "Bevestig het wachtwoord",
+  "insert_your_email": "Voer uw e-mail in",
+  "please_insert_your_email": "Voer alstublieft uw e-mail in!",
   "register": "Registreren",
+  "register_now": "Nu registreren",
   "login": "Inloggen",
-  "go_back_to_search": "Terug naar de zoekopdracht"
+  "go_back_to_search": "Terug naar de zoekopdracht",
+  "already_have_a_account": "Ik heb al een account",
+  "create_account": "Account aanmaken"
 }

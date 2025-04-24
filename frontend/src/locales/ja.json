@@ -20,7 +20,7 @@
   "medium": "中",
   "high": "長い",
   "minute_abbreviation": "分",
-  "after_": "後に",
+  "after_": "後",
   "all_results_search": "すべての結果",
   "exact_result": "正確な一致",
   "order_by": "並べ替え",
@@ -42,7 +42,7 @@
   "tips": "ヒント",
   "to_search_on_brand": "uAISearchで検索するために",
   "you_can_try_these_searches": "これらの検索を試すこともできます",
-  "artificial_intelligence_vision": "AIによって生成されたビジョン",
+  "artificial_intelligence_vision": "AI生成のビジョン",
   "show_more": "もっと見る",
   "show_less": "少なく表示",
   "approximate_small": "約",
@@ -55,7 +55,14 @@
   "please_insert_your_username": "ユーザー名を入力してください",
   "insert_your_password": "パスワードを入力してください",
   "please_insert_your_password": "パスワードを入力してください！",
+  "please_confirm_your_password": "パスワードを確認してください！",
+  "confirm_password": "パスワードを確認",
+  "insert_your_email": "メールアドレスを入力してください",
+  "please_insert_your_email": "メールアドレスを入力してください！",
   "register": "登録する",
+  "register_now": "今すぐ登録",
   "login": "ログイン",
-  "go_back_to_search": "検索に戻る"
+  "go_back_to_search": "検索に戻る",
+  "already_have_a_account": "すでにアカウントをお持ちですか",
+  "create_account": "アカウントを作成する"
 }

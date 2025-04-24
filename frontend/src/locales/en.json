@@ -55,7 +55,14 @@
   "please_insert_your_username": "Please insert your username",
   "insert_your_password": "Insert your password",
   "please_insert_your_password": "Please insert your password!",
+  "please_confirm_your_password": "Please confirm your password!",
+  "confirm_password": "Confirm password",
+  "insert_your_email": "Insert your email",
+  "please_insert_your_email": "Please insert your email!",
   "register": "Register",
+  "register_now": "Register now",
   "login": "Log in",
-  "go_back_to_search": "Go back to search"
+  "go_back_to_search": "Go back to search",
+  "already_have_a_account": "Already have an account",
+  "create_account": "Create account"
 }

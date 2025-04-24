@@ -55,7 +55,14 @@
   "please_insert_your_username": "กรุณาใส่ชื่อผู้ใช้ของคุณ",
   "insert_your_password": "ใส่รหัสผ่านของคุณ",
   "please_insert_your_password": "กรุณาใส่รหัสผ่านของคุณ!",
+  "please_confirm_your_password": "กรุณายืนยันรหัสผ่านของคุณ!",
+  "confirm_password": "ยืนยันรหัสผ่าน",
+  "insert_your_email": "ใส่อีเมลของคุณ",
+  "please_insert_your_email": "กรุณาใส่อีเมลของคุณ!",
   "register": "ลงทะเบียน",
+  "register_now": "ลงทะเบียนตอนนี้",
   "login": "เข้าสู่ระบบ",
-  "go_back_to_search": "กลับไปที่การค้นหา"
+  "go_back_to_search": "กลับไปที่การค้นหา",
+  "already_have_a_account": "ฉันมีบัญชีอยู่แล้ว",
+  "create_account": "สร้างบัญชี"
 }

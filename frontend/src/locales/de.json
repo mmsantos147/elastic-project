@@ -3,7 +3,7 @@
   "tools": "Werkzeuge",
   "all_results": "Alle Ergebnisse",
   "about": "Über",
-  "advertisement": "Anzeige",
+  "advertisement": "Werbung",
   "business": "Geschäfte",
   "how_search_works": "Wie die Suche funktioniert",
   "privacy": "Datenschutz",
@@ -55,7 +55,14 @@
   "please_insert_your_username": "Bitte geben Sie Ihren Benutzernamen ein",
   "insert_your_password": "Geben Sie Ihr Passwort ein",
   "please_insert_your_password": "Bitte geben Sie Ihr Passwort ein!",
+  "please_confirm_your_password": "Bitte bestätigen Sie Ihr Passwort!",
+  "confirm_password": "Passwort bestätigen",
+  "insert_your_email": "Geben Sie Ihre E-Mail ein",
+  "please_insert_your_email": "Bitte geben Sie Ihre E-Mail ein!",
   "register": "Registrieren",
+  "register_now": "Jetzt registrieren",
   "login": "Anmelden",
-  "go_back_to_search": "Zurück zur Suche"
+  "go_back_to_search": "Zurück zur Suche",
+  "already_have_a_account": "Ich habe bereits ein Konto",
+  "create_account": "Konto erstellen"
 }

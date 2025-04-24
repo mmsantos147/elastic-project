@@ -55,7 +55,14 @@
   "please_insert_your_username": "Vänligen ange ditt användarnamn",
   "insert_your_password": "Ange ditt lösenord",
   "please_insert_your_password": "Vänligen ange ditt lösenord!",
+  "please_confirm_your_password": "Vänligen bekräfta ditt lösenord!",
+  "confirm_password": "Bekräfta lösenord",
+  "insert_your_email": "Ange din e-post",
+  "please_insert_your_email": "Vänligen ange din e-post!",
   "register": "Registrera",
+  "register_now": "Registrera dig nu",
   "login": "Logga in",
-  "go_back_to_search": "Gå tillbaka till sökningen"
+  "go_back_to_search": "Gå tillbaka till sökningen",
+  "already_have_a_account": "Jag har redan ett konto",
+  "create_account": "Skapa konto"
 }

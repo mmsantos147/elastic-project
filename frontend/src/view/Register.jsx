@@ -3,6 +3,7 @@ import { Content } from "antd/es/layout/layout";
 import UAISearch from "../components/UAISearch";
 import COLORS from "../colors";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
   const { t } = useTranslation();
@@ -43,13 +44,13 @@ const Register = () => {
                   marginBottom: "0px",
                 }}
               >
-                Registrar-se agora
+                {t("register_now")}
               </h1>
             </Row>
             <Row>
               <a style={{ color: COLORS.white }} href="/">
                 {" "}
-                <IoMdArrowRoundBack /> Voltar para a pesquisa
+                <IoMdArrowRoundBack /> {t("go_back_to_search")}
               </a>
             </Row>
           </Col>
@@ -71,44 +72,44 @@ const Register = () => {
               <Form.Item
                 name="username"
                 rules={[
-                  { required: true, message: "Por favor, insira seu usuário!" },
+                  { required: true, message: t("please_insert_your_username") },
                 ]}
               >
                 <Input
-                  placeholder="Insira seu usuário"
+                  placeholder={t("insert_your_username")}
                   style={{ color: "white", padding: "14px" }}
                 />
               </Form.Item>
               <Form.Item
                 name="username"
                 rules={[
-                  { required: true, message: "Por favor, insira seu usuário!" },
+                  { required: true, message: t("please_insert_your_email") },
                 ]}
               >
                 <Input
-                  placeholder="Insira o seu e-mail"
+                  placeholder={t("insert_your_email")}
                   style={{ color: "white", padding: "14px" }}
                 />
               </Form.Item>
               <Form.Item
                 name="username"
                 rules={[
-                  { required: true, message: "Por favor, insira seu usuário!" },
+                  { required: true, message: t("please_insert_your_password")},
                 ]}
               >
                 <Input
-                  placeholder="Digite sua senha"
+                  placeholder={t("insert_your_password")}
                   style={{ color: "white", padding: "14px" }}
                 />
               </Form.Item>
               <Form.Item
                 name="username"
                 rules={[
-                  { required: true, message: "Por favor, insira seu usuário!" },
+                  { required: true, message: t("please_confirm_your_password") },
                 ]}
               >
                 <Input
-                  placeholder="Repita a mesma senha"
+                  placeholder={t("confirm_password")}
                   style={{ color: "white", padding: "14px" }}
                 />
               </Form.Item>
@@ -123,7 +124,7 @@ const Register = () => {
                   >
                     <b>
                       <a href="/login" style={{ color: COLORS.purple }}>
-                        Já tenho uma conta
+                        {t("already_have_a_account")}
                       </a>
                     </b>
                   </Col>
@@ -140,7 +141,7 @@ const Register = () => {
                       type="primary"
                       htmlType="submit"
                     >
-                      <b>Criar conta</b>
+                      <b>{t("create_account")}</b>
                     </Button>
                   </Col>
                 </Row>

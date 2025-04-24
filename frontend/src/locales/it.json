@@ -55,7 +55,14 @@
   "please_insert_your_username": "Per favore, inserisci il tuo nome utente",
   "insert_your_password": "Inserisci la tua password",
   "please_insert_your_password": "Per favore, inserisci la tua password!",
+  "please_confirm_your_password": "Per favore, conferma la tua password!",
+  "confirm_password": "Conferma la password",
+  "insert_your_email": "Inserisci la tua email",
+  "please_insert_your_email": "Per favore, inserisci la tua email!",
   "register": "Registrati",
+  "register_now": "Registrati ora",
   "login": "Accedi",
-  "go_back_to_search": "Torna alla ricerca"
+  "go_back_to_search": "Torna alla ricerca",
+  "already_have_a_account": "Ho già un account",
+  "create_account": "Crea un account"
 }

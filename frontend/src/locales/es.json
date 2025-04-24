@@ -1,5 +1,5 @@
 {
-  "search_default": "Busca en uAISearch o ingresa una URL",
+  "search_default": "Busque en uAISearch o ingrese una URL",
   "tools": "Herramientas",
   "all_results": "Todos los resultados",
   "about": "Acerca de",
@@ -55,7 +55,14 @@
   "please_insert_your_username": "Por favor, ingresa tu usuario",
   "insert_your_password": "Ingresa tu contraseña",
   "please_insert_your_password": "¡Por favor, ingresa tu contraseña!",
+  "please_confirm_your_password": "¡Por favor, confirma tu contraseña!",
+  "confirm_password": "Confirma la contraseña",
+  "insert_your_email": "Ingresa tu correo electrónico",
+  "please_insert_your_email": "¡Por favor, ingresa tu correo electrónico!",
   "register": "Registrar",
+  "register_now": "Regístrate ahora",
   "login": "Iniciar sesión",
-  "go_back_to_search": "Volver a la búsqueda"
+  "go_back_to_search": "Volver a la búsqueda",
+  "already_have_a_account": "Ya tengo una cuenta",
+  "create_account": "Crear cuenta"
 }
