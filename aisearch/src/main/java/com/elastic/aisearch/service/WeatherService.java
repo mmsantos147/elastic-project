@@ -28,8 +28,8 @@ public class WeatherService {
 
 
         return new WeatherDTO(
-                json.path("weather").path("id").asInt(),
-                json.path("weather").path("main").asText(),
+                json.path("weather").get(0).path("id").asInt(),
+                json.path("weather").get(0).path("main").asText(),
                 json.path("name").asText(),
                 json.path("main").path("temp").asInt(),
                 json.path("weather").get(0).path("description").asText()
