@@ -6,7 +6,7 @@ import COLORS from "../../colors";
 import { useTranslation } from "react-i18next";
 
 const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
@@ -62,11 +62,11 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
       <Row>
         <Col style={{ fontSize: "15px" }}>
           <FaCalendar style={{ verticalAlign: "middle", marginRight: "8px" }} />
-          {new Date(date).toLocaleDateString("pt-BR", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          })}
+            {new Date(date).toLocaleDateString(i18n.language, {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            })}
         </Col>
         <Col flex="auto" />
         <Col style={{ fontSize: "15px" }}>
