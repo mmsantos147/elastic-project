@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Button, Space, Typography } from "antd";
-import { DownOutlined, SunOutlined } from "@ant-design/icons";
+import { SunOutlined } from "@ant-design/icons";
 import { BsCloudsFill } from "react-icons/bs";
 import { IoCloudSharp } from "react-icons/io5";
 import { FaCloudSunRain } from "react-icons/fa";
@@ -9,7 +9,6 @@ import { IoThunderstormSharp } from "react-icons/io5";
 import { BsFillCloudSnowFill } from "react-icons/bs";
 import { BsCloudFog2Fill } from "react-icons/bs";
 import { FaCloudSun } from "react-icons/fa";
-import ReactCountryFlag from "react-country-flag";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
 import weatherApi from "../api/weather.api";
