@@ -28,8 +28,6 @@ public class DebugController {
     private UserSession userSession;
     private final WeatherService weatherService;
 
-    
-
     @GetMapping("/")
     public String hello() {
         return "Hello world!";
@@ -61,9 +59,9 @@ public class DebugController {
     }
 
     @GetMapping("/weather/{city}")
-    public ResponseEntity<String> weather(@PathVariable String city) {
-        String response = weatherService.getWeather(city).toString();
-        return ResponseEntity.ok(response);
+    public ResponseEntity<WeatherDTO> weather(@PathVariable String city) {
+        WeatherDTO weatherDTO = weatherService.getWeather(city);
+        return ResponseEntity.ok(weatherDTO);
     }
 
 }

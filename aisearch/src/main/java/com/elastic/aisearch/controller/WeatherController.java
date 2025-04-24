@@ -11,7 +11,7 @@ public class WeatherController {
     @Autowired
     private WeatherService weatherService;
 
-    @GetMapping("{/city}")
+    @GetMapping("/{city}")
     public WeatherDTO getWeather(@PathVariable String city) {
         return weatherService.getWeather(city);
     }
