@@ -5,7 +5,7 @@ import COLORS from "../colors";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const { t } = useTranslation();
@@ -51,7 +51,7 @@ const Register = () => {
               </h1>
             </Row>
             <Row>
-              <Link to="/" style={{ color: COLORS.white }} >
+              <Link to="/" style={{ color: COLORS.white }}>
                 {" "}
                 <IoMdArrowRoundBack /> {t("go_back_to_search")}
               </Link>
@@ -97,7 +97,7 @@ const Register = () => {
               <Form.Item
                 name="username"
                 rules={[
-                  { required: true, message: t("please_insert_your_password")},
+                  { required: true, message: t("please_insert_your_password") },
                 ]}
               >
                 <Input
@@ -108,7 +108,10 @@ const Register = () => {
               <Form.Item
                 name="username"
                 rules={[
-                  { required: true, message: t("please_confirm_your_password") },
+                  {
+                    required: true,
+                    message: t("please_confirm_your_password"),
+                  },
                 ]}
               >
                 <Input
@@ -116,41 +119,35 @@ const Register = () => {
                   style={{ color: "white", padding: "14px" }}
                 />
               </Form.Item>
-              <Row flex="auto" style={{ marginBottom: "" }} />
-              <Form.Item style={{ marginBottom: 0 }}>
-                <Row justify="end" gutter={20} align="middle">
-                  <Col
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <b>
-                      <Link to="/login" style={{ color: COLORS.purple }}>
-                        {t("already_have_a_account")}
-                      </Link>
-                    </b>
-                  </Col>
-                  <Col>
-                    <Button
-                      style={{
-                        backgroundColor: COLORS.purple,
-                        color: COLORS.dark_gray,
-                        borderRadius: "30px",
-                        padding: "23px",
-                        boxShadow: "none",
-                        color: "white",
-                      }}
-                      type="primary"
-                      htmlType="submit"
-                    >
-                      <b>{t("create_account")}</b>
-                    </Button>
-                  </Col>
-                </Row>
-              </Form.Item>
             </Form>
           </Col>
+          <div
+            style={{
+              position: "absolute",
+              bottom: 30,
+              right: 30,
+              display: "flex",
+              alignItems: "center",
+              gap: "20px",
+            }}
+          >
+            <b>
+              <Link style={{ color: COLORS.purple }} to="/login">
+                {t("already_have_a_account")}
+              </Link>
+            </b>
+            <Button
+              type="primary"
+              style={{
+                padding: "18px",
+                borderRadius: "999px",
+                boxShadow: "none",
+                backgroundColor: COLORS.purple,
+              }}
+            >
+              <b>{t("create_account")}</b>
+            </Button>
+          </div>
         </Row>
       </Card>
     </Content>
