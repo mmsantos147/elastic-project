@@ -8,7 +8,7 @@ import COLORS from "../../colors";
 const SearchResults = ({processingRequest, aiAbstract, searchResult, updatesInAiAbstract}) => {
   return (
     <>
-      {!processingRequest && Object.keys(aiAbstract).length > 0 && updatesInAiAbstract == 1 ? (
+      {!processingRequest && Object.keys(aiAbstract).length > 0 || updatesInAiAbstract > 1 ? (
         <IAVision aiAbstract={aiAbstract} style={{ marginBottom: "50px" }} />
       ) : (
         <IAVisionAbstractSkeleton style={{ marginBottom: "50px" }} />
