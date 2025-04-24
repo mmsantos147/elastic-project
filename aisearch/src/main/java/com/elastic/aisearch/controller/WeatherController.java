@@ -31,6 +31,7 @@ public class WeatherController {
         JsonNode location = restTemplate.getForObject(url, JsonNode.class);
 
         String city = location.path("city").asText();
+        if (city.isEmpty()) city = "São Paulo";
 
         return weatherService.getWeather(city);
     }

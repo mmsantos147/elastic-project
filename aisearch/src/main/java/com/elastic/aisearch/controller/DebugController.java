@@ -80,7 +80,8 @@ public class DebugController {
         JsonNode location = restTemplate.getForObject(url, JsonNode.class);
 
         String city = location.path("city").asText();
-        System.out.println(city);
+        System.out.println("O IP É ESSE" + ipAddress + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        if (city.isEmpty()) city = "São Paulo";
         WeatherDTO weatherDTO = weatherService.getWeather(city);
         return ResponseEntity.ok(weatherDTO);
     }
