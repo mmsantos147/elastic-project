@@ -126,7 +126,7 @@ const Search = () => {
         }}
       >
         <Col>
-          <a href="/">
+          <a onClick={()=>{navigate("/")}}>
             <UAISearch logoWidth="150px" style={{ margin: "12px 0 20px 0" }} />
           </a>
         </Col>
@@ -158,7 +158,7 @@ const Search = () => {
         <Col flex="auto" />
         <Col>
           <Space size="large">
-            <a href="/login">
+            <a onClick={()=>{navigate("/login")}}>
               <Button
                 type="primary"
                 style={{
