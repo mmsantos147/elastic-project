@@ -60,7 +60,7 @@ public class DebugController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/debug/weather/{city}")
+    @GetMapping("/weather/{city}")
     public ResponseEntity<String> weather(@PathVariable String city) {
         String response = weatherService.getWeather(city).toString();
         return ResponseEntity.ok(response);
