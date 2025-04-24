@@ -2,6 +2,6 @@ package com.elastic.aisearch.dto;
 
 public record WeatherDTO(
         String city,
-        Double temperature,
+        Integer temperature,
         String description
 ) {}

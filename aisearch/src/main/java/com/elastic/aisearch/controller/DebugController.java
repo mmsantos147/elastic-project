@@ -4,6 +4,8 @@ import java.io.StringReader;
 
 import com.elastic.aisearch.dto.WeatherDTO;
 import com.elastic.aisearch.service.WeatherService;
+import com.fasterxml.jackson.databind.JsonNode;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.ChatGptService;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequestMapping("/debug")
@@ -60,6 +63,22 @@ public class DebugController {
 
     @GetMapping("/weather/{city}")
     public ResponseEntity<WeatherDTO> weather(@PathVariable String city) {
+        WeatherDTO weatherDTO = weatherService.getWeather(city);
+        return ResponseEntity.ok(weatherDTO);
+    }
+
+    @GetMapping("/weather/ip")
+    public ResponseEntity<WeatherDTO> weatherIp(HttpServletRequest request) {
+        String ipAddress = request.getHeader("X-Forwarded-For");
+        if (ipAddress == null || ipAddress.isEmpty() || "unknown".equalsIgnoreCase(ipAddress)) {
+            ipAddress = request.getRemoteAddr();
+        }
+
+        String url = "http://ip-api.com/json/" + ipAddress;
+        RestTemplate restTemplate = new RestTemplate();
+        JsonNode location = restTemplate.getForObject(url, JsonNode.class);
+
+        String city = location.path("city").asText();
         WeatherDTO weatherDTO = weatherService.getWeather(city);
         return ResponseEntity.ok(weatherDTO);
     }
