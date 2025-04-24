@@ -11,31 +11,37 @@ import Draggable from "react-draggable";
 import styled from "styled-components";
 import searchApi from "../../api/search.api";
 import SearchSuggestions from "./SearchSuggestions";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const StyledInput = styled(Input)`
   ::placeholder {
     color: #9aa0a6;
   }
+  &&.ant-input-affix-wrapper:focus,
+  &&.ant-input-affix-wrapper-focused {
+    box-shadow: none;
+    outline: none;
+    border-color: transparent;
+  }
+
+  && input:focus {
+    box-shadow: none;
+    outline: none;
+  }
 `;
 
-const SearchBar = ({
-  className,
-  children,
-  onEnterEvent,
-  initialSearch,
-}) => {
+const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
   const [historyContent, setHistoryContent] = useState([]);
 
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState(initialSearch || "");
   const [extensionVisible, setextensionVisible] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
-  
+
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -49,13 +55,15 @@ const SearchBar = ({
   }, []);
 
   const updateSugestions = async (value) => {
-    const response = await searchApi.searchAsYouType({query: value})
-    console.log(response)
-    setSuggestions(response.suggestions)
-  }
+    const response = await searchApi.searchAsYouType({ query: value });
+    console.log(response);
+    setSuggestions(response.suggestions);
+  };
 
   const borderRadius =
-    extensionVisible && (historyContent.length > 0 || suggestions.length > 0) ? "30px 30px 0 0" : "999px";
+    extensionVisible && (historyContent.length > 0 || suggestions.length > 0)
+      ? "30px 30px 0 0"
+      : "999px";
 
   return (
     <div
@@ -117,12 +125,14 @@ const SearchBar = ({
       />
 
       <SearchHistory
-        visible={extensionVisible && inputValue.length == 0 && suggestions.length == 0}
+        visible={
+          extensionVisible && inputValue.length == 0 && suggestions.length == 0
+        }
         historyContent={historyContent}
         setHistoryContent={setHistoryContent}
       />
 
-      <SearchSuggestions 
+      <SearchSuggestions
         visible={extensionVisible && suggestions.length > 0}
         suggestions={suggestions}
       />
