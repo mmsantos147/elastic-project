@@ -18,19 +18,16 @@ const { Text } = Typography;
 
 const DefaultHeader = ({ children }) => {
   const { t } = useTranslation();
-  const [weather, setWeather] = useState({"city":"São Paulo","temperature":24,"description":"broken clouds"})
+  const [weather, setWeather] = useState({"id":804,"group":"Clouds","city":"Alfenas","temperature":22,"description":"overcast clouds"})
 
   const weatherDescription = {
-    "broken clouds": <BsCloudsFill style={{ fontSize: "20px", color: "#fff" }}/>,
-    "scattered clouds": <IoCloudSharp style={{ fontSize: "20px", color: "#fff" }}/>,
-    "shower rain": <FaCloudSunRain style={{ fontSize: "20px", color: "#fff" }}/>,
-    "rain": <FaCloudShowersHeavy style={{ fontSize: "20px", color: "#fff" }}/>,
-    "thunderstorm": <IoThunderstormSharp style={{ fontSize: "20px", color: "#fff" }}/>,
-    "snow": <BsFillCloudSnowFill style={{ fontSize: "20px", color: "#fff" }}/>,
-    "mist": <BsCloudFog2Fill style={{ fontSize: "20px", color: "#fff" }}/>,
-    "clear sky": <SunOutlined style={{ fontSize: "20px", color: "#fff" }} />,
-    "few clouds": <FaCloudSun style={{ fontSize: "20px", color: "#fff" }}/>,
-
+    "Drizzle": <FaCloudSunRain style={{ fontSize: "20px", color: "#fff" }}/>,
+    "Rain": <FaCloudShowersHeavy style={{ fontSize: "20px", color: "#fff" }}/>,
+    "Thunderstorm": <IoThunderstormSharp style={{ fontSize: "20px", color: "#fff" }}/>,
+    "Snow": <BsFillCloudSnowFill style={{ fontSize: "20px", color: "#fff" }}/>,
+    "Atmosphere": <BsCloudFog2Fill style={{ fontSize: "20px", color: "#fff" }}/>,
+    "Clear": <SunOutlined style={{ fontSize: "20px", color: "#fff" }} />,
+    "Clouds": <FaCloudSun style={{ fontSize: "20px", color: "#fff" }}/>,
   }
 
   useEffect( () => {
@@ -63,7 +60,7 @@ const DefaultHeader = ({ children }) => {
 
       <Space size="large">
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          {weatherDescription[weather.description]}
+          {weatherDescription[weather.group]}
           <Text style={{ fontWeight: "bold", color: "#fff" }}>{weather.temperature} °C</Text>
         </div>
         <div>
