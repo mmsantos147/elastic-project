@@ -10,7 +10,7 @@ const { Text } = Typography;
 
 const DefaultHeader = ({ children }) => {
   const { t } = useTranslation();
-  
+
   return (
     <Header
       style={{
@@ -39,12 +39,14 @@ const DefaultHeader = ({ children }) => {
         <div>
           <LanguageSelector />
         </div>
-        <Button
-          type="primary"
-          style={{ padding: "18px", borderRadius: "999px" }}
-        >
-          <b>{t("make_login")}</b>
-        </Button>
+        <a href="/login">
+          <Button
+            type="primary"
+            style={{ padding: "18px", borderRadius: "999px", boxShadow: "none" }}
+          >
+            <b>{t("make_login")}</b>
+          </Button>
+        </a>
       </Space>
     </Header>
   );
