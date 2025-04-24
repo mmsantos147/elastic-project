@@ -3,7 +3,7 @@ import UAISearch from "../components/UAISearch";
 import SearchBar from "../components/search/SearchBar";
 import styled from "styled-components";
 import Layout from "antd/es/layout/layout";
-import { Col, Row, Space, Button  , message } from "antd";
+import { Col, Row, Space, Button, message } from "antd";
 import NavigationBar from "../components/NavigationBar";
 import COLORS from "../colors";
 import FilterBar from "../components/FilterBar";
@@ -56,13 +56,13 @@ const Search = () => {
 
     es.addEventListener("AiAbstract", (evt) => {
       try {
-        console.log("===================================================")
+        console.log("===================================================");
         console.log(evt.data);
         const data = JSON.parse(evt.data);
         console.log(data);
         setAiAbstract(data);
       } catch (err) {
-        message.error("Um erro aconteceu com a inteligência artificial!")
+        message.error("Um erro aconteceu com a inteligência artificial!");
         console.error("Erro parseando SSE:", err);
       }
     });
@@ -79,40 +79,39 @@ const Search = () => {
           timeTaken: 0.0,
           results: [],
         });
-  
+
         setProcessingRequest(true);
-  
+
         const response = await searchApi.search(formData);
         setSearchResults(response);
-        navigate(`/search?q=${formData.search}`, { replace: true     })
+        navigate(`/search?q=${formData.search}`, { replace: true });
       } catch (error) {
         console.error("Erro ao buscar resultados:", error);
       } finally {
         setProcessingRequest(false);
       }
     };
-  
-    fetchData(); 
+
+    fetchData();
   }, [formData]);
 
   const setSearchValue = (value) => {
     setFormData((prev) => ({ ...prev, search: value }));
   };
-  
 
   const searchSubmit = async (value) => {
-  //   setSearchResults({
-  //     hits: 0,
-  //     pages: 0,
-  //     timeTaken: 0.0,
-  //     results: [],
-  //   });
-  //   const formContent = { ...formData, search: value };
-  //   setFormData(formContent);
-  //   setProcessingRequest(true);
-  //   const response = await searchApi.search(formContent);
-  //   setSearchResults(response);
-  //   setProcessingRequest(false);
+    //   setSearchResults({
+    //     hits: 0,
+    //     pages: 0,
+    //     timeTaken: 0.0,
+    //     results: [],
+    //   });
+    //   const formContent = { ...formData, search: value };
+    //   setFormData(formContent);
+    //   setProcessingRequest(true);
+    //   const response = await searchApi.search(formContent);
+    //   setSearchResults(response);
+    //   setProcessingRequest(false);
   };
 
   return (
@@ -157,12 +156,18 @@ const Search = () => {
         <Col flex="auto" />
         <Col>
           <Space size="large">
-            <Button
-              type="primary"
-              style={{ padding: "18px", borderRadius: "999px" }}
-            >
-              <b>Fazer login</b>
-            </Button>
+            <a href="/login">
+              <Button
+                type="primary"
+                style={{
+                  padding: "18px",
+                  borderRadius: "999px",
+                  boxShadow: "none",
+                }}
+              >
+                <b>{t("make_login")}</b>
+              </Button>
+            </a>
           </Space>
         </Col>
       </Row>
