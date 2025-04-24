@@ -4,7 +4,7 @@
   "all_results": "Tüm sonuçlar",
   "about": "Hakkında",
   "advertisement": "Reklam",
-  "business": "İşletmeler",
+  "business": "İş",
   "how_search_works": "Aramanın nasıl çalıştığı",
   "privacy": "Gizlilik",
   "terms": "Şartlar",
@@ -40,11 +40,15 @@
   "need_help_ask": "Yardım mı gerekiyor?",
   "check_out_other": "Diğerlerini kontrol et",
   "tips": "ipuçları",
-  "to_search_on_brand": "uAISearch'te aramak için",
+  "to_search_on_brand": "uAISearch'te arama yapmak için",
   "you_can_try_these_searches": "Bu aramaları da deneyebilirsiniz",
   "artificial_intelligence_vision": "Yapay zeka tarafından üretilen görünüm",
   "show_more": "Daha fazla göster",
   "show_less": "Daha az göster",
-  "approximate_small": "Yaklaş.",
-  "minutes": "dakika"
+  "approximate_small": "Yaklaşık.",
+  "minutes": "dakika",
+  "bachelors_degree_in_computer_science": "Bilgisayar Bilimleri Lisans Diploması",
+  "federal_university_of_alfenas": "Alfenas Federal Üniversitesi",
+  "brazil": "Brezilya",
+  "teacher_dr": "Dr. Öğretim Üyesi"
 }

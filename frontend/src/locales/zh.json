@@ -42,9 +42,13 @@
   "tips": "提示",
   "to_search_on_brand": "在uAISearch中搜索",
   "you_can_try_these_searches": "您也可以尝试这些搜索",
-  "artificial_intelligence_vision": "人工智能生成的视图",
+  "artificial_intelligence_vision": "人工智能生成的视觉",
   "show_more": "显示更多",
   "show_less": "显示更少",
   "approximate_small": "大约",
-  "minutes": "分钟"
+  "minutes": "分钟",
+  "bachelors_degree_in_computer_science": "计算机科学学士学位",
+  "federal_university_of_alfenas": "阿尔费纳斯联邦大学",
+  "brazil": "巴西",
+  "teacher_dr": "教授博士"
 }

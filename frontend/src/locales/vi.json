@@ -18,7 +18,7 @@
   "define": "Nentokake",
   "fast": "Cepet",
   "medium": "Sedheng",
-  "high": "Dawa",
+  "high": "Luwih suwe",
   "minute_abbreviation": "menit",
   "after_": "Sawise",
   "all_results_search": "Kabeh asil",
@@ -46,5 +46,9 @@
   "show_more": "Tampilake luwih akeh",
   "show_less": "Tampilake luwih sithik",
   "approximate_small": "Aprox.",
-  "minutes": "menit"
+  "minutes": "menit",
+  "bachelors_degree_in_computer_science": "Gelar Sarjana ing Ilmu Komputer",
+  "federal_university_of_alfenas": "Universitas Federal Alfenas",
+  "brazil": "Brasil",
+  "teacher_dr": "Guru Dr."
 }

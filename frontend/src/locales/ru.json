@@ -18,7 +18,7 @@
   "define": "Определить",
   "fast": "Быстрый",
   "medium": "Средний",
-  "high": "Длинный",
+  "high": "Долгий",
   "minute_abbreviation": "мин",
   "after_": "После",
   "all_results_search": "Все результаты",
@@ -46,5 +46,9 @@
   "show_more": "Показать больше",
   "show_less": "Показать меньше",
   "approximate_small": "Прибл.",
-  "minutes": "минуты"
+  "minutes": "минуты",
+  "bachelors_degree_in_computer_science": "Степень бакалавра в области компьютерных наук",
+  "federal_university_of_alfenas": "Федеральный университет Альфенас",
+  "brazil": "Бразилия",
+  "teacher_dr": "Профессор д-р"
 }

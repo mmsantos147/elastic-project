@@ -1,5 +1,5 @@
 {
-  "search_default": "Busque en uAISearch o escriba una URL",
+  "search_default": "Busque en uAISearch o ingrese una URL",
   "tools": "Herramientas",
   "all_results": "Todos los resultados",
   "about": "Acerca de",
@@ -46,5 +46,9 @@
   "show_more": "Mostrar más",
   "show_less": "Mostrar menos",
   "approximate_small": "Aprox.",
-  "minutes": "minutos"
+  "minutes": "minutos",
+  "bachelors_degree_in_computer_science": "Licenciatura en Ciencias de la Computación",
+  "federal_university_of_alfenas": "Universidad Federal de Alfenas",
+  "brazil": "Brasil",
+  "teacher_dr": "Profesor Dr."
 }

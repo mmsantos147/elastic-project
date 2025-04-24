@@ -36,7 +36,7 @@
   "recent_searches": "Ricerche recenti",
   "search": "Cerca",
   "search_on_brand": "Cerca nel uAISearch",
-  "your_search_dont_find_any_docs": "La tua ricerca non ha trovato documenti corrispondenti",
+  "your_search_dont_find_any_docs": "La tua ricerca non ha trovato alcun documento corrispondente",
   "need_help_ask": "Hai bisogno di aiuto?",
   "check_out_other": "Controlla altri",
   "tips": "consigli",
@@ -46,5 +46,9 @@
   "show_more": "Mostra di più",
   "show_less": "Mostra di meno",
   "approximate_small": "Circa.",
-  "minutes": "minuti"
+  "minutes": "minuti",
+  "bachelors_degree_in_computer_science": "Laurea in Informatica",
+  "federal_university_of_alfenas": "Università Federale di Alfenas",
+  "brazil": "Brasile",
+  "teacher_dr": "Professore Dr."
 }

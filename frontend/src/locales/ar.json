@@ -36,15 +36,19 @@
   "recent_searches": "عمليات البحث الأخيرة",
   "search": "بحث",
   "search_on_brand": "ابحث في uAISearch",
-  "your_search_dont_find_any_docs": "لم تعثر بحثك على أي مستندات مطابقة",
+  "your_search_dont_find_any_docs": "لم تجد بحثك أي مستندات مطابقة",
   "need_help_ask": "تحتاج مساعدة؟",
   "check_out_other": "تحقق من أخرى",
   "tips": "نصائح",
   "to_search_on_brand": "للبحث في uAISearch",
-  "you_can_try_these_searches": "يمكنك أيضًا تجربة هذه العمليات البحثية",
+  "you_can_try_these_searches": "يمكنك أيضًا تجربة هذه البحث",
   "artificial_intelligence_vision": "رؤية مولدة بواسطة الذكاء الاصطناعي",
   "show_more": "عرض المزيد",
   "show_less": "عرض أقل",
   "approximate_small": "تقريباً",
-  "minutes": "دقائق"
+  "minutes": "دقائق",
+  "bachelors_degree_in_computer_science": "بكالوريوس في علوم الحاسوب",
+  "federal_university_of_alfenas": "الجامعة الفيدرالية في ألفيناس",
+  "brazil": "البرازيل",
+  "teacher_dr": "أستاذ د."
 }

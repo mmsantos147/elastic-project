@@ -3,7 +3,7 @@
   "tools": "Werkzeuge",
   "all_results": "Alle Ergebnisse",
   "about": "Über",
-  "advertisement": "Werbung",
+  "advertisement": "Anzeige",
   "business": "Geschäfte",
   "how_search_works": "Wie die Suche funktioniert",
   "privacy": "Datenschutz",
@@ -41,10 +41,14 @@
   "check_out_other": "Überprüfen Sie andere",
   "tips": "Tipps",
   "to_search_on_brand": "um bei uAISearch zu suchen",
-  "you_can_try_these_searches": "Sie können auch versuchen, diese Suchen durchzuführen",
+  "you_can_try_these_searches": "Sie können auch diese Suchen versuchen",
   "artificial_intelligence_vision": "Von KI generierte Vision",
   "show_more": "Mehr anzeigen",
   "show_less": "Weniger anzeigen",
-  "approximate_small": "Ungef.",
-  "minutes": "Minuten"
+  "approximate_small": "Ungefähr",
+  "minutes": "Minuten",
+  "bachelors_degree_in_computer_science": "Bachelorabschluss in Informatik",
+  "federal_university_of_alfenas": "Bundesuniversität von Alfenas",
+  "brazil": "Brasilien",
+  "teacher_dr": "Professor Dr."
 }

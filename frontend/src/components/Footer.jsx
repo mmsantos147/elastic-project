@@ -26,7 +26,7 @@ const DefaultFooter = () => {
         }}
       >
         <div>
-          Universidade Federal de Alfenas • Bacharelado em Ciência da Computação
+            {t("bachelors_degree_in_computer_science")} • {t("federal_university_of_alfenas")}
         </div>
       </div>
       <div style={{ marginBottom: "10px" }}>
@@ -62,7 +62,7 @@ const DefaultFooter = () => {
       </div>
 
       <div>
-        Professor Dr.{" "}
+        {t("teacher_dr")}{" "}
         <a
           href="https://www.linkedin.com/in/flaviogonzaga/"
           style={{ color: COLORS.gray, textDecoration: "underline" }}

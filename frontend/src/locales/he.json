@@ -13,8 +13,8 @@
   "score_asc": "רלוונטיות עולה",
   "read_time_desc": "זמן קריאה יורד",
   "read_time_asc": "זמן קריאה עולה",
-  "date_desc": "החדשים קודם",
-  "date_asc": "הישנים קודם",
+  "date_desc": "החדש ביותר קודם",
+  "date_asc": "הישן ביותר קודם",
   "define": "להגדיר",
   "fast": "מהיר",
   "medium": "בינוני",
@@ -27,7 +27,7 @@
   "itens_per_page": "פריטים לדף",
   "reading_time": "זמן קריאה",
   "publish_date": "תאריך פרסום",
-  "search_for": "חפש עבור",
+  "search_for": "חפש לפי",
   "near": "בערך",
   "results": "תוצאות",
   "seconds": "שניות",
@@ -46,5 +46,9 @@
   "show_more": "הצג עוד",
   "show_less": "הצג פחות",
   "approximate_small": "בערך",
-  "minutes": "דקות"
+  "minutes": "דקות",
+  "bachelors_degree_in_computer_science": "תואר ראשון במדעי המחשב",
+  "federal_university_of_alfenas": "האוניברסיטה הפדרלית של אלפנס",
+  "brazil": "ברזיל",
+  "teacher_dr": "מורה דר"
 }

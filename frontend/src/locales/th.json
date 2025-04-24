@@ -7,7 +7,7 @@
   "business": "ธุรกิจ",
   "how_search_works": "การค้นหาทำงานอย่างไร",
   "privacy": "ความเป็นส่วนตัว",
-  "terms": "เงื่อนไข",
+  "terms": "ข้อกำหนด",
   "settings": "การตั้งค่า",
   "score_desc": "ความเกี่ยวข้องลดลง",
   "score_asc": "ความเกี่ยวข้องเพิ่มขึ้น",
@@ -46,5 +46,9 @@
   "show_more": "แสดงเพิ่มเติม",
   "show_less": "แสดงน้อยลง",
   "approximate_small": "ประมาณ",
-  "minutes": "นาที"
+  "minutes": "นาที",
+  "bachelors_degree_in_computer_science": "ปริญญาตรีด้านวิทยาการคอมพิวเตอร์",
+  "federal_university_of_alfenas": "มหาวิทยาลัยรัฐบาลแห่งอัลเฟนาส",
+  "brazil": "บราซิล",
+  "teacher_dr": "อาจารย์ ดร."
 }
