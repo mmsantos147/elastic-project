@@ -69,7 +69,7 @@ public class DebugController {
 
     @GetMapping("/weather/ip")
     public ResponseEntity<WeatherDTO> weatherIp(HttpServletRequest request) {
-        String ipAddress = request.getHeader("X-Forwarded-For");
+        String ipAddress = request.getHeader("X-Real-IP");
 
         if (ipAddress == null || ipAddress.isEmpty() || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getRemoteAddr();
