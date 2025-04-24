@@ -101,20 +101,6 @@ const Search = () => {
     setFormData((prev) => ({ ...prev, search: value }));
   };
 
-  const searchSubmit = async (value) => {
-    //   setSearchResults({
-    //     hits: 0,
-    //     pages: 0,
-    //     timeTaken: 0.0,
-    //     results: [],
-    //   });
-    //   const formContent = { ...formData, search: value };
-    //   setFormData(formContent);
-    //   setProcessingRequest(true);
-    //   const response = await searchApi.search(formContent);
-    //   setSearchResults(response);
-    //   setProcessingRequest(false);
-  };
 
   return (
     <>
