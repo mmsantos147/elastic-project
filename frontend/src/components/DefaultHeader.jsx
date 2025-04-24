@@ -35,7 +35,7 @@ const DefaultHeader = ({ children }) => {
 
   useEffect( () => {
     const updateWeather = async () => {
-      const weaterResponse = weatherApi.weather();
+      const weaterResponse = await weatherApi.weather();
       setWeather(weaterResponse)
     }
     updateWeather();
