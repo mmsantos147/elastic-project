@@ -22,7 +22,7 @@ public class WeatherService {
         this.restTemplate = restTemplate;
     }
     public WeatherDTO getWeather(String city) {
-        String url = String.format("%s?q=%s&appid=%s&units=metric&lang=pt", apiUrl, city, apiKey);
+        String url = String.format("%s?q=%s&appid=%s&units=metric&lang=en", apiUrl, city, apiKey);
 
         JsonNode json = restTemplate.getForObject(url, JsonNode.class);
 
