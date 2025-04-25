@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ConfigProvider, Layout } from "antd";
+import { ConfigProvider, Layout, theme } from "antd";
 import DefaultFooter from "./components/Footer";
 import i18n from './utils/i18n';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -25,6 +25,7 @@ const App = () => {
     <I18nextProvider i18n={i18n}>
     <ConfigProvider
       theme={{
+        algorithm: theme.darkAlgorithm,
         token: {
           colorBgContainer: COLORS.dark_gray,
           colorTextPlaceholder: "white"

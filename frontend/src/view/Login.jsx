@@ -138,7 +138,6 @@ const Login = () => {
           </Button>
         </div>
       </Card>
-      ;
     </Content>
   );
 };
