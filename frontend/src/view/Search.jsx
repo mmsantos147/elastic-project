@@ -16,6 +16,8 @@ import EmptyResults from "../components/search/EmptyResults";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
+import LanguageSelector from "../components/LanguageSelector";
+import WeatherReport from "../components/WeatherReport";
 
 const { Content } = Layout;
 
@@ -97,13 +99,12 @@ const Search = () => {
   }, [formData]);
 
   useEffect(() => {
-    setFormData((prev) => ({...prev, search: paramQ}))
+    setFormData((prev) => ({ ...prev, search: paramQ }));
   }, [paramQ]);
 
   const setSearchValue = (value) => {
     setFormData((prev) => ({ ...prev, search: value }));
   };
-
 
   return (
     <>
@@ -147,7 +148,10 @@ const Search = () => {
         <Col flex="auto" />
         <Col>
           <Space size="large">
-            <Link to="/login" >
+            <WeatherReport />
+
+            <LanguageSelector />
+            <Link to="/login">
               <Button
                 type="primary"
                 style={{
