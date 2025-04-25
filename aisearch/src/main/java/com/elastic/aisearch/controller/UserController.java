@@ -1,5 +1,6 @@
 package com.elastic.aisearch.controller;
 
+import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.dto.RegisterDTO;
 import com.elastic.aisearch.dto.UserDTO;
 import com.elastic.aisearch.entity.User;
@@ -42,8 +43,8 @@ public class UserController {
     }
 
     @PostMapping
-    public RegisterDTO registerNewUser(@RequestBody User user) {
-        return userService.addNewUser(user);
+    public SuccessMessageDTO registerNewUser(@RequestBody RegisterDTO registerDTO) {
+        return userService.addNewUser(registerDTO);
     }
 
     @DeleteMapping(path = "{userEmail}")

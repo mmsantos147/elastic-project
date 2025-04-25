@@ -1,7 +1,8 @@
 package com.elastic.aisearch.service;
 
+import com.elastic.aisearch.controller.GlobalExceptionHandler;
 import com.elastic.aisearch.dto.RegisterDTO;
-import com.elastic.aisearch.dto.UserDTO;
+import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -17,23 +18,25 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final GlobalExceptionHandler adviceController;
 
     public List<User> getUser() {
         return userRepository.findAll();
     }
 
-    public RegisterDTO addNewUser(User user) {
-        Optional<User> userEmail = userRepository.findUserByEmail(user.getEmail());
+    public SuccessMessageDTO addNewUser(RegisterDTO registerDTO) {
+        Optional<User> userEmail = userRepository.findUserByEmail(registerDTO.email());
         if (userEmail.isPresent()) {
-            throw new IllegalStateException("user already exists");
+            throw new IllegalStateException("failed_registration");
         }
-        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 
+        User user = new User();
+        user.setUserName(registerDTO.userName());
+        user.setEmail(registerDTO.email());
+        user.setPassword(BCrypt.hashpw(registerDTO.password(), BCrypt.gensalt()));
         userRepository.save(user);
-        return new RegisterDTO(
-                user.getUserName(),
-                user.getEmail(),
-                user.getPassword()
+        return new SuccessMessageDTO(
+                "success_registration"
         );
     }
 
