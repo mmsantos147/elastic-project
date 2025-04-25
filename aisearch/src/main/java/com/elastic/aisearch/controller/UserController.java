@@ -55,7 +55,6 @@ public class UserController {
     public boolean verifyUser(@RequestBody UserDTO userDTO) {
         if (userService.searchUser(userDTO.email(), userDTO.password())) {
             userSession.setUserEmail(userDTO.email());
-            userSession.setUserName(userDTO.userName());
         }
         return userService.searchUser(userDTO.email(), userDTO.password());
     }
