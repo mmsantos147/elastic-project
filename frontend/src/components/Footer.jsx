@@ -1,10 +1,9 @@
-import { Layout, Typography } from "antd";
+import { Layout } from "antd";
 import COLORS from "../colors";
 import { useTranslation } from "react-i18next";
 import { GrGithub, GrLinkedin } from "react-icons/gr";
 
 const { Footer } = Layout;
-const { Text } = Typography;
 
 const DefaultFooter = () => {
   const { t } = useTranslation();

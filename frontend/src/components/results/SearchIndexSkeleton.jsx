@@ -1,6 +1,5 @@
 import { Skeleton, Row, Col } from "antd";
 import { FaCalendar, FaClock } from "react-icons/fa";
-import styled from "styled-components";
 
 
 

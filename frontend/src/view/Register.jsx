@@ -4,12 +4,10 @@ import UAISearch from "../components/UAISearch";
 import COLORS from "../colors";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
-import { Navigate, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Register = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Dados enviados:", values);
   };

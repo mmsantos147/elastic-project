@@ -1,4 +1,4 @@
-import { Row, Col, Button } from "antd";
+import { Row, Col } from "antd";
 import styled from "styled-components";
 import COLORS from "../colors";
 import { useTranslation } from "react-i18next";

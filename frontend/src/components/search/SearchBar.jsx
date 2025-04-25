@@ -2,7 +2,6 @@ import { Input } from "antd";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import { SearchOutlined } from "@ant-design/icons";
-import { APP_NAME_CAMMEL_CASE } from "../../constants";
 import { FaKeyboard, FaMicrophone } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import SearchHistory from "./SearchHistory";
@@ -11,7 +10,6 @@ import Draggable from "react-draggable";
 import styled from "styled-components";
 import searchApi from "../../api/search.api";
 import SearchSuggestions from "./SearchSuggestions";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const StyledInput = styled(Input)`
@@ -41,7 +39,6 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
 
   const inputRef = useRef(null);
   const keyboardRef = useRef(null);
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   useEffect(() => {

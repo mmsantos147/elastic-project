@@ -5,11 +5,10 @@ import COLORS from "../colors";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Dados enviados:", values);
   };

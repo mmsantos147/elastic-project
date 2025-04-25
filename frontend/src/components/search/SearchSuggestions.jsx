@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Row } from "antd";
+import { Divider } from "antd";
 import COLORS from "../../colors";
 import SuggestionElement from "./SuggestionElement";
 import SearchButtonExtension from "./SearchButtonExtension";

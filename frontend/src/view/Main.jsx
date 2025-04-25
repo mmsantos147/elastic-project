@@ -5,7 +5,6 @@ import SearchButton from "../components/search/SearchButton";
 import DefaultHeader from "../components/DefaultHeader";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 const { Content } = Layout;
 
 const MarginBottomSearchBar = styled(SearchBar)`
@@ -13,7 +12,6 @@ const MarginBottomSearchBar = styled(SearchBar)`
 `;
 
 const Main = () => {
-  const { t } = useTranslation()
   
   const navigate = useNavigate();
   const setSearchValue = (e) => {}
