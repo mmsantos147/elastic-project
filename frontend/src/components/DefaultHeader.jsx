@@ -28,6 +28,7 @@ const DefaultHeader = ({ children }) => {
     "Thunderstorm": <IoThunderstormSharp style={{ fontSize: "20px", color: "#fff" }}/>,
     "Snow": <BsFillCloudSnowFill style={{ fontSize: "20px", color: "#fff" }}/>,
     "Atmosphere": <BsCloudFog2Fill style={{ fontSize: "20px", color: "#fff" }}/>,
+    "Mist": <BsCloudFog2Fill style={{ fontSize: "20px", color: "#fff" }}/>,
     "Clear": <SunOutlined style={{ fontSize: "20px", color: "#fff" }} />,
     "Clouds": <FaCloudSun style={{ fontSize: "20px", color: "#fff" }}/>,
   }
