@@ -78,7 +78,12 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
       onClick={() => setextensionVisible(true)}
     >
       <StyledInput
-        onPressEnter={(e) => {onEnterEvent(e.target.value); e.target.blur(); setextensionVisible(false); setSuggestions([])}}
+        onPressEnter={(e) => {
+          onEnterEvent(e.target.value);
+          e.target.blur();
+          setextensionVisible(false);
+          setSuggestions([]);
+        }}
         size="large"
         placeholder={t("search_default")}
         value={inputValue}
@@ -153,7 +158,17 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
             }}
           >
             <Keyboard
-              onChange={(input) => setInputValue(input)}
+              keyboardRef={(r) => (keyboardRef.current = r)}
+              onKeyPress={(button) => {
+                if (button === "{bksp}") {
+                  setInputValue((prev) => prev.slice(0, -1));
+                } else if (button === "{space}") {
+                  setInputValue((prev) => prev + " ");
+                } else if (button.startsWith("{")) {
+                } else {
+                  setInputValue((prev) => prev + button);
+                }
+              }}
               theme={"hg-theme-default myTheme"}
               layoutName="default"
             />
