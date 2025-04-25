@@ -1,5 +1,7 @@
 package com.elastic.aisearch.service;
 
+import com.elastic.aisearch.dto.RegisterDTO;
+import com.elastic.aisearch.dto.UserDTO;
 import com.elastic.aisearch.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -20,13 +22,19 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void addNewUser(User user) {
+    public RegisterDTO addNewUser(User user) {
         Optional<User> userEmail = userRepository.findUserByEmail(user.getEmail());
         if (userEmail.isPresent()) {
             throw new IllegalStateException("user already exists");
         }
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+
         userRepository.save(user);
+        return new RegisterDTO(
+                user.getUserName(),
+                user.getEmail(),
+                user.getPassword()
+        );
     }
 
     public void deleteUser(String email) {

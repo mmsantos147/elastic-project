@@ -1,5 +1,6 @@
 package com.elastic.aisearch.controller;
 
+import com.elastic.aisearch.dto.RegisterDTO;
 import com.elastic.aisearch.dto.UserDTO;
 import com.elastic.aisearch.entity.User;
 import com.elastic.aisearch.security.UserSession;
@@ -41,8 +42,8 @@ public class UserController {
     }
 
     @PostMapping
-    public void registerNewUser(@RequestBody User user) {
-        userService.addNewUser(user);
+    public RegisterDTO registerNewUser(@RequestBody User user) {
+        return userService.addNewUser(user);
     }
 
     @DeleteMapping(path = "{userEmail}")
@@ -54,8 +55,7 @@ public class UserController {
     public boolean verifyUser(@RequestBody UserDTO userDTO) {
         if (userService.searchUser(userDTO.email(), userDTO.password())) {
             userSession.setUserEmail(userDTO.email());
-            userSession.setUserId(userDTO.id());
-            userSession.setUserName(userDTO.name());
+            userSession.setUserName(userDTO.userName());
         }
         return userService.searchUser(userDTO.email(), userDTO.password());
     }

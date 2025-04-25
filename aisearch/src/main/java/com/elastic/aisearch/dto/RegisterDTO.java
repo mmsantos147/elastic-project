@@ -1,6 +1,7 @@
 package com.elastic.aisearch.dto;
 
-public record UserDTO(
+public record RegisterDTO(
+        String userName,
         String email,
         String password
 ) {}
