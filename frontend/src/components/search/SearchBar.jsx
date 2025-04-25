@@ -78,7 +78,7 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
       onClick={() => setextensionVisible(true)}
     >
       <StyledInput
-        onPressEnter={(e) => onEnterEvent(e.target.value)}
+        onPressEnter={(e) => {onEnterEvent(e.target.value); e.target.blur();}}
         size="large"
         placeholder={t("search_default")}
         value={inputValue}
