@@ -4,9 +4,16 @@ import { SlOptionsVertical } from "react-icons/sl";
 import wikipediaLogo from "../../assets/wikipedia_icon.png";
 import COLORS from "../../colors";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 
 const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
   const { t, i18n } = useTranslation();
+
+  const [languageModel, setLanguageModel] = useState();
+
+  useEffect(() => {
+    setLanguageModel(i18n.language)
+  }, [i18n.language])
   
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
@@ -62,7 +69,7 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
       <Row>
         <Col style={{ fontSize: "15px" }}>
           <FaCalendar style={{ verticalAlign: "middle", marginRight: "8px" }} />
-            {new Date(date).toLocaleDateString(i18n.language, {
+            {new Date(date).toLocaleDateString(languageModel, {
               day: "2-digit",
               month: "long",
               year: "numeric",
