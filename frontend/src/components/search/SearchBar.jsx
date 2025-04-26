@@ -2,7 +2,7 @@ import { Input } from "antd";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import { SearchOutlined } from "@ant-design/icons";
-import { FaKeyboard, FaMicrophone } from "react-icons/fa";
+import { FaKeyboard } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import SearchHistory from "./SearchHistory";
 import COLORS from "../../colors";
@@ -100,15 +100,9 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
                 color: "#9aa0a6",
                 paddingRight: "7px",
                 fontSize: "25px",
+                marginLeft: "10px"
               }}
               onClick={() => setShowKeyboard(!showKeyboard)}
-            />
-            <FaMicrophone
-              style={{
-                color: "#9aa0a6",
-                paddingRight: "10px",
-                fontSize: "22px",
-              }}
             />
           </>
         }

@@ -19,7 +19,7 @@ public class LanguageController {
     public SuccessMessageDTO setLangUserSession(LanguageDTO language) {
         userSession.setLanguage(language.toString());
         return new SuccessMessageDTO(
-                "Success_LangSet"
+                "success_langset"
         );
     }
 }
