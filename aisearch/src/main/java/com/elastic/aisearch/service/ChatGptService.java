@@ -35,7 +35,8 @@ public class ChatGptService {
                                 "    { \"content\": \"...\", \"url\": \"...\" }\n" + 
                                 "  ]\n" + 
                                 "}\n" + 
-                                "Não adicione chaves a mais no final. Responda com um único objeto JSON."),
+                                "Não adicione chaves a mais no final. Responda com um único objeto JSON." + 
+                                "Nunca use contrabarra (\\) em nenhum campo do JSON. Isso quebrará a estrutura."),
                         Map.of("role", "user", "content", searchResults)));
 
         return openAiWebClient.post()
