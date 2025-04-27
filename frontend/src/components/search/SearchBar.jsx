@@ -8,7 +8,7 @@ import SearchHistory from "./SearchHistory";
 import COLORS from "../../colors";
 import Draggable from "react-draggable";
 import styled from "styled-components";
-import searchApi from "../../api/search.api";
+import { useSearchService } from "../../api/Search.api";
 import SearchSuggestions from "./SearchSuggestions";
 import { useTranslation } from "react-i18next";
 
@@ -30,6 +30,7 @@ const StyledInput = styled(Input)`
 `;
 
 const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
+  const { searchAsYouType } = useSearchService();
   const [historyContent, setHistoryContent] = useState([]);
 
   const [showKeyboard, setShowKeyboard] = useState(false);
@@ -52,7 +53,7 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
   }, []);
 
   const updateSugestions = async (value) => {
-    const response = await searchApi.searchAsYouType({ query: value });
+    const response = await searchAsYouType({ query: value });
     console.log(response);
     setSuggestions(response.suggestions);
   };

@@ -7,7 +7,6 @@ import { Col, Row, Space, Button, message } from "antd";
 import NavigationBar from "../components/NavigationBar";
 import COLORS from "../colors";
 import FilterBar from "../components/FilterBar";
-import searchApi from "../api/search.api";
 import { Link, useLocation } from "react-router-dom";
 import { API_PREFIX, ROOT_URL } from "../constants";
 import SearchResults from "../components/search/SeachResults";
@@ -18,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import LanguageSelector from "../components/LanguageSelector";
 import WeatherReport from "../components/WeatherReport";
+import { useSearchService } from "../api/Search.api";
 
 const { Content } = Layout;
 
@@ -26,6 +26,7 @@ const StyledSearchBar = styled(SearchBar)`
 `;
 
 const Search = () => {
+  const { search, searchAsYouType, fetchHistory } = useSearchService();
   const [searchParamsReactive] = useSearchParams();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -85,7 +86,7 @@ const Search = () => {
 
         setProcessingRequest(true);
         setAiAbstract({});
-        const response = await searchApi.search(formData);
+        const response = await search(formData);
         setSearchResults(response);
         navigate(`/search?q=${formData.search}`, { replace: true });
       } catch (error) {

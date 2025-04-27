@@ -2,17 +2,19 @@ import { Divider } from "antd";
 import HistoryElement from "./HistoryElement";
 import COLORS from "../../colors";
 import { useEffect } from "react";
-import historyApi from "../../api/history.api";
 import SearchButtonExtension from "./SearchButtonExtension";
+
 import { useTranslation } from "react-i18next";
+import { useHistoryService } from "../../api/History.api";
 
 const SearchHistory = ({ visible, historyContent, setHistoryContent }) => {
+  const { fetchHistory, deleteItemFromHistory } = useHistoryService();
   const { t } = useTranslation();
   
   useEffect(() => {
     const loadHistory = async () => {
       try {
-        const data = await historyApi.fetchHistory();
+        const data = await fetchHistory();
         setHistoryContent(data);
       } catch {
         setHistoryContent([]);
@@ -24,7 +26,7 @@ const SearchHistory = ({ visible, historyContent, setHistoryContent }) => {
   const deleteFromHistory = async (id) => {
     setHistoryContent((prev) => prev.filter((item) => item.id !== id));
     try {
-      await historyApi.deleteItemFromHistory(id);
+      await deleteItemFromHistory(id);
     } catch {
       setHistoryContent([]);
     }

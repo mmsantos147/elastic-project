@@ -7,11 +7,13 @@ import { IoThunderstormSharp } from "react-icons/io5";
 import { BsFillCloudSnowFill } from "react-icons/bs";
 import { BsCloudFog2Fill } from "react-icons/bs";
 import { FaCloudSun } from "react-icons/fa";
-import weatherApi from "../api/weather.api";
+import { useWeatherService } from "../api/Weather.api";
 
 const { Text } = Typography;
 
 const WeatherReport = () => {
+  const { getWeatherCondition } = useWeatherService();
+
   const [weather, setWeather] = useState({
     id: 804,
     group: "Clouds",
@@ -33,7 +35,7 @@ const WeatherReport = () => {
 
   useEffect(() => {
     const updateWeather = async () => {
-      const weaterResponse = await weatherApi.weather();
+      const weaterResponse = await getWeatherCondition();
       setWeather(weaterResponse);
     };
     updateWeather();
