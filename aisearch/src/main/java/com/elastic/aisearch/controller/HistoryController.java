@@ -32,7 +32,7 @@ public class HistoryController {
         historyService.deleteHistory(id);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<HistoryDTO> getHistory() {
         /**
          * TODO: Fazer um endpoint get para retornar os 10 ultimas pesquisas
