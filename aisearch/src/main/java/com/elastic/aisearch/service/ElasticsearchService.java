@@ -182,11 +182,11 @@ public class ElasticsearchService {
 
             results.add(searchResultDTO);
         }
-        Integer hits = Math.toIntExact(searchResponse.getHits().getTotalHits().value);
+        Long hits = searchResponse.getHits().getTotalHits().value;
 
         return new SearchResponseDTO(
                 hits,
-                hits/searchDTO.resultsPerPage(),
+                Math.toIntExact(hits/searchDTO.resultsPerPage()),
                 (float) searchResponse.getTook().getSecondsFrac(),
                 results
         );
