@@ -5,8 +5,8 @@ export const useAuthService = () => {
   const { makeRequest } = useContext(ApiContext);
 
   const initSession = () => makeRequest('post', '/user/init');
-  const register    = content => makeRequest('post', '/register', content);
-  const login       = content => makeRequest('post', '/login', content);
+  const register    = content => makeRequest('post', '/user/register', content);
+  const login       = content => makeRequest('post', '/user/login', content);
 
   return { initSession, register, login };
 };

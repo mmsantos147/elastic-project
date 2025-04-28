@@ -6,11 +6,15 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useForm } from "antd/es/form/Form";
+import { useAuthService } from "../api/Authorization.api";
 
 const Login = () => {
+  const { login } = useAuthService();
   const { t } = useTranslation();
-  const onFinish = (values) => {
-    console.log("Dados enviados:", values);
+  const [loginForm] = useForm();
+  const onFinish = async (values) => {
+    login(values);
   };
 
   return (
@@ -68,22 +72,23 @@ const Login = () => {
             <Form
               layout="vertical"
               onFinish={onFinish}
+              form={loginForm}
               style={{
                 display: "flex",
                 flexDirection: "column",
               }}
             >
               <Form.Item
-                name="username"
+                name="email"
                 rules={[
                   {
                     required: true,
-                    message: t("please_insert_your_username"),
+                    message: t("insert_your_email"),
                   },
                 ]}
               >
                 <Input
-                  placeholder={t("insert_your_username")}
+                  placeholder={t("insert_your_email")}
                   style={{ color: "white", padding: "14px" }}
                 />
               </Form.Item>
@@ -127,6 +132,7 @@ const Login = () => {
           </b>
           <Button
             type="primary"
+            onClick={() => { loginForm.submit() }}
             style={{
               padding: "18px",
               borderRadius: "999px",
