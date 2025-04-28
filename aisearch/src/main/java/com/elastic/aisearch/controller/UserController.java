@@ -42,7 +42,7 @@ public class UserController {
         return userService.getUser();
     }
 
-    @PostMapping
+    @PostMapping(path = "/register")
     public SuccessMessageDTO registerNewUser(@RequestBody RegisterDTO registerDTO) {
         return userService.addNewUser(registerDTO);
     }

@@ -75,9 +75,9 @@ public class SearchController {
              * na
              * contagem de resultados)
              */
-            List<SearchResultDTO> results = elasticsearchService.search(searchDTO);
+            SearchResponseDTO response = elasticsearchService.search(searchDTO);
 
-            List<SearchResultDTO> top3 = results.stream()
+            List<SearchResultDTO> top3 = response.results().stream()
                     .limit(3)
                     .toList();
 
@@ -91,8 +91,6 @@ public class SearchController {
                 log.error("Erro na thread async: {}", ex.getMessage(), ex);
                 return null;
             });
-
-            SearchResponseDTO response = new SearchResponseDTO(1, 1, 1F, results);
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {

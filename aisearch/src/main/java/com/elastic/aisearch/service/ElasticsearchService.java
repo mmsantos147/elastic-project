@@ -2,6 +2,7 @@ package com.elastic.aisearch.service;
 
 import com.elastic.aisearch.dto.SearchAsYouTypeDTO;
 import com.elastic.aisearch.dto.SearchDTO;
+import com.elastic.aisearch.dto.SearchResponseDTO;
 import com.elastic.aisearch.dto.SearchResultDTO;
 import com.elastic.aisearch.elastic.QueryBuilderFactory;
 import com.elastic.aisearch.parser.QueryParser;
@@ -50,7 +51,7 @@ public class ElasticsearchService {
      * @return Lista de resultados da busca
      * @throws Exception Se ocorrer um erro durante o parsing ou a busca
      */
-    public List<SearchResultDTO> search(SearchDTO searchDTO) throws Exception {
+    public SearchResponseDTO search(SearchDTO searchDTO) throws Exception {
 
         // Cria um parser para a string de consulta
         QueryParser parser = new QueryParser(new StringReader(searchDTO.search()));
@@ -90,7 +91,7 @@ public class ElasticsearchService {
         log.info("Query gerada nesse contexto: {}", searchRequest.toString());
 
         SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
-        return processSearchResults(searchResponse);
+        return processSearchResults(searchResponse, searchDTO);
     }
 
     public Integer fromCalc(Integer page, Integer resultsPerPage) {
@@ -154,7 +155,7 @@ public class ElasticsearchService {
      * @param searchResponse A resposta da busca do Elasticsearch
      * @return Lista de resultados processados
      */
-    private List<SearchResultDTO> processSearchResults(SearchResponse searchResponse) {
+    private SearchResponseDTO processSearchResults(SearchResponse searchResponse, SearchDTO searchDTO) {
         List<SearchResultDTO> results = new ArrayList<>();
 
         for (SearchHit hit : searchResponse.getHits().getHits()) {
@@ -181,7 +182,12 @@ public class ElasticsearchService {
             results.add(searchResultDTO);
         }
 
-        return results;
+        return new SearchResponseDTO(
+                Math.toIntExact(searchResponse.getHits().getTotalHits().value),
+                searchDTO.page(),
+                (float) searchResponse.getTook().getSeconds(),
+                results
+        );
     }
 
     private SearchAsYouTypeDTO processSearchAsYouTypeDTO(SearchResponse searchResponse) {
