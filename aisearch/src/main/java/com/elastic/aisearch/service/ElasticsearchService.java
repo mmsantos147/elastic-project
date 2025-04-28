@@ -103,6 +103,7 @@ public class ElasticsearchService {
                 .query(queryBuilder)
                 .from(fromCalc(searchDTO.page(),searchDTO.resultsPerPage()))
                 .size(searchDTO.resultsPerPage())
+                .trackTotalHits(true)
                 .highlighter(highlightBuilder);
 
         if (searchDTO.orderBy().equals(Filters.DATE_ASC)) {
@@ -181,11 +182,12 @@ public class ElasticsearchService {
 
             results.add(searchResultDTO);
         }
+        Integer hits = Math.toIntExact(searchResponse.getHits().getTotalHits().value);
 
         return new SearchResponseDTO(
-                Math.toIntExact(searchResponse.getHits().getTotalHits().value),
-                searchDTO.page(),
-                (float) searchResponse.getTook().getSeconds(),
+                hits,
+                hits/searchDTO.resultsPerPage(),
+                (float) searchResponse.getTook().getSecondsFrac(),
                 results
         );
     }
