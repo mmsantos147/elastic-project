@@ -11,6 +11,8 @@ import COLORS from "./colors";
 import Login from "./view/Login";
 import Register from "./view/Register";
 import i18n from "./utils/i18n";
+import { I18nextProvider } from "react-i18next";
+
 
 const AppContent = () => {
   const { initSession } = useAuthService();
