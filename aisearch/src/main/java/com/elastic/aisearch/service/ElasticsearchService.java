@@ -11,6 +11,7 @@ import com.elastic.aisearch.parser.QueryParser.QueryNode;
 import com.elastic.aisearch.utils.Filters;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.lucene.search.TotalHits;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -182,11 +183,14 @@ public class ElasticsearchService {
 
             results.add(searchResultDTO);
         }
-        Long hits = (long)searchResponse.getHits().getHits().length;
+        TotalHits hits = searchResponse.getHits().getTotalHits();
+
+        System.out.println(hits.relation); // precisa ser EQUAL_TO
+        System.out.println(hits.value);
 
         return new SearchResponseDTO(
-                hits,
-                Math.toIntExact(hits/searchDTO.resultsPerPage()),
+                hits.value,
+                Math.toIntExact(hits.value/searchDTO.resultsPerPage()),
                 (float) searchResponse.getTook().getSecondsFrac(),
                 results
         );
