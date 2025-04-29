@@ -46,8 +46,7 @@ const LanguageSelector = () => {
 
   const handleMenuClick = ({ key }) => {
     i18n.changeLanguage(key);
-    setLanguage(key);
-    console.log("Linguagem selecionada: ", key)
+    setLanguage({"language": key});
   };
 
   const menu = (
