@@ -72,5 +72,7 @@
     "success_login": "Login efetuado com sucesso!",
     "email_does_not_exists": "Esse e-mail não existe",
     "failed_registration": "Esse e-mail já foi registrado. Por favor, tente outro.",
-    "success_langset": "Idioma alterado com sucesso!"
+    "success_langset": "Idioma alterado com sucesso!",
+    "any_date": "Qualquer data",
+    "any_time": "Qualquer tempo"
 }
