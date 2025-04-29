@@ -55,6 +55,10 @@ const Search = () => {
   const [updatesInAiAbstract, setUpdatesInAiAbstract] = useState(0);
 
   useEffect(() => {
+    console.log("🔎 Resultado de busca atualizado:", searchResult);
+  }, [searchResult]);
+
+  useEffect(() => {
     const es = new EventSource(`${ROOT_URL}/${API_PREFIX}/stream`);
 
     es.addEventListener("AiAbstract", (evt) => {
@@ -168,7 +172,7 @@ const Search = () => {
         </Col>
       </Row>
 
-      {toolsVisible && <FilterBar setFormData={setFormData} />}
+      {toolsVisible && <FilterBar setFormData={setFormData} searchResult={searchResult} />}
 
       <Content
         style={{
