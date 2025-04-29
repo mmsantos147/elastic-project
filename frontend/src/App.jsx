@@ -5,14 +5,15 @@ import { useMakeRequest } from "./api/MakeRequest";
 
 import AppContent from "./AppContent";
 
+
 const App = () => {
   const { makeRequest, contextHolder } = useMakeRequest();
 
   return (
-    <ApiProvider makeRequest={makeRequest} contextHolder={contextHolder}>
-      {contextHolder}
-      <AppContent />
-    </ApiProvider>
+      <ApiProvider makeRequest={makeRequest} contextHolder={contextHolder}>
+        {contextHolder}
+        <AppContent />
+      </ApiProvider>
   );
 };
 

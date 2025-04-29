@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import axios from 'axios';
 import { ROOT_URL, API_PREFIX } from '../constants';
+import i18n from '../utils/i18n';
 
 export const useMakeRequest = () => {
   const [messageApi, contextHolder] = message.useMessage();  
@@ -11,14 +12,14 @@ export const useMakeRequest = () => {
       const response = await axios({ method, url, data, withCredentials: true }); 
       const payload = response.data || {};
       if (payload.success) {
-        messageApi.open({ type: 'success', content: payload.success });  
+        messageApi.open({ type: 'success', content: i18n.t(payload.success) });  
       }
       return payload;
     } catch (error) {
       const errMsg = error.response?.data?.error
         ? error.response.data.error
         : 'Um erro inesperado aconteceu. Por favor, tente novamente mais tarde!';
-      messageApi.open({ type: 'error', content: errMsg });  
+      messageApi.open({ type: 'error', content: i18n.t(errMsg) });  
       return { error: true, message: errMsg };
     }
   };

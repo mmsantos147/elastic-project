@@ -58,7 +58,7 @@
     "please_confirm_your_password": "Por favor, confirme sua senha!",
     "confirm_password": "Confirme a senha",
     "insert_your_email": "Insira o seu e-mail",
-    "please_insert_your_email": "Por favor, insirá seu email!",
+    "please_insert_your_email": "Por favor, insira seu email!",
     "register": "Registrar",
     "register_now": "Registrar-se agora",
     "login": "Logar",
@@ -66,5 +66,10 @@
     "already_have_a_account": "Já tenho uma conta",
     "create_account": "Criar conta",
     "passwords_do_not_match": "As senhas não são iguais",
-    "insert_a_valid_email": "Por favor, insira um e-mail válido"
+    "insert_a_valid_email": "Por favor, insira um e-mail válido",
+    "success_registration": "Usuário registrado com sucesso!",
+    "wrong_password": "Senha incorreta",
+    "success_login": "Login efetuado com sucesso!",
+    "email_does_not_exists": "Esse e-mail não existe"
+
 }
