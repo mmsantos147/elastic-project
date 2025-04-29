@@ -4,7 +4,6 @@ import { ApiProvider } from "./context/ApiContext";
 import { useMakeRequest } from "./api/MakeRequest";
 
 import AppContent from "./AppContent";
-import i18n from "./utils/i18n";
 
 
 const App = () => {
