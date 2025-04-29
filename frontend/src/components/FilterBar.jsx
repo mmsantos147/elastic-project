@@ -24,6 +24,7 @@ const ResponsiveResults = styled(Col)`
 `;
 
 const FilterBar = ({ setFormData, searchResult }) => {
+  console.log("FilterBar recebeu:", searchResult);
   const [t] = useTranslation();
   const [orderByState, setOrderByState] = useState("SCORE_DESC");
 
@@ -205,7 +206,7 @@ const FilterBar = ({ setFormData, searchResult }) => {
 
         <Col flex="auto" />
         <ResponsiveResults style={{ marginRight: "40px" }}>
-          {t("near")} {console.log(searchResult)} {t("results")} (123 {t("seconds")})
+        {t("near")} {searchResult.hits} {t("results")} ({searchResult.timeTaken}s)
         </ResponsiveResults>
       </Row>
     </>
