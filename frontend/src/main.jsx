@@ -4,6 +4,7 @@ import App from "./App";
 
 import "antd/dist/reset.css";
 import i18n from "./utils/i18n";
+import { I18nextProvider } from "react-i18next";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
