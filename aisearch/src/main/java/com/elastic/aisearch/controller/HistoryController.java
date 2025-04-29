@@ -34,14 +34,10 @@ public class HistoryController {
         historyService.deleteHistory(id);
     }
 
-    @GetMapping(path = "/{id}")
-    public List<HistoryDTO> getHistory(@PathVariable("id") Integer id) {
-        /**
-         * TODO: Fazer um endpoint get para retornar os 10 ultimas pesquisas
-         * no histórico do usuário
-         */
+    @GetMapping
+    public List<HistoryDTO> getHistory() {
         List<HistoryDTO> histories = new ArrayList<>();
-        List<History> historyList = historyService.getRecentHistory(id);
+        List<History> historyList = historyService.getRecentHistory(userSession.getUserId());
 
         for (History history : historyList) {
             HistoryDTO historyDTO = new HistoryDTO(history.getId(), history.getPrompt());
