@@ -1,5 +1,5 @@
 {
-  "search_default": "Busque en uAISearch o ingrese una URL",
+  "search_default": "Busca en uAISearch o ingresa una URL",
   "tools": "Herramientas",
   "all_results": "Todos los resultados",
   "about": "Acerca de",
@@ -64,5 +64,7 @@
   "login": "Iniciar sesión",
   "go_back_to_search": "Volver a la búsqueda",
   "already_have_a_account": "Ya tengo una cuenta",
-  "create_account": "Crear cuenta"
+  "create_account": "Crear cuenta",
+  "passwords_do_not_match": "Las contraseñas no son iguales",
+  "insert_a_valid_email": "Por favor, ingresa un correo electrónico válido"
 }

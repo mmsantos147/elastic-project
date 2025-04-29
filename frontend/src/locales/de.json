@@ -1,9 +1,9 @@
 {
-  "search_default": "Suchen Sie bei uAISearch oder geben Sie eine URL ein",
+  "search_default": "Suchen Sie in uAISearch oder geben Sie eine URL ein",
   "tools": "Werkzeuge",
   "all_results": "Alle Ergebnisse",
   "about": "Über",
-  "advertisement": "Werbung",
+  "advertisement": "Anzeige",
   "business": "Geschäfte",
   "how_search_works": "Wie die Suche funktioniert",
   "privacy": "Datenschutz",
@@ -35,12 +35,12 @@
   "search_suggested": "Vorgeschlagene Suchen",
   "recent_searches": "Kürzliche Suchen",
   "search": "Suchen",
-  "search_on_brand": "Bei uAISearch suchen",
+  "search_on_brand": "In uAISearch suchen",
   "your_search_dont_find_any_docs": "Ihre Suche hat keine entsprechenden Dokumente gefunden",
   "need_help_ask": "Brauchen Sie Hilfe?",
   "check_out_other": "Überprüfen Sie andere",
   "tips": "Tipps",
-  "to_search_on_brand": "um bei uAISearch zu suchen",
+  "to_search_on_brand": "um in uAISearch zu suchen",
   "you_can_try_these_searches": "Sie können auch versuchen, diese Suchen durchzuführen",
   "artificial_intelligence_vision": "Von KI generierte Vision",
   "show_more": "Mehr anzeigen",
@@ -64,5 +64,7 @@
   "login": "Anmelden",
   "go_back_to_search": "Zurück zur Suche",
   "already_have_a_account": "Ich habe bereits ein Konto",
-  "create_account": "Konto erstellen"
+  "create_account": "Konto erstellen",
+  "passwords_do_not_match": "Die Passwörter stimmen nicht überein",
+  "insert_a_valid_email": "Bitte geben Sie eine gültige E-Mail ein"
 }

@@ -1,5 +1,5 @@
 {
-  "search_default": "Искать в uAISearch или введите URL",
+  "search_default": "Ищите в uAISearch или введите URL",
   "tools": "Инструменты",
   "all_results": "Все результаты",
   "about": "О нас",
@@ -22,7 +22,7 @@
   "minute_abbreviation": "мин",
   "after_": "После",
   "all_results_search": "Все результаты",
-  "exact_result": "Точное соответствие",
+  "exact_result": "Точное совпадение",
   "order_by": "Сортировать по",
   "itens_per_page": "Элементы на странице",
   "reading_time": "Время чтения",
@@ -42,7 +42,7 @@
   "tips": "советы",
   "to_search_on_brand": "для поиска в uAISearch",
   "you_can_try_these_searches": "Вы также можете попробовать выполнить эти поиски",
-  "artificial_intelligence_vision": "Видение, созданное ИИ",
+  "artificial_intelligence_vision": "Искусственный интеллект",
   "show_more": "Показать больше",
   "show_less": "Показать меньше",
   "approximate_small": "Прибл.",
@@ -60,9 +60,11 @@
   "insert_your_email": "Введите ваш email",
   "please_insert_your_email": "Пожалуйста, введите ваш email!",
   "register": "Зарегистрироваться",
-  "register_now": "Зарегистрироваться сейчас",
+  "register_now": "Зарегистрируйтесь сейчас",
   "login": "Войти",
   "go_back_to_search": "Вернуться к поиску",
   "already_have_a_account": "Уже есть аккаунт",
-  "create_account": "Создать аккаунт"
+  "create_account": "Создать аккаунт",
+  "passwords_do_not_match": "Пароли не совпадают",
+  "insert_a_valid_email": "Пожалуйста, введите действительный email"
 }

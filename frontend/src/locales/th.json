@@ -17,7 +17,7 @@
   "date_asc": "เก่ากว่าก่อน",
   "define": "กำหนด",
   "fast": "เร็ว",
-  "medium": "ปานกลาง",
+  "medium": "กลาง",
   "high": "ยาว",
   "minute_abbreviation": "นาที",
   "after_": "หลังจาก",
@@ -25,7 +25,7 @@
   "exact_result": "ผลลัพธ์ที่ตรงกัน",
   "order_by": "เรียงตาม",
   "itens_per_page": "รายการต่อหน้า",
-  "reading_time": "เวลาอ่าน",
+  "reading_time": "เวลาการอ่าน",
   "publish_date": "วันที่เผยแพร่",
   "search_for": "ค้นหา",
   "near": "ประมาณ",
@@ -64,5 +64,7 @@
   "login": "เข้าสู่ระบบ",
   "go_back_to_search": "กลับไปที่การค้นหา",
   "already_have_a_account": "ฉันมีบัญชีอยู่แล้ว",
-  "create_account": "สร้างบัญชี"
+  "create_account": "สร้างบัญชี",
+  "passwords_do_not_match": "รหัสผ่านไม่ตรงกัน",
+  "insert_a_valid_email": "กรุณาใส่อีเมลที่ถูกต้อง"
 }

@@ -18,7 +18,7 @@
   "define": "Визначити",
   "fast": "Швидко",
   "medium": "Середній",
-  "high": "Довгий",
+  "high": "Довго",
   "minute_abbreviation": "хв",
   "after_": "Після",
   "all_results_search": "Усі результати",
@@ -57,12 +57,14 @@
   "please_insert_your_password": "Будь ласка, введіть ваш пароль!",
   "please_confirm_your_password": "Будь ласка, підтвердіть ваш пароль!",
   "confirm_password": "Підтвердьте пароль",
-  "insert_your_email": "Введіть вашу електронну пошту",
-  "please_insert_your_email": "Будь ласка, введіть вашу електронну пошту!",
+  "insert_your_email": "Введіть ваш електронний лист",
+  "please_insert_your_email": "Будь ласка, введіть ваш електронний лист!",
   "register": "Зареєструватися",
   "register_now": "Зареєструватися зараз",
   "login": "Увійти",
   "go_back_to_search": "Повернутися до пошуку",
   "already_have_a_account": "Вже маю обліковий запис",
-  "create_account": "Створити обліковий запис"
+  "create_account": "Створити обліковий запис",
+  "passwords_do_not_match": "Паролі не збігаються",
+  "insert_a_valid_email": "Будь ласка, введіть дійсну електронну адресу"
 }

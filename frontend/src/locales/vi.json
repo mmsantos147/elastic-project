@@ -5,7 +5,7 @@
   "about": "Về",
   "advertisement": "Quảng cáo",
   "business": "Doanh nghiệp",
-  "how_search_works": "Cách thức tìm kiếm hoạt động",
+  "how_search_works": "Cách thức hoạt động của tìm kiếm",
   "privacy": "Quyền riêng tư",
   "terms": "Điều khoản",
   "settings": "Cài đặt",
@@ -28,7 +28,7 @@
   "reading_time": "Thời gian đọc",
   "publish_date": "Ngày xuất bản",
   "search_for": "Tìm kiếm",
-  "near": "Gần",
+  "near": "Khoảng",
   "results": "kết quả",
   "seconds": "giây",
   "make_login": "Đăng nhập",
@@ -45,7 +45,7 @@
   "artificial_intelligence_vision": "Tầm nhìn do AI tạo ra",
   "show_more": "Hiện thêm",
   "show_less": "Hiện ít hơn",
-  "approximate_small": "Khoảng",
+  "approximate_small": "Khoảng.",
   "minutes": "phút",
   "bachelors_degree_in_computer_science": "Cử nhân Khoa học Máy tính",
   "federal_university_of_alfenas": "Đại học Liên bang Alfenas",
@@ -64,5 +64,7 @@
   "login": "Đăng nhập",
   "go_back_to_search": "Quay lại tìm kiếm",
   "already_have_a_account": "Tôi đã có một tài khoản",
-  "create_account": "Tạo tài khoản"
+  "create_account": "Tạo tài khoản",
+  "passwords_do_not_match": "Mật khẩu không khớp",
+  "insert_a_valid_email": "Vui lòng nhập một email hợp lệ"
 }

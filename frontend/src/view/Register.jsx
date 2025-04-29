@@ -5,10 +5,15 @@ import COLORS from "../colors";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useAuthService } from "../api/Authorization.api";
+import { useForm } from "antd/es/form/Form";
 
 const Register = () => {
   const { t } = useTranslation();
-  const onFinish = (values) => {
+  const { register } = useAuthService();
+  const [ form ] = useForm();
+  const onFinish = async (values) => {
+    await register(values)
     console.log("Dados enviados:", values);
   };
   return (
@@ -69,9 +74,10 @@ const Register = () => {
                 display: "flex",
                 flexDirection: "column",
               }}
+              form={form}
             >
               <Form.Item
-                name="username"
+                name="userName"
                 rules={[
                   { required: true, message: t("please_insert_your_username") },
                 ]}
@@ -82,9 +88,16 @@ const Register = () => {
                 />
               </Form.Item>
               <Form.Item
-                name="username"
+                name="email"
                 rules={[
-                  { required: true, message: t("please_insert_your_email") },
+                  {
+                    required: true,
+                    message: t("please_insert_your_email"),
+                  },
+                  {
+                    type: "email",
+                    message: t("insert_a_valid_email"),
+                  },
                 ]}
               >
                 <Input
@@ -93,7 +106,7 @@ const Register = () => {
                 />
               </Form.Item>
               <Form.Item
-                name="username"
+                name="password"
                 rules={[
                   { required: true, message: t("please_insert_your_password") },
                 ]}
@@ -104,12 +117,23 @@ const Register = () => {
                 />
               </Form.Item>
               <Form.Item
-                name="username"
+                name="confirm"
+                dependencies={["password"]}
                 rules={[
                   {
                     required: true,
                     message: t("please_confirm_your_password"),
                   },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error(t("passwords_do_not_match"))
+                      );
+                    },
+                  }),
                 ]}
               >
                 <Input
@@ -142,6 +166,7 @@ const Register = () => {
                 boxShadow: "none",
                 backgroundColor: COLORS.purple,
               }}
+              onClick={() => {form.submit()}}
             >
               <b>{t("create_account")}</b>
             </Button>

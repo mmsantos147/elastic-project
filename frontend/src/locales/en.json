@@ -64,5 +64,7 @@
   "login": "Log in",
   "go_back_to_search": "Go back to search",
   "already_have_a_account": "Already have an account",
-  "create_account": "Create account"
+  "create_account": "Create account",
+  "passwords_do_not_match": "Passwords do not match",
+  "insert_a_valid_email": "Please insert a valid email"
 }

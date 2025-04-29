@@ -45,7 +45,7 @@
   "artificial_intelligence_vision": "AI-genererad vision",
   "show_more": "Visa mer",
   "show_less": "Visa mindre",
-  "approximate_small": "Ungefär.",
+  "approximate_small": "Ca.",
   "minutes": "minuter",
   "bachelors_degree_in_computer_science": "Kandidatexamen i datavetenskap",
   "federal_university_of_alfenas": "Federala universitetet i Alfenas",
@@ -64,5 +64,7 @@
   "login": "Logga in",
   "go_back_to_search": "Gå tillbaka till sökningen",
   "already_have_a_account": "Jag har redan ett konto",
-  "create_account": "Skapa konto"
+  "create_account": "Skapa konto",
+  "passwords_do_not_match": "Lösenorden matchar inte",
+  "insert_a_valid_email": "Vänligen ange en giltig e-post"
 }

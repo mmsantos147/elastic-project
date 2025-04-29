@@ -42,7 +42,7 @@
   "tips": "tips",
   "to_search_on_brand": "om te zoeken in uAISearch",
   "you_can_try_these_searches": "U kunt ook deze zoekopdrachten proberen",
-  "artificial_intelligence_vision": "Door AI gegenereerde visie",
+  "artificial_intelligence_vision": "Visie gegenereerd door AI",
   "show_more": "Meer tonen",
   "show_less": "Minder tonen",
   "approximate_small": "Ongeveer",
@@ -64,5 +64,7 @@
   "login": "Inloggen",
   "go_back_to_search": "Terug naar de zoekopdracht",
   "already_have_a_account": "Ik heb al een account",
-  "create_account": "Account aanmaken"
+  "create_account": "Account aanmaken",
+  "passwords_do_not_match": "De wachtwoorden komen niet overeen",
+  "insert_a_valid_email": "Voer alstublieft een geldig e-mailadres in"
 }

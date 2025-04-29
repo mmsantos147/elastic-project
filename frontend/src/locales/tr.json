@@ -42,7 +42,7 @@
   "tips": "ipuçları",
   "to_search_on_brand": "uAISearch'te aramak için",
   "you_can_try_these_searches": "Bu aramaları da deneyebilirsiniz",
-  "artificial_intelligence_vision": "Yapay zeka tarafından üretilen görünüm",
+  "artificial_intelligence_vision": "Yapay zeka tarafından üretilen görüntü",
   "show_more": "Daha fazla göster",
   "show_less": "Daha az göster",
   "approximate_small": "Yaklaş.",
@@ -64,5 +64,7 @@
   "login": "Giriş yap",
   "go_back_to_search": "Aramaya geri dön",
   "already_have_a_account": "Zaten bir hesabım var",
-  "create_account": "Hesap oluştur"
+  "create_account": "Hesap oluştur",
+  "passwords_do_not_match": "Şifreler eşleşmiyor",
+  "insert_a_valid_email": "Lütfen geçerli bir e-posta adresi girin"
 }

@@ -9,10 +9,10 @@
   "privacy": "プライバシー",
   "terms": "利用規約",
   "settings": "設定",
-  "score_desc": "関連性の低下",
-  "score_asc": "関連性の上昇",
-  "read_time_desc": "読書時間の減少",
-  "read_time_asc": "読書時間の増加",
+  "score_desc": "関連性の低い順",
+  "score_asc": "関連性の高い順",
+  "read_time_desc": "読書時間の短い順",
+  "read_time_asc": "読書時間の長い順",
   "date_desc": "新しい順",
   "date_asc": "古い順",
   "define": "定義する",
@@ -20,7 +20,7 @@
   "medium": "中",
   "high": "長い",
   "minute_abbreviation": "分",
-  "after_": "後",
+  "after_": "後に",
   "all_results_search": "すべての結果",
   "exact_result": "正確な一致",
   "order_by": "並べ替え",
@@ -64,5 +64,7 @@
   "login": "ログイン",
   "go_back_to_search": "検索に戻る",
   "already_have_a_account": "すでにアカウントをお持ちですか",
-  "create_account": "アカウントを作成する"
+  "create_account": "アカウントを作成する",
+  "passwords_do_not_match": "パスワードが一致しません",
+  "insert_a_valid_email": "有効なメールアドレスを入力してください"
 }
