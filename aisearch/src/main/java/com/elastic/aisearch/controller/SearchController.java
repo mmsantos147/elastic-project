@@ -64,10 +64,10 @@ public class SearchController {
                 return null;
             });
 
-            History history = new History();
-            history.setPrompt(searchDTO.search());
-            history.setUser(userService.getUserId(userSession.getUserId()));
-            historyService.addHistory(history);
+//            History history = new History();
+//            history.setPrompt(searchDTO.search());
+//            history.setUser(userService.getUserId(userSession.getUserId()));
+//            historyService.addHistory(history);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Erro ao processar consulta: {}", e.getMessage(), e);
