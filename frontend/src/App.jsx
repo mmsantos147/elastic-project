@@ -12,12 +12,10 @@ const App = () => {
   const { makeRequest, contextHolder } = useMakeRequest();
 
   return (
-    <I18nextProvider i18n={i18n}>
       <ApiProvider makeRequest={makeRequest} contextHolder={contextHolder}>
         {contextHolder}
         <AppContent />
       </ApiProvider>
-    </I18nextProvider>
   );
 };
 
