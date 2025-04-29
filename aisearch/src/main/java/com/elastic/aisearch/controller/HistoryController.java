@@ -1,11 +1,13 @@
 package com.elastic.aisearch.controller;
 
 import com.elastic.aisearch.dto.HistoryDTO;
+import com.elastic.aisearch.entity.History;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.HistoryService;
 
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,13 +34,20 @@ public class HistoryController {
         historyService.deleteHistory(id);
     }
 
-    @GetMapping
-    public List<HistoryDTO> getHistory() {
+    @GetMapping(path = "/{id}")
+    public List<HistoryDTO> getHistory(@PathVariable("id") Integer id) {
         /**
          * TODO: Fazer um endpoint get para retornar os 10 ultimas pesquisas
          * no histórico do usuário
          */
-        return Collections.emptyList();
+        List<HistoryDTO> histories = new ArrayList<>();
+        List<History> historyList = historyService.getRecentHistory(id);
+
+        for (History history : historyList) {
+            HistoryDTO historyDTO = new HistoryDTO(history.getId(), history.getPrompt());
+            histories.add(historyDTO);
+        }
+        return histories;
     }
 
 }

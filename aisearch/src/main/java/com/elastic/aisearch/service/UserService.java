@@ -24,6 +24,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUserId(Integer id) {
+        return userRepository.getReferenceById(id);
+    }
+
+    public Optional<User> getUserEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
     public SuccessMessageDTO addNewUser(RegisterDTO registerDTO) {
         Optional<User> userEmail = userRepository.findUserByEmail(registerDTO.email());
         if (userEmail.isPresent()) {
@@ -43,16 +51,16 @@ public class UserService {
     public void deleteUser(String email) {
         Optional<User> userEmail = userRepository.findUserByEmail(email);
         if(userEmail.isEmpty()) {
-            throw new IllegalStateException("user with email" + email + "does not exists");
+            throw new IllegalStateException("email_does_not_exists");
         }
 
         userRepository.deleteById(userEmail.get().getId());
     }
 
-    public boolean searchUser(String email, String password) {
+    public Boolean searchUser(String email, String password) {
         Optional<User> user = userRepository.findUserByEmail(email);
         if(user.isEmpty()) {
-            throw new IllegalStateException("user with email" + email + "does not exists");
+            throw new IllegalStateException("email_does_not_exists");
         }
         return BCrypt.checkpw(password, user.get().getPassword());
     }

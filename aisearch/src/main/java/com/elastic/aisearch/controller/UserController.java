@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,10 +54,12 @@ public class UserController {
     }
 
     @PostMapping(path = "/login")
-    public boolean verifyUser(@RequestBody UserDTO userDTO) {
-        if (userService.searchUser(userDTO.email(), userDTO.password())) {
-            userSession.setUserEmail(userDTO.email());
+    public SuccessMessageDTO verifyUser(@RequestBody UserDTO userDTO) {
+        if (!userService.searchUser(userDTO.email(), userDTO.password())) {
+            throw new IllegalStateException("wrong_password");
         }
-        return userService.searchUser(userDTO.email(), userDTO.password());
+        userSession.setUserEmail(userDTO.email());
+        userSession.setUserId(userService.getUserEmail(userDTO.email()).get().getId());
+        return new SuccessMessageDTO("success_login");
     }
 }

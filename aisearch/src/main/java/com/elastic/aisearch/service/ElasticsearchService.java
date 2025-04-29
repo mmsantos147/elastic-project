@@ -181,14 +181,11 @@ public class ElasticsearchService {
 
             results.add(searchResultDTO);
         }
-        TotalHits hits = searchResponse.getHits().getTotalHits();
-
-        System.out.println(hits.relation); // precisa ser EQUAL_TO
-        System.out.println(hits.value);
+        Long hits = searchResponse.getHits().getTotalHits().value;
 
         return new SearchResponseDTO(
-                hits.value,
-                Math.toIntExact(hits.value/searchDTO.resultsPerPage()),
+                hits,
+                Math.toIntExact(hits/searchDTO.resultsPerPage())+1,
                 (float) searchResponse.getTook().getSecondsFrac(),
                 results
         );

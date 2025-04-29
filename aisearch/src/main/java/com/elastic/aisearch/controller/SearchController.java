@@ -5,10 +5,10 @@ import com.elastic.aisearch.dto.SearchAsYouTypeDTO;
 import com.elastic.aisearch.dto.SearchDTO;
 import com.elastic.aisearch.dto.SearchResponseDTO;
 import com.elastic.aisearch.dto.SearchResultDTO;
+import com.elastic.aisearch.entity.History;
+import com.elastic.aisearch.entity.User;
 import com.elastic.aisearch.security.UserSession;
-import com.elastic.aisearch.service.ChatGptService;
-import com.elastic.aisearch.service.ElasticsearchService;
-import com.elastic.aisearch.service.StreamService;
+import com.elastic.aisearch.service.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -29,6 +29,8 @@ public class SearchController {
     private final ElasticsearchService elasticsearchService;
     private final ChatGptService chatGptService;
     private final StreamService streamService;
+    private final HistoryService historyService;
+    private final UserService userService;
 
     private final HttpServletRequest request;
 
@@ -41,40 +43,10 @@ public class SearchController {
     @PostMapping
     public ResponseEntity<SearchResponseDTO> search(@RequestBody SearchDTO searchDTO) {
         request.getSession(true);
-        /*
-         * TODO: SearchDTO contém todas as informações necessárias para a consulta.
-         * É necessário utilizá-las para fazer uma consulta funcional. Implementar
-         * funcionalidades tais como:
-         * - Paginação
-         * - Mostrar x resultados por página
-         * - Ordenar por:
-         * - - scoreDecreasing (default)
-         * - - scoreIncreasing
-         * - - readingTimeDecreasing
-         * - - readingTimeIncreasing
-         * - - newFirst
-         * - - oldFirst
-         * - As consultas podem ser
-         * - allResults : o que já está implementado
-         * - exactSearch: fazer uma nova consulta, que manda *tudo* a consulta para o must
-         * 
-         * Também é necessário adicionar a pesquisa que ele fez no histório do usuário
-         * logado.
-         * Se o usuário não estiver logado, então adiciona somente na sessão do usuário
-         */
 
         try {
             log.info("Recebida consulta: {}", searchDTO.search());
 
-            /**
-             * TODO: O SearchResultDTO também precisa retornar a quantidade de resultados
-             * e a quantidade de tempo que demorou para realizar a consulta
-             * 
-             * Obs: a quantidade de resultados deve ser um numero arredondado.
-             * Além disso, também precisa retornar a quantidade de páginas que terá (baseado
-             * na
-             * contagem de resultados)
-             */
             SearchResponseDTO response = elasticsearchService.search(searchDTO);
 
             List<SearchResultDTO> top3 = response.results().stream()
@@ -92,6 +64,10 @@ public class SearchController {
                 return null;
             });
 
+            History history = new History();
+            history.setPrompt(searchDTO.search());
+            history.setUser(userService.getUserId(userSession.getUserId()));
+            historyService.addHistory(history);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Erro ao processar consulta: {}", e.getMessage(), e);
