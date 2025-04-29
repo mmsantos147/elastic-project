@@ -23,15 +23,15 @@ const ResponsiveResults = styled(Col)`
   }
 `;
 
-const FilterBar = ({ setFormData }) => {
+const FilterBar = ({ setFormData, searchResult }) => {
   const [t] = useTranslation();
   const [orderByState, setOrderByState] = useState("SCORE_DESC");
 
   const [itensByPageState, setItensByPageState] = useState(10);
 
-  const [readingTimeState, setReadingTimeState] = useState(undefined);
+  const [readingTimeState, setReadingTimeState] = useState("any");
 
-  const [minDateTimeState, setMinDateTimeState] = useState(undefined);
+  const [minDateTimeState, setMinDateTimeState] = useState("any");
 
   const [searchForState, setSearchForState] = useState("allResults");
 
@@ -205,7 +205,7 @@ const FilterBar = ({ setFormData }) => {
 
         <Col flex="auto" />
         <ResponsiveResults style={{ marginRight: "40px" }}>
-          {t("near")} 9.000 {t("results")} (0,24 {t("seconds")})
+          {t("near")} {searchResult.hits} {t("results")} ({searchResult.timeTaken} {t("seconds")})
         </ResponsiveResults>
       </Row>
     </>
