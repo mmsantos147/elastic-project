@@ -11,7 +11,7 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;;impor
 public class QueryBuilderFactory {
 
     public static QueryBuilder buildQuery(QueryNode queryNode, SearchDTO searchDTO) {
-        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery().minimumShouldMatch(1);
 
         if(!queryNode.getShouldContent().isEmpty()) {
             boolQuery.should(QueryBuilders.matchQuery("content", queryNode.getShouldContent().trim()));
