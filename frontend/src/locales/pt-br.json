@@ -67,6 +67,9 @@
     "create_account": "Criar conta",
     "passwords_do_not_match": "As senhas não são iguais",
     "insert_a_valid_email": "Por favor, insira um e-mail válido",
-    "success_registration": "Usuário registrado com sucesso!"
+    "success_registration": "Usuário registrado com sucesso!",
+    "wrong_password": "Senha incorreta",
+    "success_login": "Login efetuado com sucesso!",
+    "email_does_not_exists": "Esse e-mail não existe"
 
 }
