@@ -39,7 +39,7 @@ public class HistoryController {
     public List<HistoryDTO> getHistory() {
         List<HistoryDTO> histories = new ArrayList<>();
         List<History> historyList = new ArrayList<>();
-        
+
         if (!Objects.isNull(userSession.getUserId())) {
             historyList = historyService.getRecentHistory(userSession.getUserId());
         } else {
