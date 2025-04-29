@@ -205,7 +205,7 @@ const FilterBar = ({ setFormData, searchResult }) => {
 
         <Col flex="auto" />
         <ResponsiveResults style={{ marginRight: "40px" }}>
-          {t("near")} {searchResult.hits} {t("results")} ({searchResult.timeTaken} {t("seconds")})
+          {t("near")} {console.log(searchResult)} {t("results")} (123 {t("seconds")})
         </ResponsiveResults>
       </Row>
     </>
