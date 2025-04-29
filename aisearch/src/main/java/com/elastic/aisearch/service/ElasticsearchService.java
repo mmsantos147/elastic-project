@@ -66,7 +66,7 @@ public class ElasticsearchService {
                 .numOfFragments(1)
                 .fragmentSize(1000);
 
-        BoolQueryBuilder highlightBool = QueryBuilders.boolQuery().minimumShouldMatch(1);
+        BoolQueryBuilder highlightBool = QueryBuilders.boolQuery();
         for (String phrase : queryNode.getMustInContent()) {
             highlightBool.should(
                     QueryBuilders.matchPhraseQuery("content", stripQuotes(phrase.trim()))
