@@ -42,11 +42,11 @@ const LanguageSelector = () => {
     const selected = languages.find((l) => l.code === i18n.language);
     if (selected) setCurrentLang(selected);
     Cookies.set("language", i18n.language, { expires: 365 });
+    setLanguage({"language": i18n.language});
   }, [i18n.language]);
 
   const handleMenuClick = ({ key }) => {
     i18n.changeLanguage(key);
-    setLanguage({"language": key});
   };
 
   const menu = (
