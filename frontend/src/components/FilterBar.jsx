@@ -48,7 +48,10 @@ const FilterBar = ({ setFormData }) => {
 
   const handleReadingTimeChange = (e) => {
     setFormData((prev) => ({ ...prev, maxReadTime: Number(e.key) }));
-    setReadingTimeState(e.key);
+    if (e.key !== "any") {
+      return setReadingTimeState(e.key);
+    }
+    setReadingTimeState(undefined)
   };
 
   const handleSearchForChange = (e) => {
@@ -58,7 +61,10 @@ const FilterBar = ({ setFormData }) => {
 
   const handleMinDateTimeChange = (e) => {
     setFormData((prev) => ({ ...prev, minDateTime: e.key }));
-    setMinDateTimeState(e.key);
+    if (e.key !== "any") {
+      return setMinDateTimeState(e.key);
+    } 
+    setMinDateTimeState(undefined);
   };
 
   const orderBy = [
@@ -106,7 +112,7 @@ const FilterBar = ({ setFormData }) => {
   const readTime = [
     {
       label: `${t("any_time")}`,
-      key: undefined,
+      key: "any",
     },
     {
       label: `${t("fast")} (<3 ${t("minute_abbreviation")})`,
@@ -125,7 +131,7 @@ const FilterBar = ({ setFormData }) => {
   const publisedDate = [
     {
       label: `${t("any_date")}`,
-      key: undefined
+      key: "any"
     },
     {
       label: `${t("after_")} 2020`,
