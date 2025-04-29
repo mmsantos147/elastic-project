@@ -182,7 +182,7 @@ public class ElasticsearchService {
 
             results.add(searchResultDTO);
         }
-        Long hits = searchResponse.getHits().getTotalHits().value;
+        Long hits = (long)searchResponse.getHits().getHits().length;
 
         return new SearchResponseDTO(
                 hits,
