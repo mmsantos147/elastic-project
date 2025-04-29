@@ -29,9 +29,9 @@ const FilterBar = ({ setFormData }) => {
 
   const [itensByPageState, setItensByPageState] = useState(10);
 
-  const [readingTimeState, setReadingTimeState] = useState(null);
+  const [readingTimeState, setReadingTimeState] = useState(undefined);
 
-  const [minDateTimeState, setMinDateTimeState] = useState(null);
+  const [minDateTimeState, setMinDateTimeState] = useState(undefined);
 
   const [searchForState, setSearchForState] = useState("allResults");
 
@@ -106,7 +106,7 @@ const FilterBar = ({ setFormData }) => {
   const readTime = [
     {
       label: `${t("any_time")}`,
-      key: null,
+      key: undefined,
     },
     {
       label: `${t("fast")} (<3 ${t("minute_abbreviation")})`,
@@ -125,7 +125,7 @@ const FilterBar = ({ setFormData }) => {
   const publisedDate = [
     {
       label: `${t("any_date")}`,
-      key: null
+      key: undefined
     },
     {
       label: `${t("after_")} 2020`,
