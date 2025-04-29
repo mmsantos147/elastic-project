@@ -66,5 +66,7 @@
     "already_have_a_account": "Já tenho uma conta",
     "create_account": "Criar conta",
     "passwords_do_not_match": "As senhas não são iguais",
-    "insert_a_valid_email": "Por favor, insira um e-mail válido"
+    "insert_a_valid_email": "Por favor, insira um e-mail válido",
+    "success_registration": "Usuário registrado com sucesso!"
+
 }

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { ConfigProvider, Layout, theme } from "antd";
 import DefaultFooter from "./components/Footer";
-import i18n from "./utils/i18n";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./view/Main";
@@ -9,7 +8,6 @@ import Search from "./view/Search";
 import VLibras from "@djpfs/react-vlibras";
 import { useAuthService } from "./api/Authorization.api";
 import COLORS from "./colors";
-import { I18nextProvider } from "react-i18next";
 import Login from "./view/Login";
 import Register from "./view/Register";
 
@@ -26,7 +24,6 @@ const AppContent = () => {
   }, []);
 
   return (
-      <I18nextProvider i18n={i18n}>
         <ConfigProvider
           theme={{
             algorithm: theme.darkAlgorithm,
@@ -65,7 +62,6 @@ const AppContent = () => {
             <DefaultFooter />
           </Layout>
         </ConfigProvider>
-      </I18nextProvider>
   );
 };
 
