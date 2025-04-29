@@ -111,7 +111,7 @@ const Register = () => {
                   { required: true, message: t("please_insert_your_password") },
                 ]}
               >
-                <Input
+                <Input.Password
                   placeholder={t("insert_your_password")}
                   style={{ color: "white", padding: "14px" }}
                 />
@@ -136,7 +136,7 @@ const Register = () => {
                   }),
                 ]}
               >
-                <Input
+                <Input.Password
                   placeholder={t("confirm_password")}
                   style={{ color: "white", padding: "14px" }}
                 />

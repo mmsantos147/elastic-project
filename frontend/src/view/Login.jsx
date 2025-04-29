@@ -83,7 +83,11 @@ const Login = () => {
                 rules={[
                   {
                     required: true,
-                    message: t("insert_your_email"),
+                    message: t("please_insert_your_email"),
+                  },
+                  {
+                    type: "email",
+                    message: t("insert_a_valid_email"),
                   },
                 ]}
               >
