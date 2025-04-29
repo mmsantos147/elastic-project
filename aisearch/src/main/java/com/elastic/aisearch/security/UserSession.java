@@ -16,6 +16,5 @@ public class UserSession {
     private Integer userId;
     private String userEmail;
     private String userName;
-    private List<String> userHistory;
     private String language;
 }

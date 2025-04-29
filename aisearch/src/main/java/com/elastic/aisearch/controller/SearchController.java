@@ -16,7 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -63,11 +65,12 @@ public class SearchController {
                 log.error("Erro na thread async: {}", ex.getMessage(), ex);
                 return null;
             });
-
-//            History history = new History();
-//            history.setPrompt(searchDTO.search());
-//            history.setUser(userService.getUserId(userSession.getUserId()));
-//            historyService.addHistory(history);
+            History history = new History();
+            history.setPrompt(searchDTO.search());
+            if (!Objects.isNull(userSession.getUserId())) {
+                history.setUser(userService.getUserId(userSession.getUserId()));
+                historyService.addHistory(history);
+            }
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Erro ao processar consulta: {}", e.getMessage(), e);

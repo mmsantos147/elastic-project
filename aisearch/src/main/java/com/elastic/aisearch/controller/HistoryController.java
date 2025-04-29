@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,13 @@ public class HistoryController {
     @GetMapping
     public List<HistoryDTO> getHistory() {
         List<HistoryDTO> histories = new ArrayList<>();
-        List<History> historyList = historyService.getRecentHistory(userSession.getUserId());
+        List<History> historyList = new ArrayList<>();
+        
+        if (!Objects.isNull(userSession.getUserId())) {
+            historyList = historyService.getRecentHistory(userSession.getUserId());
+        } else {
+            historyList = Collections.emptyList();
+        }
 
         for (History history : historyList) {
             HistoryDTO historyDTO = new HistoryDTO(history.getId(), history.getPrompt());
