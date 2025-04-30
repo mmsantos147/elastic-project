@@ -177,7 +177,7 @@ const FilterBar = ({ setFormData, searchResult }) => {
         <Col style={{ marginRight: "40px" }}>
           <Filter
             items={itensPerPage}
-            selectedKeys={itensByPageState}
+            selectedKeys={[String(itensByPageState)]}
             name={t("itens_per_page")}
             onClick={handleItensByPageChange}
           />
