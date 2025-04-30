@@ -34,6 +34,8 @@ const Login = () => {
           borderColor: "rgba(0,0,0,0)",
           borderRadius: "30px",
           height: "400px",
+          minWidth: "800px",
+          maxWidth: "900px",
           position: "relative",
           display: "flex",
           flexDirection: "column",

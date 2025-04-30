@@ -32,6 +32,8 @@ const Register = () => {
           backgroundColor: COLORS.dark_gray,
           borderColor: "rgba(0,0,0,0)",
           borderRadius: "30px",
+          minWidth: "800px",
+          maxWidth: "900px",
           height: "450px",
           display: "flex",
           flexDirection: "column",
