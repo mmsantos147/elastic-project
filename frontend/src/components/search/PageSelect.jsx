@@ -4,19 +4,38 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 import COLORS from "../../colors";
 import { useState } from "react";
 
-const PageSelect = ({ setFormData }) => {
+const PageSelect = ({ setFormData, maxPages }) => {
   const [pageSelected, setPageSelected] = useState(1);
-  const totalPages = 5;
 
   const handlePageSelect = (number) => {
-    if (number < 1 || number > totalPages) return;
+    if (number < 1 || number > maxPages) return;
     setPageSelected(number);
     setFormData((prev) => ({ ...prev, page: number }));
     window.scrollTo({ top: 0 });
   };
 
+  const getPageRange = () => {
+    const maxVisible = 5;
+    let start = Math.max(1, pageSelected - 2);
+    let end = Math.min(maxPages, pageSelected + 2);
+
+    if (end - start < maxVisible - 1) {
+      if (start === 1) {
+        end = Math.min(maxPages, start + maxVisible - 1);
+      } else if (end === maxPages) {
+        start = Math.max(1, end - maxVisible + 1);
+      }
+    }
+
+    const pages = [];
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    return pages;
+  };
+
   const PageNumber = ({ page }) => {
-    return page == pageSelected ? (
+    return page === pageSelected ? (
       <Col style={{ marginRight: "14px" }}>
         <b>{page}</b>
       </Col>
@@ -65,22 +84,22 @@ const PageSelect = ({ setFormData }) => {
             marginRight: "14px",
             color: "#ccc",
             cursor: pageSelected === 1 ? "default" : "pointer",
-            visibility: pageSelected == 1 ? "hidden" : "visible"
+            visibility: pageSelected === 1 ? "hidden" : "visible",
           }}
           onClick={() => handlePageSelect(pageSelected - 1)}
         >
           <GrPrevious />
         </Col>
-        <PageNumber page={1} />
-        <PageNumber page={2} />
-        <PageNumber page={3} />
-        <PageNumber page={4} />
-        <PageNumber page={5} />
+
+        {getPageRange().map((page) => (
+          <PageNumber key={page} page={page} />
+        ))}
+
         <Col
           style={{
             color: "#ccc",
-            cursor: pageSelected === totalPages ? "default" : "pointer",
-            visibility: pageSelected == totalPages ? "hidden" : "visible"
+            cursor: pageSelected === maxPages ? "default" : "pointer",
+            visibility: pageSelected === maxPages ? "hidden" : "visible",
           }}
           onClick={() => handlePageSelect(pageSelected + 1)}
         >

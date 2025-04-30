@@ -190,7 +190,7 @@ const Search = () => {
               searchResult={searchResult.results}
               updatesInAiAbstract={updatesInAiAbstract}
             />
-            <PageSelect setFormData={setFormData} />
+            <PageSelect setFormData={setFormData} maxPages={searchResult.pages} />
           </>
         ) : (
           <EmptyResults />
