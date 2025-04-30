@@ -43,7 +43,7 @@ const EmptyResults = () => {
             <MdOutlineSearchOff size={30} color="#f9ab00" />
           </div>
         </Col>
-        <Col>
+        <Col style={{width: "640px"}}>
             <h2>{t('your_search_dont_find_any_docs')}</h2>
             <strong>{t('need_help_ask')}</strong> {t("check_out_other")} <a href="/tips"> {t("tips")} </a> {t("to_search_on_brand")}.
             <Row style={{marginTop: "30px"}}>
