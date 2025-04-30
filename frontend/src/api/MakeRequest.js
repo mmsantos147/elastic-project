@@ -18,7 +18,7 @@ export const useMakeRequest = () => {
     } catch (error) {
       const errMsg = error.response?.data?.error
         ? error.response.data.error
-        : 'Um erro inesperado aconteceu. Por favor, tente novamente mais tarde!';
+        : i18n.t('unexpected_error');
       messageApi.open({ type: 'error', content: i18n.t(errMsg) });  
       return { error: true, message: errMsg };
     }
