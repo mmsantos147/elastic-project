@@ -67,7 +67,7 @@ const FilterBar = ({ setFormData, searchResult }) => {
       setFormData((prev) => ({ ...prev, minDateTime: e.key }));
       return setMinDateTimeState(e.key);
     }
-    setFormData((prev) => ({ ...prev, minDateTime: null }));
+    setFormData((prev) => ({ ...prev, minDateTime: "" }));
     setMinDateTimeState("any");
   };
 
