@@ -182,7 +182,7 @@ const Search = () => {
           maxWidth: "950px",
         }}
       >
-        {searchResult.results.length > 0 || processingRequest ? (
+        {Array.isArray(searchResult?.results) && searchResult.results.length > 0 || processingRequest ? (
           <>
             <SearchResults
               processingRequest={processingRequest}
