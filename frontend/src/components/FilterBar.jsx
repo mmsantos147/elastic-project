@@ -48,11 +48,13 @@ const FilterBar = ({ setFormData, searchResult }) => {
   };
 
   const handleReadingTimeChange = (e) => {
-    setFormData((prev) => ({ ...prev, maxReadTime: Number(e.key) }));
+    
     if (e.key !== "any") {
+      setFormData((prev) => ({ ...prev, maxReadTime: Number(e.key) }));
       return setReadingTimeState(e.key);
     }
-    setReadingTimeState(undefined)
+    setFormData((prev) => ({ ...prev, maxReadTime: null }));
+    setReadingTimeState("any")
   };
 
   const handleSearchForChange = (e) => {
@@ -61,11 +63,12 @@ const FilterBar = ({ setFormData, searchResult }) => {
   };
 
   const handleMinDateTimeChange = (e) => {
-    setFormData((prev) => ({ ...prev, minDateTime: e.key }));
     if (e.key !== "any") {
+      setFormData((prev) => ({ ...prev, minDateTime: e.key }));
       return setMinDateTimeState(e.key);
-    } 
-    setMinDateTimeState(undefined);
+    }
+    setFormData((prev) => ({ ...prev, minDateTime: null }));
+    setMinDateTimeState("any");
   };
 
   const orderBy = [
