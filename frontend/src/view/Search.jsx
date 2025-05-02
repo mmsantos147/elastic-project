@@ -103,10 +103,6 @@ const Search = () => {
     fetchData();
   }, [formData]);
 
-  useEffect(() => {
-    if (paramQ && paramQ !== formData.search)
-      setFormData((prev) => ({ ...prev, search: paramQ }));
-  }, [paramQ, formData.search]);
 
   const setSearchValue = (value) => {
     setFormData((prev) => ({ ...prev, search: value }));
