@@ -62,9 +62,12 @@ public class ChatGptService {
                   " com o resultado " + session.getTop3Results()
                 );
 
+        String streamId = session.getStreamId();
+        String top3results = session.getTop3Results();
+        String language = session.getLanguage();
         CompletableFuture.runAsync(() -> {
-                String aiResume = processResume(session.getTop3Results(), session.getLanguage()).block();
-                streamService.sendAiAbstractToUser(session.getStreamId(), aiResume);
+                String aiResume = processResume(top3results, language).block();
+                streamService.sendAiAbstractToUser(streamId, aiResume);
         }).exceptionally(ex -> {
             log.info("Um erro inesperado aconteceu: " + ex.getMessage());
             return null;
