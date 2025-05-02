@@ -5,7 +5,7 @@
   "about": "Về",
   "advertisement": "Quảng cáo",
   "business": "Doanh nghiệp",
-  "how_search_works": "Cách thức hoạt động của tìm kiếm",
+  "how_search_works": "Cách thức tìm kiếm hoạt động",
   "privacy": "Quyền riêng tư",
   "terms": "Điều khoản",
   "settings": "Cài đặt",
@@ -28,7 +28,7 @@
   "reading_time": "Thời gian đọc",
   "publish_date": "Ngày xuất bản",
   "search_for": "Tìm kiếm",
-  "near": "Khoảng",
+  "near": "Gần",
   "results": "kết quả",
   "seconds": "giây",
   "make_login": "Đăng nhập",
@@ -66,5 +66,14 @@
   "already_have_a_account": "Tôi đã có một tài khoản",
   "create_account": "Tạo tài khoản",
   "passwords_do_not_match": "Mật khẩu không khớp",
-  "insert_a_valid_email": "Vui lòng nhập một email hợp lệ"
+  "insert_a_valid_email": "Vui lòng nhập một email hợp lệ",
+  "success_registration": "Người dùng đã đăng ký thành công!",
+  "wrong_password": "Mật khẩu không đúng",
+  "success_login": "Đăng nhập thành công!",
+  "email_does_not_exists": "Email này không tồn tại",
+  "failed_registration": "Email này đã được đăng ký. Vui lòng thử email khác.",
+  "success_langset": "Ngôn ngữ đã được thay đổi thành công!",
+  "any_date": "Bất kỳ ngày nào",
+  "any_time": "Bất kỳ thời gian nào",
+  "unexpected_error": "Đã xảy ra lỗi không xác định. Vui lòng thử lại sau!"
 }

@@ -60,11 +60,20 @@
   "insert_your_email": "Введите ваш email",
   "please_insert_your_email": "Пожалуйста, введите ваш email!",
   "register": "Зарегистрироваться",
-  "register_now": "Зарегистрируйтесь сейчас",
+  "register_now": "Зарегистрироваться сейчас",
   "login": "Войти",
   "go_back_to_search": "Вернуться к поиску",
   "already_have_a_account": "Уже есть аккаунт",
   "create_account": "Создать аккаунт",
   "passwords_do_not_match": "Пароли не совпадают",
-  "insert_a_valid_email": "Пожалуйста, введите действительный email"
+  "insert_a_valid_email": "Пожалуйста, введите действительный email",
+  "success_registration": "Пользователь успешно зарегистрирован!",
+  "wrong_password": "Неверный пароль",
+  "success_login": "Успешный вход!",
+  "email_does_not_exists": "Этот email не существует",
+  "failed_registration": "Этот email уже зарегистрирован. Пожалуйста, попробуйте другой.",
+  "success_langset": "Язык успешно изменен!",
+  "any_date": "Любая дата",
+  "any_time": "Любое время",
+  "unexpected_error": "Произошла неизвестная ошибка. Пожалуйста, попробуйте еще раз позже!"
 }

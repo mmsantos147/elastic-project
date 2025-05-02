@@ -17,7 +17,7 @@
   "date_asc": "Äldst först",
   "define": "Definiera",
   "fast": "Snabb",
-  "medium": "Mellan",
+  "medium": "Medium",
   "high": "Lång",
   "minute_abbreviation": "min",
   "after_": "Efter",
@@ -45,7 +45,7 @@
   "artificial_intelligence_vision": "AI-genererad vision",
   "show_more": "Visa mer",
   "show_less": "Visa mindre",
-  "approximate_small": "Ca.",
+  "approximate_small": "Ungefär.",
   "minutes": "minuter",
   "bachelors_degree_in_computer_science": "Kandidatexamen i datavetenskap",
   "federal_university_of_alfenas": "Federala universitetet i Alfenas",
@@ -66,5 +66,14 @@
   "already_have_a_account": "Jag har redan ett konto",
   "create_account": "Skapa konto",
   "passwords_do_not_match": "Lösenorden matchar inte",
-  "insert_a_valid_email": "Vänligen ange en giltig e-post"
+  "insert_a_valid_email": "Vänligen ange en giltig e-post",
+  "success_registration": "Användare registrerad framgångsrikt!",
+  "wrong_password": "Fel lösenord",
+  "success_login": "Inloggning lyckades!",
+  "email_does_not_exists": "Denna e-post finns inte",
+  "failed_registration": "Denna e-post har redan registrerats. Vänligen försök med en annan.",
+  "success_langset": "Språk ändrat framgångsrikt!",
+  "any_date": "Vilket datum som helst",
+  "any_time": "Vilken tid som helst",
+  "unexpected_error": "Ett okänt fel inträffade. Vänligen försök igen senare!"
 }

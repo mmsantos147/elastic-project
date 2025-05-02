@@ -66,5 +66,14 @@
   "already_have_a_account": "Ho già un account",
   "create_account": "Crea un account",
   "passwords_do_not_match": "Le password non corrispondono",
-  "insert_a_valid_email": "Per favore, inserisci un'email valida"
+  "insert_a_valid_email": "Per favore, inserisci un'email valida",
+  "success_registration": "Utente registrato con successo!",
+  "wrong_password": "Password errata",
+  "success_login": "Accesso effettuato con successo!",
+  "email_does_not_exists": "Questa email non esiste",
+  "failed_registration": "Questa email è già stata registrata. Per favore, prova un'altra.",
+  "success_langset": "Lingua cambiata con successo!",
+  "any_date": "Qualsiasi data",
+  "any_time": "Qualsiasi tempo",
+  "unexpected_error": "Si è verificato un errore sconosciuto. Per favore, riprova più tardi!"
 }

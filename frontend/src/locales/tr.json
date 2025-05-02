@@ -66,5 +66,14 @@
   "already_have_a_account": "Zaten bir hesabım var",
   "create_account": "Hesap oluştur",
   "passwords_do_not_match": "Şifreler eşleşmiyor",
-  "insert_a_valid_email": "Lütfen geçerli bir e-posta adresi girin"
+  "insert_a_valid_email": "Lütfen geçerli bir e-posta adresi girin",
+  "success_registration": "Kullanıcı başarıyla kaydedildi!",
+  "wrong_password": "Yanlış şifre",
+  "success_login": "Giriş başarılı!",
+  "email_does_not_exists": "Bu e-posta mevcut değil",
+  "failed_registration": "Bu e-posta zaten kayıtlı. Lütfen başka bir tane deneyin.",
+  "success_langset": "Dil başarıyla değiştirildi!",
+  "any_date": "Herhangi bir tarih",
+  "any_time": "Herhangi bir zaman",
+  "unexpected_error": "Bilinmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyin!"
 }

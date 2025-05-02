@@ -2,7 +2,7 @@
   "search_default": "חפש ב-uAISearch או הקלד כתובת URL",
   "tools": "כלים",
   "all_results": "כל התוצאות",
-  "about": "על",
+  "about": "אודות",
   "advertisement": "פרסומת",
   "business": "עסקים",
   "how_search_works": "איך עובד החיפוש",
@@ -15,7 +15,7 @@
   "read_time_asc": "זמן קריאה עולה",
   "date_desc": "החדשים קודם",
   "date_asc": "הישנים קודם",
-  "define": "להגדיר",
+  "define": "הגדר",
   "fast": "מהיר",
   "medium": "בינוני",
   "high": "ארוך",
@@ -66,5 +66,14 @@
   "already_have_a_account": "כבר יש לי חשבון",
   "create_account": "צור חשבון",
   "passwords_do_not_match": "הסיסמאות אינן תואמות",
-  "insert_a_valid_email": "אנא הכנס אימייל תקף"
+  "insert_a_valid_email": "אנא הכנס אימייל תקף",
+  "success_registration": "המשתמש נרשם בהצלחה!",
+  "wrong_password": "סיסמה שגויה",
+  "success_login": "ההתחברות בוצעה בהצלחה!",
+  "email_does_not_exists": "האימייל הזה אינו קיים",
+  "failed_registration": "האימייל הזה כבר נרשם. אנא נסה אימייל אחר.",
+  "success_langset": "השפה שונתה בהצלחה!",
+  "any_date": "כל תאריך",
+  "any_time": "כל זמן",
+  "unexpected_error": "שגיאה לא צפויה התרחשה. אנא נסה שוב מאוחר יותר!"
 }
