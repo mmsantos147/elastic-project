@@ -77,25 +77,7 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
     >
       <StyledInput
         onPressEnter={(e) => {
-          const hasSuggestions = extensionVisible && suggestions.length > 0;
-          const hasHistory =
-            extensionVisible &&
-            inputValue.length === 0 &&
-            historyContent.length > 0;
-
-          let valueToUse = e.target.value;
-
-          if (hasSuggestions && highlightedIndex >= 0) {
-            valueToUse = suggestions[highlightedIndex];
-          }
-
-          if (hasHistory && highlightedIndex >= 0) {
-            valueToUse = historyContent[highlightedIndex].content;
-          }
-
-          setInputValue(valueToUse);
-          onEnterEvent(valueToUse);
-
+          onEnterEvent(e.target.value);
           e.target.blur();
           setextensionVisible(false);
           setSuggestions([]);
