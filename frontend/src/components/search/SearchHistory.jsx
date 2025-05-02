@@ -7,7 +7,7 @@ import SearchButtonExtension from "./SearchButtonExtension";
 import { useTranslation } from "react-i18next";
 import { useHistoryService } from "../../api/History.api";
 
-const SearchHistory = ({ visible, historyContent, setHistoryContent }) => {
+const SearchHistory = ({ visible, historyContent, setHistoryContent, highlightedIndex, onHover }) => {
   const { fetchHistory, deleteItemFromHistory } = useHistoryService();
   const { t } = useTranslation();
   
@@ -46,27 +46,17 @@ const SearchHistory = ({ visible, historyContent, setHistoryContent }) => {
 
   return (
     <div style={historyStyle}>
-      <Divider
-        orientation="left"
-        style={{
-          marginTop: 0,
-          borderColor: COLORS.gray,
-          color: COLORS.gray,
-          paddingLeft: "20px",
-          paddingRight: "20px",
-        }}
-      >
-        {t("recent_searches")}
-      </Divider>
-      {historyContent.map((query) => (
+      <Divider>{t("recent_searches")}</Divider>
+      {historyContent.map((item, index) => (
         <HistoryElement
-          key={query.id}
-          id={query.id}
-          query={query.content}
+          key={item.id}
+          id={item.id}
+          query={item.content}
           deleteFromHistory={deleteFromHistory}
+          isSelected={index === highlightedIndex}
+          onMouseEnter={() => onHover(index)}
         />
       ))}
-      <SearchButtonExtension />
     </div>
   );
 };
