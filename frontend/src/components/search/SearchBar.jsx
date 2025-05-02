@@ -32,9 +32,12 @@ const StyledInput = styled(Input)`
 const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
   const { searchAsYouType } = useSearchService();
   const [historyContent, setHistoryContent] = useState([]);
+<<<<<<< HEAD
 
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const interactionModeRef = useRef("mouse");
+=======
+>>>>>>> parent of 0c659e7d (feat: add select with keys)
 
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState(initialSearch || "");
@@ -46,16 +49,20 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (inputRef.current && !inputRef.current.contains(e.target)) {
+    function handleClickOutside(event) {
+      if (inputRef.current && !inputRef.current.contains(event.target)) {
         setextensionVisible(false);
-        setHighlightedIndex(-1);
       }
+<<<<<<< HEAD
     };
+=======
+    }
+>>>>>>> parent of 0c659e7d (feat: add select with keys)
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+<<<<<<< HEAD
   useEffect(() => {
     const handleMouseMove = () => {
       interactionModeRef.current = "mouse";
@@ -128,6 +135,8 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [suggestions, historyContent, extensionVisible, inputValue]);
 
+=======
+>>>>>>> parent of 0c659e7d (feat: add select with keys)
   const updateSugestions = async (value) => {
     const response = await searchAsYouType({ query: value });
     console.log(response);
@@ -175,24 +184,61 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
           e.target.blur();
           setextensionVisible(false);
           setSuggestions([]);
+<<<<<<< HEAD
           setHighlightedIndex(-1);
+=======
+        }}
+        size="large"
+        placeholder={t("search_default")}
+        value={inputValue}
+        prefix={
+          <SearchOutlined
+            style={{
+              color: COLORS.gray,
+              paddingLeft: "7px",
+              marginRight: "10px",
+            }}
+          />
+        }
+        suffix={
+          <>
+            <FaKeyboard
+              style={{
+                color: "#9aa0a6",
+                paddingRight: "7px",
+                fontSize: "25px",
+                marginLeft: "10px"
+              }}
+              onClick={() => setShowKeyboard(!showKeyboard)}
+            />
+          </>
+        }
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          updateSugestions(e.target.value);
+        }}
+        style={{
+          borderRadius,
+          backgroundColor: "#303134",
+          color: "#e8eaed",
+          border: "0px",
+          padding: "10px",
+          transition: "none",
+>>>>>>> parent of 0c659e7d (feat: add select with keys)
         }}
       />
 
       <SearchHistory
         visible={
-          extensionVisible &&
-          inputValue.length === 0 &&
-          historyContent.length > 0
+          extensionVisible && inputValue.length == 0 && suggestions.length == 0
         }
         historyContent={historyContent}
         setHistoryContent={setHistoryContent}
-        highlightedIndex={highlightedIndex}
-        onHover={(index) => {
-          if (interactionModeRef.current === "mouse") {
-            setHighlightedIndex(index);
-          }
-        }}
+      />
+
+      <SearchSuggestions
+        visible={extensionVisible && suggestions.length > 0}
+        suggestions={suggestions}
       />
 
       <SearchSuggestions
