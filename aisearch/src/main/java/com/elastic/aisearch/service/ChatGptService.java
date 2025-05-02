@@ -57,7 +57,7 @@ public class ChatGptService {
     }
 
     public void makeAiResume(UserSession session) {
-        log.debug("Chamada recebida para fazer resumo: Sessao " + session.getStreamId() + 
+        log.info("Chamada recebida para fazer resumo: Sessao " + session.getStreamId() + 
                   " na linguagem " + session.getLanguage() + 
                   " com o resultado " + session.getTop3Results()
                 );
@@ -66,7 +66,7 @@ public class ChatGptService {
                 String aiResume = processResume(session.getTop3Results(), session.getLanguage()).block();
                 streamService.sendAiAbstractToUser(session.getStreamId(), aiResume);
         }).exceptionally(ex -> {
-            log.debug("Um erro inesperado aconteceu: " + ex.getMessage());
+            log.info("Um erro inesperado aconteceu: " + ex.getMessage());
             return null;
         });
     }
