@@ -38,7 +38,7 @@ const SearchSuggestions = ({
       >
         {t("search_suggested")}
       </Divider>
-      {suggestions.map((query) => (
+      {suggestions.map((query, index) => (
         <SuggestionElement
           key={query}
           query={query}
