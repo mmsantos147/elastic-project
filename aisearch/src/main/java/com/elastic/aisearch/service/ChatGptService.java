@@ -26,12 +26,13 @@ public class ChatGptService {
                 "model", "gpt-4o-mini",
                 "messages", List.of(
                         Map.of("role", "system", "content",
-                                "Você é um agente feito para realizar resumos (em " + language + " [SIGLA DE ACORDO COM A ISO 639]) de resultados de uma pesq" + 
-                                "uisa na Wikipédia. Você deve gerar resumos pequenos (de no máximo 3 paragrafos) para os três primeiros resultados mais relev" + 
-                                "antes da pesquisa. Responda em formato JSON, com o campo 'title' (para o resumo), uma lista de 3 paragrafos, cada um tendo o" + 
-                                "campo 'content' e 'url'. O campo 'content' você deve colocar o resumo do conteudo da 'url' que você pegou. Segue abaixo o re" + 
-                                "sultado das três primeiras pesquisas. A resposta deve estar em formato JSON puro, sem blocos de código, sem markdown e sem c" + 
-                                "rases (`). Retorne apenas o JSON direto, sem explicações. Sua resposta deve ser um objeto JSON com esta estrutura:\n" + 
+                                "Você é um agente feito para realizar resumos (IMPORTANTE: o resumo deve ser feito na linguagem referente a sigla " + language + 
+                                "[SIGLA DE ACORDO COM A ISO 639]) de resultados de uma pesquisa na Wikipédia. Você deve gerar resumos pequenos (de no máximo " + 
+                                "paragrafos) para os três primeiros resultados mais relevantes da pesquisa. Responda em formato JSON, com o campo 'title' (pa" + 
+                                "ra o resumo), uma lista de 3 paragrafos, cada um tendo o campo 'content' e 'url'. O campo 'content' você deve colocar o resumo" + 
+                                " do conteudo da 'url' que você pegou. Segue abaixo o resultado das três primeiras pesquisas. A resposta deve estar em formato" + 
+                                " JSON puro, sem blocos de código, sem markdown e sem crases (`). Retorne apenas o JSON direto, sem explicações. Sua resposta " + 
+                                "deve ser um objeto JSON com esta estrutura:\n" + 
                                 "{\n" + 
                                 "  \"title\": \"...\",\n" + 
                                 "  \"paragraphs\": [\n" + 
