@@ -18,6 +18,7 @@ import { useSearchParams } from "react-router-dom";
 import LanguageSelector from "../components/LanguageSelector";
 import WeatherReport from "../components/WeatherReport";
 import { useSearchService } from "../api/Search.api";
+import emitter from "../eventBus";
 
 const { Content } = Layout;
 
@@ -63,7 +64,6 @@ const Search = () => {
 
     es.addEventListener("AiAbstract", (evt) => {
       try {
-        console.log("===================================================");
         console.log(evt.data);
         const data = JSON.parse(evt.data);
         console.log(data);
@@ -72,6 +72,7 @@ const Search = () => {
         message.error("Um erro aconteceu com a inteligência artificial!");
         console.error("Erro parseando SSE:", err);
       }
+      
       setUpdatesInAiAbstract((prev) => prev - 1);
     });
 
@@ -103,6 +104,14 @@ const Search = () => {
     fetchData();
   }, [formData]);
 
+  useEffect(() => {
+    const handleNewIARequest = () => {
+      setUpdatesInAiAbstract(prev => prev + 1);
+    }
+
+    emitter.on("new-ai-request", handleNewIARequest);
+    return () => emitter.off("new-ai-request", handleNewIARequest);
+  }, []);
 
   const setSearchValue = (value) => {
     setFormData((prev) => ({ ...prev, search: value }));

@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useLanguageService } from "../api/Language.api";
+import mitt from "mitt";
+import emitter from "../eventBus";
 
 const languages = [
   { code: "pt", name: "Português", countryCode: "BR" },
@@ -31,7 +33,6 @@ const languages = [
 
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
-
   const { setLanguage } = useLanguageService();
 
   const [currentLang, setCurrentLang] = useState(() =>
@@ -42,6 +43,7 @@ const LanguageSelector = () => {
     const selected = languages.find((l) => l.code === i18n.language);
     if (selected) setCurrentLang(selected);
     Cookies.set("language", i18n.language, { expires: 365 });
+    emitter.emit("new-ai-request");
   }, [i18n.language]);
 
   const handleMenuClick = ({ key }) => {
