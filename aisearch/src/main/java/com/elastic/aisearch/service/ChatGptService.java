@@ -10,10 +10,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.elastic.aisearch.security.UserSession;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ChatGptService {
 
     private final WebClient openAiWebClient;
@@ -55,9 +57,17 @@ public class ChatGptService {
     }
 
     public void makeAiResume(UserSession session) {
+        log.debug("Chamada recebida para fazer resumo: Sessao " + session.getStreamId() + 
+                  " na linguagem " + session.getLanguage() + 
+                  " com o resultado " + session.getTop3Results()
+                );
+
         CompletableFuture.runAsync(() -> {
                 String aiResume = processResume(session.getTop3Results(), session.getLanguage()).block();
                 streamService.sendAiAbstractToUser(session.getStreamId(), aiResume);
+        }).exceptionally(ex -> {
+            log.debug("Um erro inesperado aconteceu: " + ex.getMessage());
+            return null;
         });
     }
 }
