@@ -22,12 +22,18 @@ const SuggestionContent = styled.div`
 `;
 
 const SuggestionElement = ({ query, isSelected, onMouseEnter }) => {
-    const navigate = useNavigate();
-    return (
-    <SuggestionWrapper onClick={() => {navigate(`/search?q=${query}`)}}> 
-      <SuggestionContent onMouseEnter={onMouseEnter} style={{
-        backgroundColor: isSelected ? "rgb(44, 44, 44)" : 'transparent'
-      }}>
+  const navigate = useNavigate();
+  return (
+    <SuggestionWrapper
+      onMouseEnter={onMouseEnter}
+      style={{
+        backgroundColor: isSelected ? "rgb(44, 44, 44)" : "transparent",
+      }}
+      onClick={() => {
+        navigate(`/search?q=${query}`);
+      }}
+    >
+      <SuggestionContent>
         <SearchOutlined style={{ color: COLORS.gray, paddingRight: "15px" }} />
         {query}
       </SuggestionContent>
