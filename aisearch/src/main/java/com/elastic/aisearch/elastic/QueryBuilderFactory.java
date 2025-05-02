@@ -6,7 +6,7 @@ import com.elastic.aisearch.parser.QueryParser.QueryNode;
 import static com.elastic.aisearch.utils.DateUtils.toElasticDate; 
 
 import org.elasticsearch.index.query.*;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;;import java.util.Objects;
+import java.util.Objects;
 
 public class QueryBuilderFactory {
 

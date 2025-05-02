@@ -11,7 +11,6 @@ import com.elastic.aisearch.parser.QueryParser.QueryNode;
 import com.elastic.aisearch.utils.Filters;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.lucene.search.TotalHits;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;

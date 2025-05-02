@@ -3,8 +3,6 @@ package com.elastic.aisearch.service;
 import com.elastic.aisearch.dto.WeatherDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,13 +24,12 @@ public class WeatherService {
 
         JsonNode json = restTemplate.getForObject(url, JsonNode.class);
 
-
         return new WeatherDTO(
-                json.path("weather").get(0).path("id").asInt(),
-                json.path("weather").get(0).path("main").asText(),
-                json.path("name").asText(),
-                json.path("main").path("temp").asInt(),
-                json.path("weather").get(0).path("description").asText()
+            json.path("weather").get(0).path("id").asInt(),
+            json.path("weather").get(0).path("main").asText(),
+            json.path("name").asText(),
+            json.path("main").path("temp").asInt(),
+            json.path("weather").get(0).path("description").asText()
         );
     }
 }

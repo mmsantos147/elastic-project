@@ -1,6 +1,5 @@
 package com.elastic.aisearch.service;
 
-import com.elastic.aisearch.controller.GlobalExceptionHandler;
 import com.elastic.aisearch.dto.RegisterDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.repository.UserRepository;
@@ -18,7 +17,6 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final GlobalExceptionHandler adviceController;
 
     public List<User> getUser() {
         return userRepository.findAll();
