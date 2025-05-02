@@ -32,12 +32,6 @@ const StyledInput = styled(Input)`
 const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
   const { searchAsYouType } = useSearchService();
   const [historyContent, setHistoryContent] = useState([]);
-<<<<<<< HEAD
-
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const interactionModeRef = useRef("mouse");
-=======
->>>>>>> parent of 0c659e7d (feat: add select with keys)
 
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState(initialSearch || "");
@@ -53,90 +47,11 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
       if (inputRef.current && !inputRef.current.contains(event.target)) {
         setextensionVisible(false);
       }
-<<<<<<< HEAD
-    };
-=======
     }
->>>>>>> parent of 0c659e7d (feat: add select with keys)
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-<<<<<<< HEAD
-  useEffect(() => {
-    const handleMouseMove = () => {
-      interactionModeRef.current = "mouse";
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      const hasSuggestions = extensionVisible && suggestions.length > 0;
-      const hasHistory =
-        extensionVisible &&
-        inputValue.length === 0 &&
-        historyContent.length > 0;
-
-      if (!hasSuggestions && !hasHistory) return;
-
-      switch (e.key) {
-        case "ArrowDown":
-          e.preventDefault();
-          interactionModeRef.current = "keyboard";
-          setHighlightedIndex((prev) => {
-            const maxIndex = hasSuggestions
-              ? suggestions.length - 1
-              : historyContent.length - 1;
-            return prev < maxIndex ? prev + 1 : 0;
-          });
-          break;
-
-        case "ArrowUp":
-          e.preventDefault();
-          interactionModeRef.current = "keyboard";
-          setHighlightedIndex((prev) => {
-            const minIndex = hasSuggestions || hasHistory ? 0 : -1;
-            return prev > minIndex ? prev - 1 : -1;
-          });
-          break;
-
-        case "Enter":
-          const hasSuggestions = extensionVisible && suggestions.length > 0;
-          const hasHistory =
-            extensionVisible &&
-            inputValue.length === 0 &&
-            historyContent.length > 0;
-
-          let valueToUse = inputValue;
-
-          if (hasSuggestions && highlightedIndex >= 0) {
-            valueToUse = suggestions[highlightedIndex];
-          } else if (hasHistory && highlightedIndex >= 0) {
-            valueToUse = historyContent[highlightedIndex].content;
-          }
-
-          setInputValue(valueToUse);
-          onEnterEvent(valueToUse);
-
-          setextensionVisible(false);
-          setSuggestions([]);
-          setHighlightedIndex(-1);
-          break;
-
-        default:
-          break;
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [suggestions, historyContent, extensionVisible, inputValue]);
-
-=======
->>>>>>> parent of 0c659e7d (feat: add select with keys)
   const updateSugestions = async (value) => {
     const response = await searchAsYouType({ query: value });
     console.log(response);
@@ -184,9 +99,6 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
           e.target.blur();
           setextensionVisible(false);
           setSuggestions([]);
-<<<<<<< HEAD
-          setHighlightedIndex(-1);
-=======
         }}
         size="large"
         placeholder={t("search_default")}
@@ -224,7 +136,6 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
           border: "0px",
           padding: "10px",
           transition: "none",
->>>>>>> parent of 0c659e7d (feat: add select with keys)
         }}
       />
 
