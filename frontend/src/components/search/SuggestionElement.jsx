@@ -13,7 +13,12 @@ const SuggestionWrapper = styled.div`
   padding: 8px 20px 15px 20px;
   background-color: transparent;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 
+  &:hover {
+    background-color:rgb(44, 44, 44); /* ou use uma cor do seu theme, tipo COLORS.darkGray */
+    border-radius: 5px;
+    }
 `;
 
 const SuggestionContent = styled.div`
@@ -21,18 +26,15 @@ const SuggestionContent = styled.div`
   align-items: center;
 `;
 
-const SuggestionElement = ({ query, isSelected, onMouseEnter }) => {
-  return (
-    <div
-      onMouseEnter={onMouseEnter}
-      style={{
-        padding: "8px 20px",
-        backgroundColor: isSelected ? "#555" : "transparent",
-        cursor: "pointer",
-      }}
-    >
-      {query}
-    </div>
+const SuggestionElement = ({ query }) => {
+    const navigate = useNavigate();
+    return (
+    <SuggestionWrapper onClick={() => {navigate(`/search?q=${query}`)}}> 
+      <SuggestionContent>
+        <SearchOutlined style={{ color: COLORS.gray, paddingRight: "15px" }} />
+        {query}
+      </SuggestionContent>
+    </SuggestionWrapper>
   );
 };
 
