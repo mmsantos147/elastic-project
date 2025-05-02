@@ -23,27 +23,29 @@ public class ChatGptService {
 
     private Mono<String> processResume(String searchResults, String language) {
         Map<String, Object> requestBody = Map.of(
-                "model", "gpt-4o-mini",
-                "messages", List.of(
-                        Map.of("role", "system", "content",
-                                "Você é um agente feito para realizar resumos (IMPORTANTE: o resumo deve ser feito na linguagem referente a sigla " + language + 
-                                "[SIGLA DE ACORDO COM A ISO 639]) de resultados de uma pesquisa na Wikipédia. Você deve gerar resumos pequenos (de no máximo " + 
-                                "paragrafos) para os três primeiros resultados mais relevantes da pesquisa. Responda em formato JSON, com o campo 'title' (pa" + 
-                                "ra o resumo), uma lista de 3 paragrafos, cada um tendo o campo 'content' e 'url'. O campo 'content' você deve colocar o resumo" + 
-                                " do conteudo da 'url' que você pegou. Segue abaixo o resultado das três primeiras pesquisas. A resposta deve estar em formato" + 
-                                " JSON puro, sem blocos de código, sem markdown e sem crases (`). Retorne apenas o JSON direto, sem explicações. Sua resposta " + 
-                                "deve ser um objeto JSON com esta estrutura:\n" + 
-                                "{\n" + 
-                                "  \"title\": \"...\",\n" + 
-                                "  \"paragraphs\": [\n" + 
-                                "    { \"content\": \"...\", \"url\": \"...\" },\n" + 
-                                "    { \"content\": \"...\", \"url\": \"...\" },\n" + 
-                                "    { \"content\": \"...\", \"url\": \"...\" }\n" + 
-                                "  ]\n" + 
-                                "}\n" + 
-                                "Não adicione chaves a mais no final. Responda com um único objeto JSON." + 
-                                "Nunca use contrabarra (\\) em nenhum campo do JSON. Isso quebrará a estrutura."),
-                        Map.of("role", "user", "content", searchResults)));
+        "model", "gpt-4o-mini",
+        "messages", List.of(
+                Map.of("role", "system", "content",
+                        "You are an agent designed to summarize the results of a Wikipedia search. You should generate short summaries " +
+                        "for the top three most relevant results from the search. Respond in JSON format, with a 'title' field (for the summary), " +
+                        "and a list of 3 paragraphs, each containing 'content' and 'url'. The 'content' field should contain a summary of " +
+                        "the content from the 'url' you retrieved. Below are the results of the top three search results. The answer should be in pure JSON format, " +
+                        "without code blocks, markdown, or backticks (`). Only return the JSON directly, without explanations. Your response " +
+                        "should be a JSON object with this structure:\n" +
+                        "{\n" +
+                        "  \"title\": \"...\",\n" +
+                        "  \"paragraphs\": [\n" +
+                        "    { \"content\": \"...\", \"url\": \"...\" },\n" +
+                        "    { \"content\": \"...\", \"url\": \"...\" },\n" +
+                        "    { \"content\": \"...\", \"url\": \"...\" }\n" +
+                        "  ]\n" +
+                        "}\n" +
+                        "Do not add any extra braces at the end. Respond with a single JSON object." +
+                        "Never use a backslash (\\) in any JSON field. This will break the structure.\n" +
+                        "Although the content may be in English, you should provide the summary in the specified language."),
+                Map.of("role", "user", "content", "Language: " + getLanguageByISO(language) + " Content: " + searchResults)
+                )
+        );
 
         return openAiWebClient.post()
                 .uri("/chat/completions")
@@ -58,20 +60,47 @@ public class ChatGptService {
     }
 
     public void makeAiResume(UserSession session) {
-        log.info("Chamada recebida para fazer resumo: Sessao " + session.getStreamId() + 
-                  " na linguagem " + session.getLanguage() + 
-                  " com o resultado " + session.getTop3Results()
-                );
+        log.info("Chamada recebida para fazer resumo: Sessao " + session.getStreamId() +
+                " na linguagem " + session.getLanguage() +
+                " com o resultado " + session.getTop3Results());
 
         String streamId = session.getStreamId();
         String top3results = session.getTop3Results();
         String language = session.getLanguage();
         CompletableFuture.runAsync(() -> {
-                String aiResume = processResume(top3results, language).block();
-                streamService.sendAiAbstractToUser(streamId, aiResume);
+            String aiResume = processResume(top3results, language).block();
+            streamService.sendAiAbstractToUser(streamId, aiResume);
         }).exceptionally(ex -> {
             log.info("Um erro inesperado aconteceu: " + ex.getMessage());
             return null;
         });
     }
+
+    private String getLanguageByISO(String language) {
+        String languageName = switch (language) {
+            case "pt" -> "Português";
+            case "en" -> "English";
+            case "es" -> "Español";
+            case "fr" -> "Français";
+            case "de" -> "Deutsch";
+            case "it" -> "Italiano";
+            case "ja" -> "日本語";
+            case "zh" -> "中文";
+            case "ru" -> "Русский";
+            case "ar" -> "العربية";
+            case "ko" -> "한국어";
+            case "hi" -> "हिन्दी";
+            case "tr" -> "Türkçe";
+            case "nl" -> "Nederlands";
+            case "sv" -> "Svenska";
+            case "pl" -> "Polski";
+            case "uk" -> "Українська";
+            case "he" -> "עברית";
+            case "vi" -> "Tiếng Việt";
+            case "th" -> "ไทย";
+            default -> "Idioma não identificado";
+        };
+        return languageName;
+    }
+
 }
