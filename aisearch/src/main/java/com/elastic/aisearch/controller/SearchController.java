@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/search")
@@ -28,7 +27,6 @@ public class SearchController {
     private final UserSession userSession;
     private final ElasticsearchService elasticsearchService;
     private final ChatGptService chatGptService;
-    private final StreamService streamService;
     private final HistoryService historyService;
     private final UserService userService;
 
@@ -49,20 +47,14 @@ public class SearchController {
 
             SearchResponseDTO response = elasticsearchService.search(searchDTO);
 
-            List<SearchResultDTO> top3 = response.results().stream()
+            String top3 = response.results().stream()
                     .limit(3)
-                    .toList();
+                    .toList()
+                    .toString();
 
-            String top3Str = top3.toString();
-            String streamId = userSession.getStreamId();
+            userSession.setTop3Results(top3);
+            chatGptService.makeAiResume(userSession);
 
-            CompletableFuture.runAsync(() -> {
-                String aiResume = chatGptService.makeAiResume(top3Str).block();
-                streamService.sendAiAbstractToUser(streamId, aiResume);
-            }).exceptionally(ex -> {
-                log.error("Erro na thread async: {}", ex.getMessage(), ex);
-                return null;
-            });
             History history = new History();
             history.setPrompt(searchDTO.search());
             if (!Objects.isNull(userSession.getUserId())) {

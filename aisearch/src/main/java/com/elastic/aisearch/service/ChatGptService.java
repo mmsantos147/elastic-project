@@ -1,32 +1,35 @@
 package com.elastic.aisearch.service;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.elastic.aisearch.security.UserSession;
+
+import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
 @Service
+@RequiredArgsConstructor
 public class ChatGptService {
 
-    @Autowired
-    private WebClient openAiWebClient;
+    private final WebClient openAiWebClient;
+    private final StreamService streamService;
 
-    public Mono<String> makeAiResume(String searchResults) {
+    private Mono<String> processResume(String searchResults, String language) {
         Map<String, Object> requestBody = Map.of(
                 "model", "gpt-4o-mini",
                 "messages", List.of(
                         Map.of("role", "system", "content",
-                                "Você é um agente feito para realizar resumos (em português) de resultados de uma pesquisa na Wikipédia." + 
-                                "Você deve gerar resumos pequenos (de no máximo 3 paragrafos) para os três primeiros resultados mais relevantes da pesquisa." +
-                                "Responda em formato JSON, com o campo 'title' (para o resumo), uma lista de 3 paragrafos, cada um tendo o campo 'content' e" + 
-                                "'url'. O campo 'content' você deve colocar o resumo do conteudo da 'url' que você pegou. Segue abaixo o resultado das três " +
-                                "primeiras pesquisas. A resposta deve estar em formato JSON puro, sem blocos de código, sem markdown e sem crases (`)." + 
-                                "Retorne apenas o JSON direto, sem explicações." + 
-                                "Sua resposta deve ser um objeto JSON com esta estrutura:\n" + 
+                                "Você é um agente feito para realizar resumos (em " + language + " [SIGLA DE ACORDO COM A ISO 639]) de resultados de uma pesq" + 
+                                "uisa na Wikipédia. Você deve gerar resumos pequenos (de no máximo 3 paragrafos) para os três primeiros resultados mais relev" + 
+                                "antes da pesquisa. Responda em formato JSON, com o campo 'title' (para o resumo), uma lista de 3 paragrafos, cada um tendo o" + 
+                                "campo 'content' e 'url'. O campo 'content' você deve colocar o resumo do conteudo da 'url' que você pegou. Segue abaixo o re" + 
+                                "sultado das três primeiras pesquisas. A resposta deve estar em formato JSON puro, sem blocos de código, sem markdown e sem c" + 
+                                "rases (`). Retorne apenas o JSON direto, sem explicações. Sua resposta deve ser um objeto JSON com esta estrutura:\n" + 
                                 "{\n" + 
                                 "  \"title\": \"...\",\n" + 
                                 "  \"paragraphs\": [\n" + 
@@ -49,5 +52,12 @@ public class ChatGptService {
                     Map<String, Object> message = (Map<String, Object>) choices.get(0).get("message");
                     return (String) message.get("content");
                 });
+    }
+
+    public void makeAiResume(UserSession session) {
+        CompletableFuture.runAsync(() -> {
+                String aiResume = processResume(session.getTop3Results(), session.getLanguage()).block();
+                streamService.sendAiAbstractToUser(session.getStreamId(), aiResume);
+        });
     }
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.elastic.aisearch.parser.ParseException;
 import com.elastic.aisearch.parser.QueryParser;
 import com.elastic.aisearch.security.UserSession;
-import com.elastic.aisearch.service.ChatGptService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.client.RestTemplate;
@@ -27,7 +26,6 @@ import org.springframework.web.client.RestTemplate;
 @AllArgsConstructor
 public class DebugController {
 
-    private final ChatGptService chatGptService;
     private UserSession userSession;
     private final WeatherService weatherService;
 
@@ -47,12 +45,6 @@ public class DebugController {
         } catch (ParseException e) {
             return new ResponseEntity<>("Erro no parser: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @GetMapping("/gpt")
-    public ResponseEntity<String> chat(@RequestParam("message") String userInput) {
-        String response = chatGptService.makeAiResume(userInput).block();
-        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/session")

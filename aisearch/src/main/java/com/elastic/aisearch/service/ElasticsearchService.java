@@ -106,7 +106,7 @@ public class ElasticsearchService {
 
         if (searchDTO.orderBy().equals(Filters.DATE_ASC)) {
             searchSourceBuilder
-                    .sort("dt_creation", SortOrder.ASC);                    ;
+                    .sort("dt_creation", SortOrder.ASC);
         }
 
         if (searchDTO.orderBy().equals(Filters.DATE_DESC)) {
