@@ -92,7 +92,7 @@ const Search = () => {
         setAiAbstract({});
         const response = await search(formData);
         setSearchResults(response);
-        navigate(`/search?q=${formData.search}`, { replace: true });
+        
       } catch (error) {
         console.error("Erro ao buscar resultados:", error);
       } finally {
@@ -104,8 +104,9 @@ const Search = () => {
   }, [formData]);
 
   useEffect(() => {
-    setFormData((prev) => ({ ...prev, search: paramQ }));
-  }, [paramQ]);
+    if (paramQ && paramQ !== formData.search)
+      setFormData((prev) => ({ ...prev, search: paramQ }));
+  }, [paramQ, formData.search]);
 
   const setSearchValue = (value) => {
     setFormData((prev) => ({ ...prev, search: value }));
