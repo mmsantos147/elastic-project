@@ -134,17 +134,6 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
         suggestions={suggestions}
       />
 
-      <SearchSuggestions
-        visible={extensionVisible && suggestions.length > 0}
-        suggestions={suggestions}
-        highlightedIndex={highlightedIndex}
-        onHover={(index) => {
-          if (interactionModeRef.current === "mouse") {
-            setHighlightedIndex(index);
-          }
-        }}
-      />
-
       {children}
 
       {showKeyboard && (
