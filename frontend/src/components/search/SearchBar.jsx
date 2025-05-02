@@ -80,8 +80,10 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
           e.preventDefault();
           interactionModeRef.current = "keyboard";
           setHighlightedIndex((prev) => {
-            const next = prev < suggestions.length - 1 ? prev + 1 : 0;
-            return next;
+            const maxIndex = hasSuggestions
+              ? suggestions.length - 1
+              : historyContent.length - 1;
+            return prev < maxIndex ? prev + 1 : 0;
           });
           break;
 
@@ -89,25 +91,32 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
           e.preventDefault();
           interactionModeRef.current = "keyboard";
           setHighlightedIndex((prev) => {
-            const next = prev > 0 ? prev - 1 : suggestions.length - 1;
-            return next;
+            const minIndex = hasSuggestions || hasHistory ? 0 : -1;
+            return prev > minIndex ? prev - 1 : -1;
           });
           break;
 
         case "Enter":
+          const hasSuggestions = extensionVisible && suggestions.length > 0;
+          const hasHistory =
+            extensionVisible &&
+            inputValue.length === 0 &&
+            historyContent.length > 0;
+
+          let valueToUse = inputValue;
+
           if (hasSuggestions && highlightedIndex >= 0) {
-            setInputValue(suggestions[highlightedIndex]);
-            onEnterEvent(suggestions[highlightedIndex]);
-            setextensionVisible(false);
-            setSuggestions([]);
-            setHighlightedIndex(-1);
+            valueToUse = suggestions[highlightedIndex];
           } else if (hasHistory && highlightedIndex >= 0) {
-            const query = historyContent[highlightedIndex].content;
-            setInputValue(query);
-            onEnterEvent(query);
-            setextensionVisible(false);
-            setHighlightedIndex(-1);
+            valueToUse = historyContent[highlightedIndex].content;
           }
+
+          setInputValue(valueToUse);
+          onEnterEvent(valueToUse);
+
+          setextensionVisible(false);
+          setSuggestions([]);
+          setHighlightedIndex(-1);
           break;
 
         default:
@@ -144,47 +153,29 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
     >
       <StyledInput
         onPressEnter={(e) => {
-          onEnterEvent(e.target.value);
+          const hasSuggestions = extensionVisible && suggestions.length > 0;
+          const hasHistory =
+            extensionVisible &&
+            inputValue.length === 0 &&
+            historyContent.length > 0;
+
+          let valueToUse = e.target.value;
+
+          if (hasSuggestions && highlightedIndex >= 0) {
+            valueToUse = suggestions[highlightedIndex];
+          }
+
+          if (hasHistory && highlightedIndex >= 0) {
+            valueToUse = historyContent[highlightedIndex].content;
+          }
+
+          setInputValue(valueToUse);
+          onEnterEvent(valueToUse);
+
           e.target.blur();
           setextensionVisible(false);
           setSuggestions([]);
-        }}
-        size="large"
-        placeholder={t("search_default")}
-        value={inputValue}
-        prefix={
-          <SearchOutlined
-            style={{
-              color: COLORS.gray,
-              paddingLeft: "7px",
-              marginRight: "10px",
-            }}
-          />
-        }
-        suffix={
-          <>
-            <FaKeyboard
-              style={{
-                color: "#9aa0a6",
-                paddingRight: "7px",
-                fontSize: "25px",
-                marginLeft: "10px",
-              }}
-              onClick={() => setShowKeyboard(!showKeyboard)}
-            />
-          </>
-        }
-        onChange={(e) => {
-          setInputValue(e.target.value);
-          updateSugestions(e.target.value);
-        }}
-        style={{
-          borderRadius,
-          backgroundColor: "#303134",
-          color: "#e8eaed",
-          border: "0px",
-          padding: "10px",
-          transition: "none",
+          setHighlightedIndex(-1);
         }}
       />
 
