@@ -33,6 +33,9 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
   const { searchAsYouType } = useSearchService();
   const [historyContent, setHistoryContent] = useState([]);
 
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const interactionModeRef = useRef("mouse");
+
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState(initialSearch || "");
   const [extensionVisible, setextensionVisible] = useState(false);
@@ -43,14 +46,78 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (inputRef.current && !inputRef.current.contains(event.target)) {
+    const handleClickOutside = (e) => {
+      if (inputRef.current && !inputRef.current.contains(e.target)) {
         setextensionVisible(false);
+        setHighlightedIndex(-1);
       }
-    }
+    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    const handleMouseMove = () => {
+      interactionModeRef.current = "mouse";
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const hasSuggestions = extensionVisible && suggestions.length > 0;
+      const hasHistory =
+        extensionVisible &&
+        inputValue.length === 0 &&
+        historyContent.length > 0;
+
+      if (!hasSuggestions && !hasHistory) return;
+
+      switch (e.key) {
+        case "ArrowDown":
+          e.preventDefault();
+          interactionModeRef.current = "keyboard";
+          setHighlightedIndex((prev) => {
+            const next = prev < suggestions.length - 1 ? prev + 1 : 0;
+            return next;
+          });
+          break;
+
+        case "ArrowUp":
+          e.preventDefault();
+          interactionModeRef.current = "keyboard";
+          setHighlightedIndex((prev) => {
+            const next = prev > 0 ? prev - 1 : suggestions.length - 1;
+            return next;
+          });
+          break;
+
+        case "Enter":
+          if (hasSuggestions && highlightedIndex >= 0) {
+            setInputValue(suggestions[highlightedIndex]);
+            onEnterEvent(suggestions[highlightedIndex]);
+            setextensionVisible(false);
+            setSuggestions([]);
+            setHighlightedIndex(-1);
+          } else if (hasHistory && highlightedIndex >= 0) {
+            const query = historyContent[highlightedIndex].content;
+            setInputValue(query);
+            onEnterEvent(query);
+            setextensionVisible(false);
+            setHighlightedIndex(-1);
+          }
+          break;
+
+        default:
+          break;
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [suggestions, historyContent, extensionVisible, inputValue]);
 
   const updateSugestions = async (value) => {
     const response = await searchAsYouType({ query: value });
@@ -101,7 +168,7 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
                 color: "#9aa0a6",
                 paddingRight: "7px",
                 fontSize: "25px",
-                marginLeft: "10px"
+                marginLeft: "10px",
               }}
               onClick={() => setShowKeyboard(!showKeyboard)}
             />
@@ -123,15 +190,29 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
 
       <SearchHistory
         visible={
-          extensionVisible && inputValue.length == 0 && suggestions.length == 0
+          extensionVisible &&
+          inputValue.length === 0 &&
+          historyContent.length > 0
         }
         historyContent={historyContent}
         setHistoryContent={setHistoryContent}
+        highlightedIndex={highlightedIndex}
+        onHover={(index) => {
+          if (interactionModeRef.current === "mouse") {
+            setHighlightedIndex(index);
+          }
+        }}
       />
 
       <SearchSuggestions
         visible={extensionVisible && suggestions.length > 0}
         suggestions={suggestions}
+        highlightedIndex={highlightedIndex}
+        onHover={(index) => {
+          if (interactionModeRef.current === "mouse") {
+            setHighlightedIndex(index);
+          }
+        }}
       />
 
       {children}

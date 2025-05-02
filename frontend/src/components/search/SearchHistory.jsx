@@ -7,7 +7,7 @@ import SearchButtonExtension from "./SearchButtonExtension";
 import { useTranslation } from "react-i18next";
 import { useHistoryService } from "../../api/History.api";
 
-const SearchHistory = ({ visible, historyContent, setHistoryContent }) => {
+const SearchHistory = ({ visible, historyContent, setHistoryContent, highlightedIndex, onHover }) => {
   const { fetchHistory, deleteItemFromHistory } = useHistoryService();
   const { t } = useTranslation();
   
