@@ -26,7 +26,7 @@ const SuggestionElement = ({ query, isSelected, onMouseEnter }) => {
     return (
     <SuggestionWrapper onClick={() => {navigate(`/search?q=${query}`)}}> 
       <SuggestionContent onMouseEnter={onMouseEnter} style={{
-        backgroundColor: isSelected ? rgb(44, 44, 44) : 'transparent'
+        backgroundColor: isSelected ? "rgb(44, 44, 44)" : 'transparent'
       }}>
         <SearchOutlined style={{ color: COLORS.gray, paddingRight: "15px" }} />
         {query}
