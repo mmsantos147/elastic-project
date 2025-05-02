@@ -4,20 +4,18 @@ import com.elastic.aisearch.dto.WeatherDTO;
 import com.elastic.aisearch.service.WeatherService;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("weatherReport")
+@RequiredArgsConstructor
 public class WeatherController {
     @Autowired
     private WeatherService weatherService;
-    private final RestTemplate restTemplate;
-
-    public WeatherController(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
 
     @GetMapping("")
     public WeatherDTO getWeather(HttpServletRequest request) {

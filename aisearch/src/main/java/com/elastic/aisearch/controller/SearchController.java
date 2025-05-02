@@ -6,7 +6,6 @@ import com.elastic.aisearch.dto.SearchDTO;
 import com.elastic.aisearch.dto.SearchResponseDTO;
 import com.elastic.aisearch.dto.SearchResultDTO;
 import com.elastic.aisearch.entity.History;
-import com.elastic.aisearch.entity.User;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.*;
 
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
