@@ -1,5 +1,7 @@
 package com.elastic.aisearch.controller;
 
+import com.elastic.aisearch.dto.verify.FailedLoginDTO;
+import com.elastic.aisearch.dto.verify.LoginVerifyDTO;
 import com.elastic.aisearch.dto.Messages.SuccessLoginMessageDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.dto.RegisterDTO;
@@ -62,9 +64,23 @@ public class UserController {
         userSession.setUserEmail(userDTO.email());
         Optional<User> user = userService.getUserEmail(userDTO.email());
         userSession.setUserId(user.get().getId());
+        userSession.setUserName(user.get().getUserName());
         return new SuccessLoginMessageDTO(
                 "success_login",
                 user.get().getUserName()
         );
+    }
+
+    @PostMapping(path = "/verify")
+    public ResponseEntity<?> loginVerify() {
+        if (userSession.getUserId() != null) {
+            return ResponseEntity.ok().body( new LoginVerifyDTO(
+                    Boolean.TRUE,
+                    userSession.getUserName()
+            ));
+        }
+        return ResponseEntity.ok().body( new FailedLoginDTO(
+                Boolean.FALSE
+        ));
     }
 }
