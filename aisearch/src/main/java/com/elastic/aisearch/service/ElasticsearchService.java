@@ -21,6 +21,8 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
+import org.elasticsearch.search.suggest.SuggestBuilder;
+import org.elasticsearch.search.suggest.SuggestBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,12 +54,16 @@ public class ElasticsearchService {
      * @throws Exception Se ocorrer um erro durante o parsing ou a busca
      */
     public SearchResponseDTO search(SearchDTO searchDTO) throws Exception {
-
-        // Cria um parser para a string de consulta
         QueryParser parser = new QueryParser(new StringReader(searchDTO.search()));
 
-        // Parseia a string para obter um QueryNode
         QueryNode queryNode = parser.parseQuery(searchDTO.search());
+
+        SuggestBuilder suggestBuilder = new SuggestBuilder();
+        suggestBuilder.addSuggestion("content_suggest", SuggestBuilders
+                .termSuggestion("content_suggest")
+                .text(searchDTO.search())
+                .size(1)
+        );
 
         HighlightBuilder highlightBuilder = new HighlightBuilder()
                 .preTags("<strong>")
@@ -84,7 +90,7 @@ public class ElasticsearchService {
         QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode, searchDTO);
         SearchRequest searchRequest = new SearchRequest(indexName);
 
-        searchRequest = searchFilters(searchDTO, searchRequest, queryBuilder, highlightBuilder);
+        searchRequest = searchFilters(searchDTO, searchRequest, queryBuilder, highlightBuilder, suggestBuilder);
 
         log.info("Query gerada nesse contexto: {}", searchRequest.toString());
 
@@ -96,12 +102,13 @@ public class ElasticsearchService {
         return resultsPerPage * (page-1);
     }
 
-    public SearchRequest searchFilters(SearchDTO searchDTO, SearchRequest searchRequest, QueryBuilder queryBuilder,HighlightBuilder highlightBuilder) {
+    public SearchRequest searchFilters(SearchDTO searchDTO, SearchRequest searchRequest, QueryBuilder queryBuilder, HighlightBuilder highlightBuilder, SuggestBuilder suggestBuilder) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .query(queryBuilder)
                 .from(fromCalc(searchDTO.page(),searchDTO.resultsPerPage()))
                 .size(searchDTO.resultsPerPage())
                 .trackTotalHits(true)
+                .suggest(suggestBuilder)
                 .highlighter(highlightBuilder);
 
         if (searchDTO.orderBy().equals(Filters.DATE_ASC)) {
@@ -186,7 +193,8 @@ public class ElasticsearchService {
                 hits,
                 Math.toIntExact(hits/searchDTO.resultsPerPage())+1,
                 (float) searchResponse.getTook().getSecondsFrac(),
-                results
+                results,
+                searchResponse.getSuggest().toString()
         );
     }
 
