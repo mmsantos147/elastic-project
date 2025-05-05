@@ -1,5 +1,6 @@
 package com.elastic.aisearch.controller;
 
+import com.elastic.aisearch.dto.Messages.SuccessLoginMessageDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.dto.RegisterDTO;
 import com.elastic.aisearch.dto.UserDTO;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -53,12 +55,16 @@ public class UserController {
     }
 
     @PostMapping(path = "/login")
-    public SuccessMessageDTO verifyUser(@RequestBody UserDTO userDTO) {
+    public SuccessLoginMessageDTO verifyUser(@RequestBody UserDTO userDTO) {
         if (!userService.searchUser(userDTO.email(), userDTO.password())) {
             throw new IllegalStateException("wrong_password");
         }
         userSession.setUserEmail(userDTO.email());
-        userSession.setUserId(userService.getUserEmail(userDTO.email()).get().getId());
-        return new SuccessMessageDTO("success_login");
+        Optional<User> user = userService.getUserEmail(userDTO.email());
+        userSession.setUserId(user.get().getId());
+        return new SuccessLoginMessageDTO(
+                "success_login",
+                user.get().getUserName()
+        );
     }
 }
