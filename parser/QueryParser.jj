@@ -1,7 +1,6 @@
 options {
     STATIC = false;
     IGNORE_CASE = false;
-    DEBUG_TOKEN_MANAGER = true;
 }
 
 PARSER_BEGIN(QueryParser)
