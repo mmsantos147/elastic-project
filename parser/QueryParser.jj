@@ -71,7 +71,6 @@ public class QueryParser {
 
             return sb.toString();
         }
-
     }
 
     public QueryNode node = new QueryNode();
@@ -91,7 +90,7 @@ SKIP : {
     | "\n"
 }
 
-// Definição mais específica para os tokens de filtro
+// Tokens específicos precisam vir ANTES dos tokens genéricos
 TOKEN : {
       < OR: "OR" >
     | < READING_TIME: "reading_time:" > : FILTER_STATE
@@ -101,8 +100,8 @@ TOKEN : {
     | < NOT_IN_TITLE: "-in_title:" > : FILTER_STATE
     | < NEGATED_QUOTED: "-" "\"" (~["\""])* "\"" >
     | < QUOTED: "\"" (~["\""])* "\"" >
-    | < NEGATED_WORD: "-" (~[" ", "\t", "\n", "\r"])+ >
-    | < WORD: (~[" ", "\t", "\n", "\r"])+ >
+    | < NEGATED_WORD: "-" (~[" ", "\t", "\n", "\r", ":", ">", "<"])+ >
+    | < WORD: (~[" ", "\t", "\n", "\r", ":", ">", "<", "-"])+ >
 }
 
 <FILTER_STATE> TOKEN : {
@@ -118,29 +117,36 @@ TOKEN : {
 void Start() : { Token token; }
 {
     (
-        token = <READING_TIME> { ReadingTimeFilter(); }
-        | token = <CREATED_AT> { DateFilter(); }
-        | token = <IN_TITLE> { InTitleFilter(true); }
-        | token = <NOT_IN_TITLE> { InTitleFilter(false); }
-        | token = <IN_CONTENT> { InContentFilter(); }
-        | token = <QUOTED> {
-            String content = token.image.substring(1, token.image.length() - 1);
-            this.node.mustInContent.add("\"" + content + "\"");
-        }
-        | token = <NEGATED_QUOTED> {
-            String content = token.image.substring(2, token.image.length() - 1);
-            this.node.mustNotContent.add("\"" + content + "\"");
-        }
-        | token = <NEGATED_WORD> {
-            this.node.mustNotContent.add(token.image.substring(1));
-        }
-        | token = <WORD> {
-            this.node.shouldContent += token.image + " ";
-        }
+        parseToken()
     )+
 }
 
-void DateFilter() : { Token d1, d2; }
+void parseToken() : { Token token; }
+{
+    (
+        token = <READING_TIME> { ReadingTimeFilter(); }
+      | token = <CREATED_AT> { DateFilter(); }
+      | token = <IN_TITLE> { InTitleFilter(true); }
+      | token = <NOT_IN_TITLE> { InTitleFilter(false); }
+      | token = <IN_CONTENT> { InContentFilter(); }
+      | token = <QUOTED> {
+            String content = token.image.substring(1, token.image.length() - 1);
+            this.node.mustInContent.add("\"" + content + "\"");
+        }
+      | token = <NEGATED_QUOTED> {
+            String content = token.image.substring(2, token.image.length() - 1);
+            this.node.mustNotContent.add("\"" + content + "\"");
+        }
+      | token = <NEGATED_WORD> {
+            this.node.mustNotContent.add(token.image.substring(1));
+        }
+      | token = <WORD> {
+            this.node.shouldContent += token.image + " ";
+        }
+    )
+}
+
+void DateFilter() : { Token d1 = null, d2 = null; }
 {
     (
             <GT> d1 = <DATE> { this.node.minDate = d1.image; }
@@ -154,14 +160,14 @@ void DateFilter() : { Token d1, d2; }
                 }
             ]
             {
-                if(this.node.minDate.equals("")) { 
+                if(this.node.minDate.equals("") && this.node.maxDate.equals("")) { 
                     this.node.eqDate = d1.image;
                 }
             }
     )
 }
 
-void ReadingTimeFilter() : { Token t1, t2; }
+void ReadingTimeFilter() : { Token t1 = null, t2 = null; }
 {
     (
             <GT> t1 = <NUMBER> { this.node.minReadingTime = t1.image; }
@@ -175,7 +181,7 @@ void ReadingTimeFilter() : { Token t1, t2; }
                 }
             ]
             {
-                if(this.node.minReadingTime.equals("")) { 
+                if(this.node.minReadingTime.equals("") && this.node.maxReadingTime.equals("")) { 
                     this.node.eqReadingTime = t1.image;
                 }
             }

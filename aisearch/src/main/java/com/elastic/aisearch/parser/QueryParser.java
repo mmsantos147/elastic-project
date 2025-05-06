@@ -66,7 +66,6 @@ public class QueryParser implements QueryParserConstants {
 
             return sb.toString();
         }
-
     }
 
     public QueryNode node = new QueryNode();
@@ -80,40 +79,8 @@ public class QueryParser implements QueryParserConstants {
   final public void Start() throws ParseException {Token token;
     label_1:
     while (true) {
+      parseToken();
       if (jj_2_1(3)) {
-        token = jj_consume_token(READING_TIME);
-ReadingTimeFilter();
-      } else if (jj_2_2(3)) {
-        token = jj_consume_token(CREATED_AT);
-DateFilter();
-      } else if (jj_2_3(3)) {
-        token = jj_consume_token(IN_TITLE);
-InTitleFilter(true);
-      } else if (jj_2_4(3)) {
-        token = jj_consume_token(NOT_IN_TITLE);
-InTitleFilter(false);
-      } else if (jj_2_5(3)) {
-        token = jj_consume_token(IN_CONTENT);
-InContentFilter();
-      } else if (jj_2_6(3)) {
-        token = jj_consume_token(QUOTED);
-String content = token.image.substring(1, token.image.length() - 1);
-            this.node.mustInContent.add("\"" + content + "\"");
-      } else if (jj_2_7(3)) {
-        token = jj_consume_token(NEGATED_QUOTED);
-String content = token.image.substring(2, token.image.length() - 1);
-            this.node.mustNotContent.add("\"" + content + "\"");
-      } else if (jj_2_8(3)) {
-        token = jj_consume_token(NEGATED_WORD);
-this.node.mustNotContent.add(token.image.substring(1));
-      } else if (jj_2_9(3)) {
-        token = jj_consume_token(WORD);
-this.node.shouldContent += token.image + " ";
-      } else {
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
-      if (jj_2_10(3)) {
         ;
       } else {
         break label_1;
@@ -121,7 +88,43 @@ this.node.shouldContent += token.image + " ";
     }
 }
 
-  final public void DateFilter() throws ParseException {Token d1, d2;
+  final public void parseToken() throws ParseException {Token token;
+    if (jj_2_2(3)) {
+      token = jj_consume_token(READING_TIME);
+ReadingTimeFilter();
+    } else if (jj_2_3(3)) {
+      token = jj_consume_token(CREATED_AT);
+DateFilter();
+    } else if (jj_2_4(3)) {
+      token = jj_consume_token(IN_TITLE);
+InTitleFilter(true);
+    } else if (jj_2_5(3)) {
+      token = jj_consume_token(NOT_IN_TITLE);
+InTitleFilter(false);
+    } else if (jj_2_6(3)) {
+      token = jj_consume_token(IN_CONTENT);
+InContentFilter();
+    } else if (jj_2_7(3)) {
+      token = jj_consume_token(QUOTED);
+String content = token.image.substring(1, token.image.length() - 1);
+            this.node.mustInContent.add("\"" + content + "\"");
+    } else if (jj_2_8(3)) {
+      token = jj_consume_token(NEGATED_QUOTED);
+String content = token.image.substring(2, token.image.length() - 1);
+            this.node.mustNotContent.add("\"" + content + "\"");
+    } else if (jj_2_9(3)) {
+      token = jj_consume_token(NEGATED_WORD);
+this.node.mustNotContent.add(token.image.substring(1));
+    } else if (jj_2_10(3)) {
+      token = jj_consume_token(WORD);
+this.node.shouldContent += token.image + " ";
+    } else {
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+}
+
+  final public void DateFilter() throws ParseException {Token d1 = null, d2 = null;
     if (jj_2_12(3)) {
       jj_consume_token(GT);
       d1 = jj_consume_token(DATE);
@@ -140,7 +143,7 @@ this.node.minDate = d1.image;
       } else {
         ;
       }
-if(this.node.minDate.equals("")) {
+if(this.node.minDate.equals("") && this.node.maxDate.equals("")) {
                     this.node.eqDate = d1.image;
                 }
     } else {
@@ -149,7 +152,7 @@ if(this.node.minDate.equals("")) {
     }
 }
 
-  final public void ReadingTimeFilter() throws ParseException {Token t1, t2;
+  final public void ReadingTimeFilter() throws ParseException {Token t1 = null, t2 = null;
     if (jj_2_16(3)) {
       jj_consume_token(GT);
       t1 = jj_consume_token(NUMBER);
@@ -168,7 +171,7 @@ this.node.minReadingTime = t1.image;
       } else {
         ;
       }
-if(this.node.minReadingTime.equals("")) {
+if(this.node.minReadingTime.equals("") && this.node.maxReadingTime.equals("")) {
                     this.node.eqReadingTime = t1.image;
                 }
     } else {
@@ -481,34 +484,7 @@ String content = t1.image.substring(1, t1.image.length() - 1);
 
   private boolean jj_3_6()
  {
-    if (jj_scan_token(QUOTED)) return true;
-    return false;
-  }
-
-  private boolean jj_3_18()
- {
-    if (jj_scan_token(NUMBER)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_15()) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3_5()
- {
     if (jj_scan_token(IN_CONTENT)) return true;
-    return false;
-  }
-
-  private boolean jj_3_4()
- {
-    if (jj_scan_token(NOT_IN_TITLE)) return true;
-    return false;
-  }
-
-  private boolean jj_3_3()
- {
-    if (jj_scan_token(IN_TITLE)) return true;
     return false;
   }
 
@@ -525,9 +501,9 @@ String content = t1.image.substring(1, t1.image.length() - 1);
     return false;
   }
 
-  private boolean jj_3_2()
+  private boolean jj_3_5()
  {
-    if (jj_scan_token(CREATED_AT)) return true;
+    if (jj_scan_token(NOT_IN_TITLE)) return true;
     return false;
   }
 
@@ -538,18 +514,34 @@ String content = t1.image.substring(1, t1.image.length() - 1);
     return false;
   }
 
-  private boolean jj_3_1()
+  private boolean jj_3_4()
+ {
+    if (jj_scan_token(IN_TITLE)) return true;
+    return false;
+  }
+
+  private boolean jj_3_3()
+ {
+    if (jj_scan_token(CREATED_AT)) return true;
+    return false;
+  }
+
+  private boolean jj_3_2()
  {
     if (jj_scan_token(READING_TIME)) return true;
     return false;
   }
 
-  private boolean jj_3_10()
+  private boolean jj_3_27()
+ {
+    if (jj_scan_token(FILTER_QUOTED)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_parseToken_126_5_2()
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_1()) {
-    jj_scanpos = xsp;
     if (jj_3_2()) {
     jj_scanpos = xsp;
     if (jj_3_3()) {
@@ -564,7 +556,9 @@ String content = t1.image.substring(1, t1.image.length() - 1);
     jj_scanpos = xsp;
     if (jj_3_8()) {
     jj_scanpos = xsp;
-    if (jj_3_9()) return true;
+    if (jj_3_9()) {
+    jj_scanpos = xsp;
+    if (jj_3_10()) return true;
     }
     }
     }
@@ -573,12 +567,6 @@ String content = t1.image.substring(1, t1.image.length() - 1);
     }
     }
     }
-    return false;
-  }
-
-  private boolean jj_3_27()
- {
-    if (jj_scan_token(FILTER_QUOTED)) return true;
     return false;
   }
 
@@ -596,6 +584,12 @@ String content = t1.image.substring(1, t1.image.length() - 1);
   private boolean jj_3_20()
  {
     if (jj_scan_token(WORD)) return true;
+    return false;
+  }
+
+  private boolean jj_3_1()
+ {
+    if (jj_3R_parseToken_126_5_2()) return true;
     return false;
   }
 
@@ -686,21 +680,21 @@ String content = t1.image.substring(1, t1.image.length() - 1);
     return false;
   }
 
-  private boolean jj_3_9()
+  private boolean jj_3_10()
  {
     if (jj_scan_token(WORD)) return true;
-    return false;
-  }
-
-  private boolean jj_3_8()
- {
-    if (jj_scan_token(NEGATED_WORD)) return true;
     return false;
   }
 
   private boolean jj_3_26()
  {
     if (jj_scan_token(WORD)) return true;
+    return false;
+  }
+
+  private boolean jj_3_9()
+ {
+    if (jj_scan_token(NEGATED_WORD)) return true;
     return false;
   }
 
@@ -711,9 +705,24 @@ String content = t1.image.substring(1, t1.image.length() - 1);
     return false;
   }
 
-  private boolean jj_3_7()
+  private boolean jj_3_8()
  {
     if (jj_scan_token(NEGATED_QUOTED)) return true;
+    return false;
+  }
+
+  private boolean jj_3_18()
+ {
+    if (jj_scan_token(NUMBER)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_15()) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3_7()
+ {
+    if (jj_scan_token(QUOTED)) return true;
     return false;
   }
 
