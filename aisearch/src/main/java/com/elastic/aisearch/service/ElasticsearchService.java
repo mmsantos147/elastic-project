@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class ElasticsearchService {
 
@@ -45,6 +45,7 @@ public class ElasticsearchService {
     @Value("${elasticsearch.index.name:wikipedia}")
     private String indexName;
 
+    @Autowired
     private QueryParser queryParser;
 
     /**
