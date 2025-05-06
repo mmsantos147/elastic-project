@@ -19,6 +19,8 @@ import LanguageSelector from "../components/LanguageSelector";
 import WeatherReport from "../components/WeatherReport";
 import { useSearchService } from "../api/Search.api";
 import emitter from "../eventBus";
+import { IoPersonSharp } from "react-icons/io5";
+import { useAuthService } from "../api/Authorization.api";
 
 const { Content } = Layout;
 
@@ -28,6 +30,7 @@ const StyledSearchBar = styled(SearchBar)`
 
 const Search = () => {
   const { search, searchAsYouType, fetchHistory } = useSearchService();
+  const { verify } = useAuthService();
   const [searchParamsReactive] = useSearchParams();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -55,9 +58,8 @@ const Search = () => {
   });
   const [updatesInAiAbstract, setUpdatesInAiAbstract] = useState(0);
 
-  useEffect(() => {
-    console.log("🔎 Resultado de busca atualizado:", searchResult);
-  }, [searchResult]);
+  const [logged, setLogged] = useState(false);
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     const es = new EventSource(`${ROOT_URL}/${API_PREFIX}/stream`);
@@ -72,7 +74,7 @@ const Search = () => {
         message.error("Um erro aconteceu com a inteligência artificial!");
         console.error("Erro parseando SSE:", err);
       }
-      
+
       setUpdatesInAiAbstract((prev) => prev - 1);
     });
 
@@ -93,7 +95,6 @@ const Search = () => {
         setAiAbstract({});
         const response = await search(formData);
         setSearchResults(response);
-        
       } catch (error) {
         console.error("Erro ao buscar resultados:", error);
       } finally {
@@ -106,11 +107,23 @@ const Search = () => {
 
   useEffect(() => {
     const handleNewIARequest = () => {
-      setUpdatesInAiAbstract(prev => prev + 1);
-    }
+      setUpdatesInAiAbstract((prev) => prev + 1);
+    };
 
     emitter.on("new-ai-request", handleNewIARequest);
     return () => emitter.off("new-ai-request", handleNewIARequest);
+  }, []);
+
+  useEffect(() => {
+    const verifySession = async () => {
+      const response = await verify();
+      if (response.logged) {
+        setUserData((prev) => ({ ...prev, username: response.username }));
+      }
+      setLogged(response.logged);
+    };
+
+    verifySession();
   }, []);
 
   const setSearchValue = (value) => {
@@ -162,23 +175,43 @@ const Search = () => {
             <WeatherReport />
 
             <LanguageSelector />
-            <Link to="/login">
-              <Button
-                type="primary"
+
+            {logged ? (
+              <div
                 style={{
-                  padding: "18px",
-                  borderRadius: "999px",
-                  boxShadow: "none",
+                  color: "black",
+                  backgroundColor: COLORS.white,
+                  padding: "10px",
+                  borderRadius: "30px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                <b>{t("make_login")}</b>
-              </Button>
-            </Link>
+                <IoPersonSharp size={20} />{" "}
+              </div>
+            ) : (
+              <Link to="/login">
+                <Button
+                  type="primary"
+                  style={{
+                    padding: "18px",
+                    borderRadius: "999px",
+                    boxShadow: "none",
+                  }}
+                >
+                  <b>{t("make_login")}</b>
+                </Button>
+              </Link>
+            )}
+
           </Space>
         </Col>
       </Row>
 
-      {toolsVisible && <FilterBar setFormData={setFormData} searchResult={searchResult} />}
+      {toolsVisible && (
+        <FilterBar setFormData={setFormData} searchResult={searchResult} />
+      )}
 
       <Content
         style={{
@@ -188,7 +221,9 @@ const Search = () => {
           maxWidth: "950px",
         }}
       >
-        {Array.isArray(searchResult?.results) && searchResult.results.length > 0 || processingRequest ? (
+        {(Array.isArray(searchResult?.results) &&
+          searchResult.results.length > 0) ||
+        processingRequest ? (
           <>
             <SearchResults
               processingRequest={processingRequest}
@@ -196,7 +231,10 @@ const Search = () => {
               searchResult={searchResult.results}
               updatesInAiAbstract={updatesInAiAbstract}
             />
-            <PageSelect setFormData={setFormData} maxPages={searchResult.pages} />
+            <PageSelect
+              setFormData={setFormData}
+              maxPages={searchResult.pages}
+            />
           </>
         ) : (
           <EmptyResults />
