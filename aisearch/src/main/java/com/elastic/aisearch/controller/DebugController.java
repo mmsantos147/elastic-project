@@ -1,6 +1,5 @@
 package com.elastic.aisearch.controller;
 
-import java.io.StringReader;
 
 import com.elastic.aisearch.dto.WeatherDTO;
 import com.elastic.aisearch.service.WeatherService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.elastic.aisearch.parser.ParseException;
 import com.elastic.aisearch.parser.QueryParser;
 import com.elastic.aisearch.security.UserSession;
 
@@ -28,6 +26,7 @@ public class DebugController {
 
     private UserSession userSession;
     private final WeatherService weatherService;
+    private final QueryParser queryParser;
 
     @GetMapping("/")
     public String hello() {
@@ -36,15 +35,9 @@ public class DebugController {
 
     @GetMapping("/queryDebug")
     public ResponseEntity<String> parseQueryDebug(@RequestParam("q") String query) {
-        QueryParser queryParser = new QueryParser(new StringReader(query));
 
-        try {
-            String parsed = queryParser.parseQuery(query).toString();
-
-            return new ResponseEntity<>(parsed, HttpStatus.OK);
-        } catch (ParseException e) {
-            return new ResponseEntity<>("Erro no parser: " + e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        String parsed = queryParser.parseQuery(query).toString();
+        return new ResponseEntity<>(parsed, HttpStatus.OK);
     }
 
     @GetMapping("/session")

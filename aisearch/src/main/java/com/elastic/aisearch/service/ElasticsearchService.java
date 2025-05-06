@@ -2,9 +2,8 @@ package com.elastic.aisearch.service;
 
 import com.elastic.aisearch.dto.*;
 import com.elastic.aisearch.elastic.QueryBuilderFactory;
+import com.elastic.aisearch.parser.QueryNode;
 import com.elastic.aisearch.parser.QueryParser;
-import com.elastic.aisearch.parser.QueryParser.QueryNode;
-
 import com.elastic.aisearch.parser.SuggestionParser;
 import com.elastic.aisearch.utils.Filters;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,7 +26,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +43,8 @@ public class ElasticsearchService {
     @Value("${elasticsearch.index.name:wikipedia}")
     private String indexName;
 
+    private QueryParser queryParser;
+
     /**
      * Executa uma busca no Elasticsearch baseada em uma string de consulta.
      * 
@@ -53,9 +53,8 @@ public class ElasticsearchService {
      * @throws Exception Se ocorrer um erro durante o parsing ou a busca
      */
     public SearchResponseDTO search(SearchDTO searchDTO) throws Exception {
-        QueryParser parser = new QueryParser(new StringReader(searchDTO.search()));
 
-        QueryNode queryNode = parser.parseQuery(searchDTO.search());
+        QueryNode queryNode = queryParser.parseQuery(searchDTO.search());
 
         SuggestBuilder suggestBuilder = new SuggestBuilder();
         suggestBuilder.addSuggestion("content_suggest", SuggestBuilders
