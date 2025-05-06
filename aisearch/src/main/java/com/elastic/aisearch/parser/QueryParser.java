@@ -76,11 +76,18 @@ public class QueryParser implements QueryParserConstants {
         return node;
     }
 
-  final public void Start() throws ParseException {Token token;
+  final public void Start() throws ParseException {
     label_1:
     while (true) {
-      parseToken();
       if (jj_2_1(3)) {
+        FilterClause();
+      } else if (jj_2_2(3)) {
+        KeywordClause();
+      } else {
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      if (jj_2_3(3)) {
         ;
       } else {
         break label_1;
@@ -88,36 +95,53 @@ public class QueryParser implements QueryParserConstants {
     }
 }
 
-  final public void parseToken() throws ParseException {Token token;
-    if (jj_2_2(3)) {
+  final public void FilterClause() throws ParseException {Token token;
+    if (jj_2_4(3)) {
       token = jj_consume_token(READING_TIME);
 ReadingTimeFilter();
-    } else if (jj_2_3(3)) {
+    } else if (jj_2_5(3)) {
       token = jj_consume_token(CREATED_AT);
 DateFilter();
-    } else if (jj_2_4(3)) {
+    } else if (jj_2_6(3)) {
       token = jj_consume_token(IN_TITLE);
 InTitleFilter(true);
-    } else if (jj_2_5(3)) {
+    } else if (jj_2_7(3)) {
       token = jj_consume_token(NOT_IN_TITLE);
 InTitleFilter(false);
-    } else if (jj_2_6(3)) {
+    } else if (jj_2_8(3)) {
       token = jj_consume_token(IN_CONTENT);
 InContentFilter();
-    } else if (jj_2_7(3)) {
+    } else {
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+}
+
+  final public void KeywordClause() throws ParseException {Token token;
+    if (jj_2_9(3)) {
       token = jj_consume_token(QUOTED);
 String content = token.image.substring(1, token.image.length() - 1);
             this.node.mustInContent.add("\"" + content + "\"");
-    } else if (jj_2_8(3)) {
+    } else if (jj_2_10(3)) {
       token = jj_consume_token(NEGATED_QUOTED);
 String content = token.image.substring(2, token.image.length() - 1);
             this.node.mustNotContent.add("\"" + content + "\"");
-    } else if (jj_2_9(3)) {
+    } else if (jj_2_11(3)) {
       token = jj_consume_token(NEGATED_WORD);
 this.node.mustNotContent.add(token.image.substring(1));
-    } else if (jj_2_10(3)) {
+    } else if (jj_2_12(3)) {
       token = jj_consume_token(WORD);
-this.node.shouldContent += token.image + " ";
+// Verifica se a palavra não é um token especial mal formado antes de adicioná-la
+            if (!token.image.equals("reading_time") &&
+                !token.image.equals("created_at") &&
+                !token.image.equals("in_title") &&
+                !token.image.equals("in_content") &&
+                !token.image.equals("-in_title")) {
+                this.node.shouldContent += token.image + " ";
+            } else {
+                // Se for um token especial mal formado (sem ':'), trata como palavra normal
+                this.node.shouldContent += token.image + " ";
+            }
     } else {
       jj_consume_token(-1);
       throw new ParseException();
@@ -125,17 +149,17 @@ this.node.shouldContent += token.image + " ";
 }
 
   final public void DateFilter() throws ParseException {Token d1 = null, d2 = null;
-    if (jj_2_12(3)) {
+    if (jj_2_14(3)) {
       jj_consume_token(GT);
       d1 = jj_consume_token(DATE);
 this.node.minDate = d1.image;
-    } else if (jj_2_13(3)) {
+    } else if (jj_2_15(3)) {
       jj_consume_token(LT);
       d1 = jj_consume_token(DATE);
 this.node.maxDate = d1.image;
-    } else if (jj_2_14(3)) {
+    } else if (jj_2_16(3)) {
       d1 = jj_consume_token(DATE);
-      if (jj_2_11(3)) {
+      if (jj_2_13(3)) {
         jj_consume_token(RANGE_DOTS);
         d2 = jj_consume_token(DATE);
 this.node.minDate = d1.image;
@@ -153,17 +177,17 @@ if(this.node.minDate.equals("") && this.node.maxDate.equals("")) {
 }
 
   final public void ReadingTimeFilter() throws ParseException {Token t1 = null, t2 = null;
-    if (jj_2_16(3)) {
+    if (jj_2_18(3)) {
       jj_consume_token(GT);
       t1 = jj_consume_token(NUMBER);
 this.node.minReadingTime = t1.image;
-    } else if (jj_2_17(3)) {
+    } else if (jj_2_19(3)) {
       jj_consume_token(LT);
       t1 = jj_consume_token(NUMBER);
 this.node.maxReadingTime = t1.image;
-    } else if (jj_2_18(3)) {
+    } else if (jj_2_20(3)) {
       t1 = jj_consume_token(NUMBER);
-      if (jj_2_15(3)) {
+      if (jj_2_17(3)) {
         jj_consume_token(RANGE_DOTS);
         t2 = jj_consume_token(NUMBER);
 this.node.minReadingTime = t1.image;
@@ -181,10 +205,10 @@ if(this.node.minReadingTime.equals("") && this.node.maxReadingTime.equals("")) {
 }
 
   final public void InTitleFilter(boolean must) throws ParseException {Token t1;
-    if (jj_2_23(3)) {
-      if (jj_2_19(3)) {
+    if (jj_2_25(3)) {
+      if (jj_2_21(3)) {
         t1 = jj_consume_token(FILTER_WORD);
-      } else if (jj_2_20(3)) {
+      } else if (jj_2_22(3)) {
         t1 = jj_consume_token(WORD);
       } else {
         jj_consume_token(-1);
@@ -194,10 +218,10 @@ if (must)
                 this.node.mustTitle.add(t1.image);
             else
                 this.node.mustNotTitle.add(t1.image);
-    } else if (jj_2_24(3)) {
-      if (jj_2_21(3)) {
+    } else if (jj_2_26(3)) {
+      if (jj_2_23(3)) {
         t1 = jj_consume_token(FILTER_QUOTED);
-      } else if (jj_2_22(3)) {
+      } else if (jj_2_24(3)) {
         t1 = jj_consume_token(QUOTED);
       } else {
         jj_consume_token(-1);
@@ -215,20 +239,20 @@ String content = t1.image.substring(1, t1.image.length() - 1);
 }
 
   final public void InContentFilter() throws ParseException {Token t1;
-    if (jj_2_29(3)) {
-      if (jj_2_25(3)) {
+    if (jj_2_31(3)) {
+      if (jj_2_27(3)) {
         t1 = jj_consume_token(FILTER_WORD);
-      } else if (jj_2_26(3)) {
+      } else if (jj_2_28(3)) {
         t1 = jj_consume_token(WORD);
       } else {
         jj_consume_token(-1);
         throw new ParseException();
       }
 this.node.mustInContent.add(t1.image);
-    } else if (jj_2_30(3)) {
-      if (jj_2_27(3)) {
+    } else if (jj_2_32(3)) {
+      if (jj_2_29(3)) {
         t1 = jj_consume_token(FILTER_QUOTED);
-      } else if (jj_2_28(3)) {
+      } else if (jj_2_30(3)) {
         t1 = jj_consume_token(QUOTED);
       } else {
         jj_consume_token(-1);
@@ -482,70 +506,46 @@ String content = t1.image.substring(1, t1.image.length() - 1);
     finally { jj_save(29, xla); }
   }
 
-  private boolean jj_3_6()
+  private boolean jj_2_31(int xla)
  {
-    if (jj_scan_token(IN_CONTENT)) return true;
-    return false;
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_31()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(30, xla); }
   }
 
-  private boolean jj_3_17()
+  private boolean jj_2_32(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_32()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(31, xla); }
+  }
+
+  private boolean jj_3_15()
  {
     if (jj_scan_token(LT)) return true;
-    if (jj_scan_token(NUMBER)) return true;
+    if (jj_scan_token(DATE)) return true;
     return false;
   }
 
-  private boolean jj_3_22()
- {
-    if (jj_scan_token(QUOTED)) return true;
-    return false;
-  }
-
-  private boolean jj_3_5()
- {
-    if (jj_scan_token(NOT_IN_TITLE)) return true;
-    return false;
-  }
-
-  private boolean jj_3_16()
+  private boolean jj_3_14()
  {
     if (jj_scan_token(GT)) return true;
-    if (jj_scan_token(NUMBER)) return true;
+    if (jj_scan_token(DATE)) return true;
     return false;
   }
 
-  private boolean jj_3_4()
- {
-    if (jj_scan_token(IN_TITLE)) return true;
-    return false;
-  }
-
-  private boolean jj_3_3()
- {
-    if (jj_scan_token(CREATED_AT)) return true;
-    return false;
-  }
-
-  private boolean jj_3_2()
- {
-    if (jj_scan_token(READING_TIME)) return true;
-    return false;
-  }
-
-  private boolean jj_3_27()
+  private boolean jj_3_23()
  {
     if (jj_scan_token(FILTER_QUOTED)) return true;
     return false;
   }
 
-  private boolean jj_3R_parseToken_126_5_2()
+  private boolean jj_3R_FilterClause_131_5_2()
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_3_3()) {
-    jj_scanpos = xsp;
     if (jj_3_4()) {
     jj_scanpos = xsp;
     if (jj_3_5()) {
@@ -554,15 +554,7 @@ String content = t1.image.substring(1, t1.image.length() - 1);
     jj_scanpos = xsp;
     if (jj_3_7()) {
     jj_scanpos = xsp;
-    if (jj_3_8()) {
-    jj_scanpos = xsp;
-    if (jj_3_9()) {
-    jj_scanpos = xsp;
-    if (jj_3_10()) return true;
-    }
-    }
-    }
-    }
+    if (jj_3_8()) return true;
     }
     }
     }
@@ -570,83 +562,53 @@ String content = t1.image.substring(1, t1.image.length() - 1);
     return false;
   }
 
-  private boolean jj_3_30()
+  private boolean jj_3_26()
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_27()) {
+    if (jj_3_23()) {
     jj_scanpos = xsp;
-    if (jj_3_28()) return true;
+    if (jj_3_24()) return true;
     }
     return false;
   }
 
-  private boolean jj_3_20()
+  private boolean jj_3_2()
  {
-    if (jj_scan_token(WORD)) return true;
+    if (jj_3R_KeywordClause_142_5_3()) return true;
+    return false;
+  }
+
+  private boolean jj_3_3()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_1()) {
+    jj_scanpos = xsp;
+    if (jj_3_2()) return true;
+    }
     return false;
   }
 
   private boolean jj_3_1()
  {
-    if (jj_3R_parseToken_126_5_2()) return true;
-    return false;
-  }
-
-  private boolean jj_3_25()
- {
-    if (jj_scan_token(FILTER_WORD)) return true;
-    return false;
-  }
-
-  private boolean jj_3_29()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_25()) {
-    jj_scanpos = xsp;
-    if (jj_3_26()) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3_11()
- {
-    if (jj_scan_token(RANGE_DOTS)) return true;
-    if (jj_scan_token(DATE)) return true;
-    return false;
-  }
-
-  private boolean jj_3_14()
- {
-    if (jj_scan_token(DATE)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_11()) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3_13()
- {
-    if (jj_scan_token(LT)) return true;
-    if (jj_scan_token(DATE)) return true;
-    return false;
-  }
-
-  private boolean jj_3_12()
- {
-    if (jj_scan_token(GT)) return true;
-    if (jj_scan_token(DATE)) return true;
+    if (jj_3R_FilterClause_131_5_2()) return true;
     return false;
   }
 
   private boolean jj_3_21()
  {
-    if (jj_scan_token(FILTER_QUOTED)) return true;
+    if (jj_scan_token(FILTER_WORD)) return true;
     return false;
   }
 
-  private boolean jj_3_24()
+  private boolean jj_3_30()
+ {
+    if (jj_scan_token(QUOTED)) return true;
+    return false;
+  }
+
+  private boolean jj_3_25()
  {
     Token xsp;
     xsp = jj_scanpos;
@@ -657,72 +619,172 @@ String content = t1.image.substring(1, t1.image.length() - 1);
     return false;
   }
 
-  private boolean jj_3_19()
- {
-    if (jj_scan_token(FILTER_WORD)) return true;
-    return false;
-  }
-
   private boolean jj_3_28()
  {
-    if (jj_scan_token(QUOTED)) return true;
-    return false;
-  }
-
-  private boolean jj_3_23()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_19()) {
-    jj_scanpos = xsp;
-    if (jj_3_20()) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3_10()
- {
     if (jj_scan_token(WORD)) return true;
     return false;
   }
 
-  private boolean jj_3_26()
- {
-    if (jj_scan_token(WORD)) return true;
-    return false;
-  }
-
-  private boolean jj_3_9()
- {
-    if (jj_scan_token(NEGATED_WORD)) return true;
-    return false;
-  }
-
-  private boolean jj_3_15()
+  private boolean jj_3_17()
  {
     if (jj_scan_token(RANGE_DOTS)) return true;
     if (jj_scan_token(NUMBER)) return true;
     return false;
   }
 
-  private boolean jj_3_8()
+  private boolean jj_3_20()
  {
-    if (jj_scan_token(NEGATED_QUOTED)) return true;
+    if (jj_scan_token(NUMBER)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_17()) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3_12()
+ {
+    if (jj_scan_token(WORD)) return true;
+    return false;
+  }
+
+  private boolean jj_3_19()
+ {
+    if (jj_scan_token(LT)) return true;
+    if (jj_scan_token(NUMBER)) return true;
+    return false;
+  }
+
+  private boolean jj_3_24()
+ {
+    if (jj_scan_token(QUOTED)) return true;
     return false;
   }
 
   private boolean jj_3_18()
  {
+    if (jj_scan_token(GT)) return true;
     if (jj_scan_token(NUMBER)) return true;
+    return false;
+  }
+
+  private boolean jj_3_11()
+ {
+    if (jj_scan_token(NEGATED_WORD)) return true;
+    return false;
+  }
+
+  private boolean jj_3_10()
+ {
+    if (jj_scan_token(NEGATED_QUOTED)) return true;
+    return false;
+  }
+
+  private boolean jj_3_29()
+ {
+    if (jj_scan_token(FILTER_QUOTED)) return true;
+    return false;
+  }
+
+  private boolean jj_3_32()
+ {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_15()) jj_scanpos = xsp;
+    if (jj_3_29()) {
+    jj_scanpos = xsp;
+    if (jj_3_30()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3_9()
+ {
+    if (jj_scan_token(QUOTED)) return true;
+    return false;
+  }
+
+  private boolean jj_3_22()
+ {
+    if (jj_scan_token(WORD)) return true;
+    return false;
+  }
+
+  private boolean jj_3_27()
+ {
+    if (jj_scan_token(FILTER_WORD)) return true;
+    return false;
+  }
+
+  private boolean jj_3_31()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_27()) {
+    jj_scanpos = xsp;
+    if (jj_3_28()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3_13()
+ {
+    if (jj_scan_token(RANGE_DOTS)) return true;
+    if (jj_scan_token(DATE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_KeywordClause_142_5_3()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_9()) {
+    jj_scanpos = xsp;
+    if (jj_3_10()) {
+    jj_scanpos = xsp;
+    if (jj_3_11()) {
+    jj_scanpos = xsp;
+    if (jj_3_12()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3_8()
+ {
+    if (jj_scan_token(IN_CONTENT)) return true;
     return false;
   }
 
   private boolean jj_3_7()
  {
-    if (jj_scan_token(QUOTED)) return true;
+    if (jj_scan_token(NOT_IN_TITLE)) return true;
+    return false;
+  }
+
+  private boolean jj_3_6()
+ {
+    if (jj_scan_token(IN_TITLE)) return true;
+    return false;
+  }
+
+  private boolean jj_3_5()
+ {
+    if (jj_scan_token(CREATED_AT)) return true;
+    return false;
+  }
+
+  private boolean jj_3_16()
+ {
+    if (jj_scan_token(DATE)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_13()) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3_4()
+ {
+    if (jj_scan_token(READING_TIME)) return true;
     return false;
   }
 
@@ -745,7 +807,7 @@ String content = t1.image.substring(1, t1.image.length() - 1);
 	private static void jj_la1_init_0() {
 	   jj_la1_0 = new int[] {};
 	}
-  final private JJCalls[] jj_2_rtns = new JJCalls[30];
+  final private JJCalls[] jj_2_rtns = new JJCalls[32];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -999,7 +1061,7 @@ String content = t1.image.substring(1, t1.image.length() - 1);
 
   private void jj_rescan_token() {
 	 jj_rescan = true;
-	 for (int i = 0; i < 30; i++) {
+	 for (int i = 0; i < 32; i++) {
 	   try {
 		 JJCalls p = jj_2_rtns[i];
 
@@ -1037,6 +1099,8 @@ String content = t1.image.substring(1, t1.image.length() - 1);
 			   case 27: jj_3_28(); break;
 			   case 28: jj_3_29(); break;
 			   case 29: jj_3_30(); break;
+			   case 30: jj_3_31(); break;
+			   case 31: jj_3_32(); break;
 			 }
 		   }
 		   p = p.next;

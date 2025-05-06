@@ -2,6 +2,9 @@ options {
     STATIC = false;
     IGNORE_CASE = false;
     LOOKAHEAD = 3;
+    // Adicionando este para priorizar o token mais longo quando há ambiguidade
+    DEFAULT_LEXICAL_STATE = "DEFAULT";
+    FORCE_LA_CHECK = true;
 }
 
 PARSER_BEGIN(QueryParser)
@@ -90,18 +93,19 @@ SKIP : {
     | "\n"
 }
 
-// Tokens específicos precisam vir ANTES dos tokens genéricos
+// Tokens específicos com maior precedência
 TOKEN : {
-      < OR: "OR" >
-    | < READING_TIME: "reading_time:" > : FILTER_STATE
+    < READING_TIME: "reading_time:" > : FILTER_STATE
     | < CREATED_AT: "created_at:" > : FILTER_STATE
     | < IN_CONTENT: "in_content:" > : FILTER_STATE
     | < IN_TITLE: "in_title:" > : FILTER_STATE
     | < NOT_IN_TITLE: "-in_title:" > : FILTER_STATE
+    | < OR: "OR" >
     | < NEGATED_QUOTED: "-" "\"" (~["\""])* "\"" >
     | < QUOTED: "\"" (~["\""])* "\"" >
-    | < NEGATED_WORD: "-" (~[" ", "\t", "\n", "\r", ":", ">", "<"])+ >
-    | < WORD: (~[" ", "\t", "\n", "\r", ":", ">", "<", "-"])+ >
+    | < NEGATED_WORD: "-" (~[" ", "\t", "\n", "\r"])+ >
+    // Word é o fallback - vai capturar qualquer sequência de caracteres que não seja separador
+    | < WORD: (~[" ", "\t", "\n", "\r"])+ >
 }
 
 <FILTER_STATE> TOKEN : {
@@ -114,14 +118,15 @@ TOKEN : {
     | < FILTER_WORD: (~[" ", "\t", "\n", "\r"])+ > : DEFAULT
 }
 
-void Start() : { Token token; }
+void Start() : {}
 {
     (
-        parseToken()
+        FilterClause()
+      | KeywordClause()
     )+
 }
 
-void parseToken() : { Token token; }
+void FilterClause() : { Token token; }
 {
     (
         token = <READING_TIME> { ReadingTimeFilter(); }
@@ -129,7 +134,13 @@ void parseToken() : { Token token; }
       | token = <IN_TITLE> { InTitleFilter(true); }
       | token = <NOT_IN_TITLE> { InTitleFilter(false); }
       | token = <IN_CONTENT> { InContentFilter(); }
-      | token = <QUOTED> {
+    )
+}
+
+void KeywordClause() : { Token token; }
+{
+    (
+        token = <QUOTED> {
             String content = token.image.substring(1, token.image.length() - 1);
             this.node.mustInContent.add("\"" + content + "\"");
         }
@@ -141,7 +152,17 @@ void parseToken() : { Token token; }
             this.node.mustNotContent.add(token.image.substring(1));
         }
       | token = <WORD> {
-            this.node.shouldContent += token.image + " ";
+            // Verifica se a palavra não é um token especial mal formado antes de adicioná-la
+            if (!token.image.equals("reading_time") && 
+                !token.image.equals("created_at") && 
+                !token.image.equals("in_title") && 
+                !token.image.equals("in_content") && 
+                !token.image.equals("-in_title")) {
+                this.node.shouldContent += token.image + " ";
+            } else {
+                // Se for um token especial mal formado (sem ':'), trata como palavra normal
+                this.node.shouldContent += token.image + " ";
+            }
         }
     )
 }

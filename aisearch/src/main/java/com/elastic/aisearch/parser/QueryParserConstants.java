@@ -11,17 +11,17 @@ public interface QueryParserConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int OR = 5;
+  int READING_TIME = 5;
   /** RegularExpression Id. */
-  int READING_TIME = 6;
+  int CREATED_AT = 6;
   /** RegularExpression Id. */
-  int CREATED_AT = 7;
+  int IN_CONTENT = 7;
   /** RegularExpression Id. */
-  int IN_CONTENT = 8;
+  int IN_TITLE = 8;
   /** RegularExpression Id. */
-  int IN_TITLE = 9;
+  int NOT_IN_TITLE = 9;
   /** RegularExpression Id. */
-  int NOT_IN_TITLE = 10;
+  int OR = 10;
   /** RegularExpression Id. */
   int NEGATED_QUOTED = 11;
   /** RegularExpression Id. */
@@ -57,12 +57,12 @@ public interface QueryParserConstants {
     "\"\\t\"",
     "\"\\r\"",
     "\"\\n\"",
-    "\"OR\"",
     "\"reading_time:\"",
     "\"created_at:\"",
     "\"in_content:\"",
     "\"in_title:\"",
     "\"-in_title:\"",
+    "\"OR\"",
     "<NEGATED_QUOTED>",
     "<QUOTED>",
     "<NEGATED_WORD>",
