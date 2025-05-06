@@ -22,7 +22,7 @@ public class QueryParser {
         new QueryRule("exactReadtime", Pattern.compile("reading_time:(\\d+)")),
 
         new QueryRule("exact", Pattern.compile("\"([^\"]*)\"")),
-        new QueryRule("notInContent", Pattern.compile("-(\\s+)"))
+        new QueryRule("notInContent", Pattern.compile("-(\\w+)"))
     );
 
     public QueryNode parseQuery(String query) {
