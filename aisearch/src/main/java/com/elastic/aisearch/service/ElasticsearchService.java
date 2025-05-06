@@ -207,7 +207,7 @@ public class ElasticsearchService {
             String optionText = null;
 
             if (option.isArray() && !option.isEmpty()) {
-                optionText = option.path("text").asText();
+                optionText = option.path(0).path("text").asText();
             }
 
             suggestions.add(new SuggestionDTO(
