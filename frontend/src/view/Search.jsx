@@ -42,8 +42,7 @@ const Search = () => {
   const { t } = useTranslation();
   const screens = useBreakpoint();
   
-  // State
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = !screens.md;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toolsVisible, setToolsVisible] = useState(false);
   const [searchResult, setSearchResults] = useState({
@@ -66,20 +65,6 @@ const Search = () => {
   const [updatesInAiAbstract, setUpdatesInAiAbstract] = useState(0);
   const [logged, setLogged] = useState(false);
   const [userData, setUserData] = useState({});
-
-  // Check screen size on mount and when window resizes
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    
-    return () => {
-      window.removeEventListener('resize', checkIsMobile);
-    };
-  }, []);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -216,9 +201,7 @@ const Search = () => {
           md={10}
           style={{
             display: "flex",
-            alignItems: "center",
-            minWidth: isMobile ? "auto" : "730px",
-            width: isMobile ? "100%" : "auto",
+            alignItems: "center"
           }}
         >
           <div
