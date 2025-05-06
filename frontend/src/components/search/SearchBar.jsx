@@ -29,9 +29,42 @@ const StyledInput = styled(Input)`
   }
 `;
 
+const ResponsiveContainer = styled.div`
+  width: 100%;
+  max-width: 730px;
+  position: relative;
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+    min-width: auto;
+  }
+`;
+
+const KeyboardWrapper = styled.div`
+  margin-top: 10px;
+  position: absolute;
+  z-index: 99999;
+  width: 100%;
+  max-width: 600px;
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+    left: 0;
+    right: 0;
+  }
+  
+  @media (max-width: 480px) {
+    .hg-button {
+      height: 30px;
+      font-size: 12px;
+    }
+  }
+`;
+
 const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
   const { searchAsYouType } = useSearchService();
   const [historyContent, setHistoryContent] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [inputValue, setInputValue] = useState(initialSearch || "");
@@ -43,6 +76,17 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
     function handleClickOutside(event) {
       if (inputRef.current && !inputRef.current.contains(event.target)) {
         setextensionVisible(false);
@@ -51,6 +95,12 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (windowWidth < 480 && showKeyboard) {
+      setShowKeyboard(false);
+    }
+  }, [windowWidth]);
 
   const updateSugestions = async (value) => {
     const response = await searchAsYouType({ query: value });
@@ -63,16 +113,14 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
       ? "30px 30px 0 0"
       : "999px";
 
+  const getInputSize = () => {
+    return windowWidth <= 480 ? "middle" : "large";
+  };
+
   return (
-    <div
+    <ResponsiveContainer
       className={className}
       ref={inputRef}
-      style={{
-        width: "100%",
-        maxWidth: "730px",
-        minWidth: "600px",
-        position: "relative",
-      }}
       onClick={() => setextensionVisible(true)}
     >
       <StyledInput
@@ -82,15 +130,16 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
           setextensionVisible(false);
           setSuggestions([]);
         }}
-        size="large"
+        size={getInputSize()}
         placeholder={t("search_default")}
         value={inputValue}
         prefix={
           <SearchOutlined
             style={{
               color: COLORS.gray,
-              paddingLeft: "7px",
-              marginRight: "10px",
+              paddingLeft: windowWidth <= 480 ? "5px" : "7px",
+              marginRight: windowWidth <= 480 ? "5px" : "10px",
+              fontSize: windowWidth <= 480 ? "16px" : "18px",
             }}
           />
         }
@@ -99,11 +148,15 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
             <FaKeyboard
               style={{
                 color: "#9aa0a6",
-                paddingRight: "7px",
-                fontSize: "25px",
-                marginLeft: "10px"
+                paddingRight: windowWidth <= 480 ? "5px" : "7px",
+                fontSize: windowWidth <= 480 ? "18px" : "25px",
+                marginLeft: windowWidth <= 480 ? "5px" : "10px",
+                cursor: "pointer",
               }}
-              onClick={() => setShowKeyboard(!showKeyboard)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowKeyboard(!showKeyboard);
+              }}
             />
           </>
         }
@@ -116,7 +169,7 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
           backgroundColor: "#303134",
           color: "#e8eaed",
           border: "0px",
-          padding: "10px",
+          padding: windowWidth <= 480 ? "5px" : "10px",
           transition: "none",
         }}
       />
@@ -137,18 +190,8 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
       {children}
 
       {showKeyboard && (
-        <Draggable nodeRef={keyboardRef}>
-          <div
-            ref={keyboardRef}
-            style={{
-              marginTop: "10px",
-              position: "absolute",
-              zIndex: "99999",
-              maxWidth: "600px",
-              minWidth: "200px",
-              width: "100%",
-            }}
-          >
+        <Draggable nodeRef={keyboardRef} bounds="parent">
+          <KeyboardWrapper ref={keyboardRef}>
             <Keyboard
               keyboardRef={(r) => (keyboardRef.current = r)}
               onKeyPress={(button) => {
@@ -157,17 +200,23 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
                 } else if (button === "{space}") {
                   setInputValue((prev) => prev + " ");
                 } else if (button.startsWith("{")) {
+                  // Ignore other special keys
                 } else {
                   setInputValue((prev) => prev + button);
                 }
               }}
               theme={"hg-theme-default myTheme"}
               layoutName="default"
+              display={{
+                '{bksp}': windowWidth <= 480 ? '⌫' : 'backspace',
+                '{enter}': windowWidth <= 480 ? '↵' : 'enter',
+                '{space}': windowWidth <= 480 ? '□' : 'space',
+              }}
             />
-          </div>
+          </KeyboardWrapper>
         </Draggable>
       )}
-    </div>
+    </ResponsiveContainer>
   );
 };
 

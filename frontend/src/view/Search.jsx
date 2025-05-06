@@ -3,7 +3,7 @@ import UAISearch from "../components/UAISearch";
 import SearchBar from "../components/search/SearchBar";
 import styled from "styled-components";
 import Layout from "antd/es/layout/layout";
-import { Col, Row, Space, Button, message } from "antd";
+import { Col, Row, Space, Button, message, Drawer, Grid } from "antd";
 import NavigationBar from "../components/NavigationBar";
 import COLORS from "../colors";
 import FilterBar from "../components/FilterBar";
@@ -20,9 +20,11 @@ import WeatherReport from "../components/WeatherReport";
 import { useSearchService } from "../api/Search.api";
 import emitter from "../eventBus";
 import { IoPersonSharp } from "react-icons/io5";
+import { MenuOutlined } from "@ant-design/icons";
 import { useAuthService } from "../api/Authorization.api";
 
 const { Content } = Layout;
+const { useBreakpoint } = Grid;
 
 const StyledSearchBar = styled(SearchBar)`
   line-height: 0px;
@@ -37,6 +39,12 @@ const Search = () => {
   const initialSearch = queryParams.get("q") || "";
   const paramQ = searchParamsReactive.get("q");
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const screens = useBreakpoint();
+  
+  // State
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toolsVisible, setToolsVisible] = useState(false);
   const [searchResult, setSearchResults] = useState({
     hits: 0,
@@ -44,7 +52,6 @@ const Search = () => {
     timeTaken: 0.0,
     results: [],
   });
-  const { t } = useTranslation();
   const [processingRequest, setProcessingRequest] = useState(false);
   const [aiAbstract, setAiAbstract] = useState({});
   const [formData, setFormData] = useState({
@@ -57,9 +64,26 @@ const Search = () => {
     minDateTime: "",
   });
   const [updatesInAiAbstract, setUpdatesInAiAbstract] = useState(0);
-
   const [logged, setLogged] = useState(false);
   const [userData, setUserData] = useState({});
+
+  // Check screen size on mount and when window resizes
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
   useEffect(() => {
     const es = new EventSource(`${ROOT_URL}/${API_PREFIX}/stream`);
@@ -130,26 +154,71 @@ const Search = () => {
     setFormData((prev) => ({ ...prev, search: value }));
   };
 
+  const mobileMenuContent = (
+    <>
+      <div className="p-4">
+        <Link to="/login">
+          <Button
+            type="primary"
+            style={{ 
+              padding: "18px", 
+              borderRadius: "999px", 
+              boxShadow: "none",
+              width: "100%",
+              marginBottom: "30px"
+            }}
+          >
+            <b>{t("make_login")}</b>
+          </Button>
+        </Link>
+      </div>
+      <div className="p-4" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <WeatherReport />
+        <LanguageSelector />
+      </div>
+    </>
+  );
+
   return (
     <>
       <Row
         style={{
-          gap: "30px",
-          margin: "40px 40px 0px 40px",
+          gap: isMobile ? "10px" : "30px",
+          margin: isMobile ? "15px 15px 0px 15px" : "40px 40px 0px 40px",
           borderBottom: "1px gray solid",
+          flexDirection: isMobile ? "column" : "row",
         }}
       >
-        <Col>
-          <Link to="/">
-            <UAISearch logoWidth="150px" style={{ margin: "12px 0 20px 0" }} />
-          </Link>
-        </Col>
         <Col
-          sm={10}
+          style={{
+            display: "flex",
+            justifyContent: isMobile ? "space-between" : "flex-start",
+            alignItems: "center",
+            width: isMobile ? "100%" : "auto",
+          }}
+        >
+          <Link to="/">
+            <UAISearch logoWidth={isMobile ? "100px" : "150px"} style={{ margin: isMobile ? "0" : "12px 0 20px 0" }} />
+          </Link>
+          
+          {isMobile && (
+            <Button
+              icon={<MenuOutlined />}
+              onClick={toggleMobileMenu}
+              style={{ border: "none" }}
+            />
+          )}
+        </Col>
+        
+        <Col
+          xs={24}
+          sm={24}
+          md={10}
           style={{
             display: "flex",
             alignItems: "center",
-            minWidth: "730px",
+            minWidth: isMobile ? "auto" : "730px",
+            width: isMobile ? "100%" : "auto",
           }}
         >
           <div
@@ -160,7 +229,7 @@ const Search = () => {
               onEnterEvent={setSearchValue}
               initialSearch={initialSearch}
             />
-            <div style={{ marginTop: "20px" }}>
+            <div style={{ marginTop: isMobile ? "10px" : "20px" }}>
               <NavigationBar
                 onClickShowTools={() => {
                   setToolsVisible(!toolsVisible);
@@ -169,45 +238,60 @@ const Search = () => {
             </div>
           </div>
         </Col>
-        <Col flex="auto" />
-        <Col>
-          <Space size="large">
-            <WeatherReport />
-
-            <LanguageSelector />
-
-            {logged ? (
-              <div
-                style={{
-                  color: "black",
-                  backgroundColor: COLORS.white,
-                  padding: "10px",
-                  borderRadius: "30px",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <IoPersonSharp size={20} />{" "}
-              </div>
-            ) : (
-              <Link to="/login">
-                <Button
-                  type="primary"
-                  style={{
-                    padding: "18px",
-                    borderRadius: "999px",
-                    boxShadow: "none",
-                  }}
-                >
-                  <b>{t("make_login")}</b>
-                </Button>
-              </Link>
-            )}
-
-          </Space>
-        </Col>
+        
+        {!isMobile && (
+          <>
+            <Col flex="auto" />
+            <Col>
+              <Space size="large">
+                <WeatherReport />
+                <LanguageSelector />
+                {logged ? (
+                  <div
+                    style={{
+                      color: "black",
+                      backgroundColor: COLORS.white,
+                      padding: "10px",
+                      borderRadius: "30px",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <IoPersonSharp size={20} />
+                  </div>
+                ) : (
+                  <Link to="/login">
+                    <Button
+                      type="primary"
+                      style={{
+                        padding: "18px",
+                        borderRadius: "999px",
+                        boxShadow: "none",
+                      }}
+                    >
+                      <b>{t("make_login")}</b>
+                    </Button>
+                  </Link>
+                )}
+              </Space>
+            </Col>
+          </>
+        )}
       </Row>
+
+      {/* Mobile menu drawer */}
+      {isMobile && (
+        <Drawer
+          title={null}
+          placement="right"
+          onClose={toggleMobileMenu}
+          open={mobileMenuOpen}
+          width={250}
+        >
+          {mobileMenuContent}
+        </Drawer>
+      )}
 
       {toolsVisible && (
         <FilterBar setFormData={setFormData} searchResult={searchResult} />
@@ -215,10 +299,11 @@ const Search = () => {
 
       <Content
         style={{
-          paddingLeft: "220px",
-          marginTop: "30px",
+          paddingLeft: isMobile ? "15px" : "220px",
+          paddingRight: isMobile ? "15px" : "0",
+          marginTop: isMobile ? "15px" : "30px",
           color: COLORS.white,
-          maxWidth: "950px",
+          maxWidth: isMobile ? "100%" : "950px",
         }}
       >
         {(Array.isArray(searchResult?.results) &&
@@ -239,15 +324,6 @@ const Search = () => {
         ) : (
           <EmptyResults />
         )}
-
-        {/* <SearchIndex
-          id={1} 
-          url={"https://wikipedia.com/"}
-          title={"um titulo aleatorio"}
-          content={"Time-dependent [1] variational Monte Carlo The time-dependent variational Monte Carlo (t-VMC) method is a quantum Monte Carlo approach to study the dynamics of closed, non-relativistic quantum systems in the context of the quantum many-body problem. It is an extension of the variational Monte Carlo method, in which a time-dependent pure quantum state is encoded by some variational wave function, generally parametrized as <som1>\\Psi(X,t) = \\exp \\left ( \\sum_k a_k(t) O_k(X) \\right )</som1> where the c ..."}
-          readingTime={10}
-          date={"10/10/10"}
-        /> */}
       </Content>
     </>
   );

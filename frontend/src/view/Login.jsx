@@ -1,4 +1,4 @@
-import { Card, Form, Input, Button, Row, Col } from "antd";
+import { Card, Form, Input, Button, Row, Col, Grid } from "antd";
 import { Content } from "antd/es/layout/layout";
 import UAISearch from "../components/UAISearch";
 import COLORS from "../colors";
@@ -8,11 +8,30 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useForm } from "antd/es/form/Form";
 import { useAuthService } from "../api/Authorization.api";
+import { useEffect, useState } from "react";
+
+const { useBreakpoint } = Grid;
 
 const Login = () => {
   const { login } = useAuthService();
   const { t } = useTranslation();
   const [loginForm] = useForm();
+  const screens = useBreakpoint();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
+
   const onFinish = async (values) => {
     login(values);
   };
@@ -23,34 +42,40 @@ const Login = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        minHeight: "100vh",
+        padding: isMobile ? "20px" : 0,
       }}
     >
       <Card
         style={{
-          width: "50%",
-          padding: "30px",
+          width: isMobile ? "100%" : "50%",
+          padding: isMobile ? "20px" : "30px",
           backgroundColor: COLORS.dark_gray,
           borderColor: "rgba(0,0,0,0)",
-          borderRadius: "30px",
-          height: "400px",
-          minWidth: "800px",
-          maxWidth: "900px",
+          borderRadius: isMobile ? "20px" : "30px",
+          minHeight: isMobile ? "auto" : "400px",
+          minWidth: isMobile ? "auto" : "800px",
+          maxWidth: isMobile ? "100%" : "900px",
           position: "relative",
           display: "flex",
           flexDirection: "column",
         }}
       >
-        <Row style={{ flex: 1, width: "100%", height: "300px" }}>
-          <Col span={12}>
+        <Row style={{ 
+          flex: 1, 
+          width: "100%", 
+          flexDirection: isMobile ? "column" : "row",
+          marginBottom: isMobile ? "60px" : 0 
+        }}>
+          <Col xs={24} sm={24} md={12} lg={12}>
             <Row>
-              <UAISearch logoWidth={300} style={{ marginBottom: "30px" }} />
+              <UAISearch logoWidth={isMobile ? 200 : 300} style={{ marginBottom: isMobile ? "15px" : "30px" }} />
             </Row>
             <Row>
               <h1
                 style={{
                   color: COLORS.white,
-                  fontSize: "40px",
+                  fontSize: isMobile ? "28px" : "40px",
                   marginBottom: "0px",
                 }}
               >
@@ -62,13 +87,14 @@ const Login = () => {
             </Row>
           </Col>
           <Col
-            span={12}
+            xs={24} sm={24} md={12} lg={12}
             style={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               alignContent: "center",
               height: "100%",
+              marginTop: isMobile ? "20px" : 0,
             }}
           >
             <Form
@@ -123,16 +149,26 @@ const Login = () => {
 
         <div
           style={{
-            position: "absolute",
-            bottom: 30,
-            right: 30,
+            position: isMobile ? "static" : "absolute",
+            bottom: isMobile ? "auto" : 30,
+            right: isMobile ? "auto" : 30,
             display: "flex",
-            alignItems: "center",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: isMobile ? "stretch" : "center",
             gap: "20px",
+            marginTop: isMobile ? "10px" : 0,
+            width: isMobile ? "100%" : "auto",
           }}
         >
           <b>
-            <Link style={{ color: COLORS.purple }} to="/register">
+            <Link 
+              style={{ 
+                color: COLORS.purple,
+                textAlign: isMobile ? "center" : "left",
+                display: isMobile ? "block" : "inline"
+              }} 
+              to="/register"
+            >
               {t("register")}
             </Link>
           </b>
@@ -144,6 +180,7 @@ const Login = () => {
               borderRadius: "999px",
               boxShadow: "none",
               backgroundColor: COLORS.purple,
+              width: isMobile ? "100%" : "auto",
             }}
           >
             <b>{t("login")}</b>

@@ -1,19 +1,17 @@
 import {
   Button,
   Col,
-  Input,
-  InputNumber,
-  Modal,
-  Popover,
+  Drawer,
+  Grid,
   Row,
   Space,
 } from "antd";
 import Filter from "./Filter";
 import styled from "styled-components";
 import COLORS from "../colors";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { IoCheckboxOutline } from "react-icons/io5";
+import { FilterOutlined, CloseOutlined } from "@ant-design/icons";
 
 const ResponsiveResults = styled(Col)`
   color: ${COLORS.gray};
@@ -23,52 +21,94 @@ const ResponsiveResults = styled(Col)`
   }
 `;
 
+const FilterButton = styled(Button)`
+  display: none;
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+const DesktopFilters = styled(Row)`
+  margin-top: 13px;
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const FilterBar = ({ setFormData, searchResult }) => {
-  console.log("FilterBar recebeu:", searchResult);
   const [t] = useTranslation();
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+  
   const [orderByState, setOrderByState] = useState("SCORE_DESC");
-
   const [itensByPageState, setItensByPageState] = useState(10);
-
   const [readingTimeState, setReadingTimeState] = useState("any");
-
   const [minDateTimeState, setMinDateTimeState] = useState("any");
-
   const [searchForState, setSearchForState] = useState("allResults");
+  const [filterDrawerVisible, setFilterDrawerVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
+
+  const showFilterDrawer = () => {
+    setFilterDrawerVisible(true);
+  };
+
+  const closeFilterDrawer = () => {
+    setFilterDrawerVisible(false);
+  };
 
   const handleOrderByChange = (e) => {
     setFormData((prev) => ({ ...prev, orderBy: e.key }));
     setOrderByState(e.key);
+    if (isMobile) closeFilterDrawer();
   };
 
   const handleItensByPageChange = (e) => {
     setFormData((prev) => ({ ...prev, resultsPerPage: Number(e.key) }));
     setItensByPageState(e.key);
-    setPopoverVisible(false);
+    if (isMobile) closeFilterDrawer();
   };
 
   const handleReadingTimeChange = (e) => {
-    
     if (e.key !== "any") {
       setFormData((prev) => ({ ...prev, maxReadTime: Number(e.key) }));
-      return setReadingTimeState(e.key);
+      setReadingTimeState(e.key);
+    } else {
+      setFormData((prev) => ({ ...prev, maxReadTime: null }));
+      setReadingTimeState("any");
     }
-    setFormData((prev) => ({ ...prev, maxReadTime: null }));
-    setReadingTimeState("any")
+    if (isMobile) closeFilterDrawer();
   };
 
   const handleSearchForChange = (e) => {
     setFormData((prev) => ({ ...prev, searchFor: e.key }));
     setSearchForState(e.key);
+    if (isMobile) closeFilterDrawer();
   };
 
   const handleMinDateTimeChange = (e) => {
     if (e.key !== "any") {
       setFormData((prev) => ({ ...prev, minDateTime: e.key }));
-      return setMinDateTimeState(e.key);
+      setMinDateTimeState(e.key);
+    } else {
+      setFormData((prev) => ({ ...prev, minDateTime: "" }));
+      setMinDateTimeState("any");
     }
-    setFormData((prev) => ({ ...prev, minDateTime: "" }));
-    setMinDateTimeState("any");
+    if (isMobile) closeFilterDrawer();
   };
 
   const orderBy = [
@@ -162,9 +202,29 @@ const FilterBar = ({ setFormData, searchResult }) => {
     },
   ];
 
+  const ResultsInfo = () => (
+    <div style={{ color: COLORS.gray, margin: isMobile ? "10px 0" : undefined }}>
+      {t("near")} {searchResult.hits} {t("results")} ({searchResult.timeTaken}s)
+    </div>
+  );
+
   return (
     <>
-      <Row style={{ marginTop: "13px" }}>
+      {/* Botão de filtro para dispositivos móveis */}
+      <Row justify="space-between" align="middle" style={{ marginTop: "10px", padding: "0 15px" }}>
+        <FilterButton 
+          type="default" 
+          icon={<FilterOutlined />}
+          onClick={showFilterDrawer}
+        >
+          {t("filters")}
+        </FilterButton>
+        
+        {isMobile && <ResultsInfo />}
+      </Row>
+
+      {/* Filtros para desktop */}
+      <DesktopFilters>
         <Col style={{ width: "220px" }} />
         <Col style={{ marginRight: "40px" }}>
           <Filter
@@ -209,9 +269,67 @@ const FilterBar = ({ setFormData, searchResult }) => {
 
         <Col flex="auto" />
         <ResponsiveResults style={{ marginRight: "40px" }}>
-        {t("near")} {searchResult.hits} {t("results")} ({searchResult.timeTaken}s)
+          <ResultsInfo />
         </ResponsiveResults>
-      </Row>
+      </DesktopFilters>
+
+      <Drawer
+        title={t("filters")}
+        placement="right"
+        onClose={closeFilterDrawer}
+        open={filterDrawerVisible}
+        width={300}
+        closeIcon={<CloseOutlined />}
+        bodyStyle={{ padding: "20px 0" }}
+      >
+        <Space direction="vertical" size="large" style={{ width: "100%" }}>
+          <div style={{ padding: "0 20px" }}>
+            <Filter
+              items={orderBy}
+              selectedKeys={orderByState}
+              name={t("order_by")}
+              onClick={handleOrderByChange}
+              style={{ width: "100%" }}
+            />
+          </div>
+          <div style={{ padding: "0 20px" }}>
+            <Filter
+              items={itensPerPage}
+              selectedKeys={[String(itensByPageState)]}
+              name={t("itens_per_page")}
+              onClick={handleItensByPageChange}
+              style={{ width: "100%" }}
+            />
+          </div>
+          <div style={{ padding: "0 20px" }}>
+            <Filter
+              items={readTime}
+              name={t("reading_time")}
+              selectedKeys={readingTimeState}
+              onClick={handleReadingTimeChange}
+              style={{ width: "100%" }}
+            />
+          </div>
+          <div style={{ padding: "0 20px" }}>
+            <Filter
+              items={publisedDate}
+              name={t("publish_date")}
+              selectedKeys={minDateTimeState}
+              onClick={handleMinDateTimeChange}
+              style={{ width: "100%" }}
+            />
+          </div>
+          <div style={{ padding: "0 20px" }}>
+            <Filter
+              items={searchFor}
+              selectedKeys={searchForState}
+              name={t("search_for")}
+              onClick={handleSearchForChange}
+              style={{ width: "100%" }}
+            />
+          </div>
+        </Space>
+      </Drawer>
     </>
   );
 };
