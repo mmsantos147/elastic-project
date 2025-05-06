@@ -29,15 +29,15 @@ public interface QueryParserConstants {
   /** RegularExpression Id. */
   int NEGATED_QUOTED = 13;
   /** RegularExpression Id. */
-  int NEGATED_WORD = 14;
+  int RANGE_DOTS = 14;
   /** RegularExpression Id. */
-  int RANGE_DOTS = 15;
+  int NUMBER = 15;
   /** RegularExpression Id. */
-  int NUMBER = 16;
+  int DATE = 16;
   /** RegularExpression Id. */
-  int DATE = 17;
+  int QUOTED = 17;
   /** RegularExpression Id. */
-  int QUOTED = 18;
+  int NEGATED_WORD = 18;
   /** RegularExpression Id. */
   int WORD = 19;
 
@@ -60,11 +60,11 @@ public interface QueryParserConstants {
     "\">\"",
     "\"<\"",
     "<NEGATED_QUOTED>",
-    "<NEGATED_WORD>",
     "\"..\"",
     "<NUMBER>",
     "<DATE>",
     "<QUOTED>",
+    "<NEGATED_WORD>",
     "<WORD>",
   };
 

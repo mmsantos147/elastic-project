@@ -125,9 +125,9 @@ this.node.shouldContent += word.image + " ";
       case IN_TITLE:
       case NOT_IN_TITLE:
       case NEGATED_QUOTED:
-      case NEGATED_WORD:
       case NUMBER:
       case QUOTED:
+      case NEGATED_WORD:
       case WORD:{
         ;
         break;
@@ -288,7 +288,7 @@ if (must)
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0xd66c0,0xd66c0,0x6c0,0x8000,0x21800,0x8000,0x11800,0xc0000,};
+	   jj_la1_0 = new int[] {0xea6c0,0xea6c0,0x6c0,0x4000,0x11800,0x4000,0x9800,0xa0000,};
 	}
 
   /** Constructor with InputStream. */
