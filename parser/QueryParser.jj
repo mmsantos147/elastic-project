@@ -1,7 +1,7 @@
 options {
     STATIC = false;
     IGNORE_CASE = false;
-    LOOKAHEAD = 3;
+    LOOKAHEAD = 3;  // Aumentado para 3 para melhor detecção de padrões
 }
 
 PARSER_BEGIN(QueryParser)
@@ -110,28 +110,36 @@ TOKEN : {
     | < WORD: (~[" ", "\t", "\n", "\r"])+ >
 }
 
-void Start() : { Token word, quoted; }
+void Start() : { Token word, quoted, t; }
 {
     (
     LOOKAHEAD(3)
+    <READING_TIME> ReadingTimeFilter()
+    | LOOKAHEAD(3)
+    <CREATED_AT> DateFilter()
+    | LOOKAHEAD(3)
+    <IN_TITLE> InTitleFilter(true)
+    | LOOKAHEAD(3)
+    <NOT_IN_TITLE> InTitleFilter(false)
+    | LOOKAHEAD(3)
+    <IN_CONTENT> InContentFilter()
+    | LOOKAHEAD(2)
     quoted = < QUOTED > 
         {
             String content = quoted.image.substring(1, quoted.image.length() - 1);
             this.node.mustInContent.add("\"" + content + "\"");
         }
-    | LOOKAHEAD(3)
-    Filter()
-    | LOOKAHEAD(3)
+    | LOOKAHEAD(2)
     word = < NUMBER > 
         {
             this.node.shouldContent += word.image + " ";
         }
-    | LOOKAHEAD(3)
+    | LOOKAHEAD(2)
     word = < NEGATED_WORD >
         {
             this.node.mustNotContent.add(word.image.substring(1));
         }
-    | LOOKAHEAD(3)
+    | LOOKAHEAD(2)
     word = < NEGATED_QUOTED >
         {
             String content = word.image.substring(2, word.image.length() - 1);
@@ -142,17 +150,6 @@ void Start() : { Token word, quoted; }
             this.node.shouldContent += word.image + " ";
         }
     )+
-}
-
-void Filter() : { Token t1; }
-{
-    (
-        <CREATED_AT> DateFilter()
-      | <READING_TIME> ReadingTimeFilter()
-      | <IN_TITLE> InTitleFilter(true)
-      | <NOT_IN_TITLE> InTitleFilter(false)
-      | <IN_CONTENT> InContentFilter()
-    )
 }
 
 void DateFilter() : { Token d1, d2; }
