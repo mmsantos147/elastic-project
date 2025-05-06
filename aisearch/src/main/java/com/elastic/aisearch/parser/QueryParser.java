@@ -80,30 +80,30 @@ public class QueryParser implements QueryParserConstants {
   final public void Start() throws ParseException {Token word, quoted;
     label_1:
     while (true) {
-      if (jj_2_1(2)) {
+      if (jj_2_1(3)) {
         quoted = jj_consume_token(QUOTED);
 String content = quoted.image.substring(1, quoted.image.length() - 1);
             this.node.mustInContent.add("\"" + content + "\"");
-      } else if (jj_2_2(2)) {
+      } else if (jj_2_2(3)) {
         Filter();
-      } else if (jj_2_3(2)) {
+      } else if (jj_2_3(3)) {
         word = jj_consume_token(NUMBER);
 this.node.shouldContent += word.image + " ";
-      } else if (jj_2_4(2)) {
+      } else if (jj_2_4(3)) {
         word = jj_consume_token(NEGATED_WORD);
 this.node.mustNotContent.add(word.image.substring(1));
-      } else if (jj_2_5(2)) {
+      } else if (jj_2_5(3)) {
         word = jj_consume_token(NEGATED_QUOTED);
 String content = word.image.substring(2, word.image.length() - 1);
             this.node.mustNotContent.add("\"" + content + "\"");
-      } else if (jj_2_6(2)) {
+      } else if (jj_2_6(3)) {
         word = jj_consume_token(WORD);
 this.node.shouldContent += word.image + " ";
       } else {
         jj_consume_token(-1);
         throw new ParseException();
       }
-      if (jj_2_7(2)) {
+      if (jj_2_7(3)) {
         ;
       } else {
         break label_1;
@@ -112,19 +112,19 @@ this.node.shouldContent += word.image + " ";
 }
 
   final public void Filter() throws ParseException {Token t1;
-    if (jj_2_8(2)) {
+    if (jj_2_8(3)) {
       jj_consume_token(CREATED_AT);
       DateFilter();
-    } else if (jj_2_9(2)) {
+    } else if (jj_2_9(3)) {
       jj_consume_token(READING_TIME);
       ReadingTimeFilter();
-    } else if (jj_2_10(2)) {
+    } else if (jj_2_10(3)) {
       jj_consume_token(IN_TITLE);
       InTitleFilter(true);
-    } else if (jj_2_11(2)) {
+    } else if (jj_2_11(3)) {
       jj_consume_token(NOT_IN_TITLE);
       InTitleFilter(false);
-    } else if (jj_2_12(2)) {
+    } else if (jj_2_12(3)) {
       jj_consume_token(IN_CONTENT);
       InContentFilter();
     } else {
@@ -134,17 +134,17 @@ this.node.shouldContent += word.image + " ";
 }
 
   final public void DateFilter() throws ParseException {Token d1, d2;
-    if (jj_2_14(2)) {
+    if (jj_2_14(3)) {
       jj_consume_token(GT);
       d1 = jj_consume_token(DATE);
 this.node.minDate = d1.image;
-    } else if (jj_2_15(2)) {
+    } else if (jj_2_15(3)) {
       jj_consume_token(LT);
       d1 = jj_consume_token(DATE);
 this.node.maxDate = d1.image;
-    } else if (jj_2_16(2)) {
+    } else if (jj_2_16(3)) {
       d1 = jj_consume_token(DATE);
-      if (jj_2_13(2)) {
+      if (jj_2_13(3)) {
         jj_consume_token(RANGE_DOTS);
         d2 = jj_consume_token(DATE);
 this.node.minDate = d1.image;
@@ -162,17 +162,17 @@ if(this.node.minDate.equals("")) {
 }
 
   final public void ReadingTimeFilter() throws ParseException {Token t1, t2;
-    if (jj_2_18(2)) {
+    if (jj_2_18(3)) {
       jj_consume_token(GT);
       t1 = jj_consume_token(NUMBER);
 this.node.minReadingTime = t1.image;
-    } else if (jj_2_19(2)) {
+    } else if (jj_2_19(3)) {
       jj_consume_token(LT);
       t1 = jj_consume_token(NUMBER);
 this.node.maxReadingTime = t1.image;
-    } else if (jj_2_20(2)) {
+    } else if (jj_2_20(3)) {
       t1 = jj_consume_token(NUMBER);
-      if (jj_2_17(2)) {
+      if (jj_2_17(3)) {
         jj_consume_token(RANGE_DOTS);
         t2 = jj_consume_token(NUMBER);
 this.node.minReadingTime = t1.image;
@@ -190,13 +190,13 @@ if(this.node.minReadingTime.equals("")) {
 }
 
   final public void InTitleFilter(boolean must) throws ParseException {Token t1;
-    if (jj_2_21(2)) {
+    if (jj_2_21(3)) {
       t1 = jj_consume_token(WORD);
 if (must)
                 this.node.mustTitle.add(t1.image);
             else
                 this.node.mustNotTitle.add(t1.image);
-    } else if (jj_2_22(2)) {
+    } else if (jj_2_22(3)) {
       t1 = jj_consume_token(QUOTED);
 String content = t1.image.substring(1, t1.image.length() - 1);
             if (must)
@@ -210,10 +210,10 @@ String content = t1.image.substring(1, t1.image.length() - 1);
 }
 
   final public void InContentFilter() throws ParseException {Token t1;
-    if (jj_2_23(2)) {
+    if (jj_2_23(3)) {
       t1 = jj_consume_token(WORD);
 this.node.mustInContent.add(t1.image);
-    } else if (jj_2_24(2)) {
+    } else if (jj_2_24(3)) {
       t1 = jj_consume_token(QUOTED);
 String content = t1.image.substring(1, t1.image.length() - 1);
             this.node.mustInContent.add("\"" + content + "\"");
