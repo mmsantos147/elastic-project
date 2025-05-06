@@ -9,8 +9,6 @@ const SearchSuggestions = ({ visible, suggestions }) => {
   
   if (!visible || suggestions.length === 0) return null;
 
-  if (!visible || suggestions.length === 0) return null;
-
   const historyStyle = {
     width: "100%",
     display: "block",

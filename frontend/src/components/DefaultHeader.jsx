@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Button, Space } from "antd";
+import { Layout, Button, Space, Col } from "antd";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import WeatherReport from "./WeatherReport";
 
 const { Header } = Layout;
 
-const DefaultHeader = ({ children }) => {
+const DefaultHeader = () => {
   const { t } = useTranslation();
 
   return (
@@ -19,17 +19,7 @@ const DefaultHeader = ({ children }) => {
         alignItems: "center",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "16px",
-          width: "50%",
-        }}
-      >
-        {children}
-      </div>
-
+      <Col flex="auto" />
       <Space size="large">
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <WeatherReport />

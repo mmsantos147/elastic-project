@@ -29,7 +29,7 @@ const StyledSearchBar = styled(SearchBar)`
 `;
 
 const Search = () => {
-  const { search, searchAsYouType, fetchHistory } = useSearchService();
+  const { search } = useSearchService();
   const { verify } = useAuthService();
   const [searchParamsReactive] = useSearchParams();
   const location = useLocation();

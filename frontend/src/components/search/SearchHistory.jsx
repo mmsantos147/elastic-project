@@ -15,7 +15,9 @@ const SearchHistory = ({ visible, historyContent, setHistoryContent }) => {
     const loadHistory = async () => {
       try {
         const data = await fetchHistory();
-        setHistoryContent(data);
+        if (!data.error)
+          setHistoryContent(data);
+        
       } catch {
         setHistoryContent([]);
       }

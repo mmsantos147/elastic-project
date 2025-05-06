@@ -54,8 +54,8 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
 
   const updateSugestions = async (value) => {
     const response = await searchAsYouType({ query: value });
-    console.log(response);
-    setSuggestions(response.suggestions);
+    if (!response.error)
+      setSuggestions(response.suggestions);
   };
 
   const borderRadius =
