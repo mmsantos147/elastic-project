@@ -6,6 +6,6 @@ public record SearchResponseDTO(
     Long hits,
     Integer pages,
     Float timeTaken,
-    String searchSuggestion,
+    List<SuggestionDTO> suggestions,
     List<SearchResultDTO> results
 ) {}
