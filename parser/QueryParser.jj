@@ -1,7 +1,7 @@
 options {
     STATIC = false;
     IGNORE_CASE = false;
-    LOOKAHEAD = 3;  // Aumentado para 3 para melhor detecção de padrões
+    LOOKAHEAD = 3;
 }
 
 PARSER_BEGIN(QueryParser)
@@ -91,63 +91,51 @@ SKIP : {
     | "\n"
 }
 
-// Tokens de filtros têm prioridade sobre palavras
+// Definição mais específica para os tokens de filtro
 TOKEN : {
       < OR: "OR" >
-    | < READING_TIME: "reading_time:" >
-    | < CREATED_AT: "created_at:" >
-    | < IN_CONTENT: "in_content:" >
-    | < IN_TITLE: "in_title:" >
-    | < NOT_IN_TITLE: "-in_title:" >
-    | < GT: ">" >
-    | < LT: "<" >
-    | < RANGE_DOTS: ".." >
+    | < READING_TIME: "reading_time:" > : FILTER_STATE
+    | < CREATED_AT: "created_at:" > : FILTER_STATE
+    | < IN_CONTENT: "in_content:" > : FILTER_STATE
+    | < IN_TITLE: "in_title:" > : FILTER_STATE
+    | < NOT_IN_TITLE: "-in_title:" > : FILTER_STATE
     | < NEGATED_QUOTED: "-" "\"" (~["\""])* "\"" >
-    | < DATE: (["0"-"9"]){2} "/" (["0"-"9"]){2} "/" (["0"-"9"]){4} >
-    | < NUMBER: (["0"-"9"])+ >
     | < QUOTED: "\"" (~["\""])* "\"" >
     | < NEGATED_WORD: "-" (~[" ", "\t", "\n", "\r"])+ >
     | < WORD: (~[" ", "\t", "\n", "\r"])+ >
 }
 
-void Start() : { Token word, quoted, t; }
+<FILTER_STATE> TOKEN : {
+    < GT: ">" > : DEFAULT
+    | < LT: "<" > : DEFAULT
+    | < RANGE_DOTS: ".." > : DEFAULT
+    | < DATE: (["0"-"9"]){2} "/" (["0"-"9"]){2} "/" (["0"-"9"]){4} > : DEFAULT
+    | < NUMBER: (["0"-"9"])+ > : DEFAULT
+    | < FILTER_QUOTED: "\"" (~["\""])* "\"" > : DEFAULT
+    | < FILTER_WORD: (~[" ", "\t", "\n", "\r"])+ > : DEFAULT
+}
+
+void Start() : { Token token; }
 {
     (
-    LOOKAHEAD(3)
-    <READING_TIME> ReadingTimeFilter()
-    | LOOKAHEAD(3)
-    <CREATED_AT> DateFilter()
-    | LOOKAHEAD(3)
-    <IN_TITLE> InTitleFilter(true)
-    | LOOKAHEAD(3)
-    <NOT_IN_TITLE> InTitleFilter(false)
-    | LOOKAHEAD(3)
-    <IN_CONTENT> InContentFilter()
-    | LOOKAHEAD(2)
-    quoted = < QUOTED > 
-        {
-            String content = quoted.image.substring(1, quoted.image.length() - 1);
+        token = <READING_TIME> { ReadingTimeFilter(); }
+        | token = <CREATED_AT> { DateFilter(); }
+        | token = <IN_TITLE> { InTitleFilter(true); }
+        | token = <NOT_IN_TITLE> { InTitleFilter(false); }
+        | token = <IN_CONTENT> { InContentFilter(); }
+        | token = <QUOTED> {
+            String content = token.image.substring(1, token.image.length() - 1);
             this.node.mustInContent.add("\"" + content + "\"");
         }
-    | LOOKAHEAD(2)
-    word = < NUMBER > 
-        {
-            this.node.shouldContent += word.image + " ";
-        }
-    | LOOKAHEAD(2)
-    word = < NEGATED_WORD >
-        {
-            this.node.mustNotContent.add(word.image.substring(1));
-        }
-    | LOOKAHEAD(2)
-    word = < NEGATED_QUOTED >
-        {
-            String content = word.image.substring(2, word.image.length() - 1);
+        | token = <NEGATED_QUOTED> {
+            String content = token.image.substring(2, token.image.length() - 1);
             this.node.mustNotContent.add("\"" + content + "\"");
         }
-    | word = < WORD > 
-        {
-            this.node.shouldContent += word.image + " ";
+        | token = <NEGATED_WORD> {
+            this.node.mustNotContent.add(token.image.substring(1));
+        }
+        | token = <WORD> {
+            this.node.shouldContent += token.image + " ";
         }
     )+
 }
@@ -196,14 +184,14 @@ void ReadingTimeFilter() : { Token t1, t2; }
 
 void InTitleFilter(boolean must) : { Token t1; }
 {
-        t1 = <WORD>
+        (t1 = <FILTER_WORD> | t1 = <WORD>)
         {
             if (must)
                 this.node.mustTitle.add(t1.image);
             else
                 this.node.mustNotTitle.add(t1.image);            
         }
-    |   t1 = <QUOTED>
+    |   (t1 = <FILTER_QUOTED> | t1 = <QUOTED>)
         {
             String content = t1.image.substring(1, t1.image.length() - 1);
             if (must)
@@ -215,11 +203,11 @@ void InTitleFilter(boolean must) : { Token t1; }
 
 void InContentFilter() : { Token t1; }
 {
-        t1 = <WORD>
+        (t1 = <FILTER_WORD> | t1 = <WORD>)
         {
             this.node.mustInContent.add(t1.image);           
         }
-    |   t1 = <QUOTED>
+    |   (t1 = <FILTER_QUOTED> | t1 = <QUOTED>)
         {
             String content = t1.image.substring(1, t1.image.length() - 1);
             this.node.mustInContent.add("\"" + content + "\"");

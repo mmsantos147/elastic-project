@@ -23,26 +23,32 @@ public interface QueryParserConstants {
   /** RegularExpression Id. */
   int NOT_IN_TITLE = 10;
   /** RegularExpression Id. */
-  int GT = 11;
+  int NEGATED_QUOTED = 11;
   /** RegularExpression Id. */
-  int LT = 12;
+  int QUOTED = 12;
   /** RegularExpression Id. */
-  int RANGE_DOTS = 13;
+  int NEGATED_WORD = 13;
   /** RegularExpression Id. */
-  int NEGATED_QUOTED = 14;
+  int WORD = 14;
   /** RegularExpression Id. */
-  int DATE = 15;
+  int GT = 15;
   /** RegularExpression Id. */
-  int NUMBER = 16;
+  int LT = 16;
   /** RegularExpression Id. */
-  int QUOTED = 17;
+  int RANGE_DOTS = 17;
   /** RegularExpression Id. */
-  int NEGATED_WORD = 18;
+  int DATE = 18;
   /** RegularExpression Id. */
-  int WORD = 19;
+  int NUMBER = 19;
+  /** RegularExpression Id. */
+  int FILTER_QUOTED = 20;
+  /** RegularExpression Id. */
+  int FILTER_WORD = 21;
 
   /** Lexical state. */
   int DEFAULT = 0;
+  /** Lexical state. */
+  int FILTER_STATE = 1;
 
   /** Literal token values. */
   String[] tokenImage = {
@@ -57,15 +63,17 @@ public interface QueryParserConstants {
     "\"in_content:\"",
     "\"in_title:\"",
     "\"-in_title:\"",
-    "\">\"",
-    "\"<\"",
-    "\"..\"",
     "<NEGATED_QUOTED>",
-    "<DATE>",
-    "<NUMBER>",
     "<QUOTED>",
     "<NEGATED_WORD>",
     "<WORD>",
+    "\">\"",
+    "\"<\"",
+    "\"..\"",
+    "<DATE>",
+    "<NUMBER>",
+    "<FILTER_QUOTED>",
+    "<FILTER_WORD>",
   };
 
 }
