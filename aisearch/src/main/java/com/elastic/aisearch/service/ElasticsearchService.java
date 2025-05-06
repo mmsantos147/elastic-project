@@ -5,10 +5,9 @@ import com.elastic.aisearch.elastic.QueryBuilderFactory;
 import com.elastic.aisearch.parser.QueryParser;
 import com.elastic.aisearch.parser.QueryParser.QueryNode;
 
+import com.elastic.aisearch.parser.SuggestionParser;
 import com.elastic.aisearch.utils.Filters;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.search.SearchRequest;
@@ -189,34 +188,10 @@ public class ElasticsearchService {
         }
         Long hits = searchResponse.getHits().getTotalHits().value;
 
-        /* "{\n  \"suggest\" : {\n    \"content_suggest\" : [\n{\n        \"text\" : \"Schodiger\",\n        \"offset\" : 0,\n        \"length\" : 9,\n        \"options\" : [\n          {\n            \"text\" : \"Schrodinger\",\n            \"score\" : 0.7777778,\n            \"freq\" : 1\n          }\n        ]\n      }\n    ]\n  }\n}"
-           "{\n  \"suggest\" : {\n    \"content_suggest\" : [\n      {\n        \"text\" : \"The\",\n        \"offset\" : 0,\n        \"length\" : 3,\n        \"options\" : [ ]\n      },\n      {\n        \"text\" : \"Schrodiger\",\n        \"offset\" : 4,\n        \"length\" : 10,\n        \"options\" : [\n          {\n            \"text\" : \"Schrodinger\",\n            \"score\" : 0.9,\n            \"freq\" : 1\n          }\n        ]\n      },\n      {\n        \"text\" : \"equation\",\n        \"offset\" : 15,\n        \"length\" : 8,\n        \"options\" : [ ]\n      },\n      {\n        \"text\" : \"is\",\n        \"offset\" : 24,\n        \"length\" : 2,\n        \"options\" : [ ]\n      },\n      {\n        \"text\" : \"a\",\n        \"offset\" : 27,\n        \"length\" : 1,\n        \"options\" : [ ]\n      },\n      {\n        \"text\" : \"pargial\",\n        \"offset\" : 29,\n        \"length\" : 7,\n        \"options\" : [\n          {\n            \"text\" : \"partial\",\n            \"score\" : 0.85714287,\n            \"freq\" : 754\n          }\n        ]\n      },\n      {\n        \"text\" : \"differential\",\n        \"offset\" : 37,\n        \"length\" : 12,\n        \"options\" : [ ]\n      },\n      {\n        \"text\" : \"equation\",\n        \"offset\" : 50,\n        \"length\" : 8,\n        \"options\" : [ ]\n      },\n      {\n        \"text\" : \"fo\",\n        \"offset\" : 59,\n        \"length\" : 2,\n        \"options\" : [ ]\n      },\n      {\n        \"text\" : \"the\",\n        \"offset\" : 62,\n        \"length\" : 3,\n        \"options\" : [ ]\n      },\n      {\n        \"text\" : \"wqve\",\n        \"offset\" : 66,\n        \"length\" : 4,\n        \"options\" : [\n          {\n            \"text\" : \"wave\",\n            \"score\" : 0.75,\n            \"freq\" : 578\n          }\n        ]\n      },\n      {\n        \"text\" : \"funxtion\",\n        \"offset\" : 71,\n        \"length\" : 8,\n        \"options\" : [\n          {\n            \"text\" : \"function\",\n            \"score\" : 0.875,\n            \"freq\" : 3592\n          }\n        ]\n      },\n      {\n        \"text\" : \"of\",\n        \"offset\" : 80,\n        \"length\" : 2,\n        \"options\" : [ ]\n      },\n      {\n        \"text\" : \"quantum\",\n        \"offset\" : 83,\n        \"length\" : 7,\n        \"options\" : [ ]\n      },\n      {\n        \"text\" : \"mechanics\",\n        \"offset\" : 91,\n        \"length\" : 9,\n        \"options\" : [ ]\n      }\n    ]\n  }\n}",
-
-        * */
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode root = mapper.readTree(searchResponse.getSuggest().toString());
-
-        JsonNode suggestion = root.path("suggest").path("content_suggest");
-        List<SuggestionDTO> suggestions = new ArrayList<>();
-        for (JsonNode node: suggestion) {
-            String text = node.path("text").asText();
-            Integer offset = node.path("offset").asInt();
-            Integer length = node.path("length").asInt();
-
-            JsonNode option = node.path("options");
-            String optionText = null;
-
-            if (option.isArray() && !option.isEmpty()) {
-                optionText = option.path(0).path("text").asText();
-            }
-
-            suggestions.add(new SuggestionDTO(
-                    text, offset, length, optionText
-            ));
-        }
+        SuggestionParser suggestionParser = new SuggestionParser();
+        List<SuggestionDTO> suggestions = suggestionParser.SuggestParser(searchResponse.getSuggest().toString());
 
         return new SearchResponseDTO(
-
                 hits,
                 Math.toIntExact(hits/searchDTO.resultsPerPage())+1,
                 (float) searchResponse.getTook().getSecondsFrac(),
