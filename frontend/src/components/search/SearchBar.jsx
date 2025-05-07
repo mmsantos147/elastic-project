@@ -76,6 +76,10 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
+    setInputValue(initialSearch)
+  }, [initialSearch]);
+
+  useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
