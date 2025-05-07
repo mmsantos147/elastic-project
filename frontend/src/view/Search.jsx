@@ -178,7 +178,6 @@ const Search = () => {
           style={{
             display: "flex",
             justifyContent: isMobile ? "space-between" : "flex-start",
-            alignItems: "center",
             width: isMobile ? "100%" : "auto",
           }}
         >
