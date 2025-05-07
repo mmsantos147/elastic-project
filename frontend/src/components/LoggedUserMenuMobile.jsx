@@ -52,16 +52,16 @@ export const LoggedUserMenuMobile = ({isLogged, username}) => {
                 <FaCircleUser style={{ color: "white", marginTop: 8 }} size={100} />
               </Row>
               <Row align="center" style={{ marginTop: "20px", fontSize: "30px" }}>
-                Olá, {username}!
+                {t("hello")}, {username}!
               </Row>
               <MenuItemTop>
-                <FaStar style={{ marginRight: "10px" }} /> Favoritos
+                <FaStar style={{ marginRight: "10px" }} /> {t("favorite_searches")}
               </MenuItemTop>
               <MenuItem>
-                <FaTrash style={{ marginRight: "10px" }} /> Limpar histórico
+                <FaTrash style={{ marginRight: "10px" }} /> {t("clean_history")}
               </MenuItem>
               <MenuItemBottom>
-                <IoLogOut style={{ marginRight: "10px" }} /> Sair
+                <IoLogOut style={{ marginRight: "10px" }} /> {t("logout")}
               </MenuItemBottom>
             </div>
           ) : (

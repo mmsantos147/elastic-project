@@ -36,7 +36,7 @@
   "recent_searches": "最近搜索",
   "search": "搜索",
   "search_on_brand": "在uAISearch中搜索",
-  "your_search_dont_find_any_docs": "您的搜索没有找到任何匹配的文档",
+  "your_search_dont_find_any_docs": "您的搜索未找到任何匹配的文档",
   "need_help_ask": "需要帮助吗？",
   "check_out_other": "查看其他",
   "tips": "提示",
@@ -75,5 +75,11 @@
   "success_langset": "语言更改成功！",
   "any_date": "任何日期",
   "any_time": "任何时间",
-  "unexpected_error": "发生未知错误。请稍后再试！"
+  "unexpected_error": "发生未知错误。请稍后再试！",
+  "filters": "过滤器",
+  "did_you_mean": "您是想说",
+  "hello": "你好",
+  "favorite_searches": "收藏搜索",
+  "clean_history": "清除历史",
+  "logout": "登出"
 }

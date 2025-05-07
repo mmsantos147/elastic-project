@@ -13,9 +13,9 @@
   "score_asc": "רלוונטיות עולה",
   "read_time_desc": "זמן קריאה יורד",
   "read_time_asc": "זמן קריאה עולה",
-  "date_desc": "החדשים קודם",
-  "date_asc": "הישנים קודם",
-  "define": "הגדר",
+  "date_desc": "החדש ביותר קודם",
+  "date_asc": "הישן ביותר קודם",
+  "define": "להגדיר",
   "fast": "מהיר",
   "medium": "בינוני",
   "high": "ארוך",
@@ -75,5 +75,11 @@
   "success_langset": "השפה שונתה בהצלחה!",
   "any_date": "כל תאריך",
   "any_time": "כל זמן",
-  "unexpected_error": "שגיאה לא צפויה התרחשה. אנא נסה שוב מאוחר יותר!"
+  "unexpected_error": "שגיאה לא צפויה התרחשה. אנא נסה שוב מאוחר יותר!",
+  "filters": "מסננים",
+  "did_you_mean": "האם התכוונת ל-",
+  "hello": "שלום ",
+  "favorite_searches": "חיפושים מועדפים",
+  "clean_history": "נקה היסטוריה",
+  "logout": "התנתק"
 }

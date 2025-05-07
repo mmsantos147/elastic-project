@@ -75,5 +75,11 @@
   "success_langset": "Taal succesvol gewijzigd!",
   "any_date": "Elke datum",
   "any_time": "Elke tijd",
-  "unexpected_error": "Er is een onbekende fout opgetreden. Probeer het later opnieuw!"
+  "unexpected_error": "Er is een onbekende fout opgetreden. Probeer het later opnieuw!",
+  "filters": "Filters",
+  "did_you_mean": "Bedoelde u ",
+  "hello": "Hallo ",
+  "favorite_searches": "Favoriete zoekopdrachten",
+  "clean_history": "Geschiedenis wissen",
+  "logout": "Uitloggen"
 }

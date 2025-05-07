@@ -75,5 +75,11 @@
   "success_langset": "언어가 성공적으로 변경되었습니다!",
   "any_date": "모든 날짜",
   "any_time": "모든 시간",
-  "unexpected_error": "알 수 없는 오류가 발생했습니다. 나중에 다시 시도해 주세요!"
+  "unexpected_error": "알 수 없는 오류가 발생했습니다. 나중에 다시 시도해 주세요!",
+  "filters": "필터",
+  "did_you_mean": "당신이 의미한 것은 ",
+  "hello": "안녕하세요 ",
+  "favorite_searches": "즐겨찾는 검색",
+  "clean_history": "기록 지우기",
+  "logout": "로그아웃"
 }

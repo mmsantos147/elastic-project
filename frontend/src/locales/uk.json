@@ -1,8 +1,8 @@
 {
-  "search_default": "Шукайте в uAISearch або введіть URL-адресу",
+  "search_default": "Шукайте в uAISearch або введіть URL",
   "tools": "Інструменти",
   "all_results": "Усі результати",
-  "about": "Про нас",
+  "about": "Про",
   "advertisement": "Реклама",
   "business": "Бізнес",
   "how_search_works": "Як працює пошук",
@@ -13,8 +13,8 @@
   "score_asc": "Зростання релевантності",
   "read_time_desc": "Зменшення часу читання",
   "read_time_asc": "Зростання часу читання",
-  "date_desc": "Спочатку нові",
-  "date_asc": "Спочатку старі",
+  "date_desc": "Новіші спочатку",
+  "date_asc": "Старіші спочатку",
   "define": "Визначити",
   "fast": "Швидко",
   "medium": "Середній",
@@ -38,7 +38,7 @@
   "search_on_brand": "Шукати в uAISearch",
   "your_search_dont_find_any_docs": "Ваш пошук не знайшов жодного відповідного документа",
   "need_help_ask": "Потрібна допомога?",
-  "check_out_other": "Перегляньте інші",
+  "check_out_other": "Перевірте інші",
   "tips": "поради",
   "to_search_on_brand": "щоб шукати в uAISearch",
   "you_can_try_these_searches": "Ви також можете спробувати ці пошуки",
@@ -75,5 +75,11 @@
   "success_langset": "Мову успішно змінено!",
   "any_date": "Будь-яка дата",
   "any_time": "Будь-який час",
-  "unexpected_error": "Сталася невідома помилка. Будь ласка, спробуйте ще раз пізніше!"
+  "unexpected_error": "Сталася невідома помилка. Будь ласка, спробуйте ще раз пізніше!",
+  "filters": "Фільтри",
+  "did_you_mean": "Ви мали на увазі ",
+  "hello": "Привіт ",
+  "favorite_searches": "Улюблені пошуки",
+  "clean_history": "Очистити історію",
+  "logout": "Вийти"
 }

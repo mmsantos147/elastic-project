@@ -77,5 +77,9 @@
     "any_time": "Qualquer tempo",
     "unexpected_error": "Um erro desconhecido ocorreu. Por favor, tente novamente mais tarde!",
     "filters": "Filtros",
-    "did_you_mean": "Você quis dizer "
+    "did_you_mean": "Você quis dizer ",
+    "hello": "Olá ",
+    "favorite_searches": "Pesquisas favoritas",
+    "clean_history": "Limpar histórico",
+    "logout": "Sair"
 }

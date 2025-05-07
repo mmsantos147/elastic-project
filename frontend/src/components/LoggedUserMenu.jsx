@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Row } from "antd";
 import COLORS from "../colors";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const MenuItem = styled(Row)`
   padding: 15px;
@@ -36,7 +37,9 @@ const MenuItemBottom = styled(MenuItem)`
 `;
 
 export const LoggedUserMenu = forwardRef(({ visible, username, onClose, topDistanceAdd }, ref) => {
-  useEffect(() => {
+    const { t } = useTranslation();
+  
+    useEffect(() => {
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
         onClose();
@@ -79,20 +82,20 @@ export const LoggedUserMenu = forwardRef(({ visible, username, onClose, topDista
           marginBottom: "20px",
         }}
       >
-        Olá, {username}!
+        {t("hello")}, {username}!
       </Row>
 
       <MenuItemTop>
-        <FaStar style={{ marginRight: "10px" }} /> Favoritos
+        <FaStar style={{ marginRight: "10px" }} /> {t("favorite_searches")}
       </MenuItemTop>
 
       <MenuItem>
-        <FaTrash style={{ marginRight: "10px" }} /> Limpar histórico
+        <FaTrash style={{ marginRight: "10px" }} /> {t("clean_history")}
       </MenuItem>
 
       <LinkNoUnderline to="/logout">
         <MenuItemBottom>
-          <IoLogOut style={{ marginRight: "10px" }} /> Sair
+          <IoLogOut style={{ marginRight: "10px" }} /> {t("logout")}
         </MenuItemBottom>
       </LinkNoUnderline>
     </div>,

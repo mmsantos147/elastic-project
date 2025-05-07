@@ -75,5 +75,11 @@
   "success_langset": "Lingua cambiata con successo!",
   "any_date": "Qualsiasi data",
   "any_time": "Qualsiasi tempo",
-  "unexpected_error": "Si è verificato un errore sconosciuto. Per favore, riprova più tardi!"
+  "unexpected_error": "Si è verificato un errore sconosciuto. Per favore, riprova più tardi!",
+  "filters": "Filtri",
+  "did_you_mean": "Intendevi ",
+  "hello": "Ciao ",
+  "favorite_searches": "Ricerche preferite",
+  "clean_history": "Pulisci cronologia",
+  "logout": "Disconnetti"
 }

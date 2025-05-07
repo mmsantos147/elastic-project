@@ -75,5 +75,11 @@
   "success_langset": "Dil başarıyla değiştirildi!",
   "any_date": "Herhangi bir tarih",
   "any_time": "Herhangi bir zaman",
-  "unexpected_error": "Bilinmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyin!"
+  "unexpected_error": "Bilinmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyin!",
+  "filters": "Filtreler",
+  "did_you_mean": "Demek istediğiniz ",
+  "hello": "Merhaba ",
+  "favorite_searches": "Favori aramalar",
+  "clean_history": "Geçmişi temizle",
+  "logout": "Çıkış yap"
 }

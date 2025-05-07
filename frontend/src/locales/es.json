@@ -75,5 +75,11 @@
   "success_langset": "¡Idioma cambiado con éxito!",
   "any_date": "Cualquier fecha",
   "any_time": "Cualquier tiempo",
-  "unexpected_error": "Ocurrió un error desconocido. ¡Por favor, intenta nuevamente más tarde!"
+  "unexpected_error": "Ocurrió un error desconocido. ¡Por favor, intenta nuevamente más tarde!",
+  "filters": "Filtros",
+  "did_you_mean": "¿Quisiste decir ",
+  "hello": "Hola ",
+  "favorite_searches": "Búsquedas favoritas",
+  "clean_history": "Limpiar historial",
+  "logout": "Cerrar sesión"
 }
