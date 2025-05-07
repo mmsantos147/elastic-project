@@ -53,6 +53,7 @@ public class SearchController {
                     .toString();
 
             userSession.setTop3Results(top3);
+            userSession.setLastRequestId(searchDTO.requestId());
             chatGptService.makeAiResume(userSession);
 
             History history = new History();
@@ -61,6 +62,7 @@ public class SearchController {
                 history.setUser(userService.getUserId(userSession.getUserId()));
                 historyService.addHistory(history);
             }
+            userSession.setLastRequestId(top3);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Erro ao processar consulta: {}", e.getMessage(), e);
