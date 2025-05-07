@@ -7,14 +7,12 @@ import { Col, Row, Space, Button, message, Drawer, Grid } from "antd";
 import NavigationBar from "../components/NavigationBar";
 import COLORS from "../colors";
 import FilterBar from "../components/FilterBar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { API_PREFIX, ROOT_URL } from "../constants";
 import SearchResults from "../components/search/SeachResults";
 import PageSelect from "../components/search/PageSelect";
 import EmptyResults from "../components/search/EmptyResults";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
 import LanguageSelector from "../components/LanguageSelector";
 import WeatherReport from "../components/WeatherReport";
 import { useSearchService } from "../api/Search.api";
@@ -34,14 +32,13 @@ const StyledSearchBar = styled(SearchBar)`
 const Search = () => {
   const { search } = useSearchService();
   const { verify } = useAuthService();
-  const [searchParamsReactive] = useSearchParams();
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const initialSearch = queryParams.get("q") || "";
-  const paramQ = searchParamsReactive.get("q");
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const screens = useBreakpoint();
+
+  // Obter o parâmetro q da URL
+  const queryFromUrl = searchParams.get("q") || "";
 
   const isMobile = !screens.md;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -55,7 +52,7 @@ const Search = () => {
   const [processingRequest, setProcessingRequest] = useState(false);
   const [aiAbstract, setAiAbstract] = useState({});
   const [formData, setFormData] = useState({
-    search: initialSearch,
+    search: queryFromUrl,
     page: 1,
     resultsPerPage: 10,
     orderBy: "SCORE_DESC",
@@ -91,6 +88,16 @@ const Search = () => {
     return () => es.close();
   }, []);
 
+  const handleSearch = (searchValue) => {
+    if (searchValue !== queryFromUrl) {
+      setSearchParams({ q: searchValue });
+    }
+  };
+
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, search: queryFromUrl, page: 1 }));
+  }, [queryFromUrl]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -111,9 +118,12 @@ const Search = () => {
         setProcessingRequest(false);
       }
     };
-    setUpdatesInAiAbstract((prev) => prev + 1);
-    fetchData();
-  }, [formData]);
+    
+    if (formData.search) {
+      setUpdatesInAiAbstract((prev) => prev + 1);
+      fetchData();
+    }
+  }, [formData, search]);
 
   useEffect(() => {
     const handleNewIARequest = () => {
@@ -134,11 +144,7 @@ const Search = () => {
     };
 
     verifySession();
-  }, []);
-
-  const setSearchValue = (value) => {
-    setFormData((prev) => ({ ...prev, search: value }));
-  };
+  }, [verify]);
 
   const mobileMenuContent = (
     <>
@@ -218,9 +224,9 @@ const Search = () => {
             style={{ width: "100%", display: "flex", flexDirection: "column" }}
           >
             <StyledSearchBar
-              setSearchValue={setSearchValue}
-              onEnterEvent={setSearchValue}
-              initialSearch={initialSearch}
+              setSearchValue={handleSearch}
+              onEnterEvent={handleSearch}
+              initialSearch={queryFromUrl}
             />
             <div style={{ marginTop: isMobile ? "10px" : "20px" }}>
               <NavigationBar
