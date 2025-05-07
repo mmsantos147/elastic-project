@@ -63,7 +63,7 @@ const Search = () => {
     searchFor: "",
     minDateTime: "",
   });
-  const [updatesInAiAbstract, setUpdatesInAiAbstract] = useState(0);
+  const [currentAiAbstract, setCurrentAiAbstract] = useState(0);
   const [logged, setLogged] = useState(false);
   const [userData, setUserData] = useState({});
 
@@ -86,12 +86,12 @@ const Search = () => {
         const data = JSON.parse(evt.data);
         console.log(data);
         setAiAbstract(data);
+        setCurrentAiAbstract(data.requestId);
       } catch (err) {
         message.error("Um erro aconteceu com a inteligência artificial!");
         console.error("Erro parseando SSE:", err);
       }
 
-      setUpdatesInAiAbstract((prev) => prev - 1);
     });
 
     return () => es.close();
@@ -117,14 +117,13 @@ const Search = () => {
         setProcessingRequest(false);
       }
     };
-    setUpdatesInAiAbstract((prev) => prev + 1);
     fetchData();
     navigate(`/search?q=${formData.search}`);
   }, [formData]);
 
   useEffect(() => {
     const handleNewIARequest = () => {
-      setUpdatesInAiAbstract((prev) => prev + 1);
+      setCurrentAiAbstract((prev) => prev + 1);
     };
 
     emitter.on("new-ai-request", handleNewIARequest);
@@ -317,7 +316,7 @@ const Search = () => {
               processingRequest={processingRequest}
               aiAbstract={aiAbstract}
               searchResult={searchResult.results}
-              updatesInAiAbstract={updatesInAiAbstract}
+              currentRequestId={currentAiAbstract}
             />
             <PageSelect
               setFormData={setFormData}
