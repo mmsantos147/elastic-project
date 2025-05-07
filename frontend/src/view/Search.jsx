@@ -51,6 +51,7 @@ const Search = () => {
     pages: 0,
     timeTaken: 0.0,
     results: [],
+    requestId: "",
   });
   const [processingRequest, setProcessingRequest] = useState(false);
   const [aiAbstract, setAiAbstract] = useState({});
@@ -105,12 +106,14 @@ const Search = () => {
           pages: 0,
           timeTaken: 0.0,
           results: [],
+          requestId: ""
         });
 
         setProcessingRequest(true);
         setAiAbstract({});
         const response = await search(formData);
         setSearchResults(response);
+        currentAiAbstract(response.requestId);
       } catch (error) {
         console.error("Erro ao buscar resultados:", error);
       } finally {
