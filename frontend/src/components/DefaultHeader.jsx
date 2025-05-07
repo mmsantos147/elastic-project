@@ -39,12 +39,16 @@ const DefaultHeader = () => {
   }, []);
 
   useEffect(() => {
-    const data = verify()
+    const verifyUser = async () => {
+      const data = await verify();
 
-    if (data.logged) {
-      setIsLogged(data.logged)
-      setUsername(data.username)
-    }
+      if (data.logged) {
+        setIsLogged(data.logged);
+        setUsername(data.username);
+      }
+    };
+
+    verifyUser() 
   }, []);
 
   const toggleMobileMenu = () => {
@@ -108,7 +112,12 @@ const DefaultHeader = () => {
             <>
               <div
                 ref={userIconRef}
-                style={{ padding: "10px", cursor: "pointer", alignContent: "center", display: "flex" }}
+                style={{
+                  padding: "10px",
+                  cursor: "pointer",
+                  alignContent: "center",
+                  display: "flex",
+                }}
                 onClick={() => setMenuOpen(!menuOpen)}
               >
                 <FaCircleUser style={{ color: "white" }} size={30} />
