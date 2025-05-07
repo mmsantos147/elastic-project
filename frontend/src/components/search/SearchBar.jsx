@@ -114,7 +114,7 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
 
   const borderRadius =
     extensionVisible && (historyContent.length > 0 || suggestions.length > 0)
-      ? "30px 30px 0 0"
+      ? "20px 20px 0 0"
       : "999px";
 
   const getInputSize = () => {
