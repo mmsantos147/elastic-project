@@ -83,7 +83,7 @@ const Main = () => {
         </div>
         
         <SearchContainer>
-          <MarginBottomSearchBar onEnterEvent={onEnterEvent} setSearchValue={setSearchValue} />
+          <MarginBottomSearchBar onEnterEvent={onEnterEvent} setSearchValue={setSearchValue} initialSearch={""} />
           <Space>
             <SearchButton />
           </Space>
