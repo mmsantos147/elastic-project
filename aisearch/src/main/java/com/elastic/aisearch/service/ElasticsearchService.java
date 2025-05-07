@@ -4,7 +4,7 @@ import com.elastic.aisearch.dto.*;
 import com.elastic.aisearch.elastic.QueryBuilderFactory;
 import com.elastic.aisearch.parser.QueryNode;
 import com.elastic.aisearch.parser.QueryParser;
-import com.elastic.aisearch.parser.SuggestionParser;
+import com.elastic.aisearch.parser.JsonParser;
 import com.elastic.aisearch.utils.Filters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -47,6 +47,9 @@ public class ElasticsearchService {
 
     @Autowired
     private QueryParser queryParser;
+
+    @Autowired
+    private JsonParser jsonParser;
 
     /**
      * Executa uma busca no Elasticsearch baseada em uma string de consulta.
@@ -190,16 +193,14 @@ public class ElasticsearchService {
         }
         Long hits = searchResponse.getHits().getTotalHits().value;
 
-        SuggestionParser suggestionParser = new SuggestionParser();
-        List<SuggestionDTO> suggestions = suggestionParser.SuggestParser(searchResponse.getSuggest().toString());
+        List<SuggestionDTO> suggestions = jsonParser.suggestParser(searchResponse.getSuggest().toString());
 
         return new SearchResponseDTO(
                 hits,
                 Math.toIntExact(hits/searchDTO.resultsPerPage())+1,
                 (float) searchResponse.getTook().getSecondsFrac(),
                 suggestions,
-                results,
-                searchDTO.requestId()
+                results
         );
     }
 

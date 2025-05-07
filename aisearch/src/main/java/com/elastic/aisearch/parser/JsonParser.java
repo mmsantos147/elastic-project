@@ -1,5 +1,7 @@
 package com.elastic.aisearch.parser;
 
+import com.elastic.aisearch.dto.AIAbstractDTO;
+import com.elastic.aisearch.dto.AIParagraphDTO;
 import com.elastic.aisearch.dto.SuggestionDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,11 +11,16 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
-public class SuggestionParser {
+import org.springframework.stereotype.Component;
 
-    public List<SuggestionDTO> SuggestParser(String suggestJson) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
+@NoArgsConstructor
+@Component
+public class JsonParser {
+
+    private final ObjectMapper mapper = new ObjectMapper();
+
+    public List<SuggestionDTO> suggestParser(String suggestJson) throws JsonProcessingException {
+        
         JsonNode root = mapper.readTree(suggestJson);
 
         JsonNode suggestion = root.path("suggest").path("content_suggest");
@@ -36,4 +43,23 @@ public class SuggestionParser {
         }
         return suggestions;
     }
+
+    public AIAbstractDTO aiAbstractParser(String aiAbstractJson, String requestId) throws JsonProcessingException {
+        JsonNode root = mapper.readTree(aiAbstractJson);
+
+        List<AIParagraphDTO> paragraphDTOs = new ArrayList<>();
+        
+        for (JsonNode node: root.path("paragraphs")) {
+            AIParagraphDTO paragraphDTO = new AIParagraphDTO(
+                node.get("content").asText(), 
+                node.get("url").asText()
+            );
+            paragraphDTOs.add(paragraphDTO);
+        } 
+
+        String title = root.get("title").asText();
+        return new AIAbstractDTO(requestId, title, paragraphDTOs);
+
+    }
+
 }

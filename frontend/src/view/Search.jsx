@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import UAISearch from "../components/UAISearch";
 import SearchBar from "../components/search/SearchBar";
 import styled from "styled-components";
@@ -63,17 +63,15 @@ const Search = () => {
     searchFor: "",
     minDateTime: "",
   });
+  const [updatesInAiAbstract, setUpdatesInAiAbstract] = useState(0);
   const [logged, setLogged] = useState(false);
   const [userData, setUserData] = useState({});
-  
-  // Referência para controlar a última solicitação de pesquisa
-  const searchRequestIdRef = useRef(null);
 
   useEffect(() => {
-    if (initialSearch !== formData.search) {
-      setFormData(prev => ({...prev, search: initialSearch}));
+    if (initialSearch != formData.search) {
+      setFormData(prev => ({...prev, search: initialSearch}))
     } 
-  }, [initialSearch]);
+  }, [initialSearch])
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -81,22 +79,19 @@ const Search = () => {
 
   useEffect(() => {
     const es = new EventSource(`${ROOT_URL}/${API_PREFIX}/stream`);
-    
+
     es.addEventListener("AiAbstract", (evt) => {
       try {
+        console.log(evt.data);
         const data = JSON.parse(evt.data);
-        console.log("Recebido AiAbstract:", data);
-        
-        // Só atualiza o resumo se for para a solicitação atual
-        if (data.requestId === searchRequestIdRef.current) {
-          setAiAbstract(data);
-        } else {
-          console.log("Ignorando resposta desatualizada para requestId:", data.requestId);
-        }
+        console.log(data);
+        setAiAbstract(data);
       } catch (err) {
         message.error("Um erro aconteceu com a inteligência artificial!");
         console.error("Erro parseando SSE:", err);
       }
+
+      setUpdatesInAiAbstract((prev) => prev - 1);
     });
 
     return () => es.close();
@@ -105,7 +100,6 @@ const Search = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Limpa resultados anteriores
         setSearchResults({
           hits: 0,
           pages: 0,
@@ -114,37 +108,23 @@ const Search = () => {
         });
 
         setProcessingRequest(true);
-        setAiAbstract({}); // Limpa o resumo anterior
-        
-        // Gera um novo ID único para esta solicitação
-        const requestId = Date.now().toString();
-        searchRequestIdRef.current = requestId;
-        
-        // Adicionar o requestId ao formData antes de enviar a pesquisa
-        const searchData = { ...formData, requestId };
-        const response = await search(searchData);
-        
-        // Verifica se esta ainda é a solicitação mais recente antes de atualizar
-        if (requestId === searchRequestIdRef.current) {
-          setSearchResults(response);
-        }
+        setAiAbstract({});
+        const response = await search(formData);
+        setSearchResults(response);
       } catch (error) {
         console.error("Erro ao buscar resultados:", error);
       } finally {
         setProcessingRequest(false);
       }
     };
-    
+    setUpdatesInAiAbstract((prev) => prev + 1);
     fetchData();
     navigate(`/search?q=${formData.search}`);
-  }, [formData, search, navigate]);
+  }, [formData]);
 
   useEffect(() => {
-    const handleNewIARequest = (requestId) => {
-      // Atualiza apenas se for um requestId válido
-      if (requestId) {
-        searchRequestIdRef.current = requestId;
-      }
+    const handleNewIARequest = () => {
+      setUpdatesInAiAbstract((prev) => prev + 1);
     };
 
     emitter.on("new-ai-request", handleNewIARequest);
@@ -337,7 +317,7 @@ const Search = () => {
               processingRequest={processingRequest}
               aiAbstract={aiAbstract}
               searchResult={searchResult.results}
-              currentRequestId={searchRequestIdRef.current}
+              updatesInAiAbstract={updatesInAiAbstract}
             />
             <PageSelect
               setFormData={setFormData}

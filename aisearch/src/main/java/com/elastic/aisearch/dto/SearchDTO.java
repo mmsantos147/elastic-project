@@ -10,5 +10,5 @@ public record SearchDTO(
     Integer maxReadTime,
     String searchFor,
     String minDateTime,
-    Integer requestId
+    String requestId
 ) {}

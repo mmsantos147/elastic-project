@@ -7,7 +7,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.elastic.aisearch.dto.AIAbstractDTO;
+import com.elastic.aisearch.dto.Messages.FailMessageDTO;
+import com.elastic.aisearch.parser.JsonParser;
 import com.elastic.aisearch.security.UserSession;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +24,7 @@ public class ChatGptService {
 
     private final WebClient openAiWebClient;
     private final StreamService streamService;
+    private final JsonParser jsonParser;
 
     private Mono<String> processResume(String searchResults, String language) {
         Map<String, Object> requestBody = Map.of(
@@ -67,9 +72,20 @@ public class ChatGptService {
         String streamId = session.getStreamId();
         String top3results = session.getTop3Results();
         String language = session.getLanguage();
+        String requestId = session.getLastRequestId();
         CompletableFuture.runAsync(() -> {
             String aiResume = processResume(top3results, language).block();
-            streamService.sendAiAbstractToUser(streamId, aiResume);
+            AIAbstractDTO aiAbstractDTO;
+
+            try {
+                aiAbstractDTO = jsonParser.aiAbstractParser(aiResume, requestId);
+                streamService.sendAiAbstractToUser(streamId, aiAbstractDTO);
+            } catch (JsonProcessingException exception) {
+                streamService.sendAiAbstractToUser(streamId, new FailMessageDTO("ai_abstract_error"));
+            }
+            
+            
+            
         }).exceptionally(ex -> {
             log.info("Um erro inesperado aconteceu: " + ex.getMessage());
             return null;

@@ -23,4 +23,5 @@ public class UserSession {
     private String language = "pt";
 
     private String top3Results = "";
+    private String lastRequestId = ""; 
 }

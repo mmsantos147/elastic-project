@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import com.elastic.aisearch.dto.AIAbstractDTO;
+
 @Service
 public class StreamService {
     private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
@@ -37,13 +39,13 @@ public class StreamService {
         return emitter;
     }
 
-    public void sendAiAbstractToUser(String streamId, Object data) {
+    public void sendAiAbstractToUser(String streamId, Object abstractDTO) {
         SseEmitter emitter = emitters.get(streamId);
         if (emitter != null) {
             try {
                 emitter.send(SseEmitter.event()
                         .name("AiAbstract")
-                        .data(data));
+                        .data(abstractDTO));
             } catch (IOException e) {
                 emitters.remove(streamId);
             }
