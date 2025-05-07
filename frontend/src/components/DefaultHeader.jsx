@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Layout, Button, Space, Col, Drawer, Menu } from "antd";
+import { Layout, Button, Space, Col, Drawer, Menu, Row } from "antd";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -8,8 +8,33 @@ import { MenuOutlined } from "@ant-design/icons";
 import { useAuthService } from "../api/Authorization.api";
 import { FaCircleUser } from "react-icons/fa6";
 import { LoggedUserMenu } from "./LoggedUserMenu";
+import styled from "styled-components";
+import COLORS from "../colors";
+import { IoLogOut } from "react-icons/io5";
+import { FaStar, FaTrash } from "react-icons/fa";
 
 const { Header } = Layout;
+
+const MenuItem = styled(Row)`
+  padding: 15px;
+  background-color: rgb(24, 24, 24);
+  margin-top: 10px;
+  color: ${COLORS.white};
+  text-decoration: none;
+`;
+
+const LinkNoUnderline = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
+
+const MenuItemTop = styled(MenuItem)`
+  border-radius: 16px 16px 0 0;
+`;
+
+const MenuItemBottom = styled(MenuItem)`
+  border-radius: 0 0 16px 16px;
+`;
 
 const DefaultHeader = () => {
   const { t } = useTranslation();
@@ -48,7 +73,7 @@ const DefaultHeader = () => {
       }
     };
 
-    verifyUser() 
+    verifyUser();
   }, []);
 
   const toggleMobileMenu = () => {
@@ -57,24 +82,7 @@ const DefaultHeader = () => {
 
   const mobileMenuContent = (
     <>
-      <div className="p-4">
-        <Link to="/login">
-          <Button
-            type="primary"
-            style={{
-              padding: "18px",
-              borderRadius: "999px",
-              boxShadow: "none",
-              width: "100%",
-              marginBottom: "30px",
-            }}
-          >
-            <b>{t("make_login")}</b>
-          </Button>
-        </Link>
-      </div>
       <div
-        className="p-4"
         style={{
           display: "flex",
           alignItems: "center",
@@ -84,6 +92,42 @@ const DefaultHeader = () => {
         <WeatherReport />
         <LanguageSelector />
       </div>
+      {isLogged ? (
+        <div style={{ marginTop: "20px" }}>
+          <Row align="center" style={{ marginTop: "20px" }}>
+            <FaCircleUser style={{ color: "white", marginTop: 8 }} size={100} />
+          </Row>
+          <Row align="center" style={{ marginTop: "20px", fontSize: "30px" }}>
+            Olá, {username}!
+          </Row>
+          <MenuItemTop>
+            <FaStar style={{ marginRight: "10px" }} /> Favoritos
+          </MenuItemTop>
+          <MenuItem>
+            <FaTrash style={{ marginRight: "10px" }} /> Limpar histórico
+          </MenuItem>
+          <MenuItemBottom>
+            <IoLogOut style={{ marginRight: "10px" }} /> Sair
+          </MenuItemBottom>
+        </div>
+      ) : (
+        <div style={{ marginTop: "20px" }}>
+          <Link to="/login">
+            <Button
+              type="primary"
+              style={{
+                padding: "18px",
+                borderRadius: "999px",
+                boxShadow: "none",
+                width: "100%",
+                marginBottom: "30px",
+              }}
+            >
+              <b>{t("make_login")}</b>
+            </Button>
+          </Link>
+        </div>
+      )}
     </>
   );
 
@@ -125,7 +169,7 @@ const DefaultHeader = () => {
 
               <LoggedUserMenu
                 visible={menuOpen}
-                username="carlos"
+                username={username}
                 ref={menuRef}
                 onClose={() => setMenuOpen(false)}
               />

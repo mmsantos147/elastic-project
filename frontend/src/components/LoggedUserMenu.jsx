@@ -92,7 +92,7 @@ export const LoggedUserMenu = forwardRef(({ visible, username, onClose }, ref) =
 
       <LinkNoUnderline to="/logout">
         <MenuItemBottom>
-          <IoLogOut style={{ marginRight: "10px" }} /> Deslogar
+          <IoLogOut style={{ marginRight: "10px" }} /> Sair
         </MenuItemBottom>
       </LinkNoUnderline>
     </div>,
