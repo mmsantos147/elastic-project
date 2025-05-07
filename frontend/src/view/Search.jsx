@@ -67,6 +67,12 @@ const Search = () => {
   const [logged, setLogged] = useState(false);
   const [userData, setUserData] = useState({});
 
+  useEffect(() => {
+    if (initialSearch != formData.search) {
+      setFormData(prev => ({...prev, search: initialSearch}))
+    } 
+  }, [initialSearch])
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -113,6 +119,7 @@ const Search = () => {
     };
     setUpdatesInAiAbstract((prev) => prev + 1);
     fetchData();
+    navigate(`/search?q=${formData.search}`);
   }, [formData]);
 
   useEffect(() => {
