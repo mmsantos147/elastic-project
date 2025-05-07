@@ -22,6 +22,7 @@ import emitter from "../eventBus";
 import { IoPersonSharp } from "react-icons/io5";
 import { MenuOutlined } from "@ant-design/icons";
 import { useAuthService } from "../api/Authorization.api";
+import { DidYouMean } from "../components/search/DidYouMean";
 
 const { Content } = Layout;
 const { useBreakpoint } = Grid;
@@ -41,7 +42,7 @@ const Search = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const screens = useBreakpoint();
-  
+
   const isMobile = !screens.md;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toolsVisible, setToolsVisible] = useState(false);
@@ -145,19 +146,26 @@ const Search = () => {
         <Link to="/login">
           <Button
             type="primary"
-            style={{ 
-              padding: "18px", 
-              borderRadius: "999px", 
+            style={{
+              padding: "18px",
+              borderRadius: "999px",
               boxShadow: "none",
               width: "100%",
-              marginBottom: "30px"
+              marginBottom: "30px",
             }}
           >
             <b>{t("make_login")}</b>
           </Button>
         </Link>
       </div>
-      <div className="p-4" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div
+        className="p-4"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <WeatherReport />
         <LanguageSelector />
       </div>
@@ -182,9 +190,12 @@ const Search = () => {
           }}
         >
           <Link to="/">
-            <UAISearch logoWidth={isMobile ? "100px" : "150px"} style={{ margin: isMobile ? "0" : "12px 0 20px 0" }} />
+            <UAISearch
+              logoWidth={isMobile ? "100px" : "150px"}
+              style={{ margin: isMobile ? "0" : "12px 0 20px 0" }}
+            />
           </Link>
-          
+
           {isMobile && (
             <Button
               icon={<MenuOutlined />}
@@ -193,14 +204,14 @@ const Search = () => {
             />
           )}
         </Col>
-        
+
         <Col
           xs={24}
           sm={24}
           md={10}
           style={{
             display: "flex",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <div
@@ -220,7 +231,7 @@ const Search = () => {
             </div>
           </div>
         </Col>
-        
+
         {!isMobile && (
           <>
             <Col flex="auto" />
@@ -288,6 +299,9 @@ const Search = () => {
           maxWidth: isMobile ? "100%" : "950px",
         }}
       >
+        <DidYouMean
+          suggestions={searchResult.suggestions || []}
+        />
         {(Array.isArray(searchResult?.results) &&
           searchResult.results.length > 0) ||
         processingRequest ? (

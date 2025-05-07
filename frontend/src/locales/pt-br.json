@@ -76,5 +76,6 @@
     "any_date": "Qualquer data",
     "any_time": "Qualquer tempo",
     "unexpected_error": "Um erro desconhecido ocorreu. Por favor, tente novamente mais tarde!",
-    "filters": "Filtros"
+    "filters": "Filtros",
+    "did_you_mean": "Você quis dizer "
 }
