@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import UAISearch from "../components/UAISearch";
 import SearchBar from "../components/search/SearchBar";
 import styled from "styled-components";
@@ -23,6 +23,9 @@ import { IoPersonSharp } from "react-icons/io5";
 import { MenuOutlined } from "@ant-design/icons";
 import { useAuthService } from "../api/Authorization.api";
 import { DidYouMean } from "../components/search/DidYouMean";
+import { LoggedUserMenuMobile } from "../components/LoggedUserMenuMobile";
+import { LoggedUserMenu } from "../components/LoggedUserMenu";
+import { FaCircleUser } from "react-icons/fa6";
 
 const { Content } = Layout;
 const { useBreakpoint } = Grid;
@@ -65,14 +68,20 @@ const Search = () => {
     minDateTime: "",
   });
   const [currentAiAbstract, setCurrentAiAbstract] = useState("");
-  const [logged, setLogged] = useState(false);
   const [userData, setUserData] = useState({});
+
+  const [isLogged, setIsLogged] = useState(false);
+  const [username, setUsername] = useState();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const userIconRef = useRef(null);
+  const menuRef = useRef(null);
 
   useEffect(() => {
     if (initialSearch != formData.search) {
-      setFormData(prev => ({...prev, search: initialSearch}))
-    } 
-  }, [initialSearch])
+      setFormData((prev) => ({ ...prev, search: initialSearch }));
+    }
+  }, [initialSearch]);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -92,7 +101,6 @@ const Search = () => {
         message.error("Um erro aconteceu com a inteligência artificial!");
         console.error("Erro parseando SSE:", err);
       }
-
     });
 
     return () => es.close();
@@ -106,7 +114,7 @@ const Search = () => {
           pages: 0,
           timeTaken: 0.0,
           results: [],
-          requestId: ""
+          requestId: "",
         });
 
         setProcessingRequest(true);
@@ -134,52 +142,20 @@ const Search = () => {
   }, []);
 
   useEffect(() => {
-    const verifySession = async () => {
-      const response = await verify();
-      if (response.logged) {
-        setUserData((prev) => ({ ...prev, username: response.username }));
+    const verifyUser = async () => {
+      const data = await verify();
+
+      if (data.logged) {
+        setIsLogged(data.logged);
+        setUsername(data.username);
       }
-      setLogged(response.logged);
     };
 
-    verifySession();
+    verifyUser();
   }, []);
-
   const setSearchValue = (value) => {
     setFormData((prev) => ({ ...prev, search: value }));
   };
-
-  const mobileMenuContent = (
-    <>
-      <div className="p-4">
-        <Link to="/login">
-          <Button
-            type="primary"
-            style={{
-              padding: "18px",
-              borderRadius: "999px",
-              boxShadow: "none",
-              width: "100%",
-              marginBottom: "30px",
-            }}
-          >
-            <b>{t("make_login")}</b>
-          </Button>
-        </Link>
-      </div>
-      <div
-        className="p-4"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <WeatherReport />
-        <LanguageSelector />
-      </div>
-    </>
-  );
 
   return (
     <>
@@ -248,20 +224,28 @@ const Search = () => {
               <Space size="large">
                 <WeatherReport />
                 <LanguageSelector />
-                {logged ? (
-                  <div
-                    style={{
-                      color: "black",
-                      backgroundColor: COLORS.white,
-                      padding: "10px",
-                      borderRadius: "30px",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <IoPersonSharp size={20} />
-                  </div>
+                {isLogged ? (
+                  <>
+                    <div
+                      ref={userIconRef}
+                      style={{
+                        padding: "10px",
+                        cursor: "pointer",
+                        alignContent: "center",
+                        display: "flex",
+                      }}
+                      onClick={() => setMenuOpen(!menuOpen)}
+                    >
+                      <FaCircleUser style={{ color: "white" }} size={30} />
+                    </div>
+
+                    <LoggedUserMenu
+                      visible={menuOpen}
+                      username={username}
+                      ref={menuRef}
+                      onClose={() => setMenuOpen(false)}
+                    />
+                  </>
                 ) : (
                   <Link to="/login">
                     <Button
@@ -291,7 +275,7 @@ const Search = () => {
           open={mobileMenuOpen}
           width={250}
         >
-          {mobileMenuContent}
+          <LoggedUserMenuMobile username={username} isLogged={isLogged} />
         </Drawer>
       )}
 
@@ -308,9 +292,7 @@ const Search = () => {
           maxWidth: isMobile ? "100%" : "950px",
         }}
       >
-        <DidYouMean
-          suggestions={searchResult.suggestions || []}
-        />
+        <DidYouMean suggestions={searchResult.suggestions || []} />
         {(Array.isArray(searchResult?.results) &&
           searchResult.results.length > 0) ||
         processingRequest ? (

@@ -12,6 +12,7 @@ import styled from "styled-components";
 import COLORS from "../colors";
 import { IoLogOut } from "react-icons/io5";
 import { FaStar, FaTrash } from "react-icons/fa";
+import { LoggedUserMenuMobile } from "./LoggedUserMenuMobile";
 
 const { Header } = Layout;
 
@@ -79,57 +80,6 @@ const DefaultHeader = () => {
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
-
-  const mobileMenuContent = (
-    <>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <WeatherReport />
-        <LanguageSelector />
-      </div>
-      {isLogged ? (
-        <div style={{ marginTop: "20px" }}>
-          <Row align="center" style={{ marginTop: "20px" }}>
-            <FaCircleUser style={{ color: "white", marginTop: 8 }} size={100} />
-          </Row>
-          <Row align="center" style={{ marginTop: "20px", fontSize: "30px" }}>
-            Olá, {username}!
-          </Row>
-          <MenuItemTop>
-            <FaStar style={{ marginRight: "10px" }} /> Favoritos
-          </MenuItemTop>
-          <MenuItem>
-            <FaTrash style={{ marginRight: "10px" }} /> Limpar histórico
-          </MenuItem>
-          <MenuItemBottom>
-            <IoLogOut style={{ marginRight: "10px" }} /> Sair
-          </MenuItemBottom>
-        </div>
-      ) : (
-        <div style={{ marginTop: "20px" }}>
-          <Link to="/login">
-            <Button
-              type="primary"
-              style={{
-                padding: "18px",
-                borderRadius: "999px",
-                boxShadow: "none",
-                width: "100%",
-                marginBottom: "30px",
-              }}
-            >
-              <b>{t("make_login")}</b>
-            </Button>
-          </Link>
-        </div>
-      )}
-    </>
-  );
 
   return (
     <Header
@@ -206,7 +156,7 @@ const DefaultHeader = () => {
             open={mobileMenuOpen}
             width={250}
           >
-            {mobileMenuContent}
+            <LoggedUserMenuMobile username={username} logged={isLogged}/>
           </Drawer>
         </>
       )}
