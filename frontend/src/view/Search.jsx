@@ -68,7 +68,6 @@ const Search = () => {
     minDateTime: "",
   });
   const [currentAiAbstract, setCurrentAiAbstract] = useState("");
-  const [userData, setUserData] = useState({});
 
   const [isLogged, setIsLogged] = useState(false);
   const [username, setUsername] = useState();
@@ -244,6 +243,7 @@ const Search = () => {
                       username={username}
                       ref={menuRef}
                       onClose={() => setMenuOpen(false)}
+                      topDistanceAdd={"90px"}
                     />
                   </>
                 ) : (

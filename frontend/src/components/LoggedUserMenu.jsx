@@ -35,7 +35,7 @@ const MenuItemBottom = styled(MenuItem)`
   border-radius: 0 0 16px 16px;
 `;
 
-export const LoggedUserMenu = forwardRef(({ visible, username, onClose }, ref) => {
+export const LoggedUserMenu = forwardRef(({ visible, username, onClose, topDistanceAdd }, ref) => {
   useEffect(() => {
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
@@ -56,7 +56,7 @@ export const LoggedUserMenu = forwardRef(({ visible, username, onClose }, ref) =
       ref={ref}
       style={{
         position: "fixed",
-        top: "55px",
+        top: topDistanceAdd || "55px",
         right: "10px",
         backgroundColor: "rgb(23, 23, 23)",
         zIndex: 9999999,
