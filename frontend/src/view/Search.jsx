@@ -227,7 +227,7 @@ const Search = () => {
             <StyledSearchBar
               setSearchValue={setSearchValue}
               onEnterEvent={setSearchValue}
-              initialSearch={initialSearch}
+              initialSearch={formData.search}
             />
             <div style={{ marginTop: isMobile ? "10px" : "20px" }}>
               <NavigationBar
