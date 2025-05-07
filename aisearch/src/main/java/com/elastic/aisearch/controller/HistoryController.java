@@ -38,7 +38,7 @@ public class HistoryController {
     @GetMapping
     public List<HistoryDTO> getHistory() {
         List<HistoryDTO> histories = new ArrayList<>();
-        List<History> historyList = new ArrayList<>();
+        List<History> historyList;
 
         if (!Objects.isNull(userSession.getUserId())) {
             historyList = historyService.getRecentHistory(userSession.getUserId());
