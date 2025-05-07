@@ -9,7 +9,7 @@ const SearchResults = ({ processingRequest, aiAbstract, searchResult, currentReq
   const isValidAiAbstract = 
     aiAbstract && 
     Object.keys(aiAbstract).length > 0 && 
-    (!aiAbstract.requestId || aiAbstract.requestId === currentRequestId);
+    aiAbstract.requestId === currentRequestId;
 
   return (
     <>

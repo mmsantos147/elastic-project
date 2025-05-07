@@ -64,7 +64,7 @@ const Search = () => {
     searchFor: "",
     minDateTime: "",
   });
-  const [currentAiAbstract, setCurrentAiAbstract] = useState(0);
+  const [currentAiAbstract, setCurrentAiAbstract] = useState("");
   const [logged, setLogged] = useState(false);
   const [userData, setUserData] = useState({});
 
