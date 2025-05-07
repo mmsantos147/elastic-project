@@ -35,7 +35,7 @@ const Login = () => {
   }, []);
 
   const onFinish = async (values) => {
-    const data = login(values);
+    const data = await login(values);
 
     if (data.success) 
       navigate("/")
