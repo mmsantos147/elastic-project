@@ -4,7 +4,7 @@ import UAISearch from "../components/UAISearch";
 import COLORS from "../colors";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthService } from "../api/Authorization.api";
 import { useForm } from "antd/es/form/Form";
 import { SecurityWarning } from "../components/SecurityWarning";
@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 const { useBreakpoint } = Grid;
 
 const Register = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { register } = useAuthService();
   const [form] = useForm();
@@ -34,8 +35,9 @@ const Register = () => {
   }, []);
 
   const onFinish = async (values) => {
-    await register(values);
-    console.log("Dados enviados:", values);
+    const data = await register(values);
+    if (data.success)
+      navigate("/login");
   };
 
   return (

@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "antd/es/form/Form";
 import { useAuthService } from "../api/Authorization.api";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const { useBreakpoint } = Grid;
 
@@ -18,6 +19,7 @@ const Login = () => {
   const [loginForm] = useForm();
   const screens = useBreakpoint();
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -35,6 +37,8 @@ const Login = () => {
   const onFinish = async (values) => {
     const data = login(values);
 
+    if (data.success) 
+      navigate("/")
   };
 
   return (
