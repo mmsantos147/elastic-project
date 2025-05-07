@@ -9,5 +9,6 @@ public record SearchDTO(
     Filters orderBy,
     Integer maxReadTime,
     String searchFor,
-    String minDateTime
+    String minDateTime,
+    Integer requestId
 ) {}

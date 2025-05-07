@@ -198,7 +198,8 @@ public class ElasticsearchService {
                 Math.toIntExact(hits/searchDTO.resultsPerPage())+1,
                 (float) searchResponse.getTook().getSecondsFrac(),
                 suggestions,
-                results
+                results,
+                searchDTO.requestId()
         );
     }
 

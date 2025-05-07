@@ -7,5 +7,6 @@ public record SearchResponseDTO(
     Integer pages,
     Float timeTaken,
     List<SuggestionDTO> suggestions,
-    List<SearchResultDTO> results
+    List<SearchResultDTO> results,
+    Integer requestId
 ) {}

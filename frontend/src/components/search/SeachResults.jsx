@@ -5,17 +5,22 @@ import SearchIndexSkeleton from "../results/SearchIndexSkeleton";
 import SearchIndex from "../results/SearchIndex";
 import COLORS from "../../colors";
 
-const SearchResults = ({processingRequest, aiAbstract, searchResult, updatesInAiAbstract}) => {
+const SearchResults = ({ processingRequest, aiAbstract, searchResult, currentRequestId }) => {
+  const isValidAiAbstract = 
+    aiAbstract && 
+    Object.keys(aiAbstract).length > 0 && 
+    (!aiAbstract.requestId || aiAbstract.requestId === currentRequestId);
+
   return (
     <>
-      {(!processingRequest && Object.keys(aiAbstract).length > 0) && updatesInAiAbstract == 0 ? (
+      {(!processingRequest && isValidAiAbstract) ? (
         <IAVision aiAbstract={aiAbstract} style={{ marginBottom: "50px" }} />
       ) : (
         <IAVisionAbstractSkeleton style={{ marginBottom: "50px" }} />
       )}
-
+      
       <Divider style={{ borderColor: COLORS.gray }} />
-
+      
       {searchResult.length === 0 && processingRequest ? (
         <>
           <SearchIndexSkeleton />
@@ -26,6 +31,7 @@ const SearchResults = ({processingRequest, aiAbstract, searchResult, updatesInAi
         <Row>
           {searchResult.map((result) => (
             <SearchIndex
+              key={result.id}
               id={result.id}
               url={result.url}
               title={result.title}
