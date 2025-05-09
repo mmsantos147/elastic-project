@@ -83,4 +83,10 @@ public class UserController {
                 Boolean.FALSE
         ));
     }
+
+    @PostMapping(path = "/logout")
+    public ResponseEntity<?> logoutUser(HttpSession httpSession) {
+        httpSession.invalidate();
+        return ResponseEntity.ok().body(new SuccessMessageDTO("success_logout"));
+    }
 }
