@@ -6,8 +6,8 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const { verify } = useAuthService();
 
-  const [isLogged, setIsLogged] = useState(true);
-  const [username, setUsername] = useState("carlinhos");
+  const [isLogged, setIsLogged] = useState(false);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const verifyUser = async () => {

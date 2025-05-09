@@ -20,10 +20,6 @@ import SearchHeader from "../components/SearchHeader";
 const { Content } = Layout;
 const { useBreakpoint } = Grid;
 
-const StyledSearchBar = styled(SearchBar)`
-  line-height: 0px;
-`;
-
 const Search = () => {
   const { search } = useSearchService();
   const { verify } = useAuthService();
