@@ -9,6 +9,12 @@ app.use(bodyParser.json());
 app.post("/v1/search/suggestions", (req, res) => {
   const { query } = req.body;
 
+ if (query && query.trim().length > 4) {
+    const suggestions = [
+      ];
+      return res.json({ suggestions });
+ }
+
   if (query && query.trim().length > 0) {
     const suggestions = [
       "<i>De dicto</i> and <i>de re</i>",
