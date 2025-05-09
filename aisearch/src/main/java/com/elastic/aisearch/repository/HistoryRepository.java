@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface HistoryRepository extends JpaRepository<History, Integer> {
-    @Query("select s from History s where s.user_id = ?1 ORDER BY s.id desc")
+    @Query("select s from History s where s.user = ?1 ORDER BY s.id desc")
     List<History> findMostRecentHistory(Integer userId);
 
     @Query("delete from History s where s.user =?1")
