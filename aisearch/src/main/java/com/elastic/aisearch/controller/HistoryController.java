@@ -1,6 +1,7 @@
 package com.elastic.aisearch.controller;
 
 import com.elastic.aisearch.dto.HistoryDTO;
+import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.entity.History;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.HistoryService;
@@ -12,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,8 +28,9 @@ public class HistoryController {
     private final UserSession userSession;
 
     @DeleteMapping(path = "/all")
-    public void deleteAllById() {
+    public ResponseEntity<?> deleteAllById() {
         historyService.deleteAllHistory(userSession.getUserId());
+        return ResponseEntity.ok().body(new SuccessMessageDTO("success_delete"));
     }
 
     @DeleteMapping(path = "/{id}")
