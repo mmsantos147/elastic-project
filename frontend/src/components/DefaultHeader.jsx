@@ -69,6 +69,7 @@ const DefaultHeader = () => {
       const data = await verify();
 
       if (data.logged) {
+        console.log("DEBUG: ", data.logged)
         setIsLogged(data.logged);
         setUsername(data.username);
       }
