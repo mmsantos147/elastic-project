@@ -10,6 +10,7 @@ import COLORS from "../colors";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { useAuthService } from "../api/Authorization.api";
+import { useHistoryService } from "../api/History.api";
 
 const MenuItem = styled(Row)`
   padding: 15px;
@@ -40,6 +41,7 @@ const MenuItemBottom = styled(MenuItem)`
 export const LoggedUserMenu = forwardRef(({ visible, username, onClose, topDistanceAdd }, ref) => {
     const { t } = useTranslation();
     const { logout } = useAuthService();
+    const { deleteAllHistory } = useHistoryService();
   
     useEffect(() => {
     function handleClickOutside(event) {

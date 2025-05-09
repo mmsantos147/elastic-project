@@ -81,5 +81,7 @@
   "hello": "안녕하세요",
   "favorite_searches": "좋아하는 검색",
   "clean_history": "역사적인",
-  "logout": "외출합니다"
+  "logout": "외출합니다",
+  "success_logout": "성공적인!",
+  "success_delete": "전체 역사는 성공적으로 삭제되었습니다!"
 }

@@ -81,5 +81,7 @@
   "hello": "こんにちは",
   "favorite_searches": "お気に入りの検索",
   "clean_history": "歴史的",
-  "logout": "外出する"
+  "logout": "外出する",
+  "success_logout": "成功！",
+  "success_delete": "全歴史が正常に削除されました！"
 }

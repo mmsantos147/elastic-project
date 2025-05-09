@@ -81,5 +81,7 @@
   "hello": "Merhaba",
   "favorite_searches": "Favori Aramalar",
   "clean_history": "Tarihsel",
-  "logout": "Dışarı çıkmak"
+  "logout": "Dışarı çıkmak",
+  "success_logout": "Başarılı!",
+  "success_delete": "Tüm tarih başarıyla silindi!"
 }

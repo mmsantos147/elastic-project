@@ -81,5 +81,7 @@
   "hello": "مرحبًا",
   "favorite_searches": "عمليات البحث المفضلة",
   "clean_history": "تاريخية",
-  "logout": "للخروج"
+  "logout": "للخروج",
+  "success_logout": "ناجح!",
+  "success_delete": "تم حذف التاريخ كله بنجاح!"
 }

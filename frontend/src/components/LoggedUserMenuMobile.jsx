@@ -29,6 +29,7 @@ const MenuItemBottom = styled(MenuItem)`
 export const LoggedUserMenuMobile = ({isLogged, username}) => {
     const { t } = useTranslation();
     const { logout } = useAuthService();
+    const { deleteAllHistory } = useHistoryService();
 
     return (
         <>
@@ -53,7 +54,7 @@ export const LoggedUserMenuMobile = ({isLogged, username}) => {
               <MenuItemTop>
                 <FaStar style={{ marginRight: "10px" }} /> {t("favorite_searches")}
               </MenuItemTop>
-              <MenuItem>
+              <MenuItem onClick={async () => {await deleteAllHistory();}}>
                 <FaTrash style={{ marginRight: "10px" }} /> {t("clean_history")}
               </MenuItem>
               <MenuItemBottom onClick={async () => {await logout(); window.location.reload();}}>

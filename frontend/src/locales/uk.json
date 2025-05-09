@@ -81,5 +81,7 @@
   "hello": "Привіт",
   "favorite_searches": "Улюблені пошуки",
   "clean_history": "Історичний",
-  "logout": "Вийти"
+  "logout": "Вийти",
+  "success_logout": "Успішне!",
+  "success_delete": "Вся історія була успішно видалена!"
 }

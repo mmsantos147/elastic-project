@@ -81,5 +81,7 @@
   "hello": "Xin chào",
   "favorite_searches": "Tìm kiếm yêu thích",
   "clean_history": "Lịch sử",
-  "logout": "Đi ra ngoài"
+  "logout": "Đi ra ngoài",
+  "success_logout": "Thành công!",
+  "success_delete": "Toàn bộ lịch sử đã bị xóa thành công!"
 }

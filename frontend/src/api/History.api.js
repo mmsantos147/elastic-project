@@ -7,6 +7,7 @@ export const useHistoryService = () => {
 
   const fetchHistory = () => makeRequest('get', '/history');            
   const deleteItemFromHistory = id => makeRequest('delete', `/history/${id}`);  
+  const deleteAllHistory = () => makeRequest('delete', '/history/all');
 
-  return { fetchHistory, deleteItemFromHistory };
+  return { fetchHistory, deleteItemFromHistory, deleteAllHistory };
 };

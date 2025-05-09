@@ -81,5 +81,7 @@
   "hello": "Hej",
   "favorite_searches": "Favoritsökningar",
   "clean_history": "Historisk",
-  "logout": "Att gå ut"
+  "logout": "Att gå ut",
+  "success_logout": "Framgångsrik!",
+  "success_delete": "Hela historien raderades framgångsrikt!"
 }

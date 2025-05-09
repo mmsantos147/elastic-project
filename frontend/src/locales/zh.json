@@ -81,5 +81,7 @@
   "hello": "你好",
   "favorite_searches": "最喜欢的搜索",
   "clean_history": "历史",
-  "logout": "出去"
+  "logout": "出去",
+  "success_logout": "成功的！",
+  "success_delete": "整个历史已成功删除！"
 }

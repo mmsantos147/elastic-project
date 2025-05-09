@@ -81,5 +81,7 @@
   "hello": "Bonjour",
   "favorite_searches": "Recherches préférées",
   "clean_history": "Historique",
-  "logout": "Pour sortir"
+  "logout": "Pour sortir",
+  "success_logout": "Réussi!",
+  "success_delete": "Toute l'histoire a été supprimée avec succès!"
 }

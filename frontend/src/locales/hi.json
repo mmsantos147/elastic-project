@@ -81,5 +81,7 @@
   "hello": "नमस्ते",
   "favorite_searches": "पसंदीदा खोजें",
   "clean_history": "ऐतिहासिक",
-  "logout": "बाहर जाना"
+  "logout": "बाहर जाना",
+  "success_logout": "सफल!",
+  "success_delete": "पूरे इतिहास को सफलतापूर्वक हटा दिया गया था!"
 }

@@ -81,5 +81,7 @@
   "hello": "Привет",
   "favorite_searches": "Любимые поиски",
   "clean_history": "Исторический",
-  "logout": "Выходить на улицу"
+  "logout": "Выходить на улицу",
+  "success_logout": "Успешный!",
+  "success_delete": "Вся история была успешно удалена!"
 }

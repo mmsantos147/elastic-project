@@ -81,5 +81,7 @@
   "hello": "Hallo",
   "favorite_searches": "Favoriete zoekopdrachten",
   "clean_history": "Historisch",
-  "logout": "Om uit te gaan"
+  "logout": "Om uit te gaan",
+  "success_logout": "Succesvol!",
+  "success_delete": "De hele geschiedenis is met succes verwijderd!"
 }
