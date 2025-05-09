@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import UAISearch from "../components/UAISearch";
 import SearchBar from "../components/search/SearchBar";
 import styled from "styled-components";
 import Layout from "antd/es/layout/layout";
-import { Col, Row, Space, Button, message, Drawer, Grid } from "antd";
+import { Col, Row, message, Grid } from "antd";
 import NavigationBar from "../components/NavigationBar";
 import COLORS from "../colors";
 import FilterBar from "../components/FilterBar";
@@ -13,19 +13,13 @@ import SearchResults from "../components/search/SeachResults";
 import PageSelect from "../components/search/PageSelect";
 import EmptyResults from "../components/search/EmptyResults";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
-import LanguageSelector from "../components/LanguageSelector";
-import WeatherReport from "../components/WeatherReport";
 import { useSearchService } from "../api/Search.api";
 import emitter from "../eventBus";
-import { IoPersonSharp } from "react-icons/io5";
-import { MenuOutlined } from "@ant-design/icons";
 import { useAuthService } from "../api/Authorization.api";
 import { DidYouMean } from "../components/search/DidYouMean";
-import { LoggedUserMenuMobile } from "../components/LoggedUserMenuMobile";
-import { LoggedUserMenu } from "../components/LoggedUserMenu";
-import { FaCircleUser } from "react-icons/fa6";
+import { SideInfoMenu } from "../components/menu/SideInfoMenu";
+import { AuthProvider } from "../context/AuthContext";
 
 const { Content } = Layout;
 const { useBreakpoint } = Grid;
@@ -41,13 +35,10 @@ const Search = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const initialSearch = queryParams.get("q") || "";
-  const paramQ = searchParamsReactive.get("q");
   const navigate = useNavigate();
-  const { t } = useTranslation();
   const screens = useBreakpoint();
 
   const isMobile = !screens.md;
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toolsVisible, setToolsVisible] = useState(false);
   const [searchResult, setSearchResults] = useState({
     hits: 0,
@@ -69,12 +60,6 @@ const Search = () => {
   });
   const [currentAiAbstract, setCurrentAiAbstract] = useState("");
 
-  const [isLogged, setIsLogged] = useState(false);
-  const [username, setUsername] = useState();
-
-  const [menuOpen, setMenuOpen] = useState(false);
-  const userIconRef = useRef(null);
-  const menuRef = useRef(null);
 
   useEffect(() => {
     if (initialSearch != formData.search) {
@@ -82,9 +67,6 @@ const Search = () => {
     }
   }, [initialSearch]);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
 
   useEffect(() => {
     const es = new EventSource(`${ROOT_URL}/${API_PREFIX}/stream`);
@@ -159,125 +141,108 @@ const Search = () => {
   return (
     <>
       <Row
+  style={{
+    gap: isMobile ? "10px" : "30px",
+    margin: isMobile ? "15px" : "40px",
+    borderBottom: "1px gray solid",
+    flexDirection: isMobile ? "column" : "row",
+  }}
+>
+  {isMobile ? (
+    <>
+      <Row
         style={{
-          gap: isMobile ? "10px" : "30px",
-          margin: isMobile ? "15px 15px 0px 15px" : "40px 40px 0px 40px",
-          borderBottom: "1px gray solid",
-          flexDirection: isMobile ? "column" : "row",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        <Col
-          style={{
-            display: "flex",
-            justifyContent: isMobile ? "space-between" : "flex-start",
-            width: isMobile ? "100%" : "auto",
-          }}
-        >
+
+        <Col>
           <Link to="/">
             <UAISearch
-              logoWidth={isMobile ? "100px" : "150px"}
-              style={{ margin: isMobile ? "0" : "12px 0 20px 0" }}
+              logoWidth="100px"
+              style={{ margin: "0" }}
             />
           </Link>
-
-          {isMobile && (
-            <Button
-              icon={<MenuOutlined />}
-              onClick={toggleMobileMenu}
-              style={{ border: "none" }}
-            />
-          )}
         </Col>
 
-        <Col
-          xs={24}
-          sm={24}
-          md={10}
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{ width: "100%", display: "flex", flexDirection: "column" }}
-          >
-            <StyledSearchBar
-              setSearchValue={setSearchValue}
-              onEnterEvent={setSearchValue}
-              initialSearch={formData.search}
-            />
-            <div style={{ marginTop: isMobile ? "10px" : "20px" }}>
-              <NavigationBar
-                onClickShowTools={() => {
-                  setToolsVisible(!toolsVisible);
-                }}
-              />
-            </div>
-          </div>
+        <Col>
+          <AuthProvider>
+            <SideInfoMenu />
+          </AuthProvider>
         </Col>
-
-        {!isMobile && (
-          <>
-            <Col flex="auto" />
-            <Col>
-              <Space size="large">
-                <WeatherReport />
-                <LanguageSelector />
-                {isLogged ? (
-                  <>
-                    <div
-                      ref={userIconRef}
-                      style={{
-                        padding: "10px",
-                        cursor: "pointer",
-                        alignContent: "center",
-                        display: "flex",
-                      }}
-                      onClick={() => setMenuOpen(!menuOpen)}
-                    >
-                      <FaCircleUser style={{ color: "white" }} size={30} />
-                    </div>
-
-                    <LoggedUserMenu
-                      visible={menuOpen}
-                      username={username}
-                      ref={menuRef}
-                      onClose={() => setMenuOpen(false)}
-                      topDistanceAdd={"90px"}
-                    />
-                  </>
-                ) : (
-                  <Link to="/login">
-                    <Button
-                      type="primary"
-                      style={{
-                        padding: "18px",
-                        borderRadius: "999px",
-                        boxShadow: "none",
-                      }}
-                    >
-                      <b>{t("make_login")}</b>
-                    </Button>
-                  </Link>
-                )}
-              </Space>
-            </Col>
-          </>
-        )}
       </Row>
 
-      {/* Mobile menu drawer */}
-      {isMobile && (
-        <Drawer
-          title={null}
-          placement="right"
-          onClose={toggleMobileMenu}
-          open={mobileMenuOpen}
-          width={250}
+      <Col style={{ marginTop: "10px" }}>
+        <StyledSearchBar
+          setSearchValue={setSearchValue}
+          onEnterEvent={setSearchValue}
+          initialSearch={formData.search}
+        />
+        <div style={{ marginTop: "10px" }}>
+          <NavigationBar
+            onClickShowTools={() => {
+              setToolsVisible(!toolsVisible);
+            }}
+          />
+        </div>
+      </Col>
+    </>
+  ) : (
+    <>
+      <Col
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+        }}
+      >
+        <Link to="/">
+          <UAISearch
+            logoWidth="150px"
+            style={{ margin: "12px 0 20px 0" }}
+          />
+        </Link>
+      </Col>
+
+      <Col
+        xs={24}
+        sm={24}
+        md={10}
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{ width: "100%", display: "flex", flexDirection: "column" }}
         >
-          <LoggedUserMenuMobile username={username} isLogged={isLogged} />
-        </Drawer>
-      )}
+          <StyledSearchBar
+            setSearchValue={setSearchValue}
+            onEnterEvent={setSearchValue}
+            initialSearch={formData.search}
+          />
+          <div style={{ marginTop: "20px" }}>
+            <NavigationBar
+              onClickShowTools={() => {
+                setToolsVisible(!toolsVisible);
+              }}
+            />
+          </div>
+        </div>
+      </Col>
+
+      <Col flex="auto" />
+
+      <Col>
+        <AuthProvider>
+          <SideInfoMenu />
+        </AuthProvider>
+      </Col>
+    </>
+  )}
+</Row>
 
       {toolsVisible && (
         <FilterBar setFormData={setFormData} searchResult={searchResult} />
