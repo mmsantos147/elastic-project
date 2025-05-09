@@ -69,7 +69,6 @@ const DefaultHeader = () => {
       const data = await verify();
 
       if (data.logged) {
-        console.log("DEBUG: ", data.logged)
         setIsLogged(data.logged);
         setUsername(data.username);
       }
@@ -157,7 +156,7 @@ const DefaultHeader = () => {
             open={mobileMenuOpen}
             width={250}
           >
-            <LoggedUserMenuMobile username={username} logged={isLogged}/>
+            <LoggedUserMenuMobile username={username} isLogged={isLogged}/>
           </Drawer>
         </>
       )}
