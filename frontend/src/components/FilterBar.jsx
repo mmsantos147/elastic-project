@@ -31,7 +31,6 @@ const FilterButton = styled(Button)`
 `;
 
 const DesktopFilters = styled(Row)`
-  margin-top: 13px;
   @media (max-width: 768px) {
     display: none;
   }
