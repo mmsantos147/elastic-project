@@ -24,7 +24,7 @@ const WrongWord = styled.strong`
 `;
 
 export const DidYouMean = ({ suggestions }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const hasAnyOption = suggestions.some((s) => s.option);
   if (!hasAnyOption) return null;
@@ -47,10 +47,11 @@ export const DidYouMean = ({ suggestions }) => {
 
   return (
     <DidYouMeanBox>
+      {i18n.language == 'es' && "¿"}
       {t("did_you_mean")}{" "}
       <SuggestionLink to={`/search?q=${encodeURIComponent(correctedText)}`}>
         {nodes}
-      </SuggestionLink>
+      </SuggestionLink>{" "}
       ?
     </DidYouMeanBox>
   );
