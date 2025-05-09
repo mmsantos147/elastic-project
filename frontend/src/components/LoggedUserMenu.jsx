@@ -93,7 +93,7 @@ export const LoggedUserMenu = forwardRef(({ visible, username, onClose, topDista
         <FaStar style={{ marginRight: "10px" }} /> {t("favorite_searches")}
       </MenuItemTop>
 
-      <MenuItem>
+      <MenuItem onClick={async () => {await deleteAllHistory();}}>
         <FaTrash style={{ marginRight: "10px" }} /> {t("clean_history")}
       </MenuItem>
 
