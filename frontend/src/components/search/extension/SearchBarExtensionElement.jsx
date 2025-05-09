@@ -1,41 +1,43 @@
 import styled from "styled-components";
 import { SearchOutlined } from "@ant-design/icons";
-import COLORS from "../../colors";
+import COLORS from "../../../colors";
 import { useNavigate } from "react-router-dom";
+import { Col } from "antd";
 
-const SuggestionWrapper = styled.div`
+const ElementWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: ${COLORS.white};
   font-size: 16px;
   width: 100%;
-  padding: 8px 20px 15px 20px;
+  padding: 13px 20px 13px 20px;
   background-color: transparent;
   cursor: pointer;
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color:rgb(44, 44, 44); /* ou use uma cor do seu theme, tipo COLORS.darkGray */
+    background-color:rgb(43,43,43);
     border-radius: 5px;
-    }
+}
 `;
 
-const SuggestionContent = styled.div`
+const ElementContent = styled.div`
   display: flex;
   align-items: center;
 `;
 
-const SuggestionElement = ({ query }) => {
+export const SearchBarExtensionElement = ({ query, children }) => {
     const navigate = useNavigate();
     return (
-    <SuggestionWrapper onClick={() => {navigate(`/search?q=${query}`)}}> 
-      <SuggestionContent>
+    <ElementWrapper onClick={() => {navigate(`/search?q=${query}`)}}> 
+      <ElementContent>
         <SearchOutlined style={{ color: COLORS.gray, paddingRight: "15px" }} />
         {query}
-      </SuggestionContent>
-    </SuggestionWrapper>
+      </ElementContent>
+      <ElementContent>
+      {children}
+      </ElementContent>
+    </ElementWrapper>
   );
 };
-
-export default SuggestionElement;

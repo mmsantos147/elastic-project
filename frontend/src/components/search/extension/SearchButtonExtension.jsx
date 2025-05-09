@@ -1,5 +1,5 @@
 import { Button, Col, Row } from "antd";
-import COLORS from "../../colors";
+import COLORS from "../../../colors";
 import { useTranslation } from "react-i18next";
 
 const SearchButtonExtension = () => {

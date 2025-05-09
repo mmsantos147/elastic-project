@@ -7,6 +7,7 @@ import { SideInfoMenu } from "./menu/SideInfoMenu";
 import UAISearch from "./UAISearch";
 import NavigationBar from "./NavigationBar";
 import styled from "styled-components";
+import { SearchBarProvider } from "../context/SearchBarContext";
 
 const StyledSearchBar = styled(SearchBar)`
   line-height: 0px;
@@ -24,11 +25,13 @@ const SearchHeader = ({
   const isMobile = !screens.md;
 
   const SearchBarComponent = (
-    <StyledSearchBar
-      setSearchValue={setSearchValue}
-      onEnterEvent={setSearchValue}
-      initialSearch={formData.search}
-    />
+    <SearchBarProvider>
+      <StyledSearchBar
+        setSearchValue={setSearchValue}
+        onEnterEvent={setSearchValue}
+        initialSearch={formData.search}
+      />
+    </SearchBarProvider>
   );
 
   const NavigationComponent = (

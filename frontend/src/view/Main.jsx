@@ -6,6 +6,7 @@ import DefaultHeader from "../components/DefaultHeader";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { SearchBarProvider } from "../context/SearchBarContext";
 
 const { Content } = Layout;
 
@@ -29,6 +30,8 @@ const SearchContainer = styled.div`
   max-width: 600px;
   padding: 0 20px;
 `;
+
+
 
 const Main = () => {
   const navigate = useNavigate();
@@ -59,6 +62,7 @@ const Main = () => {
 
   return (
     <>
+    
       <DefaultHeader />
       <Content
         style={{
@@ -83,7 +87,9 @@ const Main = () => {
         </div>
         
         <SearchContainer>
-          <MarginBottomSearchBar onEnterEvent={onEnterEvent} setSearchValue={setSearchValue} initialSearch={""} />
+          <SearchBarProvider>
+            <MarginBottomSearchBar onEnterEvent={onEnterEvent} setSearchValue={setSearchValue} initialSearch={""} />          
+          </SearchBarProvider>
           <Space>
             <SearchButton />
           </Space>

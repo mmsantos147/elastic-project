@@ -11,7 +11,6 @@ import COLORS from "./colors";
 import Login from "./view/Login";
 import Register from "./view/Register";
 
-
 const AppContent = () => {
   const { initSession } = useAuthService();
 
@@ -22,6 +21,7 @@ const AppContent = () => {
 
     initializeSession();
   }, []);
+
 
   return (
       <ConfigProvider
