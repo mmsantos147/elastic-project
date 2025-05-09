@@ -6,7 +6,7 @@ import { message, Grid } from "antd";
 import COLORS from "../colors";
 import FilterBar from "../components/FilterBar";
 import { useLocation } from "react-router-dom";
-import { API_PREFIX, ROOT_URL } from "../constants";
+import { API_PREFIX } from "../constants";
 import SearchResults from "../components/search/SeachResults";
 import PageSelect from "../components/search/PageSelect";
 import EmptyResults from "../components/search/EmptyResults";
@@ -58,7 +58,7 @@ const Search = () => {
   }, [initialSearch]);
 
   useEffect(() => {
-    const es = new EventSource(`${ROOT_URL}/${API_PREFIX}/stream`);
+    const es = new EventSource(`/${API_PREFIX}/stream`);
 
     es.addEventListener("AiAbstract", (evt) => {
       try {

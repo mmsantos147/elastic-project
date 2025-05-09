@@ -1,13 +1,13 @@
 import { message } from 'antd';
 import axios from 'axios';
-import { ROOT_URL, API_PREFIX } from '../constants';
+import { API_PREFIX } from '../constants';
 import i18n from '../utils/i18n';
 
 export const useMakeRequest = () => {
   const [messageApi, contextHolder] = message.useMessage();  
 
   const makeRequest = async (method, endpoint, data = null) => {
-    const url = `${ROOT_URL}/${API_PREFIX}${endpoint}`;
+    const url = `/${API_PREFIX}${endpoint}`;
     try {
       const response = await axios({ method, url, data, withCredentials: true }); 
       const payload = response.data || {};
