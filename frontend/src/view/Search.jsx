@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from "react";
-import UAISearch from "../components/UAISearch";
 import SearchBar from "../components/search/SearchBar";
 import styled from "styled-components";
 import Layout from "antd/es/layout/layout";
-import { Col, Row, message, Grid } from "antd";
-import NavigationBar from "../components/NavigationBar";
+import { message, Grid } from "antd";
 import COLORS from "../colors";
 import FilterBar from "../components/FilterBar";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { API_PREFIX, ROOT_URL } from "../constants";
 import SearchResults from "../components/search/SeachResults";
 import PageSelect from "../components/search/PageSelect";
 import EmptyResults from "../components/search/EmptyResults";
 import { useNavigate } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
 import { useSearchService } from "../api/Search.api";
 import emitter from "../eventBus";
 import { useAuthService } from "../api/Authorization.api";
 import { DidYouMean } from "../components/search/DidYouMean";
-import { SideInfoMenu } from "../components/menu/SideInfoMenu";
-import { AuthProvider } from "../context/AuthContext";
 import SearchHeader from "../components/SearchHeader";
 
 const { Content } = Layout;
@@ -32,7 +27,6 @@ const StyledSearchBar = styled(SearchBar)`
 const Search = () => {
   const { search } = useSearchService();
   const { verify } = useAuthService();
-  const [searchParamsReactive] = useSearchParams();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const initialSearch = queryParams.get("q") || "";
