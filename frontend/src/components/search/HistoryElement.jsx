@@ -44,7 +44,7 @@ const HistoryElement = ({ id, query, deleteFromHistory }) => {
         <SearchOutlined style={{ color: COLORS.gray, paddingRight: "15px" }} />
         {query}
       </HistoryContent>
-      <CloseIcon onClick={() => deleteFromHistory(id)} />
+      <CloseIcon onClick={(e) => {e.stopPropagation(); deleteFromHistory(id)}} />
     </HistoryWrapper>
   );
 };
