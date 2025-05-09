@@ -20,6 +20,7 @@ import { useAuthService } from "../api/Authorization.api";
 import { DidYouMean } from "../components/search/DidYouMean";
 import { SideInfoMenu } from "../components/menu/SideInfoMenu";
 import { AuthProvider } from "../context/AuthContext";
+import SearchHeader from "../components/SearchHeader";
 
 const { Content } = Layout;
 const { useBreakpoint } = Grid;
@@ -138,109 +139,7 @@ const Search = () => {
 
   return (
     <>
-      <Row
-        style={{
-          gap: isMobile ? "10px" : "30px",
-          margin: isMobile ? "15px" : "40px",
-          borderBottom: "1px gray solid",
-          flexDirection: isMobile ? "column" : "row",
-        }}
-      >
-        {isMobile ? (
-          <>
-            <Row
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Col>
-                <Link to="/">
-                  <UAISearch logoWidth="100px" style={{ margin: "0" }} />
-                </Link>
-              </Col>
-
-              <Col>
-                <AuthProvider>
-                  <SideInfoMenu />
-                </AuthProvider>
-              </Col>
-            </Row>
-
-            <Col style={{ marginTop: "10px" }}>
-              <StyledSearchBar
-                setSearchValue={setSearchValue}
-                onEnterEvent={setSearchValue}
-                initialSearch={formData.search}
-              />
-              <div style={{ marginTop: "10px" }}>
-                <NavigationBar
-                  onClickShowTools={() => {
-                    setToolsVisible(!toolsVisible);
-                  }}
-                />
-              </div>
-            </Col>
-          </>
-        ) : (
-          <>
-            <Col
-              style={{
-                display: "flex",
-                justifyContent: "flex-start",
-              }}
-            >
-              <Link to="/">
-                <UAISearch
-                  logoWidth="150px"
-                  style={{ margin: "12px 0 20px 0" }}
-                />
-              </Link>
-            </Col>
-
-            <Col
-              xs={24}
-              sm={24}
-              md={10}
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <StyledSearchBar
-                  setSearchValue={setSearchValue}
-                  onEnterEvent={setSearchValue}
-                  initialSearch={formData.search}
-                />
-                <div style={{ marginTop: "20px" }}>
-                  <NavigationBar
-                    onClickShowTools={() => {
-                      setToolsVisible(!toolsVisible);
-                    }}
-                  />
-                </div>
-              </div>
-            </Col>
-
-            <Col flex="auto" />
-
-            <Col>
-              <AuthProvider>
-                <SideInfoMenu />
-              </AuthProvider>
-            </Col>
-          </>
-        )}
-      </Row>
+      <SearchHeader setSearchValue={setSearchValue} formData={formData} toolsVisible={toolsVisible} setToolsVisible={setToolsVisible}/>
 
       {toolsVisible && (
         <FilterBar setFormData={setFormData} searchResult={searchResult} />
