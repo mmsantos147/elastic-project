@@ -10,7 +10,6 @@ const HistoryWrapper = styled.div`
   color: ${COLORS.white};
   font-size: 16px;
   width: 100%;
-  margin-top: 25px;
   padding: 8px 20px 15px 20px;
   background-color: transparent;
   cursor: pointer;
