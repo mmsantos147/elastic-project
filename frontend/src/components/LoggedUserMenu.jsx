@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 const MenuItem = styled(Row)`
   padding: 15px;
   background-color: rgb(31, 31, 31);
-  margin-top: 10px;
+  margin-top: 4px;
   color: ${COLORS.white};
   text-decoration: none;
 

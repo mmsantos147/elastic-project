@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 const MenuItem = styled(Row)`
   padding: 15px;
   background-color: rgb(24, 24, 24);
-  margin-top: 10px;
+  margin-top: 4px;
   color: ${COLORS.white};
   text-decoration: none;
 `;
@@ -51,7 +51,7 @@ export const LoggedUserMenuMobile = ({isLogged, username}) => {
               <Row align="center" style={{ marginTop: "20px" }}>
                 <FaCircleUser style={{ color: "white", marginTop: 8 }} size={100} />
               </Row>
-              <Row align="center" style={{ marginTop: "20px", fontSize: "30px" }}>
+              <Row align="center" style={{ marginTop: "20px", marginBottom: "20px", fontSize: "30px" }}>
                 {t("hello")}, {username}!
               </Row>
               <MenuItemTop>
