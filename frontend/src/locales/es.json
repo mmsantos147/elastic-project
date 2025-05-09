@@ -83,5 +83,11 @@
   "clean_history": "Limpar histórico",
   "logout": "Salir",
   "success_logout": "¡Exitoso!",
-  "success_delete": "¡Toda la historia fue eliminada con éxito!"
+  "success_delete": "¡Toda la historia fue eliminada con éxito!",
+  "warning_part_1": "Atención: este sitio es puramente para fines de estudio",
+  "warning_part_2": "Este sitio es solo para fines de demostración.",
+  "warning_part_3": "Nunca",
+  "warning_part_4": "insertar",
+  "warning_part_5": "Credenciales reales",
+  "warning_part_6": "neste sistema."
 }

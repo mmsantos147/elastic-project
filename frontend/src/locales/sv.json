@@ -83,5 +83,11 @@
   "clean_history": "Historisk",
   "logout": "Att gå ut",
   "success_logout": "Framgångsrik!",
-  "success_delete": "Hela historien raderades framgångsrikt!"
+  "success_delete": "Hela historien raderades framgångsrikt!",
+  "warning_part_1": "Uppmärksamhet: Denna webbplats är enbart för studieändamål",
+  "warning_part_2": "Denna webbplats är endast för demonstrationsändamål.",
+  "warning_part_3": "Aldrig",
+  "warning_part_4": "infoga",
+  "warning_part_5": "Verkliga referenser",
+  "warning_part_6": "I detta system."
 }

@@ -1,4 +1,5 @@
 import { Alert } from "antd";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 const FixedAlertWrapper = styled.div`
@@ -23,14 +24,16 @@ const StyledAlert = styled(Alert)`
 `;
 
 export const SecurityWarning = () => {
+  const { t } = useTranslation();
+
   return (
     <FixedAlertWrapper>
       <StyledAlert
-        message={<b>Atenção: Esse site é puramente para fins de estudos</b>}
+        message={<b>{t("warning_part_1")}</b>}
         description={
           <>
-            Este site é apenas para fins de demonstração.{' '}
-            <strong>Jamais</strong> insira <strong>credenciais reais</strong> neste sistema.
+            {t("warning_part_2")}.{' '}
+            <strong>{t("warning_part_3")}</strong>{' '}{t("warning_part_5")}{' '}<strong>{t("warning_part_4")}</strong>{' '}{t("warning_part_5")}.
           </>
         }
         type="warning"

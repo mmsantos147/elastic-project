@@ -83,5 +83,11 @@
   "clean_history": "Historyczny",
   "logout": "Wyjść",
   "success_logout": "Udany!",
-  "success_delete": "Cała historia została pomyślnie usunięta!"
+  "success_delete": "Cała historia została pomyślnie usunięta!",
+  "warning_part_1": "Uwaga: ta strona jest przeznaczona wyłącznie do celów studiów",
+  "warning_part_2": "Ta strona służy wyłącznie do celów demonstracyjnych.",
+  "warning_part_3": "Nigdy",
+  "warning_part_4": "wstawić",
+  "warning_part_5": "Prawdziwe poświadczenia",
+  "warning_part_6": "W tym systemie."
 }

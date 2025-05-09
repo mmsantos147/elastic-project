@@ -83,5 +83,11 @@
   "clean_history": "Historisch",
   "logout": "Om uit te gaan",
   "success_logout": "Succesvol!",
-  "success_delete": "De hele geschiedenis is met succes verwijderd!"
+  "success_delete": "De hele geschiedenis is met succes verwijderd!",
+  "warning_part_1": "Aandacht: deze site is puur voor studiedoeleinden",
+  "warning_part_2": "Deze site is alleen voor demonstratiedoeleinden.",
+  "warning_part_3": "Nooit",
+  "warning_part_4": "invoegen",
+  "warning_part_5": "Echte referenties",
+  "warning_part_6": "In dit systeem."
 }

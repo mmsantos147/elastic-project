@@ -83,5 +83,11 @@
   "clean_history": "역사적인",
   "logout": "외출합니다",
   "success_logout": "성공적인!",
-  "success_delete": "전체 역사는 성공적으로 삭제되었습니다!"
+  "success_delete": "전체 역사는 성공적으로 삭제되었습니다!",
+  "warning_part_1": "주의 :이 사이트는 순전히 학습 목적을위한 것입니다",
+  "warning_part_2": "이 사이트는 데모 목적으로 만 사용됩니다.",
+  "warning_part_3": "절대",
+  "warning_part_4": "끼워 넣다",
+  "warning_part_5": "실제 자격 증명",
+  "warning_part_6": "이 시스템에서."
 }

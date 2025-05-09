@@ -83,5 +83,11 @@
   "clean_history": "Historique",
   "logout": "Pour sortir",
   "success_logout": "Réussi!",
-  "success_delete": "Toute l'histoire a été supprimée avec succès!"
+  "success_delete": "Toute l'histoire a été supprimée avec succès!",
+  "warning_part_1": "Attention: ce site est purement à des fins d'étude",
+  "warning_part_2": "Ce site est uniquement à des fins de démonstration.",
+  "warning_part_3": "Jamais",
+  "warning_part_4": "insérer",
+  "warning_part_5": "Réels références",
+  "warning_part_6": "Dans ce système."
 }

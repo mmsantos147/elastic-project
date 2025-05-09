@@ -59,6 +59,15 @@ const KeyboardWrapper = styled.div`
       font-size: 12px;
     }
   }
+
+  .simple-keyboard .hg-button {
+    color: black !important;
+    background: white;
+  }
+  
+  .simple-keyboard .hg-button:active {
+    background: #e6e6e6;
+  }
 `;
 
 const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
@@ -204,12 +213,10 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
                 } else if (button === "{space}") {
                   setInputValue((prev) => prev + " ");
                 } else if (button.startsWith("{")) {
-                  // Ignore other special keys
                 } else {
                   setInputValue((prev) => prev + button);
                 }
               }}
-              theme={"hg-theme-default myTheme"}
               layoutName="default"
               display={{
                 '{bksp}': windowWidth <= 480 ? '⌫' : 'backspace',

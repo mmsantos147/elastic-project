@@ -83,5 +83,11 @@
   "clean_history": "Storico",
   "logout": "Per uscire",
   "success_logout": "Riuscito!",
-  "success_delete": "L'intera storia è stata eliminata con successo!"
+  "success_delete": "L'intera storia è stata eliminata con successo!",
+  "warning_part_1": "Attenzione: questo sito è puramente a scopo di studio",
+  "warning_part_2": "Questo sito è solo per scopi dimostrativi.",
+  "warning_part_3": "Mai",
+  "warning_part_4": "inserire",
+  "warning_part_5": "Credenziali reali",
+  "warning_part_6": "neste sistema."
 }

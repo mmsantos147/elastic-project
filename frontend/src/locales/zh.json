@@ -83,5 +83,11 @@
   "clean_history": "历史",
   "logout": "出去",
   "success_logout": "成功的！",
-  "success_delete": "整个历史已成功删除！"
+  "success_delete": "整个历史已成功删除！",
+  "warning_part_1": "注意：此站点纯粹是出于研究目的",
+  "warning_part_2": "该站点仅用于演示目的。",
+  "warning_part_3": "绝不",
+  "warning_part_4": "插入",
+  "warning_part_5": "真正的凭据",
+  "warning_part_6": "在这个系统中。"
 }

@@ -83,5 +83,11 @@
   "clean_history": "تاريخية",
   "logout": "للخروج",
   "success_logout": "ناجح!",
-  "success_delete": "تم حذف التاريخ كله بنجاح!"
+  "success_delete": "تم حذف التاريخ كله بنجاح!",
+  "warning_part_1": "الانتباه: هذا الموقع بحت لأغراض الدراسة",
+  "warning_part_2": "هذا الموقع هو فقط لأغراض التوضيح.",
+  "warning_part_3": "أبداً",
+  "warning_part_4": "أدخل",
+  "warning_part_5": "أوراق اعتماد حقيقية",
+  "warning_part_6": "في هذا النظام."
 }
