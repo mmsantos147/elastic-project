@@ -6,7 +6,7 @@ export const GenericLoginButton = () => {
   const { t } = useTranslation();
   
   return (
-    <div style={{ marginTop: "20px" }}>
+    <div>
       <Link to="/login">
         <Button
           type="primary"
@@ -15,7 +15,6 @@ export const GenericLoginButton = () => {
             borderRadius: "999px",
             boxShadow: "none",
             width: "100%",
-            marginBottom: "30px",
           }}
         >
           <b>{t("make_login")}</b>

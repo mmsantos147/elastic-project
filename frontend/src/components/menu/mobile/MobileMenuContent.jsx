@@ -8,7 +8,8 @@ import LanguageSelector from "../../LanguageSelector";
 const MenuWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;,
+  justify-content: space-between;
+  margin-bottom: 20px
 `;
 
 export const MobileMenuContent = () => {

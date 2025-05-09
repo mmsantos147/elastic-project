@@ -85,7 +85,7 @@ const SearchHeader = ({
     <Row
       style={{
         gap: "30px",
-        margin: "40px",
+        padding: "40px 40px 0 40px",
         borderBottom: "1px gray solid",
         flexDirection: "row",
       }}
