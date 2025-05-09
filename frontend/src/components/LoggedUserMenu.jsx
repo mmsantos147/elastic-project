@@ -9,6 +9,7 @@ import { Row } from "antd";
 import COLORS from "../colors";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useAuthService } from "../api/Authorization.api";
 
 const MenuItem = styled(Row)`
   padding: 15px;
@@ -38,6 +39,7 @@ const MenuItemBottom = styled(MenuItem)`
 
 export const LoggedUserMenu = forwardRef(({ visible, username, onClose, topDistanceAdd }, ref) => {
     const { t } = useTranslation();
+    const { logout } = useAuthService();
   
     useEffect(() => {
     function handleClickOutside(event) {
@@ -93,11 +95,9 @@ export const LoggedUserMenu = forwardRef(({ visible, username, onClose, topDista
         <FaTrash style={{ marginRight: "10px" }} /> {t("clean_history")}
       </MenuItem>
 
-      <LinkNoUnderline to="/logout">
-        <MenuItemBottom>
+        <MenuItemBottom onClick={async () => {await logout(); window.location.reload();}}>
           <IoLogOut style={{ marginRight: "10px" }} /> {t("logout")}
         </MenuItemBottom>
-      </LinkNoUnderline>
     </div>,
     document.body
   );

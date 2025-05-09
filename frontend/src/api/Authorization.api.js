@@ -7,7 +7,9 @@ export const useAuthService = () => {
   const initSession = () => makeRequest('post', '/user/init');
   const register    = content => makeRequest('post', '/user/register', content);
   const login       = content => makeRequest('post', '/user/login', content);
-  const verify      = content => makeRequest('post', '/user/verify');
+  const logout      = () => makeRequest('post', '/user/logout');
+  const verify      = () => makeRequest('post', '/user/verify');
+  
 
-  return { initSession, register, login, verify };
+  return { initSession, register, login, verify, logout };
 };
