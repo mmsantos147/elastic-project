@@ -18,11 +18,6 @@ const MenuItem = styled(Row)`
   text-decoration: none;
 `;
 
-const LinkNoUnderline = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-`;
-
 const MenuItemTop = styled(MenuItem)`
   border-radius: 16px 16px 0 0;
 `;
@@ -33,6 +28,8 @@ const MenuItemBottom = styled(MenuItem)`
 
 export const LoggedUserMenuMobile = ({isLogged, username}) => {
     const { t } = useTranslation();
+    const { logout } = useAuthService();
+    const { deleteAllHistory } = useHistoryService();
 
     return (
         <>
@@ -57,10 +54,10 @@ export const LoggedUserMenuMobile = ({isLogged, username}) => {
               <MenuItemTop>
                 <FaStar style={{ marginRight: "10px" }} /> {t("favorite_searches")}
               </MenuItemTop>
-              <MenuItem>
+              <MenuItem onClick={async () => {await deleteAllHistory();}}>
                 <FaTrash style={{ marginRight: "10px" }} /> {t("clean_history")}
               </MenuItem>
-              <MenuItemBottom>
+              <MenuItemBottom onClick={async () => {await logout(); window.location.reload();}}>
                 <IoLogOut style={{ marginRight: "10px" }} /> {t("logout")}
               </MenuItemBottom>
             </div>

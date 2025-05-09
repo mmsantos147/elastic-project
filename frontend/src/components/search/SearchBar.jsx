@@ -59,6 +59,15 @@ const KeyboardWrapper = styled.div`
       font-size: 12px;
     }
   }
+
+  .simple-keyboard .hg-button {
+    color: black !important;
+    background: white;
+  }
+  
+  .simple-keyboard .hg-button:active {
+    background: #e6e6e6;
+  }
 `;
 
 const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
@@ -204,17 +213,18 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
                 } else if (button === "{space}") {
                   setInputValue((prev) => prev + " ");
                 } else if (button.startsWith("{")) {
-                  // Ignore other special keys
                 } else {
                   setInputValue((prev) => prev + button);
                 }
               }}
-              theme={"hg-theme-default myTheme"}
               layoutName="default"
               display={{
-                '{bksp}': windowWidth <= 480 ? '⌫' : 'backspace',
-                '{enter}': windowWidth <= 480 ? '↵' : 'enter',
-                '{space}': windowWidth <= 480 ? '□' : 'space',
+                '{bksp}': windowWidth <= 480 ? '⌫' : 'Backspace',
+                '{enter}': windowWidth <= 480 ? '↵' : 'Enter',
+                '{space}': windowWidth <= 480 ? '' : 'Space',
+                '{tab}': windowWidth <= 480 ? 'Tab' : 'Tab',
+                '{lock}': windowWidth <= 480 ? 'Caps' : 'Caps Lock',
+                '{shift}': windowWidth <= 480 ? 'Shift' : 'Shift',
               }}
             />
           </KeyboardWrapper>

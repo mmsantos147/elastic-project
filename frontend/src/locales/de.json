@@ -81,5 +81,13 @@
   "hello": "Hallo",
   "favorite_searches": "Lieblingssuchungen",
   "clean_history": "Historisch",
-  "logout": "Rausgehen"
+  "logout": "Rausgehen",
+  "success_logout": "Erfolgreich!",
+  "success_delete": "Die ganze Geschichte wurde erfolgreich gelöscht!",
+  "warning_part_1": "Achtung: Diese Seite dient nur zu Studienzwecken",
+  "warning_part_2": "Diese Seite dient nur zu Demonstrationszwecken.",
+  "warning_part_3": "Niemals",
+  "warning_part_4": "einfügen",
+  "warning_part_5": "Echte Anmeldeinformationen",
+  "warning_part_6": "In diesem System."
 }

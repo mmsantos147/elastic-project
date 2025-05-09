@@ -81,5 +81,13 @@
   "hello": "Hello",
   "favorite_searches": "Favorite searches",
   "clean_history": "Historical",
-  "logout": "To go out"
+  "logout": "To go out",
+  "success_logout": "Successful!",
+  "success_delete": "The whole history was successfully deleted!",
+  "warning_part_1": "ATTENTION: This site is purely for study purposes",
+  "warning_part_2": "This site is only for demonstration purposes.",
+  "warning_part_3": "Never",
+  "warning_part_4": "insert",
+  "warning_part_5": "Real credentials",
+  "warning_part_6": "In this system."
 }

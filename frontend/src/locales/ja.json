@@ -81,5 +81,13 @@
   "hello": "こんにちは",
   "favorite_searches": "お気に入りの検索",
   "clean_history": "歴史的",
-  "logout": "外出する"
+  "logout": "外出する",
+  "success_logout": "成功！",
+  "success_delete": "全歴史が正常に削除されました！",
+  "warning_part_1": "注意：このサイトは純粋に研究目的です",
+  "warning_part_2": "このサイトは、デモンストレーションのみを目的としています。",
+  "warning_part_3": "一度もない",
+  "warning_part_4": "入れる",
+  "warning_part_5": "本当の資格情報",
+  "warning_part_6": "このシステムで。"
 }

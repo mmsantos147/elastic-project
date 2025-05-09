@@ -81,5 +81,13 @@
   "hello": "Xin chào",
   "favorite_searches": "Tìm kiếm yêu thích",
   "clean_history": "Lịch sử",
-  "logout": "Đi ra ngoài"
+  "logout": "Đi ra ngoài",
+  "success_logout": "Thành công!",
+  "success_delete": "Toàn bộ lịch sử đã bị xóa thành công!",
+  "warning_part_1": "Chú ý: Trang web này hoàn toàn nhằm mục đích nghiên cứu",
+  "warning_part_2": "Trang web này chỉ dành cho mục đích trình diễn.",
+  "warning_part_3": "Không bao giờ",
+  "warning_part_4": "chèn",
+  "warning_part_5": "Thông tin thực sự",
+  "warning_part_6": "Trong hệ thống này."
 }

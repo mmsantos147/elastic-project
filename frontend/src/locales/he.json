@@ -81,5 +81,13 @@
   "hello": "שלום",
   "favorite_searches": "חיפושים אהובים",
   "clean_history": "הִיסטוֹרִי",
-  "logout": "לצאת"
+  "logout": "לצאת",
+  "success_logout": "מוּצלָח!",
+  "success_delete": "כל ההיסטוריה נמחקה בהצלחה!",
+  "warning_part_1": "תשומת לב: אתר זה מיועד אך ורק למטרות לימוד",
+  "warning_part_2": "אתר זה מיועד רק למטרות הפגנה.",
+  "warning_part_3": "לְעוֹלָם לֹא",
+  "warning_part_4": "לְהַכנִיס",
+  "warning_part_5": "אישורים אמיתיים",
+  "warning_part_6": "במערכת זו."
 }
