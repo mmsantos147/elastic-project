@@ -18,6 +18,14 @@ const SearchBarExtensionWrapper = styled.div`
   border-radius: 0 0 20px 20px;
 `
 
+const DividerStyled = styled(Divider)`
+  margin-top: 0 !important;
+  border-color: ${COLORS.gray};
+  color: ${COLORS.gray};
+  padding-left: 20px;
+  padding-right: 20px;
+`
+
 export const SearchBarExtension = () => {
   const { inputValue, inputOnFocus, historyContent, suggestionContent } = useSearchBarData();
   const { t } = useTranslation();
@@ -27,18 +35,11 @@ export const SearchBarExtension = () => {
   if (inputValue.length === 0 && historyContent.length > 0)
     return (
       <SearchBarExtensionWrapper>
-        <Divider
+        <DividerStyled
           orientation="left"
-          style={{
-            marginTop: 0,
-            borderColor: COLORS.gray,
-            color: COLORS.gray,
-            paddingLeft: "20px",
-            paddingRight: "20px",
-          }}
         >
           {t("recent_searches")}
-        </Divider>
+        </DividerStyled>
         {historyContent.map((query) => (
           <SearchBarExtensionElement key={query.id} query={query.content}>
             <CloseOutlined />
@@ -51,18 +52,11 @@ export const SearchBarExtension = () => {
   if (suggestionContent.suggestions.length > 0)
     return (
       <SearchBarExtensionWrapper>
-        <Divider
+        <DividerStyled
           orientation="left"
-          style={{
-            marginTop: 0,
-            borderColor: COLORS.gray,
-            color: COLORS.gray,
-            paddingLeft: "20px",
-            paddingRight: "20px",
-          }}
         >
           {t("search_suggested")}
-        </Divider>
+        </DividerStyled>
         {suggestionContent.suggestions.map((query) => (
           <SearchBarExtensionElement key={query} query={query} />
 
