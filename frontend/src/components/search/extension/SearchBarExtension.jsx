@@ -24,7 +24,7 @@ export const SearchBarExtension = () => {
 
   if (!inputOnFocus) return null;
 
-  if (inputValue.length === 0)
+  if (inputValue.length === 0 && historyContent.length > 0)
     return (
       <SearchBarExtensionWrapper>
         <Divider

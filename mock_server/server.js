@@ -31,11 +31,7 @@ app.post("/v1/search/suggestions", (req, res) => {
 });
 
 app.get("/v1/history", (req, res) => {
-  const history = [
-    { id: 1, content: "history_element_1" },
-    { id: 2, content: "history_element_2" },
-    { id: 3, content: "history_element_3" },
-  ];
+  const history = [];
 
   return res.status(200).json(history)
 });
