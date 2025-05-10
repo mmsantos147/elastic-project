@@ -22,10 +22,10 @@ app.post("/v1/search/suggestions", (req, res) => {
       "List of commutative algebra topics",
       "Artinian module",
     ];
-    return res.json({ suggestions });
+    return res.json(suggestions);
   } else {
     const suggestions = [];
-    return res.status(200).json({ suggestions });
+    return res.status(200).json(suggestions);
   }
 });
 

@@ -11,7 +11,7 @@ export const SearchBarProvider = ({ children }) => {
   const [inputValue, setInputValue] = useState("");
   const [inputOnFocus, setInputOnFocus] = useState(false);
   
-  const [suggestionContent, setSuggestionContent] = useState({suggestions:[]});
+  const [suggestionContent, setSuggestionContent] = useState([]);
   const [historyContent, setHistoryContent] = useState([])
 
   useEffect(() => {
@@ -38,11 +38,11 @@ export const SearchBarProvider = ({ children }) => {
   }, [inputValue])
 
   useEffect(() => {
-    if (inputOnFocus && ((historyContent.length > 0 && inputValue.length == 0) || suggestionContent.suggestions.length > 0))
+    if (inputOnFocus && ((historyContent.length > 0 && inputValue.length == 0) || suggestionContent.length > 0))
       setExtensionVisible(true);
     else 
       setExtensionVisible(false);
-  }, [historyContent.length, suggestionContent.suggestions.length, inputOnFocus]);
+  }, [historyContent.length, suggestionContent.length, inputOnFocus]);
 
   return (
     <SearchBarContext.Provider

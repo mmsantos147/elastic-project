@@ -49,7 +49,7 @@ export const SearchBarExtension = () => {
       </SearchBarExtensionWrapper>
     );
   
-  if (suggestionContent.suggestions.length > 0)
+  if (suggestionContent.length > 0)
     return (
       <SearchBarExtensionWrapper>
         <DividerStyled
@@ -57,7 +57,7 @@ export const SearchBarExtension = () => {
         >
           {t("search_suggested")}
         </DividerStyled>
-        {suggestionContent.suggestions.map((query) => (
+        {suggestionContent.map((query) => (
           <SearchBarExtensionElement key={query} query={query} />
 
         ))}

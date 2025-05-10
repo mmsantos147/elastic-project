@@ -138,7 +138,7 @@ public class ElasticsearchService {
         return searchRequest.source(searchSourceBuilder);
     }
 
-    public SearchAsYouTypeDTO searchAsYouType(String query) throws Exception {
+    public List<String> searchAsYouType(String query) throws Exception {
         SearchRequest searchRequest = new SearchRequest("wikipedia");
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 
@@ -205,7 +205,7 @@ public class ElasticsearchService {
         );
     }
 
-    private SearchAsYouTypeDTO processSearchAsYouTypeDTO(SearchResponse searchResponse) {
+    private List<String> processSearchAsYouTypeDTO(SearchResponse searchResponse) {
         List<String> suggestions = new ArrayList<>();
 
         for (SearchHit hit : searchResponse.getHits().getHits()) {
@@ -216,7 +216,7 @@ public class ElasticsearchService {
             }
         }
 
-        return new SearchAsYouTypeDTO(suggestions);
+        return suggestions;
     }
 
     /**
