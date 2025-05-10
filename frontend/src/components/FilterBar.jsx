@@ -1,17 +1,11 @@
-import {
-  Button,
-  Col,
-  Drawer,
-  Grid,
-  Row,
-  Space,
-} from "antd";
+import { Button, Col, Drawer, Grid, Row, Space } from "antd";
 import Filter from "./Filter";
 import styled from "styled-components";
 import COLORS from "../colors";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { FilterOutlined, CloseOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const ResponsiveResults = styled(Col)`
   color: ${COLORS.gray};
@@ -40,7 +34,7 @@ const FilterBar = ({ setFormData, searchResult }) => {
   const [t] = useTranslation();
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
-  
+
   const [orderByState, setOrderByState] = useState("SCORE_DESC");
   const [itensByPageState, setItensByPageState] = useState(10);
   const [readingTimeState, setReadingTimeState] = useState("any");
@@ -53,12 +47,12 @@ const FilterBar = ({ setFormData, searchResult }) => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    
+    window.addEventListener("resize", checkIsMobile);
+
     return () => {
-      window.removeEventListener('resize', checkIsMobile);
+      window.removeEventListener("resize", checkIsMobile);
     };
   }, []);
 
@@ -149,7 +143,7 @@ const FilterBar = ({ setFormData, searchResult }) => {
     {
       label: "30",
       key: 30,
-    }
+    },
   ];
 
   const readTime = [
@@ -168,13 +162,13 @@ const FilterBar = ({ setFormData, searchResult }) => {
     {
       label: `${t("high")} (<10 ${t("minute_abbreviation")})`,
       key: 10,
-    }
+    },
   ];
 
   const publisedDate = [
     {
       label: `${t("any_date")}`,
-      key: "any"
+      key: "any",
     },
     {
       label: `${t("after_")} 2020`,
@@ -187,7 +181,7 @@ const FilterBar = ({ setFormData, searchResult }) => {
     {
       label: `${t("after_")} 2005`,
       key: `2005-01-01`,
-    }
+    },
   ];
 
   const searchFor = [
@@ -202,7 +196,9 @@ const FilterBar = ({ setFormData, searchResult }) => {
   ];
 
   const ResultsInfo = () => (
-    <div style={{ color: COLORS.gray, margin: isMobile ? "10px 0" : undefined }}>
+    <div
+      style={{ color: COLORS.gray, margin: isMobile ? "10px 0" : undefined }}
+    >
       {t("near")} {searchResult.hits} {t("results")} ({searchResult.timeTaken}s)
     </div>
   );
@@ -210,15 +206,19 @@ const FilterBar = ({ setFormData, searchResult }) => {
   return (
     <>
       {/* Botão de filtro para dispositivos móveis */}
-      <Row justify="space-between" align="middle" style={{ marginTop: "10px", padding: "0 15px" }}>
-        <FilterButton 
-          type="default" 
+      <Row
+        justify="space-between"
+        align="middle"
+        style={{ marginTop: "10px", padding: "0 15px" }}
+      >
+        <FilterButton
+          type="default"
           icon={<FilterOutlined />}
           onClick={showFilterDrawer}
         >
           {t("filters")}
         </FilterButton>
-        
+
         {isMobile && <ResultsInfo />}
       </Row>
 
@@ -257,13 +257,9 @@ const FilterBar = ({ setFormData, searchResult }) => {
             onClick={handleMinDateTimeChange}
           />
         </Col>
+
         <Col>
-          <Filter
-            items={searchFor}
-            selectedKeys={searchForState}
-            name={t("search_for")}
-            onClick={handleSearchForChange}
-          />
+          <Link style={{ color: "rgb(154, 160, 166)", textDecoration: "underline" }} to={"/tips"}>Mais informações</Link>
         </Col>
 
         <Col flex="auto" />
@@ -315,15 +311,6 @@ const FilterBar = ({ setFormData, searchResult }) => {
               name={t("publish_date")}
               selectedKeys={minDateTimeState}
               onClick={handleMinDateTimeChange}
-              style={{ width: "100%" }}
-            />
-          </div>
-          <div style={{ padding: "0 20px" }}>
-            <Filter
-              items={searchFor}
-              selectedKeys={searchForState}
-              name={t("search_for")}
-              onClick={handleSearchForChange}
               style={{ width: "100%" }}
             />
           </div>

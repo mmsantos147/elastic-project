@@ -109,6 +109,7 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
           transition: "none",
         }}
       />
+      
 
       <SearchBarExtension />
 

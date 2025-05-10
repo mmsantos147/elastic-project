@@ -1,4 +1,4 @@
-import { Space } from "antd";
+import { Button, Space } from "antd";
 import WeatherReport from "../WeatherReport";
 import LanguageSelector from "../LanguageSelector";
 import { useAuthData } from "../../../context/AuthContext";
@@ -6,6 +6,7 @@ import { FaCircleUser } from "react-icons/fa6";
 import { GenericLoginButton } from "../GenericLoginButton";
 import { useRef, useState } from "react";
 import { DesktopMenuContent } from "./DesktopMenuContent";
+import { BsQuestionCircle } from "react-icons/bs";
 
 export const DesktopMenu = () => {
   const { isLogged } = useAuthData();
@@ -15,6 +16,7 @@ export const DesktopMenu = () => {
 
   return (
     <Space size="large">
+
       <WeatherReport />
       <LanguageSelector />
       {isLogged ? (
@@ -41,6 +43,7 @@ export const DesktopMenu = () => {
       ) : 
         <GenericLoginButton />
       }
+      
     </Space>
   );
 };

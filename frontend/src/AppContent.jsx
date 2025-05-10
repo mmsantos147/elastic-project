@@ -10,6 +10,7 @@ import { useAuthService } from "./api/Authorization.api";
 import COLORS from "./colors";
 import Login from "./view/Login";
 import Register from "./view/Register";
+import { Tips } from "./view/Tips";
 
 const AppContent = () => {
   const { initSession } = useAuthService();
@@ -57,6 +58,7 @@ const AppContent = () => {
               <Route path="/search" element={<Search />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/tips" element={<Tips />} />
             </Routes>
           </BrowserRouter>
           <DefaultFooter />
