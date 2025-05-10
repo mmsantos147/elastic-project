@@ -77,6 +77,7 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
       <StyledInput
         onPressEnter={(e) => {
           e.target.blur();
+          setInputOnFocus(false);
           onEnterEvent(e.target.value);
         }}
         size={isMobile ? "middle" : "large"}
