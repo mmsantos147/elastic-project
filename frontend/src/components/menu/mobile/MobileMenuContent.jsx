@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { LoggedMenuContent } from "../LoggedMenuContent";
 import { useAuthData } from "../../../context/AuthContext";
 import { GenericLoginButton } from "../GenericLoginButton";
-import WeatherReport from "../../WeatherReport";
-import LanguageSelector from "../../LanguageSelector";
+import WeatherReport from "../WeatherReport";
+import LanguageSelector from "../LanguageSelector";
 
 const MenuWrapper = styled.div`
   display: flex;

@@ -72,7 +72,7 @@
   "success_login": "Đăng nhập được thực hiện thành công!",
   "email_does_not_exists": "Email này không tồn tại",
   "failed_registration": "Email này đã được đăng ký. Vui lòng thử một cái khác.",
-  "success_langset": "Ngôn ngữ đã thay đổi thành công!",
+  "success_langset": "Ngôn ngữ thay đổi thành công!",
   "any_date": "Bất kỳ ngày nào",
   "any_time": "Bất cứ lúc nào",
   "unexpected_error": "Một sai lầm chưa biết đã xảy ra. Hãy thử lại sau!",
@@ -89,5 +89,6 @@
   "warning_part_3": "Không bao giờ",
   "warning_part_4": "chèn",
   "warning_part_5": "Thông tin thực sự",
-  "warning_part_6": "Trong hệ thống này."
+  "warning_part_6": "Trong hệ thống này.",
+  "wikipedia": "Wikipedia"
 }

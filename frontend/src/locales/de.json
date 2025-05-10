@@ -35,7 +35,7 @@
   "search_suggested": "Vorgeschlagene Suchanfragen",
   "recent_searches": "Jüngste Forschungen",
   "search": "Nach suchen",
-  "search_on_brand": "Suche bei uaisearch",
+  "search_on_brand": "Suche bei uaisarch",
   "your_search_dont_find_any_docs": "Ihre Suche fand kein entsprechendes Dokument",
   "need_help_ask": "Benötigen Sie Hilfe?",
   "check_out_other": "Überprüfen Sie andere",
@@ -43,7 +43,7 @@
   "to_search_on_brand": "Bei uaisarch suchen",
   "you_can_try_these_searches": "Sie können auch versuchen, diese Suchanfragen durchzuführen",
   "artificial_intelligence_vision": "Ansicht von IA erzeugt",
-  "show_more": "Mehr zeigen",
+  "show_more": "Zeigen Sie mehr",
   "show_less": "Weniger",
   "approximate_small": "Ca.",
   "minutes": "Minuten",
@@ -73,7 +73,7 @@
   "email_does_not_exists": "Diese E -Mail existiert nicht",
   "failed_registration": "Diese E -Mail wurde bereits registriert. Bitte versuchen Sie es mit einem anderen.",
   "success_langset": "Erfolgreich veränderte Sprache!",
-  "any_date": "Jedes Datum",
+  "any_date": "An jedem Datum",
   "any_time": "Jederzeit",
   "unexpected_error": "Ein unbekannter Fehler trat auf. Bitte versuchen Sie es später noch einmal!",
   "filters": "Filter",
@@ -89,5 +89,6 @@
   "warning_part_3": "Niemals",
   "warning_part_4": "einfügen",
   "warning_part_5": "Echte Anmeldeinformationen",
-  "warning_part_6": "In diesem System."
+  "warning_part_6": "In diesem System.",
+  "wikipedia": "Wikipedia"
 }

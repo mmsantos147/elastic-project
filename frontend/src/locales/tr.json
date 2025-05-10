@@ -9,7 +9,7 @@
   "privacy": "Mahremiyet",
   "terms": "Şartlar",
   "settings": "Ayarlar",
-  "score_desc": "Alaka Alan azaltma",
+  "score_desc": "Alaka Düzeni Azaltma",
   "score_asc": "Artan Alaka",
   "read_time_desc": "Azalan okuma süresi",
   "read_time_asc": "Artan okuma süresi",
@@ -89,5 +89,6 @@
   "warning_part_3": "Asla",
   "warning_part_4": "sokmak",
   "warning_part_5": "Gerçek kimlik bilgileri",
-  "warning_part_6": "Bu sistemde."
+  "warning_part_6": "Bu sistemde.",
+  "wikipedia": "Wikipedia"
 }

@@ -7,7 +7,7 @@ import { IoThunderstormSharp } from "react-icons/io5";
 import { BsFillCloudSnowFill } from "react-icons/bs";
 import { BsCloudFog2Fill } from "react-icons/bs";
 import { FaCloudSun } from "react-icons/fa";
-import { useWeatherService } from "../api/Weather.api";
+import { useWeatherService } from "../../api/Weather.api";
 
 const { Text } = Typography;
 

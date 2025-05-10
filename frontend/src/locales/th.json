@@ -12,7 +12,7 @@
   "score_desc": "ลดความเกี่ยวข้อง",
   "score_asc": "เพิ่มความเกี่ยวข้อง",
   "read_time_desc": "ลดเวลาการอ่าน",
-  "read_time_asc": "เพิ่มเวลาการอ่าน",
+  "read_time_asc": "เพิ่มเวลาอ่าน",
   "date_desc": "ใหม่ล่าสุดก่อน",
   "date_asc": "แก่กว่าก่อน",
   "define": "กำหนด",
@@ -48,7 +48,7 @@
   "approximate_small": "ประมาณ",
   "minutes": "นาที",
   "bachelors_degree_in_computer_science": "วิทยาศาสตรบัณฑิต",
-  "federal_university_of_alfenas": "มหาวิทยาลัยอัลเฟนัสแห่งสหพันธรัฐ",
+  "federal_university_of_alfenas": "มหาวิทยาลัยแห่งสหพันธรัฐอัลเฟนัส",
   "brazil": "บราซิล",
   "teacher_dr": "ศาสตราจารย์ดร.",
   "insert_your_username": "ป้อนผู้ใช้ของคุณ",
@@ -73,7 +73,7 @@
   "email_does_not_exists": "อีเมลนี้ไม่มีอยู่จริง",
   "failed_registration": "อีเมลนี้ได้รับการลงทะเบียนแล้ว โปรดลองอีกอัน",
   "success_langset": "ภาษาที่เปลี่ยนแปลงประสบความสำเร็จ!",
-  "any_date": "วันที่ใด ๆ",
+  "any_date": "วันที่ใดก็ได้",
   "any_time": "ตลอดเวลา",
   "unexpected_error": "เกิดความผิดพลาดที่ไม่รู้จัก โปรดลองอีกครั้งในภายหลัง!",
   "filters": "ตัวกรอง",
@@ -89,5 +89,6 @@
   "warning_part_3": "ไม่เคย",
   "warning_part_4": "แทรก",
   "warning_part_5": "ข้อมูลประจำตัวจริง",
-  "warning_part_6": "ในระบบนี้"
+  "warning_part_6": "ในระบบนี้",
+  "wikipedia": "วิกิพีเดีย"
 }

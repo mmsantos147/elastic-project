@@ -13,7 +13,7 @@
   "score_asc": "הגדלת הרלוונטיות",
   "read_time_desc": "ירידה בזמן הקריאה",
   "read_time_asc": "הגדלת זמן הקריאה",
-  "date_desc": "הכי חדש הראשון",
+  "date_desc": "ראשית הכי חדש",
   "date_asc": "ראשית ישן יותר",
   "define": "לְהַגדִיר",
   "fast": "מָהִיר",
@@ -54,7 +54,7 @@
   "insert_your_username": "הזן את המשתמש שלך",
   "please_insert_your_username": "אנא הכנס את המשתמש שלך",
   "insert_your_password": "הזן את הסיסמה שלך",
-  "please_insert_your_password": "אנא הזן את הסיסמה שלך!",
+  "please_insert_your_password": "אנא הכנס את הסיסמה שלך!",
   "please_confirm_your_password": "אנא אשר את הסיסמה שלך!",
   "confirm_password": "אשר את הסיסמה",
   "insert_your_email": "הזן את הדוא\"ל שלך",
@@ -89,5 +89,6 @@
   "warning_part_3": "לְעוֹלָם לֹא",
   "warning_part_4": "לְהַכנִיס",
   "warning_part_5": "אישורים אמיתיים",
-  "warning_part_6": "במערכת זו."
+  "warning_part_6": "במערכת זו.",
+  "wikipedia": "ויקיפדיה"
 }

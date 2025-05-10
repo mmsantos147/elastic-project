@@ -4,9 +4,9 @@ import ReactCountryFlag from "react-country-flag";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { useLanguageService } from "../api/Language.api";
+import { useLanguageService } from "../../api/Language.api";
 import mitt from "mitt";
-import emitter from "../eventBus";
+import emitter from "../../eventBus";
 
 const languages = [
   { code: "pt", name: "Português", countryCode: "BR" },

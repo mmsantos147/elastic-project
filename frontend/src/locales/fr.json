@@ -73,7 +73,7 @@
   "email_does_not_exists": "Cet e-mail n'existe pas",
   "failed_registration": "Cet e-mail a déjà été enregistré. Veuillez essayer un autre.",
   "success_langset": "Langue changée réussie!",
-  "any_date": "N'importe quelle date",
+  "any_date": "Toute date",
   "any_time": "À tout moment",
   "unexpected_error": "Une erreur inconnue s'est produite. Veuillez réessayer plus tard!",
   "filters": "Filtres",
@@ -89,5 +89,6 @@
   "warning_part_3": "Jamais",
   "warning_part_4": "insérer",
   "warning_part_5": "Réels références",
-  "warning_part_6": "Dans ce système."
+  "warning_part_6": "Dans ce système.",
+  "wikipedia": "Wikipédia"
 }

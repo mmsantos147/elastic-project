@@ -33,7 +33,7 @@
   "seconds": "दूसरा",
   "make_login": "लॉग इन करें",
   "search_suggested": "खोजे गए खोज",
-  "recent_searches": "हाल के शोध",
+  "recent_searches": "हालिया शोध",
   "search": "को देखने के लिए",
   "search_on_brand": "Uaisearch पर खोजें",
   "your_search_dont_find_any_docs": "आपकी खोज में कोई संबंधित दस्तावेज नहीं मिला",
@@ -89,5 +89,6 @@
   "warning_part_3": "कभी नहीं",
   "warning_part_4": "डालना",
   "warning_part_5": "वास्तविक साख",
-  "warning_part_6": "इस प्रणाली में।"
+  "warning_part_6": "इस प्रणाली में।",
+  "wikipedia": "विकिपीडिया"
 }

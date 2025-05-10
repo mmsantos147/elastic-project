@@ -1,6 +1,6 @@
 import { Space } from "antd";
-import WeatherReport from "../../WeatherReport";
-import LanguageSelector from "../../LanguageSelector";
+import WeatherReport from "../WeatherReport";
+import LanguageSelector from "../LanguageSelector";
 import { useAuthData } from "../../../context/AuthContext";
 import { FaCircleUser } from "react-icons/fa6";
 import { GenericLoginButton } from "../GenericLoginButton";
