@@ -120,5 +120,6 @@
   "smart_search_example_2": "정확히 포함합니다",
   "smart_search_example_3": "5 분 이상 독서가 있습니다",
   "smart_search_example_4": "\"코스\"라는 단어를 언급하지 마십시오.",
-  "tips_footer": "결과가 너무 넓은 경우 항상 간단한 용어로 시작하고 필터로 개선하십시오."
+  "tips_footer": "결과가 너무 넓은 경우 항상 간단한 용어로 시작하고 필터로 개선하십시오.",
+  "more_information": "더 많은 정보"
 }

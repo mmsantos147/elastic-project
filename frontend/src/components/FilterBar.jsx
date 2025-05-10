@@ -259,7 +259,7 @@ const FilterBar = ({ setFormData, searchResult }) => {
         </Col>
 
         <Col>
-          <Link style={{ color: "rgb(154, 160, 166)", textDecoration: "underline" }} to={"/tips"}>Mais informações</Link>
+          <Link style={{ color: "rgb(154, 160, 166)", textDecoration: "underline" }} to={"/tips"}>{t("more_information")}</Link>
         </Col>
 
         <Col flex="auto" />

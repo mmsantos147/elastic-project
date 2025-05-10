@@ -100,7 +100,7 @@
   "created_at_1": "Contenido de búsqueda creado en la fecha N.",
   "created_at_2": "Busca contenido creado después de la fecha N.",
   "created_at_3": "Busca contenido creado antes de la fecha N.",
-  "created_at_4": "Busca contenido creado entre la fecha N y M.",
+  "created_at_4": "Busca contenido creado entre la fecha n y M.",
   "search_tokens": "Tokens de investigación",
   "search_tokens_description": "Puede refinar su búsqueda utilizando operadores especiales. Aquí hay algunos consejos útiles",
   "search_tokens_final": "Use estos filtros combinados con palabras clave gratuitas para obtener resultados más precisos",
@@ -120,5 +120,6 @@
   "smart_search_example_2": "Contener exactamente",
   "smart_search_example_3": "Tener más de 5 minutos de lectura",
   "smart_search_example_4": "No mencione la palabra \"curso\"",
-  "tips_footer": "Siempre trate de comenzar con términos simples y refinar con filtros si los resultados son demasiado amplios"
+  "tips_footer": "Siempre trate de comenzar con términos simples y refinar con filtros si los resultados son demasiado amplios",
+  "more_information": "Más información"
 }

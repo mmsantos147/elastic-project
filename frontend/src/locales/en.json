@@ -120,5 +120,6 @@
   "smart_search_example_2": "Contain exactly",
   "smart_search_example_3": "Have more than 5 minutes of reading",
   "smart_search_example_4": "Do not mention the word \"course\"",
-  "tips_footer": "Always try to start with simple terms and refine with filters if the results are too wide"
+  "tips_footer": "Always try to start with simple terms and refine with filters if the results are too wide",
+  "more_information": "More information"
 }

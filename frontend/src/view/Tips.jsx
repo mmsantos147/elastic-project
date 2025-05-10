@@ -3,6 +3,7 @@ import { Card, Typography, List, Row, Col, Divider } from "antd";
 import { InfoCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import UAISearch from "../components/UAISearch";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -57,7 +58,9 @@ export const Tips = () => {
       <div
         style={{ display: "flex", justifyContent: "center", marginBottom: 30 }}
       >
-        <UAISearch logoWidth={300} />
+        <Link to={"/"}>
+          <UAISearch logoWidth={300} />
+        </Link>
       </div>
 
       <Row gutter={24}>
