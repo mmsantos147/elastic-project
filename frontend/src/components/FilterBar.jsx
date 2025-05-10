@@ -184,17 +184,6 @@ const FilterBar = ({ setFormData, searchResult }) => {
     },
   ];
 
-  const searchFor = [
-    {
-      label: t("all_results_search"),
-      key: "allResults",
-    },
-    {
-      label: t("exact_result"),
-      key: "exactSearch",
-    },
-  ];
-
   const ResultsInfo = () => (
     <div
       style={{ color: COLORS.gray, margin: isMobile ? "10px 0" : undefined }}
@@ -206,11 +195,7 @@ const FilterBar = ({ setFormData, searchResult }) => {
   return (
     <>
       {/* Botão de filtro para dispositivos móveis */}
-      <Row
-        justify="space-between"
-        align="middle"
-        style={{ marginTop: "10px", padding: "0 15px" }}
-      >
+      <Row justify="space-between" align="middle" style={{ padding: "0 15px" }}>
         <FilterButton
           type="default"
           icon={<FilterOutlined />}
@@ -259,7 +244,12 @@ const FilterBar = ({ setFormData, searchResult }) => {
         </Col>
 
         <Col>
-          <Link style={{ color: "rgb(154, 160, 166)", textDecoration: "underline" }} to={"/tips"}>{t("more_information")}</Link>
+          <Link
+            style={{ color: "rgb(154, 160, 166)", textDecoration: "underline" }}
+            to={"/tips"}
+          >
+            {t("more_information")}{" "}
+          </Link>
         </Col>
 
         <Col flex="auto" />
@@ -313,6 +303,17 @@ const FilterBar = ({ setFormData, searchResult }) => {
               onClick={handleMinDateTimeChange}
               style={{ width: "100%" }}
             />
+          </div>
+          <div style={{ padding: "0 20px" }}>
+            <Link
+              style={{
+                color: "rgb(154, 160, 166)",
+                textDecoration: "underline",
+              }}
+              to={"/tips"}
+            >
+              {t("more_information")}{" "}
+            </Link>
           </div>
         </Space>
       </Drawer>
