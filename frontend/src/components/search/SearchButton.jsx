@@ -8,11 +8,9 @@ const SearchButton = () => {
   return (
     <Button
       style={{
-        borderRadius: "4px",
         backgroundColor: "#303134",
         color: COLORS.white,
-        borderColor: "#5f6368",
-        border: "0px",
+        border: "none",
       }}
       size="middle"
     >

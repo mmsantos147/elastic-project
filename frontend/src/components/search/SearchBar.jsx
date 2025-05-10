@@ -3,9 +3,7 @@ import "react-simple-keyboard/build/css/index.css";
 import { SearchOutlined } from "@ant-design/icons";
 import { FaKeyboard } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
-import COLORS from "../../colors";
 import styled from "styled-components";
-import { useSearchService } from "../../api/Search.api";
 import { useTranslation } from "react-i18next";
 import { VirtualKeyboard } from "./VirtualKeyboard";
 import { SearchBarExtension } from "./extension/SearchBarExtension";
@@ -39,14 +37,19 @@ const ResponsiveContainer = styled.div`
   }
 `;
 
+const IconWrapper = styled.div`
+  color: #9aa0a6;
+  padding-left: ${(props) => (props.isMobile ? "5px" : "7px")};
+  margin-right: ${(props) => (props.isMobile ? "5px" : "10px")};
+  font-size: ${(props) => (props.isMobile ? "16px" : "18px")};
+  cursor: pointer;
+`;
 
 const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
+  const { t } = useTranslation();
   const { extensionVisible, inputValue, setInputValue, setInputOnFocus } =
     useSearchBarData();
-  const { t } = useTranslation();
-
   const [showKeyboard, setShowKeyboard] = useState(false);
-
   const inputRef = useRef(null);
 
   const isMobile = window.innerWidth <= 768;
@@ -80,40 +83,26 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
         placeholder={t("search_default")}
         value={inputValue}
         prefix={
-          <SearchOutlined
-            style={{
-              color: COLORS.gray,
-              paddingLeft: isMobile ? "5px" : "7px",
-              marginRight: isMobile ? "5px" : "10px",
-              fontSize: isMobile ? "16px" : "18px",
-            }}
-          />
+          <IconWrapper isMobile={isMobile}>
+            <SearchOutlined />
+          </IconWrapper>
         }
         suffix={
-          <>
+          <IconWrapper>
             <FaKeyboard
-              style={{
-                color: "#9aa0a6",
-                paddingRight: isMobile ? "5px" : "7px",
-                fontSize: isMobile ? "18px" : "25px",
-                marginLeft: isMobile ? "5px" : "10px",
-                cursor: "pointer",
-              }}
               onClick={(e) => {
                 e.stopPropagation();
                 setShowKeyboard(!showKeyboard);
               }}
             />
-          </>
+          </IconWrapper>
         }
         onChange={(e) => {
           setInputValue(e.target.value);
-          updateSugestions(e.target.value);
         }}
         style={{
-          borderRadius: extensionVisible ? "20px 20px 0 0" : "999px",
+          borderRadius: extensionVisible ? "16px 16px 0 0" : "999px",
           backgroundColor: "#303134",
-          color: "#e8eaed",
           border: "0px",
           padding: isMobile ? "5px" : "10px",
           transition: "none",
