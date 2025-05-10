@@ -28,6 +28,7 @@ const DesktopFilters = styled(Row)`
   @media (max-width: 768px) {
     display: none;
   }
+  margin-top: 10px;
 `;
 
 const FilterBar = ({ setFormData, searchResult }) => {
