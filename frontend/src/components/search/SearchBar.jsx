@@ -76,19 +76,19 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
     >
       <StyledInput
         onPressEnter={(e) => {
-          onEnterEvent(e.target.value);
           e.target.blur();
+          onEnterEvent(e.target.value);
         }}
         size={isMobile ? "middle" : "large"}
         placeholder={t("search_default")}
         value={inputValue}
         prefix={
-          <IconWrapper isMobile={isMobile}>
+          <IconWrapper $isMobile={isMobile}>
             <SearchOutlined />
           </IconWrapper>
         }
         suffix={
-          <IconWrapper>
+          <IconWrapper $isMobile={isMobile}>
             <FaKeyboard
               onClick={(e) => {
                 e.stopPropagation();
