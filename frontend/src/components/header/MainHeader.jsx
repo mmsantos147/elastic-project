@@ -1,11 +1,11 @@
 import React from "react";
 import { Layout, Col } from "antd";
-import { SideInfoMenu } from "./menu/SideInfoMenu";
-import { AuthProvider } from "../context/AuthContext";
+import { SideInfoMenu } from "../menu/SideInfoMenu";
+import { AuthProvider } from "../../context/AuthContext";
 
 const { Header } = Layout;
 
-const DefaultHeader = () => {
+const MainHeader = () => {
 
   const isMobile = window.innerWidth <= 768;
 
@@ -29,4 +29,4 @@ const DefaultHeader = () => {
   );
 };
 
-export default DefaultHeader;
+export default MainHeader;

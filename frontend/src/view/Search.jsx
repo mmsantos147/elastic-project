@@ -15,7 +15,7 @@ import { useSearchService } from "../api/Search.api";
 import emitter from "../eventBus";
 import { useAuthService } from "../api/Authorization.api";
 import { DidYouMean } from "../components/search/DidYouMean";
-import SearchHeader from "../components/SearchHeader";
+import SearchHeader from "../components/header/SearchHeader";
 
 const { Content } = Layout;
 const { useBreakpoint } = Grid;

@@ -2,7 +2,7 @@ import { Layout, Space } from "antd";
 import UAISearch from "../components/UAISearch";
 import SearchBar from "../components/search/SearchBar";
 import SearchButton from "../components/search/SearchButton";
-import DefaultHeader from "../components/DefaultHeader";
+import MainHeader from "../components/header/MainHeader";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -63,7 +63,7 @@ const Main = () => {
   return (
     <>
     
-      <DefaultHeader />
+      <MainHeader />
       <Content
         style={{
           flex: 1,
