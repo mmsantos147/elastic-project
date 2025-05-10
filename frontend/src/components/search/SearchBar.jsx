@@ -43,6 +43,7 @@ const IconWrapper = styled.div`
   margin-right: ${(props) => (props.isMobile ? "5px" : "10px")};
   font-size: ${(props) => (props.isMobile ? "16px" : "18px")};
   cursor: pointer;
+  display: flex;
 `;
 
 const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
