@@ -149,6 +149,15 @@ app.post("/v1/search", (req, res) => {
   return res.status(200).json(response)
 });
 
+app.post("/v1/user/verify", (req, res) => {
+  const response = {
+    user: "username",
+    logged: true
+  }
+
+  return res.status(200).json(response)
+})
+
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });
