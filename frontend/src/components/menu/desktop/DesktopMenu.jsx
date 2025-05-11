@@ -6,7 +6,6 @@ import { FaCircleUser } from "react-icons/fa6";
 import { GenericLoginButton } from "../GenericLoginButton";
 import { useRef, useState } from "react";
 import { DesktopMenuContent } from "./DesktopMenuContent";
-import { BsQuestionCircle } from "react-icons/bs";
 
 export const DesktopMenu = () => {
   const { isLogged } = useAuthData();

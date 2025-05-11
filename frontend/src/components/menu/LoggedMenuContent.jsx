@@ -15,6 +15,11 @@ const MenuItem = styled(Row)`
   margin-top: 4px;
   color: ${COLORS.white};
   text-decoration: none;
+  cursor: pointer;
+
+  &:hover{
+    background-color: rgb(20, 20, 20);
+  }
 `;
 
 const MenuItemTop = styled(MenuItem)`
@@ -38,7 +43,7 @@ export const LoggedMenuContent = () => {
       </Row>
       <Row
         align="center"
-        style={{ marginTop: "20px", marginBottom: "20px", fontSize: "30px", color: "white" }}
+        style={{ marginTop: "20px", marginBottom: "20px", fontSize: "30px", color: "white", textAlign: "center" }}
       >
         {t("hello")}, {username}!
       </Row>
