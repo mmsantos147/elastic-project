@@ -151,7 +151,7 @@ app.post("/v1/search", (req, res) => {
 
 app.post("/v1/user/verify", (req, res) => {
   const response = {
-    user: "username",
+    username: "username",
     logged: true
   }
 
