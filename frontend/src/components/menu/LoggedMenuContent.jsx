@@ -31,7 +31,7 @@ const MenuItemBottom = styled(MenuItem)`
 `;
 
 export const LoggedMenuContent = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { logout } = useAuthService();
   const { deleteAllHistory } = useHistoryService();
   const { username } = useAuthData();
@@ -45,7 +45,7 @@ export const LoggedMenuContent = () => {
         align="center"
         style={{ marginTop: "20px", marginBottom: "20px", fontSize: "30px", color: "white", textAlign: "center" }}
       >
-        {t("hello")}, {username}!
+        {i18n.language == "es" ? "¡" : ""}{t("hello")}, {username}!
       </Row>
       <MenuItemTop>
         <FaStar style={{ marginRight: "10px" }} /> {t("favorite_searches")}
