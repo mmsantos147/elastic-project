@@ -158,6 +158,18 @@ app.post("/v1/user/verify", (req, res) => {
   return res.status(200).json(response)
 })
 
+app.get("/v1/weatherReport", (req, res) => {
+  const response = {
+    id: 804,
+    group: "Clouds",
+    city: "Alfenas",
+    temperature: 22,
+    description: "overcast clouds",
+  }
+
+  return res.status(200).json(response)
+})
+
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });

@@ -8,6 +8,13 @@ export const AuthProvider = ({ children }) => {
 
   const [isLogged, setIsLogged] = useState(false);
   const [username, setUsername] = useState("");
+  const [weather, setWeather] = useState({
+    id: 804,
+    group: "Clouds",
+    city: "Alfenas",
+    temperature: 22,
+    description: "overcast clouds",
+  });
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -22,8 +29,22 @@ export const AuthProvider = ({ children }) => {
     verifyUser();
   }, []);
 
+  useEffect(() => {
+    const updateWeather = async () => {
+      const weaterResponse = await getWeatherCondition();
+      setWeather(weaterResponse);
+    };
+    updateWeather();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ isLogged, username }}>
+    <AuthContext.Provider
+      value={{
+        isLogged,
+        username,
+        weather
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
