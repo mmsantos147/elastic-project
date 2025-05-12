@@ -250,7 +250,8 @@ public class ElasticsearchService {
     }
 
     private String treatContent(String content) {
-        content = content.replaceAll("</?(som|math)\\d*>", "");
+        content = content.replaceAll("</?(som|math|Math)\\d*>", "");
+        content = content.replaceAll("(?i)(?!</?strong>)<[^>]+>", "");
         content = content.replaceAll("[^A-Za-z\\s\\d]+", "");
         content = content.replaceAll("\\s+", " ");
         content = content.replaceAll("^\\s+", "");
