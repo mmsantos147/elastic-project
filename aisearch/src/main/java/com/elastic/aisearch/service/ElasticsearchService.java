@@ -185,7 +185,7 @@ public class ElasticsearchService {
                     hit.getScore(),
                     getStringValue(sourceAsMap, "url"),
                     getStringValue(sourceAsMap, "title"),
-                    content,
+                    treatContent(content),
                     getIntegerValue(sourceAsMap, "reading_time"),
                     getStringValue(sourceAsMap, "dt_creation"));
 
@@ -247,5 +247,13 @@ public class ElasticsearchService {
 
     private static String stripQuotes(String s) {
         return s.replaceAll("^\"|\"$", "");
+    }
+
+    private String treatContent(String content) {
+        content = content.replaceAll("</?(som|math)\\d*>", "");
+        content = content.replaceAll("[^A-Za-z\\s]+", "");
+        content = content.replaceAll("\\s+", " ");
+        content = content.replaceAll("^\\s+", "");
+        return content;
     }
 }
