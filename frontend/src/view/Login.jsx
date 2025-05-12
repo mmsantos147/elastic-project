@@ -7,14 +7,14 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useForm } from "antd/es/form/Form";
-import { useAuthService } from "../api/Authorization.api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthData } from "../context/AuthContext";
 
 const { useBreakpoint } = Grid;
 
 const Login = () => {
-  const { login } = useAuthService();
+  const { login } = useAuthData();
   const { t } = useTranslation();
   const [loginForm] = useForm();
   const screens = useBreakpoint();
