@@ -8,19 +8,13 @@ import { BsFillCloudSnowFill } from "react-icons/bs";
 import { BsCloudFog2Fill } from "react-icons/bs";
 import { FaCloudSun } from "react-icons/fa";
 import { useWeatherService } from "../../api/Weather.api";
+import { useAuthData } from "../../context/AuthContext";
 
 const { Text } = Typography;
 
 const WeatherReport = () => {
   const { getWeatherCondition } = useWeatherService();
-
-  const [weather, setWeather] = useState({
-    id: 804,
-    group: "Clouds",
-    city: "Alfenas",
-    temperature: 22,
-    description: "overcast clouds",
-  });
+  const { weather } = useAuthData();
 
   const weatherDescription = {
     Drizzle: <FaCloudSunRain style={{ fontSize: "20px", color: "#fff" }} />,
@@ -33,13 +27,7 @@ const WeatherReport = () => {
     Clouds: <FaCloudSun style={{ fontSize: "20px", color: "#fff" }} />,
   };
 
-  useEffect(() => {
-    const updateWeather = async () => {
-      const weaterResponse = await getWeatherCondition();
-      setWeather(weaterResponse);
-    };
-    updateWeather();
-  }, []);
+
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
