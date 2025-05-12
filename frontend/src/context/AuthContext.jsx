@@ -4,7 +4,7 @@ import { useAuthService } from "../api/Authorization.api";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const { verify } = useAuthService();
+  const { verify, login: apiLogin, logout: apiLogout } = useAuthService();
 
   const [isLogged, setIsLogged] = useState(false);
   const [username, setUsername] = useState("");
@@ -16,17 +16,14 @@ export const AuthProvider = ({ children }) => {
     description: "overcast clouds",
   });
 
+  const checkLogin = async () => {
+    const data = await verify();
+    setIsLogged(data.logged);
+    setUsername(data.logged ? data.username : "");
+  };
+
   useEffect(() => {
-    const verifyUser = async () => {
-      const data = await verify();
-
-      if (data.logged) {
-        setIsLogged(data.logged);
-        setUsername(data.username);
-      }
-    };
-
-    verifyUser();
+    checkLogin();
   }, []);
 
   useEffect(() => {
@@ -37,12 +34,27 @@ export const AuthProvider = ({ children }) => {
     updateWeather();
   }, []);
 
+  const login = async (credentials) => {
+    const response = await apiLogin(credentials);
+    if (response.success) {
+      await checkLogin();
+    }
+    return response;
+  };
+
+  const logout = async () => {
+    await apiLogout();
+    await checkLogin();
+  };
+
   return (
     <AuthContext.Provider
       value={{
         isLogged,
         username,
-        weather
+        weather,
+        login,
+        logout
       }}
     >
       {children}
