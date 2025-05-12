@@ -56,9 +56,10 @@ const AppContent = () => {
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/search" element={<Search />} />
+              <Route path="/tips" element={<Tips />} />
+
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/tips" element={<Tips />} />
             </Routes>
           </BrowserRouter>
           <DefaultFooter />

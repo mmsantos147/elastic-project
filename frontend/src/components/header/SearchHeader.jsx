@@ -82,9 +82,7 @@ const SearchHeader = ({
             </Link>
           </Col>
           <Col>
-            <AuthProvider>
-              <SideInfoMenu />
-            </AuthProvider>
+            <SideInfoMenu />
           </Col>
         </Row>
         <Col style={{ marginTop: "10px" }}>
@@ -132,9 +130,7 @@ const SearchHeader = ({
         </SearchWrapper>
       </SearchCol>
       <AuthCol>
-        <AuthProvider>
-          <SideInfoMenu />
-        </AuthProvider>
+        <SideInfoMenu />
       </AuthCol>
     </StyledHeaderRow>
   );

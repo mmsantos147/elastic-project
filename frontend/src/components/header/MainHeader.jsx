@@ -21,9 +21,7 @@ const MainHeader = () => {
     >
       <Col flex="auto" />
 
-      <AuthProvider>
-        <SideInfoMenu />
-      </AuthProvider>
+      <SideInfoMenu />
 
     </Header>
   );
