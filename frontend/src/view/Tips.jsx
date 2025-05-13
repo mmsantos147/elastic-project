@@ -37,19 +37,19 @@ export const Tips = () => {
     },
     {
       keyword: `created_at:N`,
-      description: t("created_at_1"),
+      description: <>{t("created_at_1")} <Text code>dd/MM/yyyy</Text>.</>,
     },
     {
       keyword: `created_at:>N`,
-      description: t("created_at_2"),
+      description: <>{t("created_at_2")} <Text code>dd/MM/yyyy</Text>.</>,
     },
     {
       keyword: `created_at:<N`,
-      description: t("created_at_3"),
+      description: <>{t("created_at_3")} <Text code>dd/MM/yyyy</Text>.</>,
     },
     {
       keyword: `created_at:N..M`,
-      description: t("created_at_4"),
+      description: <>{t("created_at_4")} <Text code>dd/MM/yyyy</Text>.</>,
     },
   ];
 
