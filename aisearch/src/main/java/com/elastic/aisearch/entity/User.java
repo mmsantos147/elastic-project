@@ -23,8 +23,12 @@ public class User {
     private String userName;
     private String email;
     private String password;
+
     @OneToMany(mappedBy = "user")
     private List<History> histories;
+
+    @OneToMany(mappedBy = "user")
+    private List<Favorite> favorites;
 
     public User(String userName, String email, String password) {
         this.userName = userName;
