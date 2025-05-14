@@ -72,7 +72,7 @@ const SearchIndex = ({ content }) => {
       <Row>
         <Col style={{ fontSize: "15px" }}>
           <FaCalendar style={{ verticalAlign: "middle", marginRight: "8px" }} />
-          {new Date(content.date).toLocaleDateString(i18n.language, {
+          {new Date(content.datetime).toLocaleDateString(i18n.language, {
             day: "2-digit",
             month: "long",
             year: "numeric",
