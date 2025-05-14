@@ -13,7 +13,7 @@ const SideMenu = styled(Content)`
   padding: 25px;
   background: rgba(0, 0, 0, 0.14);
   border-radius: 40px;
-  max-width: 50vw;
+  max-width: 800px;
   margin: 50px;
   position: sticky;
   top: 30px;
