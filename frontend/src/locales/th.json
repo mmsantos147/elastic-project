@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "นี่คือผลการค้นหาไม่ใช่โฆษณา มีการจ่ายเฉพาะโฆษณาเท่านั้นและจะถูกระบุด้วยเครื่องหมาย \"ผู้สนับสนุน\" หรือ \"โฆษณา\" เสมอ",
   "whatsapp": "Whatsapp",
   "facebook": "Facebook",
-  "twitter": "Twitter"
+  "twitter": "Twitter",
+  "these": "เหล่านี้",
+  "search_terms": "ข้อกำหนดการวิจัย",
+  "show_up_in_results": "ปรากฏในผลลัพธ์",
+  "the_results_is_on": "ผลลัพธ์อยู่ใน",
+  "english_american": "ภาษาอังกฤษ (อเมริกัน)",
+  "this_result_is_relevant_on": "ผลลัพธ์ดูเหมือนจะเกี่ยวข้องกับการวิจัยในประเทศนี้:",
+  "united_states": "สหรัฐอเมริกา",
+  "how_search_works_question": "การวิจัยทำงานอย่างไร?",
+  "tips_how_to_search": "เคล็ดลับเกี่ยวกับวิธีการค้นหา"
 }

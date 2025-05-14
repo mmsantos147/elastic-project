@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "Bu bir arama sonucu, bir reklam değil. Yalnızca reklamlar ödenir ve her zaman \"sponsorlu\" veya \"reklam\" işaretleyicisi ile tanımlanır.",
   "whatsapp": "Whatsapp",
   "facebook": "Facebook",
-  "twitter": "Twitter"
+  "twitter": "Twitter",
+  "these": "Bunlar",
+  "search_terms": "Araştırma Şartları",
+  "show_up_in_results": "Sonuçlarda görünmek",
+  "the_results_is_on": "Sonuç içinde",
+  "english_american": "İngilizce (Amerikan)",
+  "this_result_is_relevant_on": "Sonuç, bu ülkedeki araştırmalarla ilgili görünüyor:",
+  "united_states": "Amerika",
+  "how_search_works_question": "Araştırma nasıl çalışır?",
+  "tips_how_to_search": "Bir arama nasıl yapılacağına dair ipuçları"
 }

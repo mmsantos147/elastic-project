@@ -7,6 +7,7 @@ import {
 import COLORS from "../../../colors";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const { Paragraph } = Typography;
 
@@ -46,21 +47,22 @@ const UnderlineDotted = styled.strong`
 `;
 
 export const WhyIndexed = () => {
+  const { t } = useTranslation();
+  
   return (
     <WhyIndexModal>
       <WhyIndexList>
         <WhyIndexItem>
-          Estes <UnderlineDotted>termos de pesquisa</UnderlineDotted> aparecem
-          no resultado: <strong>Lorem</strong>, <strong>ipsum</strong>,{" "}
+          {t("these")}{" "}<UnderlineDotted>{t("search_terms")}</UnderlineDotted>{" "}{t("show_up_in_results")}: <strong>Lorem</strong>, <strong>ipsum</strong>,{" "}
           <strong>dolor</strong>
         </WhyIndexItem>
         <WhyIndexItem>
-          O resultado está em{" "}
-          <UnderlineDotted>Inglês (americano)</UnderlineDotted>
+          {t("the_results_is_on")}{" "}
+          <UnderlineDotted>{t("english_american")}</UnderlineDotted>
         </WhyIndexItem>
         <WhyIndexItem>
-          O resultado parece ser relevante para pesquisas neste país:{" "}
-          <UnderlineDotted>Estados Unidos</UnderlineDotted>
+          {t("this_result_is_relevant_on")}{" "}
+          <UnderlineDotted>{t("united_states")}</UnderlineDotted>
         </WhyIndexItem>
       </WhyIndexList>
       <Paragraph style={{ fontSize: "16px", marginBottom: "0px" }}>
@@ -71,7 +73,7 @@ export const WhyIndexed = () => {
                 style={{ margin: "0px 20px 0px 20px", fontSize: "19px" }}
               />
               <strong style={{ fontSize: "15px" }}>
-                Como que a pesquisa funciona ?
+                {t("how_search_works_question")}
               </strong>
             </Col>
             <Col>
@@ -89,7 +91,7 @@ export const WhyIndexed = () => {
                 style={{ margin: "0px 20px 0px 20px", fontSize: "19px" }}
               />
               <strong style={{ fontSize: "15px" }}>
-                Dicas de como fazer uma pesquisa
+                {t("tips_how_to_search")}
               </strong>
             </Col>
             <Col>

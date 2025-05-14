@@ -129,11 +129,20 @@
   "share": "Поділитися",
   "save_result": "Збережіть результат",
   "report_result": "Результат звіту",
-  "feedback": "Зворотний зв'язок",
+  "feedback": "Відгук",
   "visit_the_site": "Відвідайте сайт",
   "your_search_about_this_result": "Ваші дослідження щодо цього результату",
   "this_result_is_not_an_ad": "Це результат пошуку, а не оголошення. Оплата лише оголошення, і вони завжди ототожнюються з маркером \"спонсорованого\" або \"AD\".",
   "whatsapp": "WhatsApp",
   "facebook": "Facebook",
-  "twitter": "Твіттер"
+  "twitter": "Твіттер",
+  "these": "Ці",
+  "search_terms": "Умови дослідження",
+  "show_up_in_results": "З'являються в результатах",
+  "the_results_is_on": "Результат -",
+  "english_american": "Англійська (американська)",
+  "this_result_is_relevant_on": "Результат, здається, має значення для досліджень у цій країні:",
+  "united_states": "США",
+  "how_search_works_question": "Як працює дослідження?",
+  "tips_how_to_search": "Поради щодо того, як зробити пошук"
 }

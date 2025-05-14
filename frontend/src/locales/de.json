@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "Dies ist ein Suchergebnis, keine Anzeige. Es werden nur Anzeigen bezahlt und immer mit dem Marker \"gesponsert\" oder \"Anzeigen\" identifiziert.",
   "whatsapp": "WhatsApp",
   "facebook": "Facebook",
-  "twitter": "Twitter"
+  "twitter": "Twitter",
+  "these": "Diese",
+  "search_terms": "Forschungsbegriffe",
+  "show_up_in_results": "Erscheinen in den Ergebnissen",
+  "the_results_is_on": "Das Ergebnis ist in",
+  "english_american": "Englisch (Amerikaner)",
+  "this_result_is_relevant_on": "Das Ergebnis scheint für die Forschung in diesem Land relevant zu sein:",
+  "united_states": "USA",
+  "how_search_works_question": "Wie funktioniert die Forschung?",
+  "tips_how_to_search": "Tipps zum Durchführen einer Suche"
 }

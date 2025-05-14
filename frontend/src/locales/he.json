@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "זוהי תוצאת חיפוש, ולא מודעה. רק מודעות משולמות והם תמיד מזוהים עם הסמן \"ממומן\" או \"מודעה\".",
   "whatsapp": "WhatsApp",
   "facebook": "פייסבוק",
-  "twitter": "לְצַפְצֵף"
+  "twitter": "לְצַפְצֵף",
+  "these": "אֵלֶה",
+  "search_terms": "מונחי מחקר",
+  "show_up_in_results": "מופיעים בתוצאות",
+  "the_results_is_on": "התוצאה היא ב",
+  "english_american": "אנגלית (אמריקאית)",
+  "this_result_is_relevant_on": "נראה שהתוצאה רלוונטית למחקר במדינה זו:",
+  "united_states": "אַרצוֹת הַבְּרִית",
+  "how_search_works_question": "איך המחקר עובד?",
+  "tips_how_to_search": "טיפים כיצד לבצע חיפוש"
 }

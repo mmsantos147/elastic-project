@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "هذه نتيجة بحث ، وليس إعلانًا. يتم دفع الإعلانات فقط ويتم تحديدها دائمًا مع علامة \"الدعاء\" أو \"AD\".",
   "whatsapp": "Whatsapp",
   "facebook": "فيسبوك",
-  "twitter": "تغريد"
+  "twitter": "تغريد",
+  "these": "هؤلاء",
+  "search_terms": "شروط البحث",
+  "show_up_in_results": "تظهر في النتائج",
+  "the_results_is_on": "النتيجة في",
+  "english_american": "اللغة الإنجليزية (أمريكية)",
+  "this_result_is_relevant_on": "يبدو أن النتيجة ذات صلة بالبحث في هذا البلد:",
+  "united_states": "الولايات المتحدة الأمريكية",
+  "how_search_works_question": "كيف يعمل البحث؟",
+  "tips_how_to_search": "نصائح حول كيفية إجراء البحث"
 }

@@ -44,8 +44,6 @@ export const IndexResultMenu = () => {
   const { isLogged } = useAuthData();
   const [ modalOpen, setModalOpen ] = useState(false);
 
-
-
   return (
     <>
       <Row

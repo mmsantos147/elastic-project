@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "Detta är ett sökresultat, inte en annons. Endast annonser betalas och de identifieras alltid med den \"sponsrade\" eller \"AD\" -markören.",
   "whatsapp": "Whatsapp",
   "facebook": "Facebook",
-  "twitter": "Kvittra"
+  "twitter": "Kvittra",
+  "these": "Dessa",
+  "search_terms": "Forskningsvillkor",
+  "show_up_in_results": "Visas i resultaten",
+  "the_results_is_on": "Resultatet är i",
+  "english_american": "Engelska (amerikan)",
+  "this_result_is_relevant_on": "Resultatet verkar vara relevant för forskning i detta land:",
+  "united_states": "Usa",
+  "how_search_works_question": "Hur fungerar forskningen?",
+  "tips_how_to_search": "Tips om hur man gör en sökning"
 }

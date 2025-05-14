@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "This is a search result, not an ad. Only ads are paid and they are always identified with the \"sponsored\" or \"ad\" marker.",
   "whatsapp": "WhatsApp",
   "facebook": "Facebook",
-  "twitter": "Twitter"
+  "twitter": "Twitter",
+  "these": "Estes",
+  "search_terms": "Research Terms",
+  "show_up_in_results": "APPEAR IN THE RESULTS",
+  "the_results_is_on": "The result is in",
+  "english_american": "English (American)",
+  "this_result_is_relevant_on": "The result seems to be relevant to research in this country:",
+  "united_states": "USA",
+  "how_search_works_question": "How does the research work?",
+  "tips_how_to_search": "Tips on how to do a search"
 }

@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "Ceci est un résultat de recherche, pas une annonce. Seules les annonces sont payées et elles sont toujours identifiées avec le marqueur \"sponsorisé\" ou \"AD\".",
   "whatsapp": "Whatsapp",
   "facebook": "Facebook",
-  "twitter": "Gazouillement"
+  "twitter": "Gazouillement",
+  "these": "Ces",
+  "search_terms": "Conditions de recherche",
+  "show_up_in_results": "Apparaissent dans les résultats",
+  "the_results_is_on": "Le résultat est en",
+  "english_american": "Anglais (américain)",
+  "this_result_is_relevant_on": "Le résultat semble être pertinent pour la recherche dans ce pays:",
+  "united_states": "USA",
+  "how_search_works_question": "Comment fonctionne la recherche?",
+  "tips_how_to_search": "Conseils sur la façon de faire une recherche"
 }

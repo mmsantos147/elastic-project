@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "To jest wynik wyszukiwania, a nie reklama. Tylko reklamy są opłacane i zawsze identyfikują się ze znacznikiem „sponsorowanego” lub „reklamy”.",
   "whatsapp": "WhatsApp",
   "facebook": "Facebook",
-  "twitter": "Świergot"
+  "twitter": "Świergot",
+  "these": "Te",
+  "search_terms": "Warunki badawcze",
+  "show_up_in_results": "Pojawiają się w wynikach",
+  "the_results_is_on": "Wynik jest w",
+  "english_american": "Angielski (amerykański)",
+  "this_result_is_relevant_on": "Wynik wydaje się być istotny dla badań w tym kraju:",
+  "united_states": "USA",
+  "how_search_works_question": "Jak działa badania?",
+  "tips_how_to_search": "Wskazówki dotyczące wyszukiwania"
 }

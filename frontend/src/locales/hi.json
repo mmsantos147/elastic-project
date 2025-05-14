@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "यह एक खोज परिणाम है, एक विज्ञापन नहीं। केवल विज्ञापन का भुगतान किया जाता है और उन्हें हमेशा \"प्रायोजित\" या \"विज्ञापन\" मार्कर के साथ पहचाना जाता है।",
   "whatsapp": "WhatsApp",
   "facebook": "फेसबुक",
-  "twitter": "ट्विटर"
+  "twitter": "ट्विटर",
+  "these": "इन",
+  "search_terms": "अनुसंधान शर्तें",
+  "show_up_in_results": "परिणामों में दिखाई देते हैं",
+  "the_results_is_on": "परिणाम है",
+  "english_american": "अंग्रेजी (अमेरिकी)",
+  "this_result_is_relevant_on": "परिणाम इस देश में अनुसंधान के लिए प्रासंगिक प्रतीत होता है:",
+  "united_states": "यूएसए",
+  "how_search_works_question": "शोध कैसे काम करता है?",
+  "tips_how_to_search": "खोज करने के तरीके पर टिप्स"
 }

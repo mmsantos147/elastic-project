@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "Đây là một kết quả tìm kiếm, không phải là một quảng cáo. Chỉ quảng cáo được thanh toán và chúng luôn được xác định với điểm đánh dấu \"được tài trợ\" hoặc \"quảng cáo\".",
   "whatsapp": "WhatsApp",
   "facebook": "Facebook",
-  "twitter": "Twitter"
+  "twitter": "Twitter",
+  "these": "Những cái này",
+  "search_terms": "Điều khoản nghiên cứu",
+  "show_up_in_results": "Xuất hiện trong kết quả",
+  "the_results_is_on": "Kết quả là ở",
+  "english_american": "Tiếng Anh (người Mỹ)",
+  "this_result_is_relevant_on": "Kết quả dường như có liên quan đến nghiên cứu ở đất nước này:",
+  "united_states": "Hoa Kỳ",
+  "how_search_works_question": "Nghiên cứu hoạt động như thế nào?",
+  "tips_how_to_search": "Mẹo về cách thực hiện tìm kiếm"
 }

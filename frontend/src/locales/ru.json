@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "Это результат поиска, а не объявление. Только реклама оплачивается, и они всегда идентифицируются с «спонсируемым» или «рекламным» маркером.",
   "whatsapp": "WhatsApp",
   "facebook": "Facebook",
-  "twitter": "Twitter"
+  "twitter": "Twitter",
+  "these": "Эти",
+  "search_terms": "Исследовательские термины",
+  "show_up_in_results": "Появляться в результатах",
+  "the_results_is_on": "Результат в",
+  "english_american": "Английский (американский)",
+  "this_result_is_relevant_on": "Результат, по -видимому, имеет отношение к исследованиям в этой стране:",
+  "united_states": "США",
+  "how_search_works_question": "Как работает исследование?",
+  "tips_how_to_search": "Советы о том, как выполнить поиск"
 }

@@ -135,5 +135,14 @@
   "this_result_is_not_an_ad": "これは広告ではなく検索結果です。広告のみが支払われ、それらは常に「スポンサー」または「広告」マーカーで識別されます。",
   "whatsapp": "whatsapp",
   "facebook": "Facebook",
-  "twitter": "ツイッター"
+  "twitter": "ツイッター",
+  "these": "これら",
+  "search_terms": "研究条件",
+  "show_up_in_results": "結果に表示されます",
+  "the_results_is_on": "結果は次のとおりです",
+  "english_american": "英語（アメリカ）",
+  "this_result_is_relevant_on": "結果は、この国での研究に関連しているようです。",
+  "united_states": "アメリカ合衆国",
+  "how_search_works_question": "研究はどのように機能しますか？",
+  "tips_how_to_search": "検索方法のヒント"
 }
