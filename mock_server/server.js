@@ -211,8 +211,8 @@ app.post("/v1/search", (req, res) => {
 
 app.post("/v1/user/verify", (req, res) => {
   const response = {
-    username: "username",
     logged: true,
+    username: "username"
   };
 
   return res.status(200).json(response);
