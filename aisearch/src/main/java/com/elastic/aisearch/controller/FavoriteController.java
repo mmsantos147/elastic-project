@@ -1,6 +1,7 @@
 package com.elastic.aisearch.controller;
 
 import com.elastic.aisearch.dto.FavoriteDTO;
+import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.entity.Favorite;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.FavoriteService;
@@ -44,13 +45,13 @@ public class FavoriteController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> setFavorite(@RequestBody FavoriteDTO favoriteDTO) {
+    public ResponseEntity<SuccessMessageDTO> setFavorite(@RequestBody FavoriteDTO favoriteDTO) {
         return ResponseEntity.ok().body(favoriteService.addFavorite(userSession.getUserId(), favoriteDTO));
     }
 
-    @PostMapping(path = "/{id}")
-    public ResponseEntity<?> removeFavorite(@PathVariable Integer id) {
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<SuccessMessageDTO> removeFavorite(@PathVariable Integer id) {
         favoriteService.deleteFavoriteById(id);
-        return ResponseEntity.ok().body("success_remove");
+        return ResponseEntity.ok().body(new SuccessMessageDTO("success_remove"));
     }
 }
