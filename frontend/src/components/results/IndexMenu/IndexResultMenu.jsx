@@ -9,6 +9,8 @@ import wikipediaLogo from "../../../assets/wikipedia_icon.png";
 import styled from "styled-components";
 import { useSearchData } from "../../../context/SearchContext";
 import { ApplyHighlighter } from "../ApplyHighlighter";
+import { useEffect, useState } from "react";
+import { ShareModal } from "./ShareModal";
 
 const { Text, Paragraph } = Typography;
 
@@ -32,6 +34,7 @@ const ImageLogo = styled.img`
 
 export const IndexResultMenu = () => {
   const { setIsIndexMenuOpen, indexMenuContent } = useSearchData();
+  const [ modalOpen, setModalOpen ] = useState(false);
 
   return (
     <>
@@ -81,15 +84,17 @@ export const IndexResultMenu = () => {
       </IndexResume>
 
       <Row style={{ display: "flex", justifyContent: "space-between" }}>
-        <OptionButton>
-          <ShareAltOutlined /> Compartilhar
+        <OptionButton onClick={() => {setModalOpen(true)}}>
+          <ShareAltOutlined/>Compartilhar
         </OptionButton>
         <OptionButton>
-          <StarOutlined /> Salvar resultado
+          <StarOutlined />Salvar resultado
         </OptionButton>
         <OptionButton>Denunciar resultado</OptionButton>
         <OptionButton>Feedback</OptionButton>
       </Row>
+
+      <ShareModal open={modalOpen} setOpen={setModalOpen} url={indexMenuContent.url} />
     </>
   );
 };
