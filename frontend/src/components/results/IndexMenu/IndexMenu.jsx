@@ -6,16 +6,21 @@ import { IndexResultMenu } from "./IndexResultMenu";
 import { AboutTheFont } from "./AboutTheFont";
 import { WhyIndexed } from "./WhyIndexed";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 const { Paragraph } = Typography;
 
 const SideMenu = styled(Content)`
-    padding: 25px;
-    background: rgba(0, 0, 0, 0.14);
-    border-radius: 40px;
-    maxWidth: 700px;
-    margin: 50px;
-    height: 100%;
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.14);
+  border-radius: 40px;
+  max-width: 50vw;
+  margin: 50px;
+  position: sticky;
+  top: 30px;
+  align-self: flex-start;
+  max-height: calc(100vh + 30px);
+  overflow-y: auto;
 `
 
 const SideMenuFooter = styled(Paragraph)`
@@ -37,8 +42,20 @@ const TitleParagraph = styled(Paragraph)`
 `
 
 export const IndexMenu = () => {
+  const [scrollY, setScrollY] = useState();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+  
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  
+  
   return (
-    <SideMenu>
+    <SideMenu down={scrollY}>
       <IndexResultMenu />
 
       <DividerMarginBottom />

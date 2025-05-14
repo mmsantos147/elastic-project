@@ -4,8 +4,10 @@ import { SlOptionsVertical } from "react-icons/sl";
 import wikipediaLogo from "../../assets/wikipedia_icon.png";
 import COLORS from "../../colors";
 import { useTranslation } from "react-i18next";
+import { useSearchData } from "../../context/SearchContext";
 
-const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
+const SearchIndex = ({ content }) => {
+  const { setIndexMenuContent, setIsIndexMenuOpen } = useSearchData();
   const { t, i18n } = useTranslation();
 
   return (
@@ -19,7 +21,7 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
           />
         </Col>
         <Col>
-          <a href={url}>
+          <a href={content.url}>
             <Row
               style={{
                 color: COLORS.white,
@@ -31,25 +33,23 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
             </Row>
           </a>
           <Row style={{ marginBottom: "6px", fontSize: "12px" }}>
-            <a href={url}>
+            <a href={content.url}>
               <div style={{ color: COLORS.white, marginRight: "20px" }}>
-                {url}
+                {content.url}
               </div>
             </a>
             <SlOptionsVertical
               style={{ color: COLORS.white, cursor: "pointer" }}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
+              onClick={() => {setIndexMenuContent(content); setIsIndexMenuOpen(true);}}
             />
           </Row>
         </Col>
       </Row>
       <Row style={{ fontSize: "22px", marginBottom: "5px" }}>
-        <a style={{ color: COLORS.purple }} href={url}>
+        <a style={{ color: COLORS.purple }} href={content.url}>
           <div
             style={{ fontSize: "22px", marginBottom: "5px" }}
-            dangerouslySetInnerHTML={{ __html: title }}
+            dangerouslySetInnerHTML={{ __html: content.title }}
           />
         </a>
       </Row>
@@ -63,13 +63,13 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
             textAlign: "justify",
             width: "100%",
           }}
-          dangerouslySetInnerHTML={{ __html: content + "..." }}
+          dangerouslySetInnerHTML={{ __html: content.content + "..." }}
         />
       </Row>
       <Row>
         <Col style={{ fontSize: "15px" }}>
           <FaCalendar style={{ verticalAlign: "middle", marginRight: "8px" }} />
-          {new Date(date).toLocaleDateString(i18n.language, {
+          {new Date(content.date).toLocaleDateString(i18n.language, {
             day: "2-digit",
             month: "long",
             year: "numeric",
@@ -78,7 +78,7 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
         <Col flex="auto" />
         <Col style={{ fontSize: "15px" }}>
           <FaClock style={{ verticalAlign: "middle", marginRight: "8px" }} />
-          {t("approximate_small")}. {readingTime} {t("minutes")}
+          {t("approximate_small")}. {content.readingTime} {t("minutes")}
         </Col>
       </Row>
     </div>

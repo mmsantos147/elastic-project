@@ -28,6 +28,10 @@ export const SearchProvider = ({ children }) => {
   const [currentAiAbstract, setCurrenctAiAbstract] = useState({});
 
   const [currentRequestId, setCurrentRequestId] = useState();
+
+  const [isIndexMenuOpen, setIsIndexMenuOpen] = useState(false);
+  const [indexMenuContent, setIndexMenuContent] = useState({});
+  
   const [searchData, setSearchData] = useState({
     search: initialSearch,
     page: 1,
@@ -157,6 +161,12 @@ export const SearchProvider = ({ children }) => {
 
         setIsProcessingAiAbstract,
         isProcessingAiAbstract,
+
+        isIndexMenuOpen,
+        setIsIndexMenuOpen,
+
+        indexMenuContent,
+        setIndexMenuContent
       }}
     >
       {children}

@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import wikipediaLogo from "../../../assets/wikipedia_icon.png";
 import styled from "styled-components";
+import { useSearchData } from "../../../context/SearchContext";
 
 const { Text, Paragraph } = Typography;
 
@@ -29,6 +30,8 @@ const ImageLogo = styled.img`
 `
 
 export const IndexResultMenu = () => {
+  const { setIsIndexMenuOpen, indexMenuContent } = useSearchData();
+  
   return (
     <>
       <Row
@@ -41,7 +44,7 @@ export const IndexResultMenu = () => {
         <ImageLogo src={wikipediaLogo}/>
         <Text style={{ fontSize: "18px" }}>Wikipédia</Text>
         <Col flex="auto" />
-        <CloseOutlined style={{ fontSize: "20px" }} />
+        <CloseOutlined style={{ fontSize: "20px" }} onClick={() => {setIsIndexMenuOpen(false)}}/>
       </Row>
 
       <Row
@@ -51,7 +54,7 @@ export const IndexResultMenu = () => {
           marginBottom: "20px",
         }}
       >
-        <Text style={{ fontSize: "22px" }}>Título da página</Text>
+        <Text style={{ fontSize: "22px" }}>{indexMenuContent.title}</Text>
         <Col flex="auto" />
         <Button
           type="primary"
@@ -66,11 +69,7 @@ export const IndexResultMenu = () => {
       </Row>
 
       <IndexResume>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod debitis
-        ea mollitia ullam accusamus dolorum quibusdam modi, voluptatibus totam,
-        et corrupti? In corporis non ut. Cum mollitia sed itaque modi. Lorem
-        ipsum, dolor sit amet consectetur adipisicing elit. Fugiat voluptatibus
-        nobis...
+        {indexMenuContent.content}
       </IndexResume>
 
       <Row style={{ display: "flex", justifyContent: "space-between" }}>

@@ -31,12 +31,7 @@ const SearchResults = () => {
           {searchResults.results.map((result) => (
             <SearchIndex
               key={result.id}
-              id={result.id}
-              url={result.url}
-              title={result.title}
-              content={result.content}
-              readingTime={result.reading_time}
-              date={result.datetime}
+              content={result}
             />
           ))}
         </Row>
