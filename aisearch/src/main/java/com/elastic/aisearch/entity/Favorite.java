@@ -22,6 +22,8 @@ public class Favorite {
 
     private String title;
     private String url;
+
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
     @Column(name = "reading_time")
     private Integer readingTime;
