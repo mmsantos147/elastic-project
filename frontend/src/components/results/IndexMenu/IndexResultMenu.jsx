@@ -77,7 +77,7 @@ export const IndexResultMenu = () => {
       </Row>
 
       <IndexResume>
-        <ApplyHighlighter text={indexMenuContent.content} />
+        <ApplyHighlighter text={indexMenuContent.content} /> ...
       </IndexResume>
 
       <Row style={{ display: "flex", justifyContent: "space-between" }}>

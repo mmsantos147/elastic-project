@@ -66,7 +66,7 @@ const SearchIndex = ({ content }) => {
             width: "100%",
           }}
         >
-          <ApplyHighlighter text={content.content} />
+          <ApplyHighlighter text={content.content} />...
         </p>
       </Row>
       <Row>
