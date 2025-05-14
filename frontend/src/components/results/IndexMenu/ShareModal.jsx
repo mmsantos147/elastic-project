@@ -38,13 +38,13 @@ export const ShareModal = ({ open, setOpen, url }) => {
       width={300}
     >
       <ShareOptionsContainer>
-        <Link to={`https://www.facebook.com/sharer/sharer.php?u=${url}`} target="_blank">
+        <Link to={`https://api.whatsapp.com/send?text=${url}`} target="_blank">
           <ShareOption>
             <BsWhatsapp /> WhatsApp
           </ShareOption>
         </Link>
 
-        <Link to={`https://api.whatsapp.com/send?text=${url}`} target="_blank">
+        <Link to={`https://www.facebook.com/sharer/sharer.php?u=${url}`} target="_blank">
           <ShareOption>
             <BsFacebook /> Facebook
           </ShareOption>
