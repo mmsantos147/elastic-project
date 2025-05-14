@@ -81,7 +81,7 @@ const SearchIndex = ({ content }) => {
         <Col flex="auto" />
         <Col style={{ fontSize: "15px" }}>
           <FaClock style={{ verticalAlign: "middle", marginRight: "8px" }} />
-          {t("approximate_small")}. {content.readingTime} {t("minutes")}
+          {t("approximate_small")}. {content.reading_time} {t("minutes")}
         </Col>
       </Row>
     </div>
