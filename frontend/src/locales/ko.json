@@ -121,5 +121,19 @@
   "smart_search_example_3": "5 분 이상 독서가 있습니다",
   "smart_search_example_4": "\"코스\"라는 단어를 언급하지 마십시오.",
   "tips_footer": "결과가 너무 넓어지면 항상 간단한 용어로 시작하고 필터로 개선하십시오.",
-  "more_information": "더 많은 정보"
+  "more_information": "더 많은 정보",
+  "wikipedia_description": "Wikipedia는 2001 년에 제작 된 무료 온라인 온라인 백과 사전으로 Wikimedia Foundation에서 유지하고 전 세계 자원 봉사자들이 작성합니다. 인터넷에 액세스 할 수있는 사람은 누구나 기사를 편집 할 수 있습니다. 여러 언어로 제공되며 다양한 과목을 다룹니다. 내용은 신뢰할 수있는 출처 및 검증 가능성 정책을 기반으로합니다. 인터넷에서 가장 크고 가장 많이 액세스 한 정보 소스 중 하나입니다.",
+  "site": "대지",
+  "about_the_font": "소스를 통해",
+  "share_the_result": "결과를 공유하십시오",
+  "share": "공유합니다",
+  "save_result": "결과를 저장하십시오",
+  "report_result": "보고서 결과",
+  "feedback": "피드백",
+  "visit_the_site": "사이트를 방문하십시오",
+  "your_search_about_this_result": "이 결과에 대한 귀하의 연구",
+  "this_result_is_not_an_ad": "이것은 광고가 아닌 검색 결과입니다. 광고 만 지불되며 항상 \"스폰서\"또는 \"AD\"마커로 식별됩니다.",
+  "whatsapp": "whatsapp",
+  "facebook": "페이스 북",
+  "twitter": "지저귀다"
 }

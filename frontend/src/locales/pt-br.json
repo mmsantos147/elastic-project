@@ -121,5 +121,19 @@
     "smart_search_example_3": "Tenham mais de 5 minutos de leitura",
     "smart_search_example_4": "Não mencionem a palavra \"curso\"",
     "tips_footer": "Tente sempre começar com termos simples e ir refinando com filtros se os resultados forem muito amplos",
-    "more_information": "Mais informações"
+    "more_information": "Mais informações",
+    "wikipedia_description": "A Wikipédia é uma enciclopédia online colaborativa e gratuita, criada em 2001. É mantida pela Fundação Wikimedia e escrita por voluntários ao redor do mundo. Qualquer pessoa com acesso à internet pode editar seus artigos. Está disponível em diversos idiomas e cobre uma ampla variedade de assuntos. Seu conteúdo é baseado em fontes confiáveis e políticas de verificabilidade. É uma das maiores e mais acessadas fontes de informação da internet.",
+    "site": "Site",
+    "about_the_font": "Sobre a fonte",
+    "share_the_result": "Compartilhar o resultado",
+    "share": "Compartilhar",
+    "save_result": "Salvar o resultado",
+    "report_result": "Reportar resultado",
+    "feedback": "Feedback",
+    "visit_the_site": "Visitar o site",
+    "your_search_about_this_result": "Sua pesquisa sobre esse resultado",
+    "this_result_is_not_an_ad": "Esse é um resultado de pesquisa, não um anúncio. Apenas os anúncios são pagos e eles sempre são identificados com o marcador \"Patrocinado\" ou \"Anúncio\".",
+    "whatsapp": "WhatsApp",
+    "facebook": "Facebook",
+    "twitter": "Twitter"
 } 

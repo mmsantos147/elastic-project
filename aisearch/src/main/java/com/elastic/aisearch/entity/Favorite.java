@@ -25,6 +25,7 @@ public class Favorite {
 
     @Column(columnDefinition = "LONGTEXT")
     private String content;
+    
     @Column(name = "reading_time")
     private Integer readingTime;
     private LocalDate date;

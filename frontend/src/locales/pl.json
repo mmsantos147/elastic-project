@@ -121,5 +121,19 @@
   "smart_search_example_3": "Mieć ponad 5 minut czytania",
   "smart_search_example_4": "Nie wspominaj słowa „kurs”",
   "tips_footer": "Zawsze staraj się zacząć od prostych warunków i udoskonalić filtry, jeśli wyniki są zbyt szerokie",
-  "more_information": "Więcej informacji"
+  "more_information": "Więcej informacji",
+  "wikipedia_description": "Wikipedia to bezpłatna i współpracująca encyklopedia online, utworzona w 2001 roku. Jest utrzymywana przez Fundację Wikimedia i napisana przez wolontariuszy na całym świecie. Każdy, kto ma dostęp do Internetu, może edytować swoje artykuły. Jest dostępny w kilku językach i obejmuje szeroką gamę przedmiotów. Jego treść opiera się na wiarygodnych źródłach i zasadach weryfikowalności. Jest to jedno z największych i najczęściej dostępnych źródeł informacji w Internecie.",
+  "site": "Strona",
+  "about_the_font": "Nad źródłem",
+  "share_the_result": "Udostępnij wynik",
+  "share": "Dzielić się",
+  "save_result": "Zapisz wynik",
+  "report_result": "Raport Wynik",
+  "feedback": "Informacja zwrotna",
+  "visit_the_site": "Odwiedź stronę",
+  "your_search_about_this_result": "Twoje badania nad tym wynikiem",
+  "this_result_is_not_an_ad": "To jest wynik wyszukiwania, a nie reklama. Tylko reklamy są opłacane i zawsze identyfikują się ze znacznikiem „sponsorowanego” lub „reklamy”.",
+  "whatsapp": "WhatsApp",
+  "facebook": "Facebook",
+  "twitter": "Świergot"
 }

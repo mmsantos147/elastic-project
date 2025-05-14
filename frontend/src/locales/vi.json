@@ -121,5 +121,19 @@
   "smart_search_example_3": "Có hơn 5 phút đọc",
   "smart_search_example_4": "Không đề cập đến từ \"khóa học\"",
   "tips_footer": "Luôn cố gắng bắt đầu với các thuật ngữ đơn giản và tinh chỉnh với các bộ lọc nếu kết quả quá rộng",
-  "more_information": "Thêm thông tin"
+  "more_information": "Thêm thông tin",
+  "wikipedia_description": "Wikipedia là một bách khoa toàn thư trực tuyến miễn phí và hợp tác, được tạo ra vào năm 2001. Nó được duy trì bởi Tổ chức Wikimedia và được viết bởi các tình nguyện viên trên khắp thế giới. Bất cứ ai có truy cập Internet đều có thể chỉnh sửa bài viết của họ. Nó có sẵn bằng một số ngôn ngữ và bao gồm nhiều đối tượng khác nhau. Nội dung của nó dựa trên các nguồn đáng tin cậy và các chính sách xác minh. Đây là một trong những nguồn thông tin lớn nhất và được truy cập nhiều nhất trên Internet.",
+  "site": "Địa điểm",
+  "about_the_font": "Qua nguồn",
+  "share_the_result": "Chia sẻ kết quả",
+  "share": "Để chia sẻ",
+  "save_result": "Lưu kết quả",
+  "report_result": "Báo cáo kết quả",
+  "feedback": "Nhận xét",
+  "visit_the_site": "Truy cập trang web",
+  "your_search_about_this_result": "Nghiên cứu của bạn về kết quả này",
+  "this_result_is_not_an_ad": "Đây là một kết quả tìm kiếm, không phải là một quảng cáo. Chỉ quảng cáo được thanh toán và chúng luôn được xác định với điểm đánh dấu \"được tài trợ\" hoặc \"quảng cáo\".",
+  "whatsapp": "WhatsApp",
+  "facebook": "Facebook",
+  "twitter": "Twitter"
 }

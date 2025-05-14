@@ -1,4 +1,5 @@
 import { Typography } from "antd";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 
@@ -19,21 +20,16 @@ const SectionDescription = styled(Paragraph)`
 `
 
 export const AboutTheFont = () => {
+  const {t} = useTranslation();
   return (
     <>
-      <SectionTitle>Sobre a fonte</SectionTitle>
+      <SectionTitle>{t("about_the_font")}</SectionTitle>
       <SiteTitle>
-        Wikipédia
+        {t("wikipedia")}
       </SiteTitle>
-      <Paragraph>Site</Paragraph>
+      <Paragraph>{t("site")}</Paragraph>
       <SectionDescription>
-        A Wikipédia é uma enciclopédia online colaborativa e gratuita, criada em
-        2001. É mantida pela Fundação Wikimedia e escrita por voluntários ao
-        redor do mundo. Qualquer pessoa com acesso à internet pode editar seus
-        artigos. Está disponível em diversos idiomas e cobre uma ampla variedade
-        de assuntos. Seu conteúdo é baseado em fontes confiáveis e políticas de
-        verificabilidade. É uma das maiores e mais acessadas fontes de
-        informação da internet.
+        {t("wikipedia_description")}
       </SectionDescription>
     </>
   );

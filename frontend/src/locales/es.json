@@ -121,5 +121,19 @@
   "smart_search_example_3": "Tener más de 5 minutos de lectura",
   "smart_search_example_4": "No mencione la palabra \"curso\"",
   "tips_footer": "Siempre trate de comenzar con términos simples y refinar con filtros si los resultados son demasiado amplios",
-  "more_information": "Más información"
+  "more_information": "Más información",
+  "wikipedia_description": "Wikipedia es una enciclopedia en línea gratuita y colaborativa, creada en 2001. Lo mantienen la Fundación Wikimedia y escrita por voluntarios de todo el mundo. Cualquier persona con acceso a Internet puede editar sus artículos. Está disponible en varios idiomas y cubre una amplia variedad de temas. Su contenido se basa en fuentes confiables y políticas de verificabilidad. Es una de las fuentes de información más grandes y accedidas en Internet.",
+  "site": "Sitio",
+  "about_the_font": "Sobre a fonte",
+  "share_the_result": "Compartir el resultado",
+  "share": "Para compartir",
+  "save_result": "Salvar o resultado",
+  "report_result": "Reportar resultado",
+  "feedback": "Comentario",
+  "visit_the_site": "Visitar o site",
+  "your_search_about_this_result": "Su investigación sobre este resultado",
+  "this_result_is_not_an_ad": "Este es un resultado de búsqueda, no un anuncio. Solo se pagan los anuncios y siempre se identifican con el marcador \"patrocinado\" o \"anuncio\".",
+  "whatsapp": "Whatsapp",
+  "facebook": "Facebook",
+  "twitter": "Gorjeo"
 }

@@ -14,6 +14,7 @@ import { ShareModal } from "./ShareModal";
 import { useNavigate } from "react-router-dom";
 import { useAuthData } from "../../../context/AuthContext";
 import { useFavoriteSearch } from "../../../api/Favorite.api";
+import { useTranslation } from "react-i18next";
 
 const { Text, Paragraph } = Typography;
 
@@ -36,6 +37,7 @@ const ImageLogo = styled.img`
 `;
 
 export const IndexResultMenu = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { setIsIndexMenuOpen, indexMenuContent } = useSearchData();
   const { favoriteItem } = useFavoriteSearch();
@@ -54,7 +56,7 @@ export const IndexResultMenu = () => {
         }}
       >
         <ImageLogo src={wikipediaLogo} />
-        <Text style={{ fontSize: "18px" }}>Wikipédia</Text>
+        <Text style={{ fontSize: "18px" }}>{t("wikipedia")}</Text>
         <Col flex="auto" />
         <CloseOutlined
           style={{ fontSize: "20px" }}
@@ -84,7 +86,7 @@ export const IndexResultMenu = () => {
           }}
           onClick={() => {window.location.href=indexMenuContent.url}}
         >
-          <strong>Visitar o site</strong> <RightOutlined />
+          <strong>{t("visit_the_site")}</strong> <RightOutlined />
         </Button>
       </Row>
 
@@ -94,13 +96,13 @@ export const IndexResultMenu = () => {
 
       <Row style={{ display: "flex", justifyContent: "space-between" }}>
         <OptionButton onClick={() => {setModalOpen(true)}}>
-          <ShareAltOutlined/>Compartilhar
+          <ShareAltOutlined/>{t("share")}
         </OptionButton>
         <OptionButton onClick={() => {isLogged ? favoriteItem(indexMenuContent) : navigate("/login");}}>
-          <StarOutlined/>Salvar resultado
+          <StarOutlined/>{t("save_result")}
         </OptionButton>
-        <OptionButton>Denunciar resultado</OptionButton>
-        <OptionButton>Feedback</OptionButton>
+        <OptionButton>{t("report_result")}</OptionButton>
+        <OptionButton>{t("Feedback")}</OptionButton>
       </Row>
 
       <ShareModal open={modalOpen} setOpen={setModalOpen} url={indexMenuContent.url} />

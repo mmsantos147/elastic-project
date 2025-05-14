@@ -121,5 +121,19 @@
   "smart_search_example_3": "阅读超过5分钟",
   "smart_search_example_4": "不要提到“课程”一词",
   "tips_footer": "如果结果太大",
-  "more_information": "更多信息"
+  "more_information": "更多信息",
+  "wikipedia_description": "Wikipedia是一个免费的协作在线百科全书，该百科全书于2001年创建。它由Wikimedia基金会维护，由世界各地的志愿者撰写。任何具有Internet访问的人都可以编辑他们的文章。它有几种语言可用，涵盖了各种各样的主题。它的内容基于可靠的来源和可验证性策略。它是Internet上最大，最访问的信息来源之一。",
+  "site": "地点",
+  "about_the_font": "越过来源",
+  "share_the_result": "分享结果",
+  "share": "分享",
+  "save_result": "保存结果",
+  "report_result": "报告结果",
+  "feedback": "反馈",
+  "visit_the_site": "访问网站",
+  "your_search_about_this_result": "您对此结果的研究",
+  "this_result_is_not_an_ad": "这是搜索结果，而不是广告。仅付费广告，并且始终用“赞助”或“ AD”标记识别。",
+  "whatsapp": "WhatsApp",
+  "facebook": "Facebook",
+  "twitter": "叽叽喳喳"
 }

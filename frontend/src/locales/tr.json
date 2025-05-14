@@ -121,5 +121,19 @@
   "smart_search_example_3": "5 dakikadan fazla okuma geçirin",
   "smart_search_example_4": "\"Kurs\" kelimesinden bahsetmeyin",
   "tips_footer": "Her zaman basit terimlerle başlamaya çalışın ve sonuçlar çok genişse filtrelerle rafine edin",
-  "more_information": "Daha Fazla Bilgi"
+  "more_information": "Daha Fazla Bilgi",
+  "wikipedia_description": "Wikipedia, 2001 yılında oluşturulan ücretsiz ve işbirlikçi bir çevrimiçi ansiklopedidir. Wikimedia Vakfı tarafından korunur ve dünyanın dört bir yanındaki gönüllüler tarafından yazılır. İnternet erişimi olan herkes makalelerini düzenleyebilir. Birkaç dilde mevcuttur ve çok çeşitli konuları kapsar. İçeriği güvenilir kaynaklara ve doğrulanabilirlik politikalarına dayanmaktadır. İnternetteki en büyük ve en erişilen bilgi kaynaklarından biridir.",
+  "site": "Alan",
+  "about_the_font": "Kaynağın üzerinde",
+  "share_the_result": "Sonucu paylaş",
+  "share": "Paylaşmak",
+  "save_result": "Sonucu kaydedin",
+  "report_result": "Rapor Sonucu",
+  "feedback": "Geri bildirim",
+  "visit_the_site": "Siteyi ziyaret edin",
+  "your_search_about_this_result": "Bu sonuç hakkındaki araştırmanız",
+  "this_result_is_not_an_ad": "Bu bir arama sonucu, bir reklam değil. Yalnızca reklamlar ödenir ve her zaman \"sponsorlu\" veya \"reklam\" işaretleyicisi ile tanımlanır.",
+  "whatsapp": "Whatsapp",
+  "facebook": "Facebook",
+  "twitter": "Twitter"
 }

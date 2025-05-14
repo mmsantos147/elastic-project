@@ -121,5 +121,19 @@
   "smart_search_example_3": "Har mer än 5 minuters läsning",
   "smart_search_example_4": "Nämn inte ordet \"kurs\"",
   "tips_footer": "Försök alltid att börja med enkla termer och förfina med filter om resultaten är för breda",
-  "more_information": "Mer information"
+  "more_information": "Mer information",
+  "wikipedia_description": "Wikipedia är en gratis och samarbetsvillig online -encyklopedi som skapades 2001. Det upprätthålls av Wikimedia Foundation och skriven av frivilliga runt om i världen. Alla med internetåtkomst kan redigera sina artiklar. Det finns på flera språk och täcker ett brett utbud av ämnen. Dess innehåll är baserat på tillförlitliga källor och verifierbarhetspolicy. Det är en av de största och mest åtkomna informationskällorna på internet.",
+  "site": "Plats",
+  "about_the_font": "Över källan",
+  "share_the_result": "Dela resultatet",
+  "share": "Att dela",
+  "save_result": "Spara resultatet",
+  "report_result": "Rapportresultat",
+  "feedback": "Feed-back",
+  "visit_the_site": "Besök webbplatsen",
+  "your_search_about_this_result": "Din forskning om detta resultat",
+  "this_result_is_not_an_ad": "Detta är ett sökresultat, inte en annons. Endast annonser betalas och de identifieras alltid med den \"sponsrade\" eller \"AD\" -markören.",
+  "whatsapp": "Whatsapp",
+  "facebook": "Facebook",
+  "twitter": "Kvittra"
 }

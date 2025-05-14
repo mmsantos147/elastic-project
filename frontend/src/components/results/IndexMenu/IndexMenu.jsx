@@ -6,6 +6,8 @@ import { IndexResultMenu } from "./IndexResultMenu";
 import { AboutTheFont } from "./AboutTheFont";
 import { WhyIndexed } from "./WhyIndexed";
 import styled from "styled-components";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const { Paragraph } = Typography;
 
@@ -41,7 +43,7 @@ const TitleParagraph = styled(Paragraph)`
 `
 
 export const IndexMenu = () => {
-
+  const { t } = useTranslation();
     
   return (
     <SideMenu>
@@ -53,20 +55,18 @@ export const IndexMenu = () => {
 
       <DividerMarginBottom>
         <DividerInformation>
-          Mais informações
+          {t("more_information")}
         </DividerInformation>
       </DividerMarginBottom>
 
       <TitleParagraph>
-        Sua pesquisa sobre esse resultado
+        {t("your_search_about_this_result")}
       </TitleParagraph>
 
       <WhyIndexed />
 
       <SideMenuFooter>
-        Esse é um resultado de pesquisa, não um anúncio. Apenas os anúncios são
-        pagos e eles sempre são identificados com o marcador "Patrocinado" ou
-        "Anúncio".
+        {t("this_result_is_not_an_ad")}
       </SideMenuFooter>
     </SideMenu>
   );

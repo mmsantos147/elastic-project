@@ -121,5 +121,19 @@
   "smart_search_example_3": "Have more than 5 minutes of reading",
   "smart_search_example_4": "Do not mention the word \"course\"",
   "tips_footer": "Always try to start with simple terms and refine with filters if the results are too wide",
-  "more_information": "More information"
+  "more_information": "More information",
+  "wikipedia_description": "Wikipedia is a free and collaborative online encyclopedia, created in 2001. It is maintained by the Wikimedia Foundation and written by volunteers around the world. Anyone with internet access can edit their articles. It is available in several languages ​​and covers a wide variety of subjects. Its content is based on reliable sources and verifiability policies. It is one of the largest and most accessed sources of information on the internet.",
+  "site": "Site",
+  "about_the_font": "Over the source",
+  "share_the_result": "Share the result",
+  "share": "To share",
+  "save_result": "Save the result",
+  "report_result": "Report result",
+  "feedback": "Feedback",
+  "visit_the_site": "Visit the Site",
+  "your_search_about_this_result": "Your research on this result",
+  "this_result_is_not_an_ad": "This is a search result, not an ad. Only ads are paid and they are always identified with the \"sponsored\" or \"ad\" marker.",
+  "whatsapp": "WhatsApp",
+  "facebook": "Facebook",
+  "twitter": "Twitter"
 }

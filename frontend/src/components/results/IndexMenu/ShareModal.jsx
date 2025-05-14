@@ -1,4 +1,5 @@
 import { Col, Modal, Row } from "antd";
+import { useTranslation } from "react-i18next";
 import { BsFacebook, BsTwitter, BsWhatsapp } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -28,9 +29,10 @@ const ShareOptionsContainer = styled(Col)`
 
 
 export const ShareModal = ({ open, setOpen, url }) => {  
+    const {t} = useTranslation();
     return (
     <Modal
-      title="Compartilhar resultado"
+      title={t("share_the_result")}
       open={open}
       footer={null}
       onCancel={() => setOpen(false)}
@@ -40,19 +42,19 @@ export const ShareModal = ({ open, setOpen, url }) => {
       <ShareOptionsContainer>
         <Link to={`https://api.whatsapp.com/send?text=${url}`} target="_blank">
           <ShareOption>
-            <BsWhatsapp /> WhatsApp
+            <BsWhatsapp /> {t("whatsapp")}
           </ShareOption>
         </Link>
 
         <Link to={`https://www.facebook.com/sharer/sharer.php?u=${url}`} target="_blank">
           <ShareOption>
-            <BsFacebook /> Facebook
+            <BsFacebook /> {t("facebook")}
           </ShareOption>
         </Link>
 
         <Link to={`https://x.com/intent/post?url=${url}`} target="_blank">
           <ShareOption>
-            <BsTwitter /> Twitter
+            <BsTwitter /> {t("twitter")}
           </ShareOption>
         </Link>
       </ShareOptionsContainer>
