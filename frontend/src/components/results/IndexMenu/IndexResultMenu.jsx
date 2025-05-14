@@ -8,6 +8,7 @@ import {
 import wikipediaLogo from "../../../assets/wikipedia_icon.png";
 import styled from "styled-components";
 import { useSearchData } from "../../../context/SearchContext";
+import { ApplyHighlighter } from "../ApplyHighlighter";
 
 const { Text, Paragraph } = Typography;
 
@@ -22,16 +23,16 @@ const IndexResume = styled(Paragraph)`
   line-height: 21px;
   font-size: 14px;
   margin-bottom: 20px !important;
-`
+`;
 
 const ImageLogo = styled.img`
-  width: 40px; 
+  width: 40px;
   margin-right: 15px;
-`
+`;
 
 export const IndexResultMenu = () => {
   const { setIsIndexMenuOpen, indexMenuContent } = useSearchData();
-  
+
   return (
     <>
       <Row
@@ -41,10 +42,15 @@ export const IndexResultMenu = () => {
           marginBottom: "20px",
         }}
       >
-        <ImageLogo src={wikipediaLogo}/>
+        <ImageLogo src={wikipediaLogo} />
         <Text style={{ fontSize: "18px" }}>Wikipédia</Text>
         <Col flex="auto" />
-        <CloseOutlined style={{ fontSize: "20px" }} onClick={() => {setIsIndexMenuOpen(false)}}/>
+        <CloseOutlined
+          style={{ fontSize: "20px" }}
+          onClick={() => {
+            setIsIndexMenuOpen(false);
+          }}
+        />
       </Row>
 
       <Row
@@ -54,7 +60,9 @@ export const IndexResultMenu = () => {
           marginBottom: "20px",
         }}
       >
-        <Text style={{ fontSize: "22px" }}>{indexMenuContent.title}</Text>
+        <Text style={{ fontSize: "22px" }}>
+          <ApplyHighlighter text={indexMenuContent.title} />
+        </Text>
         <Col flex="auto" />
         <Button
           type="primary"
@@ -69,7 +77,7 @@ export const IndexResultMenu = () => {
       </Row>
 
       <IndexResume>
-        {indexMenuContent.content}
+        <ApplyHighlighter text={indexMenuContent.content} />
       </IndexResume>
 
       <Row style={{ display: "flex", justifyContent: "space-between" }}>

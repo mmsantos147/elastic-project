@@ -6,7 +6,6 @@ import { IndexResultMenu } from "./IndexResultMenu";
 import { AboutTheFont } from "./AboutTheFont";
 import { WhyIndexed } from "./WhyIndexed";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
 
 const { Paragraph } = Typography;
 
@@ -42,20 +41,10 @@ const TitleParagraph = styled(Paragraph)`
 `
 
 export const IndexMenu = () => {
-  const [scrollY, setScrollY] = useState();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-  
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-  
-  
+    
   return (
-    <SideMenu down={scrollY}>
+    <SideMenu>
       <IndexResultMenu />
 
       <DividerMarginBottom />

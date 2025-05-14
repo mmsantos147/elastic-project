@@ -5,6 +5,7 @@ import wikipediaLogo from "../../assets/wikipedia_icon.png";
 import COLORS from "../../colors";
 import { useTranslation } from "react-i18next";
 import { useSearchData } from "../../context/SearchContext";
+import { ApplyHighlighter } from "./ApplyHighlighter";
 
 const SearchIndex = ({ content }) => {
   const { setIndexMenuContent, setIsIndexMenuOpen } = useSearchData();
@@ -49,8 +50,9 @@ const SearchIndex = ({ content }) => {
         <a style={{ color: COLORS.purple }} href={content.url}>
           <div
             style={{ fontSize: "22px", marginBottom: "5px" }}
-            dangerouslySetInnerHTML={{ __html: content.title }}
-          />
+          >
+            <ApplyHighlighter text={content.title} />
+          </div>
         </a>
       </Row>
 
@@ -63,8 +65,9 @@ const SearchIndex = ({ content }) => {
             textAlign: "justify",
             width: "100%",
           }}
-          dangerouslySetInnerHTML={{ __html: content.content + "..." }}
-        />
+        >
+          <ApplyHighlighter text={content.content} />
+        </p>
       </Row>
       <Row>
         <Col style={{ fontSize: "15px" }}>
