@@ -2,10 +2,10 @@ import { Divider } from "antd";
 import COLORS from "../../../colors";
 import SearchButtonExtension from "./SearchButtonExtension";
 import { useTranslation } from "react-i18next";
-import { useSearchBarData } from "../../../context/SearchBarContext";
 import { SearchBarExtensionElement } from "./SearchBarExtensionElement";
 import { CloseOutlined } from "@ant-design/icons";
 import styled from "styled-components";
+import { useSearchData } from "../../../context/SearchContext";
 
 
 const SearchBarExtensionWrapper = styled.div`
@@ -27,12 +27,14 @@ const DividerStyled = styled(Divider)`
 `
 
 export const SearchBarExtension = () => {
-  const { inputValue, inputOnFocus, historyContent, suggestionContent } = useSearchBarData();
+  const { inputValue, inputOnFocus, historyContent, suggestionContent } = useSearchData();
   const { t } = useTranslation();
+
+  console.log(inputValue)
 
   if (!inputOnFocus) return null;
 
-  if (inputValue.length === 0 && historyContent.length > 0)
+  if (inputValue && inputValue.length === 0 && historyContent.length > 0)
     return (
       <SearchBarExtensionWrapper>
         <DividerStyled

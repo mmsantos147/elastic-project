@@ -1,8 +1,5 @@
-import { forwardRef } from "react";
-import Draggable from "react-draggable";
 import styled from "styled-components";
 import Keyboard from "react-simple-keyboard";
-import { useSearchBarData } from "../../context/SearchBarContext";
 
 const KeyboardWrapper = styled.div`
   margin-top: 10px;

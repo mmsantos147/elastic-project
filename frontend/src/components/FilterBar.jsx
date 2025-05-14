@@ -1,4 +1,4 @@
-import { Button, Col, Drawer, Grid, Row, Space } from "antd";
+import { Button, Col, Drawer, Row, Space } from "antd";
 import Filter from "./Filter";
 import styled from "styled-components";
 import COLORS from "../colors";
@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { FilterOutlined, CloseOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { useSearchData } from "../context/SearchContext";
 
 const ResponsiveResults = styled(Col)`
   color: ${COLORS.gray};
@@ -31,16 +32,15 @@ const DesktopFilters = styled(Row)`
   margin-top: 10px;
 `;
 
-const FilterBar = ({ setFormData, searchResult }) => {
+const FilterBar = () => {
+  const { setSearchData, searchResults } = useSearchData();
+
   const [t] = useTranslation();
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
 
   const [orderByState, setOrderByState] = useState("SCORE_DESC");
   const [itensByPageState, setItensByPageState] = useState(10);
   const [readingTimeState, setReadingTimeState] = useState("any");
   const [minDateTimeState, setMinDateTimeState] = useState("any");
-  const [searchForState, setSearchForState] = useState("allResults");
   const [filterDrawerVisible, setFilterDrawerVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -66,40 +66,34 @@ const FilterBar = ({ setFormData, searchResult }) => {
   };
 
   const handleOrderByChange = (e) => {
-    setFormData((prev) => ({ ...prev, orderBy: e.key }));
+    setSearchData((prev) => ({ ...prev, orderBy: e.key }));
     setOrderByState(e.key);
     if (isMobile) closeFilterDrawer();
   };
 
   const handleItensByPageChange = (e) => {
-    setFormData((prev) => ({ ...prev, resultsPerPage: Number(e.key) }));
+    setSearchData((prev) => ({ ...prev, resultsPerPage: Number(e.key) }));
     setItensByPageState(e.key);
     if (isMobile) closeFilterDrawer();
   };
 
   const handleReadingTimeChange = (e) => {
     if (e.key !== "any") {
-      setFormData((prev) => ({ ...prev, maxReadTime: Number(e.key) }));
+      setSearchData((prev) => ({ ...prev, maxReadTime: Number(e.key) }));
       setReadingTimeState(e.key);
     } else {
-      setFormData((prev) => ({ ...prev, maxReadTime: null }));
+      setSearchData((prev) => ({ ...prev, maxReadTime: null }));
       setReadingTimeState("any");
     }
     if (isMobile) closeFilterDrawer();
   };
 
-  const handleSearchForChange = (e) => {
-    setFormData((prev) => ({ ...prev, searchFor: e.key }));
-    setSearchForState(e.key);
-    if (isMobile) closeFilterDrawer();
-  };
-
   const handleMinDateTimeChange = (e) => {
     if (e.key !== "any") {
-      setFormData((prev) => ({ ...prev, minDateTime: e.key }));
+      setSearchData((prev) => ({ ...prev, minDateTime: e.key }));
       setMinDateTimeState(e.key);
     } else {
-      setFormData((prev) => ({ ...prev, minDateTime: "" }));
+      setSearchData((prev) => ({ ...prev, minDateTime: "" }));
       setMinDateTimeState("any");
     }
     if (isMobile) closeFilterDrawer();
@@ -189,7 +183,7 @@ const FilterBar = ({ setFormData, searchResult }) => {
     <div
       style={{ color: COLORS.gray, margin: isMobile ? "10px 0" : undefined }}
     >
-      {t("near")} {searchResult.hits} {t("results")} ({searchResult.timeTaken}s)
+      {t("near")} {searchResults.hits} {t("results")} ({searchResults.timeTaken}s)
     </div>
   );
 

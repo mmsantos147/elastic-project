@@ -11,6 +11,7 @@ import COLORS from "./colors";
 import Login from "./view/Login";
 import Register from "./view/Register";
 import { Tips } from "./view/Tips";
+import { SearchProvider } from "./context/SearchContext";
 
 const AppContent = () => {
   const { initSession } = useAuthService();
@@ -22,7 +23,6 @@ const AppContent = () => {
 
     initializeSession();
   }, []);
-
 
   return (
       <ConfigProvider
@@ -55,7 +55,8 @@ const AppContent = () => {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Main />} />
-              <Route path="/search" element={<Search />} />
+
+              <Route path="/search" element={<SearchProvider><Search /></SearchProvider>} />
               <Route path="/tips" element={<Tips />} />
 
               <Route path="/login" element={<Login />} />

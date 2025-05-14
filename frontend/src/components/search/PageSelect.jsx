@@ -3,26 +3,28 @@ import UAISearch from "../UAISearch";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import COLORS from "../../colors";
 import { useState } from "react";
+import { useSearchData } from "../../context/SearchContext";
 
-const PageSelect = ({ setFormData, maxPages }) => {
+const PageSelect = () => {
+  const {setSearchData, searchResults} = useSearchData();
   const [pageSelected, setPageSelected] = useState(1);
 
   const handlePageSelect = (number) => {
-    if (number < 1 || number > maxPages) return;
+    if (number < 1 || number > searchResults.pages) return;
     setPageSelected(number);
-    setFormData((prev) => ({ ...prev, page: number }));
+    setSearchData((prev) => ({ ...prev, page: number }));
     window.scrollTo({ top: 0 });
   };
 
   const getPageRange = () => {
     const maxVisible = 5;
     let start = Math.max(1, pageSelected - 2);
-    let end = Math.min(maxPages, pageSelected + 2);
+    let end = Math.min(searchResults.pages, pageSelected + 2);
 
     if (end - start < maxVisible - 1) {
       if (start === 1) {
-        end = Math.min(maxPages, start + maxVisible - 1);
-      } else if (end === maxPages) {
+        end = Math.min(searchResults.pages, start + maxVisible - 1);
+      } else if (end === searchResults.pages) {
         start = Math.max(1, end - maxVisible + 1);
       }
     }
@@ -98,8 +100,8 @@ const PageSelect = ({ setFormData, maxPages }) => {
         <Col
           style={{
             color: "#ccc",
-            cursor: pageSelected === maxPages ? "default" : "pointer",
-            visibility: pageSelected === maxPages ? "hidden" : "visible",
+            cursor: pageSelected === searchResults.pages ? "default" : "pointer",
+            visibility: pageSelected === searchResults.pages ? "hidden" : "visible",
           }}
           onClick={() => handlePageSelect(pageSelected + 1)}
         >

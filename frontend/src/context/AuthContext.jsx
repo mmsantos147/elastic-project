@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuthService } from "../api/Authorization.api";
+import { useWeatherService } from "../api/Weather.api";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const { verify, login: apiLogin, logout: apiLogout } = useAuthService();
+  const { getWeatherCondition } = useWeatherService();
 
   const [isLogged, setIsLogged] = useState(false);
   const [username, setUsername] = useState("");

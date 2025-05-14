@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
   const { t, i18n } = useTranslation();
-  
+
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
       <Row style={{ marginBottom: "7px" }}>
@@ -27,15 +27,22 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
                 fontSize: "16px",
               }}
             >
-              {t('wikipedia')}
+              {t("wikipedia")}
             </Row>
-            <Row style={{ marginBottom: "6px", fontSize: "12px" }}>
+          </a>
+          <Row style={{ marginBottom: "6px", fontSize: "12px" }}>
+            <a href={url}>
               <div style={{ color: COLORS.white, marginRight: "20px" }}>
                 {url}
               </div>
-              <SlOptionsVertical style={{ color: COLORS.white }} />
-            </Row>
-          </a>
+            </a>
+            <SlOptionsVertical
+              style={{ color: COLORS.white, cursor: "pointer" }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            />
+          </Row>
         </Col>
       </Row>
       <Row style={{ fontSize: "22px", marginBottom: "5px" }}>
@@ -62,11 +69,11 @@ const SearchIndex = ({ id, url, title, content, readingTime, date }) => {
       <Row>
         <Col style={{ fontSize: "15px" }}>
           <FaCalendar style={{ verticalAlign: "middle", marginRight: "8px" }} />
-            {new Date(date).toLocaleDateString(i18n.language, {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
-            })}
+          {new Date(date).toLocaleDateString(i18n.language, {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}
         </Col>
         <Col flex="auto" />
         <Col style={{ fontSize: "15px" }}>

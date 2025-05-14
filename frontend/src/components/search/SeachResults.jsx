@@ -4,24 +4,23 @@ import IAVisionAbstractSkeleton from "../results/IAVisionSkeleton";
 import SearchIndexSkeleton from "../results/SearchIndexSkeleton";
 import SearchIndex from "../results/SearchIndex";
 import COLORS from "../../colors";
+import { useSearchData } from "../../context/SearchContext";
 
-const SearchResults = ({ processingRequest, aiAbstract, searchResult, currentRequestId }) => {
-  const isValidAiAbstract = 
-    aiAbstract && 
-    Object.keys(aiAbstract).length > 0 && 
-    aiAbstract.requestId === currentRequestId;
+const SearchResults = () => {
+  const { isProcessingAiAbstract, isProcessingRequest, searchResults, currentRequestId } = useSearchData()
+
 
   return (
     <>
-      {(!processingRequest && isValidAiAbstract) ? (
-        <IAVision aiAbstract={aiAbstract} style={{ marginBottom: "50px" }} />
+      {!isProcessingAiAbstract ? (
+        <IAVision style={{ marginBottom: "50px" }} />
       ) : (
         <IAVisionAbstractSkeleton style={{ marginBottom: "50px" }} />
       )}
       
       <Divider style={{ borderColor: COLORS.gray }} />
       
-      {searchResult.length === 0 && processingRequest ? (
+      {isProcessingRequest ? (
         <>
           <SearchIndexSkeleton />
           <SearchIndexSkeleton />
@@ -29,7 +28,7 @@ const SearchResults = ({ processingRequest, aiAbstract, searchResult, currentReq
         </>
       ) : (
         <Row>
-          {searchResult.map((result) => (
+          {searchResults.results.map((result) => (
             <SearchIndex
               key={result.id}
               id={result.id}

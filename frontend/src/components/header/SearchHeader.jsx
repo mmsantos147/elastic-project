@@ -2,12 +2,11 @@ import React from "react";
 import { Row, Col, Grid } from "antd";
 import { Link } from "react-router-dom";
 import SearchBar from "../search/SearchBar";
-import { AuthProvider } from "../../context/AuthContext";
 import { SideInfoMenu } from "../menu/SideInfoMenu";
 import UAISearch from "../UAISearch";
 import NavigationBar from "../NavigationBar";
 import styled from "styled-components";
-import { SearchBarProvider } from "../../context/SearchBarContext";
+import { useSearchData } from "../../context/SearchContext";
 
 const StyledSearchBar = styled(SearchBar)`
   line-height: 0px;
@@ -48,7 +47,6 @@ const { useBreakpoint } = Grid;
 
 const SearchHeader = ({
   setSearchValue,
-  formData,
   toolsVisible,
   setToolsVisible,
 }) => {
@@ -75,10 +73,7 @@ const SearchHeader = ({
         >
           <Col>
             <Link to="/">
-              <UAISearch
-                logoWidth={"100px"}
-                style={{ margin: "0" }}
-              />
+              <UAISearch logoWidth={"100px"} style={{ margin: "0" }} />
             </Link>
           </Col>
           <Col>
@@ -86,14 +81,10 @@ const SearchHeader = ({
           </Col>
         </Row>
         <Col style={{ marginTop: "10px" }}>
-          <SearchBarProvider>
-            <StyledSearchBar
-              setSearchValue={setSearchValue}
-              onEnterEvent={setSearchValue}
-              initialSearch={formData.search}
-            />
-          </SearchBarProvider>
-          <div style={{ marginTop: "10px"}}>
+          <StyledSearchBar
+            setSearchValue={setSearchValue}
+          />
+          <div style={{ marginTop: "10px" }}>
             <NavigationBar
               onClickShowTools={() => setToolsVisible(!toolsVisible)}
             />
@@ -107,21 +98,15 @@ const SearchHeader = ({
     <StyledHeaderRow>
       <LogoCol>
         <Link to="/">
-          <UAISearch
-            logoWidth={"150px"}
-            style={{ margin: "12px 0 20px 0" }}
-          />
+          <UAISearch logoWidth={"150px"} style={{ margin: "12px 0 20px 0" }} />
         </Link>
       </LogoCol>
       <SearchCol>
         <SearchWrapper>
-          <SearchBarProvider>
-            <StyledSearchBar
-              setSearchValue={setSearchValue}
-              onEnterEvent={setSearchValue}
-              initialSearch={formData.search}
-            />
-          </SearchBarProvider>
+          <StyledSearchBar
+            setSearchValue={setSearchValue}
+            onEnterEvent={setSearchValue}
+          />
           <div style={{ marginTop: "20px" }}>
             <NavigationBar
               onClickShowTools={() => setToolsVisible(!toolsVisible)}

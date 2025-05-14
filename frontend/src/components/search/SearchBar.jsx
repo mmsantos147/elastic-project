@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { VirtualKeyboard } from "./VirtualKeyboard";
 import { SearchBarExtension } from "./extension/SearchBarExtension";
-import { useSearchBarData } from "../../context/SearchBarContext";
+import { useSearchData } from "../../context/SearchContext";
 
 const StyledInput = styled(Input)`
   ::placeholder {
@@ -46,18 +46,14 @@ const IconWrapper = styled.div`
   display: flex;
 `;
 
-const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
+const SearchBar = ({ className, children, onEnterEvent }) => {
   const { t } = useTranslation();
-  const { extensionVisible, inputValue, setInputValue, setInputOnFocus } =
-    useSearchBarData();
+  const { extensionVisible, inputValue, setInputValue, setInputOnFocus, setSearchData } =
+    useSearchData();
   const [showKeyboard, setShowKeyboard] = useState(false);
   const inputRef = useRef(null);
 
   const isMobile = window.innerWidth <= 768;
-
-  useEffect(() => {
-    setInputValue(initialSearch);
-  }, [initialSearch]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -79,7 +75,11 @@ const SearchBar = ({ className, children, onEnterEvent, initialSearch }) => {
         onPressEnter={(e) => {
           e.target.blur();
           setInputOnFocus(false);
-          onEnterEvent(e.target.value);
+          if (typeof onEnterEvent === "function") {
+            onEnterEvent(e.target.value); 
+          } else {
+            setSearchData((prev) => ({ ...prev, search: e.target.value }));
+          }
         }}
         size={isMobile ? "middle" : "large"}
         placeholder={t("search_default")}

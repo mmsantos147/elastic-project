@@ -6,7 +6,7 @@ import MainHeader from "../components/header/MainHeader";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { SearchBarProvider } from "../context/SearchBarContext";
+import { SearchProvider } from "../context/SearchContext";
 
 const { Content } = Layout;
 
@@ -87,9 +87,9 @@ const Main = () => {
         </div>
         
         <SearchContainer>
-          <SearchBarProvider>
-            <MarginBottomSearchBar onEnterEvent={onEnterEvent} setSearchValue={setSearchValue} initialSearch={""} />          
-          </SearchBarProvider>
+          <SearchProvider>
+            <MarginBottomSearchBar onEnterEvent={onEnterEvent} />          
+          </SearchProvider>
           <Space>
             <SearchButton />
           </Space>

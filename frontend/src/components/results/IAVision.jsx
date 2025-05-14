@@ -5,14 +5,15 @@ import { BsStars } from "react-icons/bs";
 import COLORS from "../../colors";
 import IAVisionAbstract from "./IAVisionAbstract";
 import { useTranslation } from "react-i18next";
+import { useSearchData } from "../../context/SearchContext";
 
 const { Title } = Typography;
 
 const IAVision = (props) => {
+  const { aiAbstract } = useSearchData();
   const { t } = useTranslation();
   
   const [expanded, setExpanded] = useState(false);
-  const { aiAbstract } = props;
   return (
     <div style={props.style}>
       <Row>
