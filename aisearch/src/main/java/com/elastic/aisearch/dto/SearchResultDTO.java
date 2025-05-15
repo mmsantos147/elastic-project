@@ -7,5 +7,7 @@ public record SearchResultDTO(
     String title,
     String content,
     Integer reading_time,
-    String datetime
+    String datetime,
+
+    String explanation
 ) {}

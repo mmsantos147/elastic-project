@@ -188,8 +188,9 @@ public class ElasticsearchService {
                     getStringValue(sourceAsMap, "title"),
                     treatContent(content),
                     getIntegerValue(sourceAsMap, "reading_time"),
-                    getStringValue(sourceAsMap, "dt_creation"));
-
+                    getStringValue(sourceAsMap, "dt_creation"),
+                    hit.getExplanation().toString());
+                    
             results.add(searchResultDTO);
         }
         Long hits = searchResponse.getHits().getTotalHits().value;
