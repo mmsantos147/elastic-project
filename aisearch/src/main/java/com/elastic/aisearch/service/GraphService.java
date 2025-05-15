@@ -1,16 +1,20 @@
 package com.elastic.aisearch.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.elastic.aisearch.dto.graph.ArticleDTO;
+import com.elastic.aisearch.dto.graph.GraphNodeDTO;
 import com.elastic.aisearch.entity.Article;
+import com.elastic.aisearch.exceptions.ArticleDoesNotExists;
 import com.elastic.aisearch.mappers.ArticleMapper;
 import com.elastic.aisearch.repository.ArticleRepository;
 
@@ -46,6 +50,25 @@ public class GraphService {
         }
 
         articleRepository.saveAll(articleMap.values());
+    }
+
+    public GraphNodeDTO generateGraph(Integer id, int currentDepth, int maxDepth, Set<Integer> visited) {
+        if (visited.contains(id)) return null;
+        if (currentDepth > maxDepth) return null;
+    
+        visited.add(id);
+    
+        Article article = articleRepository.findById(id)
+            .orElseThrow(() -> new ArticleDoesNotExists("article_not_found"));
+    
+        List<GraphNodeDTO> children = new ArrayList<>();
+        for (Article neighbor : article.getConnectedArticles()) {
+            GraphNodeDTO child = generateGraph(neighbor.getId(), currentDepth + 1, maxDepth, visited);
+            if (child != null) children.add(child);
+        }
+        
+    
+        return new GraphNodeDTO(article.getId(), article.getUrl(), article.getTitle(), children);
     }
 
 }
