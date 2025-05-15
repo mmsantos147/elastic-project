@@ -19,8 +19,7 @@ public class ArticleMapper {
             Article article = new Article(
                 articleDTO.id(), 
                 articleDTO.title(), 
-                articleDTO.url(), 
-                Collections.emptyList()
+                articleDTO.url()
             );
             articles.add(article);
         }

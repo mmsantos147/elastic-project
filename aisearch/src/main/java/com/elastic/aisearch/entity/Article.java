@@ -28,4 +28,10 @@ public class Article {
         inverseJoinColumns = @JoinColumn(name = "to_id")
     )
     private List<Article> connectedArticles = new ArrayList<>();
+
+    public Article(Integer id, String title, String url) {
+        this.id = id;
+        this.title = title;
+        this.url = url;
+    }
 }
