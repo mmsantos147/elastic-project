@@ -2,6 +2,7 @@ package com.elastic.aisearch.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -26,6 +27,7 @@ public class GraphService {
 
     private final ArticleMapper articleMapper;
     private final ArticleRepository articleRepository;
+    private Map<Integer, GraphNodeDTO> nodesMap; 
 
     public void bulkArticles(List<ArticleDTO> articles) {
         List<Article> articlesToSave = articleMapper.toObject(articles);
@@ -52,37 +54,67 @@ public class GraphService {
         articleRepository.saveAll(articleMap.values());
     }
 
-    public GraphNodeDTO generateGraph(Integer rootId, int maxDepth) {
-        Map<Integer, GraphNodeDTO> nodeMap = new HashMap<>();
-        build(rootId, 0, maxDepth, nodeMap);
-        return nodeMap.get(rootId);
+    public GraphNodeDTO generateCompleteGraph(Integer rootId, int maxDepth) {
+        this.nodesMap = new HashMap<>();
+        Set<Integer> currentPath = new HashSet<>(); 
+        
+        return generateGraph(rootId, 0, maxDepth, currentPath);
     }
 
-    private void build(Integer id,
-            int currentDepth,
-            int maxDepth,
-            Map<Integer, GraphNodeDTO> nodeMap) {
-
-        GraphNodeDTO dto = nodeMap.computeIfAbsent(id, k -> {
-            Article article = articleRepository.findById(id)
-                    .orElseThrow(() -> new ArticleDoesNotExists("article_not_found"));
+    private GraphNodeDTO generateGraph(Integer id, int currentDepth, int maxDepth, Set<Integer> currentPath) {
+        if (currentDepth > maxDepth) return null;
+        
+        if (nodesMap.containsKey(id)) {
+            GraphNodeDTO existingNode = nodesMap.get(id);
             return new GraphNodeDTO(
-                    article.getId(),
-                    article.getUrl(),
-                    article.getTitle(),
-                    new ArrayList<>());
-        });
-
-        if (currentDepth >= maxDepth) {
-            return;
+                existingNode.id(), 
+                existingNode.url(), 
+                existingNode.title(), 
+                new ArrayList<>(), 
+                true
+            ); 
         }
-
+        
         Article article = articleRepository.findById(id)
-                .orElseThrow(() -> new ArticleDoesNotExists("article_not_found"));
+            .orElseThrow(() -> new ArticleDoesNotExists("article_not_found"));
+        
+        GraphNodeDTO currentNode = new GraphNodeDTO(
+            article.getId(), 
+            article.getUrl(), 
+            article.getTitle(), 
+            new ArrayList<>(), 
+            false
+        );
+        
+        nodesMap.put(id, currentNode);
+        
+        currentPath.add(id);
+        
+        List<GraphNodeDTO> connections = new ArrayList<>();
+        
         for (Article neighbor : article.getConnectedArticles()) {
-            build(neighbor.getId(), currentDepth + 1, maxDepth, nodeMap);
-            dto.connections().add(nodeMap.get(neighbor.getId()));
+            Integer neighborId = neighbor.getId();
+            
+            GraphNodeDTO neighborNode = generateGraph(neighborId, currentDepth + 1, maxDepth, currentPath);
+            
+            if (neighborNode != null) {
+                connections.add(neighborNode);
+            }
         }
+        
+        currentPath.remove(id);
+        
+        currentNode = new GraphNodeDTO(
+            currentNode.id(),
+            currentNode.url(),
+            currentNode.title(),
+            connections,
+            currentNode.isCyclicReference()
+        );
+        
+        nodesMap.put(id, currentNode);
+        
+        return currentNode;
     }
 
 }

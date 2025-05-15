@@ -35,7 +35,7 @@ public class GraphController {
 
     @GetMapping("/{id}/{depth}")
     public ResponseEntity<GraphNodeDTO> fetchGraph(@PathVariable("id") Integer id, @PathVariable("depth") Integer depth) {
-        GraphNodeDTO graph = graphService.generateGraph(id, depth);
+        GraphNodeDTO graph = graphService.generateCompleteGraph(id, depth);
         return ResponseEntity.ok(graph);
     }
 }

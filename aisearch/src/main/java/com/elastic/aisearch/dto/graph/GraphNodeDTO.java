@@ -6,5 +6,6 @@ public record GraphNodeDTO(
     Integer id,
     String url,
     String title,
-    List<GraphNodeDTO> connections
+    List<GraphNodeDTO> connections,
+    boolean isCyclicReference
 ) {}
