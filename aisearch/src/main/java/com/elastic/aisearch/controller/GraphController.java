@@ -35,8 +35,7 @@ public class GraphController {
 
     @GetMapping("/{id}/{depth}")
     public ResponseEntity<GraphNodeDTO> fetchGraph(@PathVariable("id") Integer id, @PathVariable("depth") Integer depth) {
-        Set<Integer> visited = new HashSet<>();
-        GraphNodeDTO graph = graphService.generateGraph(id, 0, depth, visited);
+        GraphNodeDTO graph = graphService.generateGraph(id, depth);
         return ResponseEntity.ok(graph);
     }
 }

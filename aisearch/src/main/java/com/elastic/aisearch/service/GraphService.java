@@ -1,6 +1,7 @@
 package com.elastic.aisearch.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -51,23 +52,37 @@ public class GraphService {
         articleRepository.saveAll(articleMap.values());
     }
 
-    public GraphNodeDTO generateGraph(Integer id, int currentDepth, int maxDepth, Set<Integer> visited) {
-        if (visited.contains(id)) return null;
-        if (currentDepth > maxDepth) return null;
-    
-        visited.add(id);
-    
-        Article article = articleRepository.findById(id)
-            .orElseThrow(() -> new ArticleDoesNotExists("article_not_found"));
-    
-        List<GraphNodeDTO> children = new ArrayList<>();
-        for (Article neighbor : article.getConnectedArticles()) {
-            GraphNodeDTO child = generateGraph(neighbor.getId(), currentDepth + 1, maxDepth, visited);
-            if (child != null) children.add(child);
+    public GraphNodeDTO generateGraph(Integer rootId, int maxDepth) {
+        Map<Integer, GraphNodeDTO> nodeMap = new HashMap<>();
+        build(rootId, 0, maxDepth, nodeMap);
+        return nodeMap.get(rootId);
+    }
+
+    private void build(Integer id,
+            int currentDepth,
+            int maxDepth,
+            Map<Integer, GraphNodeDTO> nodeMap) {
+
+        GraphNodeDTO dto = nodeMap.computeIfAbsent(id, k -> {
+            Article article = articleRepository.findById(id)
+                    .orElseThrow(() -> new ArticleDoesNotExists("article_not_found"));
+            return new GraphNodeDTO(
+                    article.getId(),
+                    article.getUrl(),
+                    article.getTitle(),
+                    new ArrayList<>());
+        });
+
+        if (currentDepth >= maxDepth) {
+            return;
         }
-        
-    
-        return new GraphNodeDTO(article.getId(), article.getUrl(), article.getTitle(), children);
+
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new ArticleDoesNotExists("article_not_found"));
+        for (Article neighbor : article.getConnectedArticles()) {
+            build(neighbor.getId(), currentDepth + 1, maxDepth, nodeMap);
+            dto.connections().add(nodeMap.get(neighbor.getId()));
+        }
     }
 
 }
