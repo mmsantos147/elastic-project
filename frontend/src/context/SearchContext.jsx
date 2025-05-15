@@ -127,10 +127,10 @@ export const SearchProvider = ({ children }) => {
   }, [searchData]);
 
   useEffect(() => {
-    navigate(
-      { location: location.pathname, search: `?q=${searchData.search}` },
-      { replace: true }
-    );
+        navigate(
+          { location: location.pathname, search: `?q=${searchData.search}` },
+          { replace: true }
+        );
   }, [searchData.search]);
 
   return (

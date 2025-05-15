@@ -24,13 +24,19 @@ const WrongWord = styled.strong`
   font-style: italic;
 `;
 
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+
 export const DidYouMean = () => {
-  const { searchResults } = useSearchData();
+  const { searchData, searchResults } = useSearchData();
   const suggestions = searchResults.suggestions;
   const { t, i18n } = useTranslation();
 
   const hasAnyOption = suggestions.some((s) => s.option);
   if (!hasAnyOption) return null;
+  const searchedFor = searchData.search;
 
   const ordered = [...suggestions].sort((a, b) => a.offset - b.offset);
 
@@ -39,7 +45,9 @@ export const DidYouMean = () => {
     .join(" ");
 
   const nodes = ordered.map((s, idx) => {
-    const word = s.option ?? s.text;
+    let word = s.option ?? s.text;
+    if (idx == 0)
+      word = capitalizeFirstLetter(word)
     const element = s.option ? (
       <WrongWord key={idx}>{word}</WrongWord>
     ) : (
