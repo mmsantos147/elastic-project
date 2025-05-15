@@ -53,7 +53,7 @@ export const GraphModal = () => {
     }}>
       <ForceGraph2D
         ref={fgRef}
-        width={650}
+        width={748}
         height={500}
         graphData={{ nodes, links }}
         nodeLabel={(node) => node.title}
@@ -97,8 +97,8 @@ export const GraphModal = () => {
         linkDirectionalParticleSpeed={0.005}
         linkDirectionalArrowLength={3.5}
         linkDirectionalArrowRelPos={1}
-        linkCurvature={0.1}
-        cooldownTicks={100}
+        linkCurvature={0}
+        cooldownTicks={250}
         onNodeClick={(node) => {
           window.open(node.url, '_blank');
         }}

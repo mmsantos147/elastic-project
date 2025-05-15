@@ -235,7 +235,7 @@ app.get("/v1/weatherReport", (req, res) => {
   return res.status(200).json(response);
 });
 
-app.get("/v1/graph/1/1", (req, res) => {
+app.get("/v1/graph/14232/1", (req, res) => {
   const response = {
     id: 1,
     url: "https://en.wikipedia.org/wiki/Albedo",
@@ -475,7 +475,7 @@ app.get("/v1/graph/1/1", (req, res) => {
   return res.status(200).json(response);
 });
 
-app.get("/v1/graph/1/2", (req, res) => {
+app.get("/v1/graph/14232/2", (req, res) => {
   const filePath = path.join(__dirname, 'graph_2_level.json')
 
   fs.readFile(filePath, 'utf8', (err, data) => {
