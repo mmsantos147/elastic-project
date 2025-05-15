@@ -113,6 +113,7 @@ public class ElasticsearchService {
                 .size(searchDTO.resultsPerPage())
                 .trackTotalHits(true)
                 .suggest(suggestBuilder)
+                .explain(true)
                 .highlighter(highlightBuilder);
 
         if (searchDTO.orderBy().equals(Filters.DATE_ASC)) {
@@ -219,16 +220,10 @@ public class ElasticsearchService {
         return suggestions;
     }
 
-    /**
-     * Extrai um valor de String de um mapa com segurança.
-     */
     private String getStringValue(Map<String, Object> map, String key) {
         return map.containsKey(key) && map.get(key) != null ? map.get(key).toString() : "";
     }
 
-    /**
-     * Extrai um valor de Integer de um mapa com segurança.
-     */
     private Integer getIntegerValue(Map<String, Object> map, String key) {
         if (map.containsKey(key) && map.get(key) != null) {
             try {

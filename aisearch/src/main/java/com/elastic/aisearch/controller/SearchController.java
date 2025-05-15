@@ -31,12 +31,6 @@ public class SearchController {
 
     private final HttpServletRequest request;
 
-    /**
-     * Endpoint para realizar buscas usando o parser de consultas personalizado.
-     *
-     * @param query A string de consulta a ser processada
-     * @return Lista de resultados da busca
-     */
     @PostMapping
     public ResponseEntity<SearchResponseDTO> search(@RequestBody SearchDTO searchDTO) {
         request.getSession(true);
