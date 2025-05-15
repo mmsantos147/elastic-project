@@ -37,10 +37,10 @@ public class GraphService {
             if (fromArticle == null)
                 continue;
 
-            List<Article> connections = dto.connections().stream()
+            List<Article> connections = new ArrayList<>(dto.connections().stream()
                     .map(articleMap::get)
                     .filter(Objects::nonNull)
-                    .toList();
+                    .toList());
 
             fromArticle.setConnectedArticles(connections);
         }
