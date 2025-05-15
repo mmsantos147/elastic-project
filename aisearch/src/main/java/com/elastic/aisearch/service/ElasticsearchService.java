@@ -8,7 +8,6 @@ import com.elastic.aisearch.parser.JsonParser;
 import com.elastic.aisearch.utils.Filters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.search.SearchRequest;

@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.elastic.aisearch.dto.AIAbstractDTO;
 
 @Service
 public class StreamService {

@@ -1,7 +1,6 @@
 package com.elastic.aisearch.service;
 
 import com.elastic.aisearch.entity.History;
-import com.elastic.aisearch.mappers.HistoryMapper;
 import com.elastic.aisearch.repository.HistoryRepository;
 
 import lombok.AllArgsConstructor;

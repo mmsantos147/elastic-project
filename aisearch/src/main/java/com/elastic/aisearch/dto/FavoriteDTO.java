@@ -1,6 +1,5 @@
 package com.elastic.aisearch.dto;
 
-import jakarta.persistence.Column;
 
 import java.time.LocalDate;
 
