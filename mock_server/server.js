@@ -1,460 +1,3198 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
-import * as d3 from 'd3';
-import { useGraphService } from '../../api/Graph.api';
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+const port = 3000;
 
-// Componente de grafo com física estabilizada
-const Graph = ({ data }) => {
-  const svgRef = useRef();
-  const [dimensions, setDimensions] = useState({ width: 1400, height: 900 });
-  const [selectedNode, setSelectedNode] = useState(null);
-  const [hoveredNode, setHoveredNode] = useState(null);
-  const [simulation, setSimulation] = useState(null);
+app.use(bodyParser.json());
 
-  // Configurações do grafo
-  const [settings, setSettings] = useState({
-    repelForce: -600,
-    centerForce: 0.8,
-    linkDistance: 30,
-    nodeSize: 4,
-    focusOnHover: true,
-    showLabels: true,
-    clusterByGroup: false,
+app.get("/v1/stream", (req, res) => {
+  // Configurando os cabeçalhos para SSE (Server-Sent Events)
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+
+  const keepAliveInterval = setInterval(() => {
+    res.write(": keepalive\n\n");
+  }, 15000);
+
+  setTimeout(() => {
+    const data = {
+      requestId: "1746888836936",
+      title: "Testes de Flexão e Fitness",
+      paragraphs: [
+        {
+          content:
+            "O teste de flexão de três pontos é um método utilizado para determinar os valores do módulo de elasticidade em flexão, estresse de flexão e a resposta de estresse-deformação do material. Este teste é realizado em uma máquina de testes universal e é importante para a análise de propriedades mecânicas de materiais como o concreto.",
+          url: "https://en.wikipedia.org/wiki/Three-point_flexural_test",
+        },
+        {
+          content:
+            "O teste do ponto de virada é um método estatístico que avalia a independência de uma série de variáveis aleatórias. Descrito por Maurice Kendall e Alan Stuart, ele é considerado eficaz para testar a ciclicidade, mas inadequado para examinar tendências. Este teste foi publicado pela primeira vez por Irénée-Jules Bienaymé em 1874.",
+          url: "https://en.wikipedia.org/wiki/Turning_point_test",
+        },
+        {
+          content:
+            "O teste de fitness multi-estágios, conhecido também como teste PACER ou beep test, é utilizado para estimar a capacidade aeróbica de um atleta. Os participantes devem correr 20 metros de um lado para o outro em um intervalo determinado por sinais sonoros, com a dificuldade aumentando a cada minuto, o que ajuda a medir a resistência cardiovascular.",
+          url: "https://en.wikipedia.org/wiki/Multi-stage_fitness_test",
+        },
+      ],
+    };
+    res.write(`event: AiAbstract\ndata: ${JSON.stringify(data)}\n\n`);
+  }, 5000);
+
+  // Quando a conexão for fechada
+  req.on("close", () => {
+    clearInterval(keepAliveInterval);
+    res.end();
   });
+});
 
-  // Medir o container SVG
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver(entries => {
-      if (entries[0]) {
-        const { width, height } = entries[0].contentRect;
-        setDimensions({ width, height });
-      }
-    });
+// Endpoint /v1/search/suggestions
+app.post("/v1/search/suggestions", (req, res) => {
+  const { query } = req.body;
 
-    const container = svgRef.current?.parentElement;
-    if (container) {
-      resizeObserver.observe(container);
-    }
+  if (query && query.trim().length > 4) {
+    const suggestions = [];
+    return res.json({ suggestions });
+  }
 
-    return () => {
-      if (container) {
-        resizeObserver.disconnect();
-      }
-    };
-  }, []);
-
-  // Função para determinar a cor do nó baseada na profundidade
-  const getNodeColor = (depth) => {
-    const colors = [
-      '#ff6347', // Nó principal (camada 0) - vermelho
-      '#4682b4', // Camada 1 - azul
-      '#2e8b57', // Camada 2 - verde
-      '#9932cc', // Camada 3 - roxo
-      '#ff8c00'  // Camada 4+ - laranja
+  if (query && query.trim().length > 0) {
+    const suggestions = [
+      "<i>De dicto</i> and <i>de re</i>",
+      "Gravity Probe A",
+      "Ankeny–Artin–Chowla congruence",
+      "List of commutative algebra topics",
+      "Artinian module",
     ];
-    
-    if (depth === 0) return colors[0];
-    if (depth >= colors.length) return colors[colors.length - 1];
-    return colors[depth];
-  };
+    return res.json(suggestions);
+  } else {
+    const suggestions = [];
+    return res.status(200).json(suggestions);
+  }
+});
 
-  // Posicionamento estático em círculos concêntricos 
-  const getInitialNodePosition = (node, index, totalNodes) => {
-    const { width, height } = dimensions;
-    const centerX = width / 2;
-    const centerY = height / 2;
-    
-    // Nó central
-    if (node.depth === 0) return { x: centerX, y: centerY };
-    
-    // Distribuição radial baseada na profundidade
-    const radius = 100 + (node.depth * 60);
-    
-    // Distribuir igualmente em círculo
-    const nodesInLevel = data.nodes.filter(n => n.depth === node.depth).length;
-    const indexInLevel = data.nodes.filter(n => n.depth === node.depth).findIndex(n => n.id === node.id);
-    const angle = ((indexInLevel === -1 ? index : indexInLevel) / Math.max(1, nodesInLevel)) * 2 * Math.PI;
-    
-    return {
-      x: centerX + radius * Math.cos(angle),
-      y: centerY + radius * Math.sin(angle)
+app.get("/v1/history", (req, res) => {
+  const history = [];
+
+  return res.status(200).json(history);
+});
+
+app.post("/v1/search", (req, res) => {
+  const { search } = req.body;
+
+  let response;
+
+  if (search === "none")
+    response = {
+      hits: 0,
+      pages: 0,
+      timeTaken: 0.0,
+      suggestions: [],
+      results: [],
+      requestId: "1746888836933",
     };
-  };
-
-  // SOLUÇÃO PRINCIPAL PARA O GRAFO DESCENDO
-  useEffect(() => {
-    if (!data || !data.nodes || !data.links || data.nodes.length === 0 || !svgRef.current) {
-      return;
-    }
-
-    const { width, height } = dimensions;
-    
-    // Posicionar todos os nós inicialmente
-    const nodes = data.nodes.map((node, i) => {
-      const pos = getInitialNodePosition(node, i, data.nodes.length);
-      return {
-        ...node,
-        // IMPORTANTE: Fixar as posições Y para evitar que desçam
-        x: pos.x,
-        y: pos.y,
-        fx: null,    // Permite movimento horizontal (controlado)
-        fy: pos.y,   // FIXA a posição vertical para evitar queda
-        radius: node.depth === 0 ? 8 : Math.max(settings.nodeSize + 2 - node.depth, 2)
-      };
-    });
-    
-    const links = data.links.map(link => ({
-      ...link,
-      value: 1 / (link.depth + 1)
-    }));
-
-    // Configurar o SVG e o zoom
-    const svg = d3.select(svgRef.current)
-      .attr("width", width)
-      .attr("height", height)
-      .attr("viewBox", [0, 0, width, height])
-      .attr("style", "font: 12px sans-serif; max-width: 100%; height: auto;");
-
-    // Limpar SVG
-    svg.selectAll("*").remove();
-    
-    // Container com zoom
-    const container = svg.append("g");
-    
-    // Adicionar zoom
-    const zoom = d3.zoom()
-      .scaleExtent([0.1, 8])
-      .on("zoom", (event) => {
-        container.attr("transform", event.transform);
-      });
-    
-    svg.call(zoom);
-    
-    // Configurar links primeiro (para ficarem abaixo dos nós)
-    const link = container.append("g")
-      .attr("stroke", "#999")
-      .attr("stroke-opacity", 0.5)
-      .selectAll("line")
-      .data(links)
-      .join("line")
-      .attr("stroke-width", d => Math.max(1.5 - (d.depth * 0.3), 0.5))
-      .attr("opacity", 0.6);
-    
-    // Configurar nós
-    const node = container.append("g")
-      .selectAll("circle")
-      .data(nodes)
-      .join("circle")
-      .attr("r", d => d.radius)
-      .attr("fill", d => getNodeColor(d.depth))
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 1.5)
-      .attr("cursor", "pointer")
-      .call(drag()); 
-    
-    // Adicionar tooltips para nós (estilo Quartz)
-    const tooltip = d3.select("body").append("div")
-      .attr("class", "quartz-graph-tooltip")
-      .style("position", "absolute")
-      .style("z-index", "10")
-      .style("visibility", "hidden")
-      .style("padding", "8px")
-      .style("background", "rgba(0,0,0,0.75)")
-      .style("border-radius", "6px")
-      .style("color", "#fff")
-      .style("font-size", "12px")
-      .style("pointer-events", "none");
-    
-    // Rótulos para nós (limitados aos principais)
-    const labels = container.append("g")
-      .attr("class", "node-labels")
-      .style("pointer-events", "none")
-      .selectAll("text")
-      .data(nodes.filter(d => settings.showLabels && (d.depth <= 1 || d.isSelected || d === hoveredNode)))
-      .join("text")
-      .text(d => d.label)
-      .attr("font-size", d => d.depth === 0 ? 11 : 9)
-      .attr("fill", "#333")
-      .attr("text-anchor", "middle")
-      .attr("dy", d => -d.radius - 5)
-      .attr("opacity", d => d.depth === 0 ? 1 : 0.8);
-    
-    // Adicionar eventos de interação
-    node
-      .on("mouseover", function(event, d) {
-        setHoveredNode(d);
-        
-        // Mostrar tooltip
-        tooltip.html(`<strong>${d.label}</strong>${d.depth > 0 ? `<br>Profundidade: ${d.depth}` : ''}`)
-          .style("visibility", "visible")
-          .style("top", (event.pageY - 10) + "px")
-          .style("left", (event.pageX + 10) + "px");
-        
-        // Destacar nó e conexões
-        if (settings.focusOnHover) {
-          node.attr("opacity", n => isConnected(d, n) ? 1 : 0.2);
-          link.attr("opacity", l => isLinkConnected(l, d) ? 1 : 0.05);
-          labels.attr("opacity", n => isConnected(d, n) ? 1 : 0.1);
-        }
-      })
-      .on("mouseout", function() {
-        setHoveredNode(null);
-        
-        // Esconder tooltip
-        tooltip.style("visibility", "hidden");
-        
-        // Restaurar visualização normal
-        if (settings.focusOnHover) {
-          node.attr("opacity", n => n === selectedNode ? 1 : 0.8);
-          link.attr("opacity", 0.6);
-          labels.attr("opacity", d => d.depth === 0 ? 1 : 0.8);
-        }
-      })
-      .on("click", function(event, d) {
-        event.stopPropagation();
-        
-        // Selecionar ou desselecionar nó
-        if (selectedNode === d) {
-          setSelectedNode(null);
-        } else {
-          setSelectedNode(d);
-          
-          // Centralizar no nó selecionado
-          const transform = d3.zoomIdentity
-            .translate(width/2 - d.x * 2, height/2 - d.y * 2)
-            .scale(2);
-          
-          svg.transition().duration(500).call(zoom.transform, transform);
-        }
-      });
-    
-    // Auxiliar para verificar se dois nós estão conectados
-    function isConnected(a, b) {
-      if (a === b) return true;
-      return links.some(l => 
-        (l.source === a && l.target === b) || 
-        (l.target === a && l.source === b) ||
-        (l.source.id === a.id && l.target.id === b.id) ||
-        (l.source.id === b.id && l.target.id === a.id)
-      );
-    }
-    
-    // Auxiliar para verificar se um link está conectado a um nó
-    function isLinkConnected(l, node) {
-      return (l.source === node || l.target === node || 
-             l.source.id === node.id || l.target.id === node.id);
-    }
-    
-    // Configurar simulação D3 - SIMULAÇÃO MODIFICADA
-    const sim = d3.forceSimulation(nodes)
-      .force("link", d3.forceLink(links)
-        .id(d => d.id)
-        .distance(d => settings.linkDistance + (d.source.depth * 5)))
-      .force("charge", d3.forceManyBody()
-        .strength(d => d.depth === 0 ? settings.repelForce * 2 : settings.repelForce)
-        .distanceMax(300))
-      .force("centerX", d3.forceX(width / 2).strength(0.2)) // Força horizontal mais forte
-      .force("centerY", d3.forceY(height / 2).strength(0.05)) // Força vertical muito mais fraca
-      .force("collision", d3.forceCollide().radius(d => d.radius * 2.5))
-      .velocityDecay(0.6) // Maior atrito para desacelerar movimento
-      .alphaDecay(0.02)
-      .alphaMin(0.001)
-      .alpha(0.5); // Alpha inicial mais baixo
-    
-    // Forçar parada após aquecimento inicial
-    setTimeout(() => {
-      sim.alpha(0).stop();
-      
-      // SOLUÇÃO EXTREMA: Depois de posicionar, fixar TODOS os nós
-      nodes.forEach(node => {
-        node.fx = node.x; 
-        node.fy = node.y;
-      });
-      
-      // Atualizar posições finais
-      updatePositions();
-    }, 2000);
-    
-    // Função para atualizar posições a cada tick
-    function updatePositions() {
-      // Atualizar posições dos links
-      link
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y);
-      
-      // Atualizar posições dos nós (com limites)
-      node
-        .attr("cx", d => d.x = Math.max(d.radius, Math.min(width - d.radius, d.x)))
-        .attr("cy", d => d.y = Math.max(d.radius, Math.min(height - d.radius, d.y)));
-      
-      // Atualizar posições dos rótulos
-      labels
-        .attr("x", d => d.x)
-        .attr("y", d => d.y);
-    }
-    
-    sim.on("tick", updatePositions);
-    
-    // Salvar simulação para referência externa
-    setSimulation(sim);
-    
-    // Função para arrastar nós
-    function drag() {
-      return d3.drag()
-        .on("start", (event, d) => {
-          // Desbloquear o nó para arrastar
-          if (!event.active) sim.alphaTarget(0.1).restart();
-          d.fx = d.x;
-          d.fy = d.y;
-        })
-        .on("drag", (event, d) => {
-          // Limitar movimento apenas na horizontal
-          d.fx = Math.max(d.radius, Math.min(width - d.radius, event.x));
-          d.fy = Math.max(d.radius, Math.min(height - d.radius, event.y));
-        })
-        .on("end", (event, d) => {
-          if (!event.active) sim.alphaTarget(0);
-          // Manter posição fixa após soltar para evitar deriva
-          // Comentar as duas linhas abaixo se quiser que os nós voltem a se mover
-          // d.fx = null;
-          // d.fy = null;
-        });
-    }
-    
-    // Função de limpeza
-    return () => {
-      sim.stop();
-      d3.select('.quartz-graph-tooltip').remove();
+  else
+    response = {
+      hits: 693,
+      pages: 70,
+      timeTaken: 0.635,
+      suggestions: [
+        { text: "right", offset: 0, length: 4, option: null },
+        { text: "wrng", offset: 0, length: 4, option: "wrong" },
+      ],
+      results: [
+        {
+          id: "14232",
+          score: 7.947667,
+          url: "https://en.wikipedia.org/wiki/Three-point_flexural_test",
+          title: "Three-point flexural test",
+          content:
+            "Three-point flexural **test** 1940s flexural **test** machinery working on a sample of concrete **Test** fixture on universal **testing** machine for three-point flex **test** The three-point bending flexural **test** provides values for the modulus of elasticity in bending <som1>E_f</som1>, flexural stress <som2>\\sigma_f</som2>, flexural strain <som3>\\epsilon_f</som3> and the flexural stress–strain response of the material. This **test** is performed on a universal **testing** machine (tensile **testing** machine or tensile **teste**",
+          reading_time: 11,
+          datetime: "2011-12-03",
+        },
+        {
+          id: "32105",
+          score: 7.8845177,
+          url: "https://en.wikipedia.org/wiki/Turning_point_test",
+          title: "Turning point test",
+          content:
+            'Turning point **test** In statistical hypothesis **testing**, a turning point **test** is a statistical **test** of the independence of a series of random variables.[1][2][3] Maurice Kendall and Alan Stuart describe the **test** as "reasonable for a **test** against cyclicity but poor as a **test** against trend."[4][5] The **test** was first published by Irénée-Jules Bienaymé in 1874.[4][6] Statement of **test** The turning point **tests** the null hypothesis[1] H0: X1, X2, ..., Xn are independent and identically distributed random v',
+          reading_time: 6,
+          datetime: "2014-11-22",
+        },
+        {
+          id: "10108",
+          score: 7.7892075,
+          url: "https://en.wikipedia.org/wiki/Multi-stage_fitness_test",
+          title: "Multi-stage fitness test",
+          content:
+            "Multi-stage fitness **test** The multi-stage fitness **test** (MSFT), also known as the beep **test**, bleep **test**, PACER (Progressive Aerobic Cardiovascular Endurance Run), PACER **test**, FitnessGram PACER **test**, or the 20 m Shuttle Run **Test** (20 m SRT), is a running **test** used to estimate an athlete's aerobic capacity (VO2 max). The **test** requires participants to run 20 meters back and forth across a marked track keeping time with beeps. Every minute or so, the next level commences: the time between beeps gets sh",
+          reading_time: 3,
+          datetime: "2021-07-15",
+        },
+        {
+          id: "11566",
+          score: 7.7481556,
+          url: "https://en.wikipedia.org/wiki/Permutation_test",
+          title: "Permutation test",
+          content:
+            "A permutation **test** (also called re-randomization **test**) is an exact statistical hypothesis **test** making use of the proof by contradiction in which the distribution of the **test** statistic under the null hypothesis is obtained by calculating all possible values of the **test** statistic under possible rearrangements of the observed data. Permutation **tests** are, therefore, a form of resampling. Permutation **tests** can be understood as surrogate data **testing** where the surrogate data under the null hypothesis",
+          reading_time: 1,
+          datetime: "2012-08-14",
+        },
+        {
+          id: "5144",
+          score: 7.710675,
+          url: "https://en.wikipedia.org/wiki/Ratio_test",
+          title: "Ratio test",
+          content:
+            "Ratio **test** In mathematics, the ratio **test** is a **test** (or \"criterion\") for the convergence of a series <som1>\\sum_{n=1}^\\infty a_n,</som1> where each term is a real or complex number and is nonzero when is large. The **test** was first published by Jean le Rond d'Alembert and is sometimes known as d'Alembert's ratio **test** or as the Cauchy ratio **test**.[1] The **test** Decision diagram for the ratio **test** The usual form of the **test** makes use of the limit The ratio **test** states that: if L < 1 then the series con",
+          reading_time: 6,
+          datetime: "2017-05-05",
+        },
+        {
+          id: "9057",
+          score: 7.674818,
+          url: "https://en.wikipedia.org/wiki/One-_and_two-tailed_tests",
+          title: "One- and two-tailed tests",
+          content:
+            "One- and two-tailed **tests** A two-tailed **test** applied to the normal distribution. A one-tailed **test**, showing the p-value as the size of one tail. In statistical significance **testing**, a one-tailed **test** and a two-tailed **test** are alternative ways of computing the statistical significance of a parameter inferred from a data set, in terms of a **test** statistic. A two-tailed **test** is appropriate if the estimated value is greater or less than a certain range of values, for example, whether a **test** taker may",
+          reading_time: 5,
+          datetime: "2017-12-06",
+        },
+        {
+          id: "16121",
+          score: 7.6363564,
+          url: "https://en.wikipedia.org/wiki/Ljung–Box_test",
+          title: "Ljung–Box test",
+          content:
+            'The Ljung–Box **test** (named for Greta M. Ljung and George E. P. Box) is a type of statistical **test** of whether any of a group of autocorrelations of a time series are different from zero. Instead of **testing** randomness at each distinct lag, it **tests** the "overall" randomness based on a number of lags, and is therefore a portmanteau **test**. This **test** is sometimes known as the Ljung–Box Q **test**, and it is closely connected to the Box–Pierce **test** (which is named after George E. P. Box and David A. Pierce).',
+          reading_time: 1,
+          datetime: "2012-01-25",
+        },
+        {
+          id: "34657",
+          score: 7.6224203,
+          url: "https://en.wikipedia.org/wiki/Cucconi_test",
+          title: "Cucconi test",
+          content:
+            "In statistics, the Cucconi **test** is a nonparametric **test** for jointly comparing central tendency and variability (detecting location and scale changes) in two samples. Many rank **tests** have been proposed for the two-sample location-scale problem. Nearly all of them are Lepage-type **tests**, that is a combination of a location **test** and a scale **test**. The Cucconi **test** was first proposed by Odoardo Cucconi in 1968.[1] The Cucconi **test** is not as familiar as other location-scale **tests** but it is of interest",
+          reading_time: 2,
+          datetime: "2019-01-25",
+        },
+        {
+          id: "5918",
+          score: 7.593691,
+          url: "https://en.wikipedia.org/wiki/Student's_t-test",
+          title: "Student's <i>t</i>-test",
+          content:
+            "The t-**test** is any statistical hypothesis **test** in which the **test** statistic follows a Student's t-distribution under the null hypothesis. A t-**test** is the most commonly applied when the **test** statistic would follow a normal distribution if the value of a scaling term in the **test** statistic were known. When the scaling term is unknown and is replaced by an estimate based on the data, the **test** statistics (under certain conditions) follow a Student's t distribution. The t-**test** can be used, for example,",
+          reading_time: 1,
+          datetime: "2017-05-28",
+        },
+        {
+          id: "15224",
+          score: 7.5822506,
+          url: "https://en.wikipedia.org/wiki/Test_probe",
+          title: "Test probe",
+          content:
+            "Typical passive oscilloscope probe being used to **test** an integrated circuit. A **test** probe is a physical device used to connect electronic **test** equipment to a device under **test** (DUT). **Test** probes range from very simple, robust devices to complex probes that are sophisticated, expensive, and fragile. Specific types include **test** prods, oscilloscope probes and current probes. A **test** probe is often supplied as a **test** lead, which includes the probe, cable and terminating connector. Voltage Voltage pro",
+          reading_time: 6,
+          datetime: "2020-10-06",
+        },
+      ],
+      requestId: "1746888836936",
     };
-  }, [data, dimensions, settings, hoveredNode, selectedNode]);
 
-  // Manipuladores para controles do usuário
-  const handleSettingChange = (setting, value) => {
-    setSettings(prev => ({ ...prev, [setting]: value }));
-    
-    // Atualizar simulação se já existir
-    if (simulation) {
-      if (setting === 'repelForce') {
-        simulation.force("charge").strength(value);
-      } else if (setting === 'centerForce') {
-        simulation.force("centerX").strength(value);
-        simulation.force("centerY").strength(value * 0.25); // Reduzir força vertical
-      } else if (setting === 'linkDistance') {
-        simulation.force("link").distance(d => value + (d.source.depth * 5));
-      }
-      
-      simulation.alpha(0.3).restart();
-      
-      // Parar após breve período de ajuste
-      setTimeout(() => {
-        simulation.stop();
-      }, 1000);
-    }
+  setTimeout(() => {
+    console.log("Consulta recebida. Simulando tempo de processamento...");
+    return res.status(200).json(response);
+  }, 1300);
+});
+
+app.post("/v1/user/verify", (req, res) => {
+  const response = {
+    logged: true,
+    username: "username",
   };
 
-  return (
-    <div className="graph-container flex flex-col w-full h-full">
-      <div className="controls bg-gray-100 p-3 rounded flex flex-wrap gap-4 items-center mb-4">
-        <div className="control-group">
-          <label className="block text-sm font-medium text-gray-700">Repulsão</label>
-          <input 
-            type="range" 
-            min="-1000" 
-            max="-100" 
-            value={settings.repelForce} 
-            onChange={(e) => handleSettingChange('repelForce', parseInt(e.target.value))}
-            className="w-32" 
-          />
-          <span className="text-xs ml-1">{settings.repelForce}</span>
-        </div>
-        
-        <div className="control-group">
-          <label className="block text-sm font-medium text-gray-700">Gravidade Central</label>
-          <input 
-            type="range" 
-            min="0.1" 
-            max="2" 
-            step="0.1" 
-            value={settings.centerForce} 
-            onChange={(e) => handleSettingChange('centerForce', parseFloat(e.target.value))}
-            className="w-32" 
-          />
-          <span className="text-xs ml-1">{settings.centerForce}</span>
-        </div>
-        
-        <div className="control-group">
-          <label className="block text-sm font-medium text-gray-700">Distância de Links</label>
-          <input 
-            type="range" 
-            min="10" 
-            max="100" 
-            value={settings.linkDistance} 
-            onChange={(e) => handleSettingChange('linkDistance', parseInt(e.target.value))}
-            className="w-32" 
-          />
-          <span className="text-xs ml-1">{settings.linkDistance}px</span>
-        </div>
-        
-        <div className="ml-auto flex items-center space-x-4">
-          <label className="flex items-center text-sm">
-            <input 
-              type="checkbox" 
-              checked={settings.focusOnHover} 
-              onChange={(e) => handleSettingChange('focusOnHover', e.target.checked)}
-              className="mr-1 h-4 w-4" 
-            />
-            Destacar conexões
-          </label>
-          
-          <label className="flex items-center text-sm">
-            <input 
-              type="checkbox" 
-              checked={settings.showLabels} 
-              onChange={(e) => handleSettingChange('showLabels', e.target.checked)}
-              className="mr-1 h-4 w-4" 
-            />
-            Mostrar rótulos
-          </label>
-        </div>
-      </div>
-      
-      <div className="graph-view relative flex-grow border border-gray-200 rounded overflow-hidden bg-white">
-        {data.nodes.length === 0 ? (
-          <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-            Sem dados para visualizar
-          </div>
-        ) : (
-          <svg 
-            ref={svgRef} 
-            className="w-full h-full"
-            style={{ cursor: 'grab' }}
-          >
-            <g className="graph"></g>
-          </svg>
-        )}
-        
-        {/* Mini legenda */}
-        <div className="absolute bottom-2 left-2 bg-white bg-opacity-80 p-2 rounded border text-xs">
-          <div className="flex items-center mb-1">
-            <span className="inline-block w-3 h-3 rounded-full bg-red-500 mr-1"></span>
-            <span>Nó principal</span>
-          </div>
-          <div className="flex items-center">
-            <span className="inline-block w-3 h-3 rounded-full bg-blue-500 mr-1"></span>
-            <span>Conexões</span>
-          </div>
-        </div>
-        
-        {/* Instruções */}
-        <div className="absolute bottom-2 right-2 bg-white bg-opacity-80 p-2 rounded border text-xs">
-          Scroll para zoom • Arraste para mover • Clique para selecionar
-        </div>
-      </div>
-    </div>
-  );
-};
+  return res.status(200).json(response);
+});
 
-// O restante do componente WikipediaGraph permanece igual...
+app.get("/v1/weatherReport", (req, res) => {
+  const response = {
+    id: 804,
+    group: "Clouds",
+    city: "Alfenas",
+    temperature: 22,
+    description: "overcast clouds",
+  };
 
-export default Graph;
+  return res.status(200).json(response);
+});
+
+app.get("/v1/graph/1/1", (req, res) => {
+  const response = {
+    id: 1,
+    url: "https://en.wikipedia.org/wiki/Albedo",
+    title: "Albedo",
+    connections: [
+      {
+        id: 1020,
+        url: "https://en.wikipedia.org/wiki/Sunlight",
+        title: "Sunlight",
+        connections: [],
+      },
+      {
+        id: 1518,
+        url: "https://en.wikipedia.org/wiki/Black_body",
+        title: "Black body",
+        connections: [],
+      },
+      {
+        id: 18936,
+        url: "https://en.wikipedia.org/wiki/Radiosity_(radiometry)",
+        title: "Radiosity (radiometry)",
+        connections: [],
+      },
+      {
+        id: 6042,
+        url: "https://en.wikipedia.org/wiki/Irradiance",
+        title: "Irradiance",
+        connections: [],
+      },
+      {
+        id: 29880,
+        url: "https://en.wikipedia.org/wiki/Position_of_the_Sun",
+        title: "Position of the Sun",
+        connections: [],
+      },
+      {
+        id: 1432,
+        url: "https://en.wikipedia.org/wiki/Reflectance",
+        title: "Reflectance",
+        connections: [],
+      },
+      {
+        id: 3295,
+        url: "https://en.wikipedia.org/wiki/Positive_feedback",
+        title: "Positive feedback",
+        connections: [],
+      },
+      {
+        id: 9961,
+        url: "https://en.wikipedia.org/wiki/Bidirectional_reflectance_distribution_function",
+        title: "Bidirectional reflectance distribution function",
+        connections: [],
+      },
+      {
+        id: 7973,
+        url: "https://en.wikipedia.org/wiki/Solar_zenith_angle",
+        title: "Solar zenith angle",
+        connections: [],
+      },
+      {
+        id: 5461,
+        url: "https://en.wikipedia.org/wiki/Radiative_forcing",
+        title: "Radiative forcing",
+        connections: [],
+      },
+      {
+        id: 23220,
+        url: "https://en.wikipedia.org/wiki/Thermal_emittance",
+        title: "Thermal emittance",
+        connections: [],
+      },
+      {
+        id: 10103,
+        url: "https://en.wikipedia.org/wiki/Solar_irradiance",
+        title: "Solar irradiance",
+        connections: [],
+      },
+      {
+        id: 3294,
+        url: "https://en.wikipedia.org/wiki/Negative_feedback",
+        title: "Negative feedback",
+        connections: [],
+      },
+      {
+        id: 23308,
+        url: "https://en.wikipedia.org/wiki/Photovoltaic_system",
+        title: "Photovoltaic system",
+        connections: [],
+      },
+      {
+        id: 37061,
+        url: "https://en.wikipedia.org/wiki/Bifacial_solar_cells",
+        title: "Bifacial solar cells",
+        connections: [],
+      },
+      {
+        id: 2215,
+        url: "https://en.wikipedia.org/wiki/Evapotranspiration",
+        title: "Evapotranspiration",
+        connections: [],
+      },
+      {
+        id: 419,
+        url: "https://en.wikipedia.org/wiki/Fresnel_equations",
+        title: "Fresnel equations",
+        connections: [],
+      },
+      {
+        id: 6706,
+        url: "https://en.wikipedia.org/wiki/Specular_reflection",
+        title: "Specular reflection",
+        connections: [],
+      },
+      {
+        id: 3244,
+        url: "https://en.wikipedia.org/wiki/Enceladus",
+        title: "Enceladus",
+        connections: [],
+      },
+      {
+        id: 674,
+        url: "https://en.wikipedia.org/wiki/Moon",
+        title: "Moon",
+        connections: [],
+      },
+      {
+        id: 7207,
+        url: "https://en.wikipedia.org/wiki/Lambertian_reflectance",
+        title: "Lambertian reflectance",
+        connections: [],
+      },
+      {
+        id: 15649,
+        url: "https://en.wikipedia.org/wiki/Bond_albedo",
+        title: "Bond albedo",
+        connections: [],
+      },
+      {
+        id: 18212,
+        url: "https://en.wikipedia.org/wiki/Hapke_parameters",
+        title: "Hapke parameters",
+        connections: [],
+      },
+      {
+        id: 945,
+        url: "https://en.wikipedia.org/wiki/Refractive_index",
+        title: "Refractive index",
+        connections: [],
+      },
+      {
+        id: 1339,
+        url: "https://en.wikipedia.org/wiki/Circular_polarization",
+        title: "Circular polarization",
+        connections: [],
+      },
+      {
+        id: 7013,
+        url: "https://en.wikipedia.org/wiki/Radar_cross-section",
+        title: "Radar cross-section",
+        connections: [],
+      },
+      {
+        id: 11136,
+        url: "https://en.wikipedia.org/wiki/Bulk_density",
+        title: "Bulk density",
+        connections: [],
+      },
+      {
+        id: 7541,
+        url: "https://en.wikipedia.org/wiki/Emissivity",
+        title: "Emissivity",
+        connections: [],
+      },
+      {
+        id: 25444,
+        url: "https://en.wikipedia.org/wiki/Greenhouse_gas",
+        title: "Greenhouse gas",
+        connections: [],
+      },
+      {
+        id: 1200,
+        url: "https://en.wikipedia.org/wiki/Svante_Arrhenius",
+        title: "Svante Arrhenius",
+        connections: [],
+      },
+      {
+        id: 12176,
+        url: "https://en.wikipedia.org/wiki/Ocean_acidification",
+        title: "Ocean acidification",
+        connections: [],
+      },
+      {
+        id: 19522,
+        url: "https://en.wikipedia.org/wiki/Ocean_heat_content",
+        title: "Ocean heat content",
+        connections: [],
+      },
+      {
+        id: 10134,
+        url: "https://en.wikipedia.org/wiki/Climate_sensitivity",
+        title: "Climate sensitivity",
+        connections: [],
+      },
+      {
+        id: 7043,
+        url: "https://en.wikipedia.org/wiki/Proxy_(climate)",
+        title: "Proxy (climate)",
+        connections: [],
+      },
+      {
+        id: 1624,
+        url: "https://en.wikipedia.org/wiki/Cloud_forcing",
+        title: "Cloud forcing",
+        connections: [],
+      },
+      {
+        id: 484,
+        url: "https://en.wikipedia.org/wiki/Global_warming_potential",
+        title: "Global warming potential",
+        connections: [],
+      },
+      {
+        id: 37148,
+        url: "https://en.wikipedia.org/wiki/Illustrative_model_of_greenhouse_effect_on_climate_change",
+        title: "Illustrative model of greenhouse effect on climate change",
+        connections: [],
+      },
+      {
+        id: 1623,
+        url: "https://en.wikipedia.org/wiki/Climate_model",
+        title: "Climate model",
+        connections: [],
+      },
+    ],
+  };
+
+  return res.status(200).json(response);
+});
+
+app.get("/v1/graph/1/2", (req, res) => {
+  const response = {
+    id: 1,
+    url: "https://en.wikipedia.org/wiki/Albedo",
+    title: "Albedo",
+    connections: [
+      {
+        id: 1020,
+        url: "https://en.wikipedia.org/wiki/Sunlight",
+        title: "Sunlight",
+        connections: [
+          {
+            id: 3052,
+            url: "https://en.wikipedia.org/wiki/Sunrise",
+            title: "Sunrise",
+            connections: [],
+          },
+          {
+            id: 3053,
+            url: "https://en.wikipedia.org/wiki/Sunset",
+            title: "Sunset",
+            connections: [],
+          },
+          {
+            id: 338,
+            url: "https://en.wikipedia.org/wiki/Electromagnetic_radiation",
+            title: "Electromagnetic radiation",
+            connections: [],
+          },
+          {
+            id: 975,
+            url: "https://en.wikipedia.org/wiki/Sun",
+            title: "Sun",
+            connections: [],
+          },
+          {
+            id: 558,
+            url: "https://en.wikipedia.org/wiki/Infrared",
+            title: "Infrared",
+            connections: [],
+          },
+          {
+            id: 18316,
+            url: "https://en.wikipedia.org/wiki/Light_scattering_by_particles",
+            title: "Light scattering by particles",
+            connections: [],
+          },
+          {
+            id: 1324,
+            url: "https://en.wikipedia.org/wiki/Attenuation",
+            title: "Attenuation",
+            connections: [],
+          },
+          {
+            id: 1677,
+            url: "https://en.wikipedia.org/wiki/Horizon",
+            title: "Horizon",
+            connections: [],
+          },
+          {
+            id: 615,
+            url: "https://en.wikipedia.org/wiki/Light",
+            title: "Light",
+            connections: [],
+          },
+          {
+            id: 26833,
+            url: "https://en.wikipedia.org/wiki/Autotroph",
+            title: "Autotroph",
+            connections: [],
+          },
+          {
+            id: 5113,
+            url: "https://en.wikipedia.org/wiki/Chemical_energy",
+            title: "Chemical energy",
+            connections: [],
+          },
+          {
+            id: 10103,
+            url: "https://en.wikipedia.org/wiki/Solar_irradiance",
+            title: "Solar irradiance",
+            connections: [],
+          },
+          {
+            id: 8234,
+            url: "https://en.wikipedia.org/wiki/Orbital_eccentricity",
+            title: "Orbital eccentricity",
+            connections: [],
+          },
+          {
+            id: 7863,
+            url: "https://en.wikipedia.org/wiki/Elliptic_orbit",
+            title: "Elliptic orbit",
+            connections: [],
+          },
+          {
+            id: 28,
+            url: "https://en.wikipedia.org/wiki/Astronomical_unit",
+            title: "Astronomical unit",
+            connections: [],
+          },
+          {
+            id: 10336,
+            url: "https://en.wikipedia.org/wiki/Luminous_efficacy",
+            title: "Luminous efficacy",
+            connections: [],
+          },
+          {
+            id: 12438,
+            url: "https://en.wikipedia.org/wiki/Radiant_flux",
+            title: "Radiant flux",
+            connections: [],
+          },
+          {
+            id: 7141,
+            url: "https://en.wikipedia.org/wiki/Illuminance",
+            title: "Illuminance",
+            connections: [],
+          },
+          {
+            id: 6042,
+            url: "https://en.wikipedia.org/wiki/Irradiance",
+            title: "Irradiance",
+            connections: [],
+          },
+          {
+            id: 1032,
+            url: "https://en.wikipedia.org/wiki/Steradian",
+            title: "Steradian",
+            connections: [],
+          },
+          {
+            id: 5900,
+            url: "https://en.wikipedia.org/wiki/Radiance",
+            title: "Radiance",
+            connections: [],
+          },
+          {
+            id: 8695,
+            url: "https://en.wikipedia.org/wiki/Limb_darkening",
+            title: "Limb darkening",
+            connections: [],
+          },
+          {
+            id: 6965,
+            url: "https://en.wikipedia.org/wiki/Black-body_radiation",
+            title: "Black-body radiation",
+            connections: [],
+          },
+          {
+            id: 381,
+            url: "https://en.wikipedia.org/wiki/Electromagnetic_spectrum",
+            title: "Electromagnetic spectrum",
+            connections: [],
+          },
+          {
+            id: 821,
+            url: "https://en.wikipedia.org/wiki/Photon",
+            title: "Photon",
+            connections: [],
+          },
+          {
+            id: 270,
+            url: "https://en.wikipedia.org/wiki/Stellar_corona",
+            title: "Stellar corona",
+            connections: [],
+          },
+          {
+            id: 2358,
+            url: "https://en.wikipedia.org/wiki/Radio_wave",
+            title: "Radio wave",
+            connections: [],
+          },
+          {
+            id: 871,
+            url: "https://en.wikipedia.org/wiki/Power_law",
+            title: "Power law",
+            connections: [],
+          },
+          {
+            id: 744,
+            url: "https://en.wikipedia.org/wiki/Neutrino",
+            title: "Neutrino",
+            connections: [],
+          },
+          {
+            id: 1169,
+            url: "https://en.wikipedia.org/wiki/Wavelength",
+            title: "Wavelength",
+            connections: [],
+          },
+          {
+            id: 800,
+            url: "https://en.wikipedia.org/wiki/Ozone_layer",
+            title: "Ozone layer",
+            connections: [],
+          },
+          {
+            id: 6460,
+            url: "https://en.wikipedia.org/wiki/Reactive_oxygen_species",
+            title: "Reactive oxygen species",
+            connections: [],
+          },
+          {
+            id: 3281,
+            url: "https://en.wikipedia.org/wiki/Diffuse_sky_radiation",
+            title: "Diffuse sky radiation",
+            connections: [],
+          },
+          {
+            id: 24718,
+            url: "https://en.wikipedia.org/wiki/Heat",
+            title: "Heat",
+            connections: [],
+          },
+          {
+            id: 788,
+            url: "https://en.wikipedia.org/wiki/Orbit",
+            title: "Orbit",
+            connections: [],
+          },
+          {
+            id: 1388,
+            url: "https://en.wikipedia.org/wiki/Inverse-square_law",
+            title: "Inverse-square law",
+            connections: [],
+          },
+          {
+            id: 603,
+            url: "https://en.wikipedia.org/wiki/Latitude",
+            title: "Latitude",
+            connections: [],
+          },
+          {
+            id: 2742,
+            url: "https://en.wikipedia.org/wiki/Wavenumber",
+            title: "Wavenumber",
+            connections: [],
+          },
+          {
+            id: 957,
+            url: "https://en.wikipedia.org/wiki/Rayleigh_scattering",
+            title: "Rayleigh scattering",
+            connections: [],
+          },
+          {
+            id: 15257,
+            url: "https://en.wikipedia.org/wiki/Standard_illuminant",
+            title: "Standard illuminant",
+            connections: [],
+          },
+          {
+            id: 1333,
+            url: "https://en.wikipedia.org/wiki/Brightness",
+            title: "Brightness",
+            connections: [],
+          },
+          {
+            id: 244,
+            url: "https://en.wikipedia.org/wiki/Color_temperature",
+            title: "Color temperature",
+            connections: [],
+          },
+          {
+            id: 28197,
+            url: "https://en.wikipedia.org/wiki/Coronal_radiative_losses",
+            title: "Coronal radiative losses",
+            connections: [],
+          },
+          {
+            id: 28012,
+            url: "https://en.wikipedia.org/wiki/Starlight",
+            title: "Starlight",
+            connections: [],
+          },
+          {
+            id: 15733,
+            url: "https://en.wikipedia.org/wiki/Standard_solar_model",
+            title: "Standard solar model",
+            connections: [],
+          },
+          {
+            id: 14657,
+            url: "https://en.wikipedia.org/wiki/Solar_core",
+            title: "Solar core",
+            connections: [],
+          },
+          {
+            id: 1001,
+            url: "https://en.wikipedia.org/wiki/Sunspot",
+            title: "Sunspot",
+            connections: [],
+          },
+          {
+            id: 1045,
+            url: "https://en.wikipedia.org/wiki/Solar_wind",
+            title: "Solar wind",
+            connections: [],
+          },
+          {
+            id: 5067,
+            url: "https://en.wikipedia.org/wiki/Helioseismology",
+            title: "Helioseismology",
+            connections: [],
+          },
+          {
+            id: 7937,
+            url: "https://en.wikipedia.org/wiki/Bow_shock",
+            title: "Bow shock",
+            connections: [],
+          },
+          {
+            id: 10524,
+            url: "https://en.wikipedia.org/wiki/Solar_neutrino",
+            title: "Solar neutrino",
+            connections: [],
+          },
+          {
+            id: 37190,
+            url: "https://en.wikipedia.org/wiki/Solar_radio_emission",
+            title: "Solar radio emission",
+            connections: [],
+          },
+          {
+            id: 977,
+            url: "https://en.wikipedia.org/wiki/Star",
+            title: "Star",
+            connections: [],
+          },
+          {
+            id: 10559,
+            url: "https://en.wikipedia.org/wiki/Air_quality_index",
+            title: "Air quality index",
+            connections: [],
+          },
+          {
+            id: 1213,
+            url: "https://en.wikipedia.org/wiki/Emissions_trading",
+            title: "Emissions trading",
+            connections: [],
+          },
+          {
+            id: 354,
+            url: "https://en.wikipedia.org/wiki/Energy",
+            title: "Energy",
+            connections: [],
+          },
+          {
+            id: 520,
+            url: "https://en.wikipedia.org/wiki/Hydropower",
+            title: "Hydropower",
+            connections: [],
+          },
+          {
+            id: 3931,
+            url: "https://en.wikipedia.org/wiki/Wind_power",
+            title: "Wind power",
+            connections: [],
+          },
+          {
+            id: 15620,
+            url: "https://en.wikipedia.org/wiki/Mineral_rights",
+            title: "Mineral rights",
+            connections: [],
+          },
+          {
+            id: 24817,
+            url: "https://en.wikipedia.org/wiki/Plant",
+            title: "Plant",
+            connections: [],
+          },
+          {
+            id: 1172,
+            url: "https://en.wikipedia.org/wiki/Water",
+            title: "Water",
+            connections: [],
+          },
+          {
+            id: 2530,
+            url: "https://en.wikipedia.org/wiki/Iceberg",
+            title: "Iceberg",
+            connections: [],
+          },
+          {
+            id: 24486,
+            url: "https://en.wikipedia.org/wiki/Rain",
+            title: "Rain",
+            connections: [],
+          },
+          {
+            id: 25951,
+            url: "https://en.wikipedia.org/wiki/Earth_Overshoot_Day",
+            title: "Earth Overshoot Day",
+            connections: [],
+          },
+          {
+            id: 16545,
+            url: "https://en.wikipedia.org/wiki/Young_stellar_object",
+            title: "Young stellar object",
+            connections: [],
+          },
+          {
+            id: 15088,
+            url: "https://en.wikipedia.org/wiki/Hayashi_track",
+            title: "Hayashi track",
+            connections: [],
+          },
+          {
+            id: 15559,
+            url: "https://en.wikipedia.org/wiki/Henyey_track",
+            title: "Henyey track",
+            connections: [],
+          },
+          {
+            id: 679,
+            url: "https://en.wikipedia.org/wiki/Main_sequence",
+            title: "Main sequence",
+            connections: [],
+          },
+          {
+            id: 6546,
+            url: "https://en.wikipedia.org/wiki/Subdwarf",
+            title: "Subdwarf",
+            connections: [],
+          },
+          {
+            id: 761,
+            url: "https://en.wikipedia.org/wiki/Neutron_star",
+            title: "Neutron star",
+            connections: [],
+          },
+          {
+            id: 8701,
+            url: "https://en.wikipedia.org/wiki/Pulsar",
+            title: "Pulsar",
+            connections: [],
+          },
+          {
+            id: 13849,
+            url: "https://en.wikipedia.org/wiki/Binary_pulsar",
+            title: "Binary pulsar",
+            connections: [],
+          },
+          {
+            id: 2604,
+            url: "https://en.wikipedia.org/wiki/Stellar_nucleosynthesis",
+            title: "Stellar nucleosynthesis",
+            connections: [],
+          },
+          {
+            id: 3349,
+            url: "https://en.wikipedia.org/wiki/Alpha_process",
+            title: "Alpha process",
+            connections: [],
+          },
+          {
+            id: 3353,
+            url: "https://en.wikipedia.org/wiki/Carbon-burning_process",
+            title: "Carbon-burning process",
+            connections: [],
+          },
+          {
+            id: 8012,
+            url: "https://en.wikipedia.org/wiki/Stellar_structure",
+            title: "Stellar structure",
+            connections: [],
+          },
+          {
+            id: 18435,
+            url: "https://en.wikipedia.org/wiki/Solar-like_oscillations",
+            title: "Solar-like oscillations",
+            connections: [],
+          },
+          {
+            id: 8725,
+            url: "https://en.wikipedia.org/wiki/Radiation_zone",
+            title: "Radiation zone",
+            connections: [],
+          },
+          {
+            id: 2981,
+            url: "https://en.wikipedia.org/wiki/Stellar_wind",
+            title: "Stellar wind",
+            connections: [],
+          },
+          {
+            id: 23021,
+            url: "https://en.wikipedia.org/wiki/Stellar-wind_bubble",
+            title: "Stellar-wind bubble",
+            connections: [],
+          },
+          {
+            id: 33871,
+            url: "https://en.wikipedia.org/wiki/Accretion_disk",
+            title: "Accretion disk",
+            connections: [],
+          },
+          {
+            id: 4989,
+            url: "https://en.wikipedia.org/wiki/Asteroseismology",
+            title: "Asteroseismology",
+            connections: [],
+          },
+          {
+            id: 3248,
+            url: "https://en.wikipedia.org/wiki/Eddington_luminosity",
+            title: "Eddington luminosity",
+            connections: [],
+          },
+          {
+            id: 5385,
+            url: "https://en.wikipedia.org/wiki/Stellar_dynamics",
+            title: "Stellar dynamics",
+            connections: [],
+          },
+          {
+            id: 9327,
+            url: "https://en.wikipedia.org/wiki/Effective_temperature",
+            title: "Effective temperature",
+            connections: [],
+          },
+          {
+            id: 1537,
+            url: "https://en.wikipedia.org/wiki/Luminosity",
+            title: "Luminosity",
+            connections: [],
+          },
+          {
+            id: 25085,
+            url: "https://en.wikipedia.org/wiki/Stellar_kinematics",
+            title: "Stellar kinematics",
+            connections: [],
+          },
+          {
+            id: 49,
+            url: "https://en.wikipedia.org/wiki/Absolute_magnitude",
+            title: "Absolute magnitude",
+            connections: [],
+          },
+          {
+            id: 8348,
+            url: "https://en.wikipedia.org/wiki/Metallicity",
+            title: "Metallicity",
+            connections: [],
+          },
+          {
+            id: 19054,
+            url: "https://en.wikipedia.org/wiki/Stellar_rotation",
+            title: "Stellar rotation",
+            connections: [],
+          },
+          {
+            id: 10655,
+            url: "https://en.wikipedia.org/wiki/Gravity_darkening",
+            title: "Gravity darkening",
+            connections: [],
+          },
+          {
+            id: 28457,
+            url: "https://en.wikipedia.org/wiki/Color_index",
+            title: "Color index",
+            connections: [],
+          },
+          {
+            id: 1799,
+            url: "https://en.wikipedia.org/wiki/Binary_star",
+            title: "Binary star",
+            connections: [],
+          },
+          {
+            id: 15902,
+            url: "https://en.wikipedia.org/wiki/Super_star_cluster",
+            title: "Super star cluster",
+            connections: [],
+          },
+          {
+            id: 11626,
+            url: "https://en.wikipedia.org/wiki/Magnitude_(astronomy)",
+            title: "Magnitude (astronomy)",
+            connections: [],
+          },
+          {
+            id: 48,
+            url: "https://en.wikipedia.org/wiki/Apparent_magnitude",
+            title: "Apparent magnitude",
+            connections: [],
+          },
+          {
+            id: 8712,
+            url: "https://en.wikipedia.org/wiki/Extinction_(astronomy)",
+            title: "Extinction (astronomy)",
+            connections: [],
+          },
+          {
+            id: 1771,
+            url: "https://en.wikipedia.org/wiki/Proper_motion",
+            title: "Proper motion",
+            connections: [],
+          },
+          {
+            id: 3179,
+            url: "https://en.wikipedia.org/wiki/Stellar_parallax",
+            title: "Stellar parallax",
+            connections: [],
+          },
+          {
+            id: 1519,
+            url: "https://en.wikipedia.org/wiki/Brown_dwarf",
+            title: "Brown dwarf",
+            connections: [],
+          },
+          {
+            id: 1256,
+            url: "https://en.wikipedia.org/wiki/Gravity",
+            title: "Gravity",
+            connections: [],
+          },
+          {
+            id: 1145,
+            url: "https://en.wikipedia.org/wiki/Universe",
+            title: "Universe",
+            connections: [],
+          },
+          {
+            id: 150,
+            url: "https://en.wikipedia.org/wiki/Calculus",
+            title: "Calculus",
+            connections: [],
+          },
+          {
+            id: 25218,
+            url: "https://en.wikipedia.org/wiki/Earth_science",
+            title: "Earth science",
+            connections: [],
+          },
+          {
+            id: 1110,
+            url: "https://en.wikipedia.org/wiki/Tide",
+            title: "Tide",
+            connections: [],
+          },
+          {
+            id: 351,
+            url: "https://en.wikipedia.org/wiki/Ecology",
+            title: "Ecology",
+            connections: [],
+          },
+          {
+            id: 27487,
+            url: "https://en.wikipedia.org/wiki/Field_(physics)",
+            title: "Field (physics)",
+            connections: [],
+          },
+          {
+            id: 73,
+            url: "https://en.wikipedia.org/wiki/Astrobiology",
+            title: "Astrobiology",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 1518,
+        url: "https://en.wikipedia.org/wiki/Black_body",
+        title: "Black body",
+        connections: [
+          {
+            id: 3360,
+            url: "https://en.wikipedia.org/wiki/Ultraviolet_catastrophe",
+            title: "Ultraviolet catastrophe",
+            connections: [],
+          },
+          {
+            id: 25214,
+            url: "https://en.wikipedia.org/wiki/Temperature",
+            title: "Temperature",
+            connections: [],
+          },
+          {
+            id: 11502,
+            url: "https://en.wikipedia.org/wiki/Isotropic_radiator",
+            title: "Isotropic radiator",
+            connections: [],
+          },
+          {
+            id: 7541,
+            url: "https://en.wikipedia.org/wiki/Emissivity",
+            title: "Emissivity",
+            connections: [],
+          },
+          {
+            id: 455,
+            url: "https://en.wikipedia.org/wiki/Gustav_Kirchhoff",
+            title: "Gustav Kirchhoff",
+            connections: [],
+          },
+          {
+            id: 24723,
+            url: "https://en.wikipedia.org/wiki/Planck_constant",
+            title: "Planck constant",
+            connections: [],
+          },
+          {
+            id: 7150,
+            url: "https://en.wikipedia.org/wiki/Laws_of_thermodynamics",
+            title: "Laws of thermodynamics",
+            connections: [],
+          },
+          {
+            id: 5166,
+            url: "https://en.wikipedia.org/wiki/H-theorem",
+            title: "<i>H</i>-theorem",
+            connections: [],
+          },
+          {
+            id: 419,
+            url: "https://en.wikipedia.org/wiki/Fresnel_equations",
+            title: "Fresnel equations",
+            connections: [],
+          },
+          {
+            id: 13451,
+            url: "https://en.wikipedia.org/wiki/Opacity_(optics)",
+            title: "Opacity (optics)",
+            connections: [],
+          },
+          {
+            id: 2741,
+            url: "https://en.wikipedia.org/wiki/Scattering",
+            title: "Scattering",
+            connections: [],
+          },
+          {
+            id: 155,
+            url: "https://en.wikipedia.org/wiki/Carbon_nanotube",
+            title: "Carbon nanotube",
+            connections: [],
+          },
+          {
+            id: 945,
+            url: "https://en.wikipedia.org/wiki/Refractive_index",
+            title: "Refractive index",
+            connections: [],
+          },
+          {
+            id: 1024,
+            url: "https://en.wikipedia.org/wiki/Sirius",
+            title: "Sirius",
+            connections: [],
+          },
+          {
+            id: 2870,
+            url: "https://en.wikipedia.org/wiki/Hawking_radiation",
+            title: "Hawking radiation",
+            connections: [],
+          },
+          {
+            id: 133,
+            url: "https://en.wikipedia.org/wiki/Black_hole",
+            title: "Black hole",
+            connections: [],
+          },
+          {
+            id: 1055,
+            url: "https://en.wikipedia.org/wiki/Spacetime",
+            title: "Spacetime",
+            connections: [],
+          },
+          {
+            id: 28081,
+            url: "https://en.wikipedia.org/wiki/Event_horizon",
+            title: "Event horizon",
+            connections: [],
+          },
+          {
+            id: 1052,
+            url: "https://en.wikipedia.org/wiki/Speed_of_light",
+            title: "Speed of light",
+            connections: [],
+          },
+          {
+            id: 1821,
+            url: "https://en.wikipedia.org/wiki/Boltzmann_constant",
+            title: "Boltzmann constant",
+            connections: [],
+          },
+          {
+            id: 1253,
+            url: "https://en.wikipedia.org/wiki/Gravitational_constant",
+            title: "Gravitational constant",
+            connections: [],
+          },
+          {
+            id: 116,
+            url: "https://en.wikipedia.org/wiki/Big_Bang",
+            title: "Big Bang",
+            connections: [],
+          },
+          {
+            id: 12898,
+            url: "https://en.wikipedia.org/wiki/Radiant_exitance",
+            title: "Radiant exitance",
+            connections: [],
+          },
+          {
+            id: 862,
+            url: "https://en.wikipedia.org/wiki/Power_(physics)",
+            title: "Power (physics)",
+            connections: [],
+          },
+          {
+            id: 3094,
+            url: "https://en.wikipedia.org/wiki/Heat_capacity",
+            title: "Heat capacity",
+            connections: [],
+          },
+          {
+            id: 1849,
+            url: "https://en.wikipedia.org/wiki/Phase_transition",
+            title: "Phase transition",
+            connections: [],
+          },
+          {
+            id: 10058,
+            url: "https://en.wikipedia.org/wiki/Planckian_locus",
+            title: "Planckian locus",
+            connections: [],
+          },
+          {
+            id: 1178,
+            url: "https://en.wikipedia.org/wiki/Weak_interaction",
+            title: "Weak interaction",
+            connections: [],
+          },
+          {
+            id: 474,
+            url: "https://en.wikipedia.org/wiki/Gluon",
+            title: "Gluon",
+            connections: [],
+          },
+          {
+            id: 691,
+            url: "https://en.wikipedia.org/wiki/Max_Planck",
+            title: "Max Planck",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 18936,
+        url: "https://en.wikipedia.org/wiki/Radiosity_(radiometry)",
+        title: "Radiosity (radiometry)",
+        connections: [
+          {
+            id: 1429,
+            url: "https://en.wikipedia.org/wiki/Radiometry",
+            title: "Radiometry",
+            connections: [],
+          },
+          {
+            id: 401,
+            url: "https://en.wikipedia.org/wiki/Frequency",
+            title: "Frequency",
+            connections: [],
+          },
+          {
+            id: 976,
+            url: "https://en.wikipedia.org/wiki/International_System_of_Units",
+            title: "International System of Units",
+            connections: [],
+          },
+          {
+            id: 25443,
+            url: "https://en.wikipedia.org/wiki/Watt",
+            title: "Watt",
+            connections: [],
+          },
+          {
+            id: 522,
+            url: "https://en.wikipedia.org/wiki/Hertz",
+            title: "Hertz",
+            connections: [],
+          },
+          {
+            id: 8668,
+            url: "https://en.wikipedia.org/wiki/Radiant_intensity",
+            title: "Radiant intensity",
+            connections: [],
+          },
+          {
+            id: 1794,
+            url: "https://en.wikipedia.org/wiki/Partial_derivative",
+            title: "Partial derivative",
+            connections: [],
+          },
+          {
+            id: 2990,
+            url: "https://en.wikipedia.org/wiki/Heat_transfer",
+            title: "Heat transfer",
+            connections: [],
+          },
+          {
+            id: 23015,
+            url: "https://en.wikipedia.org/wiki/View_factor",
+            title: "View factor",
+            connections: [],
+          },
+          {
+            id: 602,
+            url: "https://en.wikipedia.org/wiki/Linear_equation",
+            title: "Linear equation",
+            connections: [],
+          },
+          {
+            id: 649,
+            url: "https://en.wikipedia.org/wiki/Linear_algebra",
+            title: "Linear algebra",
+            connections: [],
+          },
+          {
+            id: 7000,
+            url: "https://en.wikipedia.org/wiki/Network_analysis_(electrical_circuits)",
+            title: "Network analysis (electrical circuits)",
+            connections: [],
+          },
+          {
+            id: 6706,
+            url: "https://en.wikipedia.org/wiki/Specular_reflection",
+            title: "Specular reflection",
+            connections: [],
+          },
+          {
+            id: 575,
+            url: "https://en.wikipedia.org/wiki/Integral",
+            title: "Integral",
+            connections: [],
+          },
+          {
+            id: 6539,
+            url: "https://en.wikipedia.org/wiki/Contour_line",
+            title: "Contour line",
+            connections: [],
+          },
+          {
+            id: 580,
+            url: "https://en.wikipedia.org/wiki/Joule",
+            title: "Joule",
+            connections: [],
+          },
+          {
+            id: 29914,
+            url: "https://en.wikipedia.org/wiki/Radiant_energy_density",
+            title: "Radiant energy density",
+            connections: [],
+          },
+          {
+            id: 23158,
+            url: "https://en.wikipedia.org/wiki/Spectral_flux_density",
+            title: "Spectral flux density",
+            connections: [],
+          },
+          {
+            id: 2942,
+            url: "https://en.wikipedia.org/wiki/Jansky",
+            title: "Jansky",
+            connections: [],
+          },
+          {
+            id: 29098,
+            url: "https://en.wikipedia.org/wiki/Radiant_exposure",
+            title: "Radiant exposure",
+            connections: [],
+          },
+          {
+            id: 810,
+            url: "https://en.wikipedia.org/wiki/Physical_quantity",
+            title: "Physical quantity",
+            connections: [],
+          },
+          {
+            id: 2779,
+            url: "https://en.wikipedia.org/wiki/Nu_(letter)",
+            title: "Nu (letter)",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 29880,
+        url: "https://en.wikipedia.org/wiki/Position_of_the_Sun",
+        title: "Position of the Sun",
+        connections: [],
+      },
+      {
+        id: 1432,
+        url: "https://en.wikipedia.org/wiki/Reflectance",
+        title: "Reflectance",
+        connections: [
+          {
+            id: 449,
+            url: "https://en.wikipedia.org/wiki/Gold",
+            title: "Gold",
+            connections: [],
+          },
+          {
+            id: 712,
+            url: "https://en.wikipedia.org/wiki/Mirror",
+            title: "Mirror",
+            connections: [],
+          },
+          {
+            id: 9961,
+            url: "https://en.wikipedia.org/wiki/Bidirectional_reflectance_distribution_function",
+            title: "Bidirectional reflectance distribution function",
+            connections: [],
+          },
+          {
+            id: 6514,
+            url: "https://en.wikipedia.org/wiki/Half-space_(geometry)",
+            title: "Half-space (geometry)",
+            connections: [],
+          },
+          {
+            id: 1366,
+            url: "https://en.wikipedia.org/wiki/Electric_field",
+            title: "Electric field",
+            connections: [],
+          },
+          {
+            id: 173,
+            url: "https://en.wikipedia.org/wiki/Complex_number",
+            title: "Complex number",
+            connections: [],
+          },
+          {
+            id: 25212,
+            url: "https://en.wikipedia.org/wiki/Real_number",
+            title: "Real number",
+            connections: [],
+          },
+          {
+            id: 7207,
+            url: "https://en.wikipedia.org/wiki/Lambertian_reflectance",
+            title: "Lambertian reflectance",
+            connections: [],
+          },
+          {
+            id: 1358,
+            url: "https://en.wikipedia.org/wiki/Diffraction_grating",
+            title: "Diffraction grating",
+            connections: [],
+          },
+          {
+            id: 30424,
+            url: "https://en.wikipedia.org/wiki/Diffraction_efficiency",
+            title: "Diffraction efficiency",
+            connections: [],
+          },
+          {
+            id: 26232,
+            url: "https://en.wikipedia.org/wiki/Absorptance",
+            title: "Absorptance",
+            connections: [],
+          },
+          {
+            id: 5558,
+            url: "https://en.wikipedia.org/wiki/Absorbance",
+            title: "Absorbance",
+            connections: [],
+          },
+          {
+            id: 5561,
+            url: "https://en.wikipedia.org/wiki/Transmittance",
+            title: "Transmittance",
+            connections: [],
+          },
+          {
+            id: 19214,
+            url: "https://en.wikipedia.org/wiki/Attenuation_coefficient",
+            title: "Attenuation coefficient",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 3295,
+        url: "https://en.wikipedia.org/wiki/Positive_feedback",
+        title: "Positive feedback",
+        connections: [
+          {
+            id: 3294,
+            url: "https://en.wikipedia.org/wiki/Negative_feedback",
+            title: "Negative feedback",
+            connections: [],
+          },
+          {
+            id: 853,
+            url: "https://en.wikipedia.org/wiki/Phase_(waves)",
+            title: "Phase (waves)",
+            connections: [],
+          },
+          {
+            id: 3071,
+            url: "https://en.wikipedia.org/wiki/Exponential_growth",
+            title: "Exponential growth",
+            connections: [],
+          },
+          {
+            id: 789,
+            url: "https://en.wikipedia.org/wiki/Oscillation",
+            title: "Oscillation",
+            connections: [],
+          },
+          {
+            id: 26215,
+            url: "https://en.wikipedia.org/wiki/Filter_(signal_processing)",
+            title: "Filter (signal processing)",
+            connections: [],
+          },
+          {
+            id: 4124,
+            url: "https://en.wikipedia.org/wiki/Maxima_and_minima",
+            title: "Maxima and minima",
+            connections: [],
+          },
+          {
+            id: 209,
+            url: "https://en.wikipedia.org/wiki/Chemical_reaction",
+            title: "Chemical reaction",
+            connections: [],
+          },
+          {
+            id: 4138,
+            url: "https://en.wikipedia.org/wiki/Tacoma_Narrows_Bridge_(1940)",
+            title: "Tacoma Narrows Bridge (1940)",
+            connections: [],
+          },
+          {
+            id: 1467,
+            url: "https://en.wikipedia.org/wiki/Gain_(electronics)",
+            title: "Gain (electronics)",
+            connections: [],
+          },
+          {
+            id: 6023,
+            url: "https://en.wikipedia.org/wiki/Causal_system",
+            title: "Causal system",
+            connections: [],
+          },
+          {
+            id: 2542,
+            url: "https://en.wikipedia.org/wiki/Hysteresis",
+            title: "Hysteresis",
+            connections: [],
+          },
+          {
+            id: 4832,
+            url: "https://en.wikipedia.org/wiki/Schmitt_trigger",
+            title: "Schmitt trigger",
+            connections: [],
+          },
+          {
+            id: 149,
+            url: "https://en.wikipedia.org/wiki/Bistability",
+            title: "Bistability",
+            connections: [],
+          },
+          {
+            id: 4525,
+            url: "https://en.wikipedia.org/wiki/Regenerative_circuit",
+            title: "Regenerative circuit",
+            connections: [],
+          },
+          {
+            id: 1156,
+            url: "https://en.wikipedia.org/wiki/Vacuum_tube",
+            title: "Vacuum tube",
+            connections: [],
+          },
+          {
+            id: 515,
+            url: "https://en.wikipedia.org/wiki/Harmonic_oscillator",
+            title: "Harmonic oscillator",
+            connections: [],
+          },
+          {
+            id: 6357,
+            url: "https://en.wikipedia.org/wiki/Armstrong_oscillator",
+            title: "Armstrong oscillator",
+            connections: [],
+          },
+          {
+            id: 4524,
+            url: "https://en.wikipedia.org/wiki/Hartley_oscillator",
+            title: "Hartley oscillator",
+            connections: [],
+          },
+          {
+            id: 7476,
+            url: "https://en.wikipedia.org/wiki/Colpitts_oscillator",
+            title: "Colpitts oscillator",
+            connections: [],
+          },
+          {
+            id: 9544,
+            url: "https://en.wikipedia.org/wiki/Wien_bridge_oscillator",
+            title: "Wien bridge oscillator",
+            connections: [],
+          },
+          {
+            id: 6477,
+            url: "https://en.wikipedia.org/wiki/Input_impedance",
+            title: "Input impedance",
+            connections: [],
+          },
+          {
+            id: 6478,
+            url: "https://en.wikipedia.org/wiki/Output_impedance",
+            title: "Output impedance",
+            connections: [],
+          },
+          {
+            id: 104,
+            url: "https://en.wikipedia.org/wiki/Bandwidth_(signal_processing)",
+            title: "Bandwidth (signal processing)",
+            connections: [],
+          },
+          {
+            id: 1493,
+            url: "https://en.wikipedia.org/wiki/Alternating_current",
+            title: "Alternating current",
+            connections: [],
+          },
+          {
+            id: 1885,
+            url: "https://en.wikipedia.org/wiki/Low-pass_filter",
+            title: "Low-pass filter",
+            connections: [],
+          },
+          {
+            id: 24037,
+            url: "https://en.wikipedia.org/wiki/Barkhausen_stability_criterion",
+            title: "Barkhausen stability criterion",
+            connections: [],
+          },
+          {
+            id: 635,
+            url: "https://en.wikipedia.org/wiki/Logic_gate",
+            title: "Logic gate",
+            connections: [],
+          },
+          {
+            id: 28947,
+            url: "https://en.wikipedia.org/wiki/Flip-flop_(electronics)",
+            title: "Flip-flop (electronics)",
+            connections: [],
+          },
+          {
+            id: 731,
+            url: "https://en.wikipedia.org/wiki/Multivibrator",
+            title: "Multivibrator",
+            connections: [],
+          },
+          {
+            id: 1579,
+            url: "https://en.wikipedia.org/wiki/Loudspeaker",
+            title: "Loudspeaker",
+            connections: [],
+          },
+          {
+            id: 371,
+            url: "https://en.wikipedia.org/wiki/Amplifier",
+            title: "Amplifier",
+            connections: [],
+          },
+          {
+            id: 6213,
+            url: "https://en.wikipedia.org/wiki/Bimetallic_strip",
+            title: "Bimetallic strip",
+            connections: [],
+          },
+          {
+            id: 1226,
+            url: "https://en.wikipedia.org/wiki/Amplitude",
+            title: "Amplitude",
+            connections: [],
+          },
+          {
+            id: 2669,
+            url: "https://en.wikipedia.org/wiki/Action_potential",
+            title: "Action potential",
+            connections: [],
+          },
+          {
+            id: 3132,
+            url: "https://en.wikipedia.org/wiki/Molecular_dynamics",
+            title: "Molecular dynamics",
+            connections: [],
+          },
+          {
+            id: 1567,
+            url: "https://en.wikipedia.org/wiki/Demography",
+            title: "Demography",
+            connections: [],
+          },
+          {
+            id: 2262,
+            url: "https://en.wikipedia.org/wiki/Logistic_function",
+            title: "Logistic function",
+            connections: [],
+          },
+          {
+            id: 7912,
+            url: "https://en.wikipedia.org/wiki/Systemic_risk",
+            title: "Systemic risk",
+            connections: [],
+          },
+          {
+            id: 213,
+            url: "https://en.wikipedia.org/wiki/Chaos_theory",
+            title: "Chaos theory",
+            connections: [],
+          },
+          {
+            id: 11408,
+            url: "https://en.wikipedia.org/wiki/Hyperbolic_growth",
+            title: "Hyperbolic growth",
+            connections: [],
+          },
+          {
+            id: 1626,
+            url: "https://en.wikipedia.org/wiki/Carrying_capacity",
+            title: "Carrying capacity",
+            connections: [],
+          },
+          {
+            id: 2215,
+            url: "https://en.wikipedia.org/wiki/Evapotranspiration",
+            title: "Evapotranspiration",
+            connections: [],
+          },
+          {
+            id: 1858,
+            url: "https://en.wikipedia.org/wiki/Dew_point",
+            title: "Dew point",
+            connections: [],
+          },
+          {
+            id: 13297,
+            url: "https://en.wikipedia.org/wiki/Runaway_greenhouse_effect",
+            title: "Runaway greenhouse effect",
+            connections: [],
+          },
+          {
+            id: 25444,
+            url: "https://en.wikipedia.org/wiki/Greenhouse_gas",
+            title: "Greenhouse gas",
+            connections: [],
+          },
+          {
+            id: 3618,
+            url: "https://en.wikipedia.org/wiki/Reaction_rate",
+            title: "Reaction rate",
+            connections: [],
+          },
+          {
+            id: 269,
+            url: "https://en.wikipedia.org/wiki/Chain_reaction",
+            title: "Chain reaction",
+            connections: [],
+          },
+          {
+            id: 19328,
+            url: "https://en.wikipedia.org/wiki/Strategic_complements",
+            title: "Strategic complements",
+            connections: [],
+          },
+          {
+            id: 2619,
+            url: "https://en.wikipedia.org/wiki/System_dynamics",
+            title: "System dynamics",
+            connections: [],
+          },
+          {
+            id: 3986,
+            url: "https://en.wikipedia.org/wiki/Autocatalysis",
+            title: "Autocatalysis",
+            connections: [],
+          },
+          {
+            id: 16208,
+            url: "https://en.wikipedia.org/wiki/Doubling_time",
+            title: "Doubling time",
+            connections: [],
+          },
+          {
+            id: 240,
+            url: "https://en.wikipedia.org/wiki/Control_theory",
+            title: "Control theory",
+            connections: [],
+          },
+          {
+            id: 2057,
+            url: "https://en.wikipedia.org/wiki/Ludwig_von_Bertalanffy",
+            title: "Ludwig von Bertalanffy",
+            connections: [],
+          },
+          {
+            id: 2408,
+            url: "https://en.wikipedia.org/wiki/Heinz_von_Foerster",
+            title: "Heinz von Foerster",
+            connections: [],
+          },
+          {
+            id: 7934,
+            url: "https://en.wikipedia.org/wiki/Howard_T._Odum",
+            title: "Howard T. Odum",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 7973,
+        url: "https://en.wikipedia.org/wiki/Solar_zenith_angle",
+        title: "Solar zenith angle",
+        connections: [
+          {
+            id: 7974,
+            url: "https://en.wikipedia.org/wiki/Solar_azimuth_angle",
+            title: "Solar azimuth angle",
+            connections: [],
+          },
+          {
+            id: 1675,
+            url: "https://en.wikipedia.org/wiki/Hour_angle",
+            title: "Hour angle",
+            connections: [],
+          },
+          {
+            id: 6540,
+            url: "https://en.wikipedia.org/wiki/Spherical_trigonometry",
+            title: "Spherical trigonometry",
+            connections: [],
+          },
+          {
+            id: 11516,
+            url: "https://en.wikipedia.org/wiki/Subsolar_point",
+            title: "Subsolar point",
+            connections: [],
+          },
+          {
+            id: 2674,
+            url: "https://en.wikipedia.org/wiki/Dot_product",
+            title: "Dot product",
+            connections: [],
+          },
+          {
+            id: 10172,
+            url: "https://en.wikipedia.org/wiki/Atmospheric_refraction",
+            title: "Atmospheric refraction",
+            connections: [],
+          },
+          {
+            id: 14524,
+            url: "https://en.wikipedia.org/wiki/Sunrise_equation",
+            title: "Sunrise equation",
+            connections: [],
+          },
+          {
+            id: 1621,
+            url: "https://en.wikipedia.org/wiki/Azimuth",
+            title: "Azimuth",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 5461,
+        url: "https://en.wikipedia.org/wiki/Radiative_forcing",
+        title: "Radiative forcing",
+        connections: [
+          {
+            id: 10134,
+            url: "https://en.wikipedia.org/wiki/Climate_sensitivity",
+            title: "Climate sensitivity",
+            connections: [],
+          },
+          {
+            id: 1904,
+            url: "https://en.wikipedia.org/wiki/Aerosol",
+            title: "Aerosol",
+            connections: [],
+          },
+          {
+            id: 30462,
+            url: "https://en.wikipedia.org/wiki/Planetary_equilibrium_temperature",
+            title: "Planetary equilibrium temperature",
+            connections: [],
+          },
+          {
+            id: 176,
+            url: "https://en.wikipedia.org/wiki/Carbon_dioxide",
+            title: "Carbon dioxide",
+            connections: [],
+          },
+          {
+            id: 5491,
+            url: "https://en.wikipedia.org/wiki/Non-equilibrium_thermodynamics",
+            title: "Non-equilibrium thermodynamics",
+            connections: [],
+          },
+          {
+            id: 12376,
+            url: "https://en.wikipedia.org/wiki/Radiative_transfer",
+            title: "Radiative transfer",
+            connections: [],
+          },
+          {
+            id: 26424,
+            url: "https://en.wikipedia.org/wiki/Radiative_equilibrium",
+            title: "Radiative equilibrium",
+            connections: [],
+          },
+          {
+            id: 2388,
+            url: "https://en.wikipedia.org/wiki/Perturbation_theory",
+            title: "Perturbation theory",
+            connections: [],
+          },
+          {
+            id: 2202,
+            url: "https://en.wikipedia.org/wiki/Periodic_function",
+            title: "Periodic function",
+            connections: [],
+          },
+          {
+            id: 1623,
+            url: "https://en.wikipedia.org/wiki/Climate_model",
+            title: "Climate model",
+            connections: [],
+          },
+          {
+            id: 2928,
+            url: "https://en.wikipedia.org/wiki/Spectral_line",
+            title: "Spectral line",
+            connections: [],
+          },
+          {
+            id: 2738,
+            url: "https://en.wikipedia.org/wiki/Logarithmic_scale",
+            title: "Logarithmic scale",
+            connections: [],
+          },
+          {
+            id: 33766,
+            url: "https://en.wikipedia.org/wiki/Solar_activity_and_climate",
+            title: "Solar activity and climate",
+            connections: [],
+          },
+          {
+            id: 1464,
+            url: "https://en.wikipedia.org/wiki/Accuracy_and_precision",
+            title: "Accuracy and precision",
+            connections: [],
+          },
+          {
+            id: 1014,
+            url: "https://en.wikipedia.org/wiki/Sphere",
+            title: "Sphere",
+            connections: [],
+          },
+          {
+            id: 1204,
+            url: "https://en.wikipedia.org/wiki/Little_Ice_Age",
+            title: "Little Ice Age",
+            connections: [],
+          },
+          {
+            id: 878,
+            url: "https://en.wikipedia.org/wiki/Precession",
+            title: "Precession",
+            connections: [],
+          },
+          {
+            id: 15649,
+            url: "https://en.wikipedia.org/wiki/Bond_albedo",
+            title: "Bond albedo",
+            connections: [],
+          },
+          {
+            id: 1857,
+            url: "https://en.wikipedia.org/wiki/Chlorofluorocarbon",
+            title: "Chlorofluorocarbon",
+            connections: [],
+          },
+          {
+            id: 484,
+            url: "https://en.wikipedia.org/wiki/Global_warming_potential",
+            title: "Global warming potential",
+            connections: [],
+          },
+          {
+            id: 1200,
+            url: "https://en.wikipedia.org/wiki/Svante_Arrhenius",
+            title: "Svante Arrhenius",
+            connections: [],
+          },
+          {
+            id: 12176,
+            url: "https://en.wikipedia.org/wiki/Ocean_acidification",
+            title: "Ocean acidification",
+            connections: [],
+          },
+          {
+            id: 19522,
+            url: "https://en.wikipedia.org/wiki/Ocean_heat_content",
+            title: "Ocean heat content",
+            connections: [],
+          },
+          {
+            id: 7043,
+            url: "https://en.wikipedia.org/wiki/Proxy_(climate)",
+            title: "Proxy (climate)",
+            connections: [],
+          },
+          {
+            id: 1624,
+            url: "https://en.wikipedia.org/wiki/Cloud_forcing",
+            title: "Cloud forcing",
+            connections: [],
+          },
+          {
+            id: 37148,
+            url: "https://en.wikipedia.org/wiki/Illustrative_model_of_greenhouse_effect_on_climate_change",
+            title: "Illustrative model of greenhouse effect on climate change",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 23220,
+        url: "https://en.wikipedia.org/wiki/Thermal_emittance",
+        title: "Thermal emittance",
+        connections: [],
+      },
+      {
+        id: 23308,
+        url: "https://en.wikipedia.org/wiki/Photovoltaic_system",
+        title: "Photovoltaic system",
+        connections: [
+          {
+            id: 24031,
+            url: "https://en.wikipedia.org/wiki/Concentrated_solar_power",
+            title: "Concentrated solar power",
+            connections: [],
+          },
+          {
+            id: 343,
+            url: "https://en.wikipedia.org/wiki/Electricity",
+            title: "Electricity",
+            connections: [],
+          },
+          {
+            id: 28087,
+            url: "https://en.wikipedia.org/wiki/Solar_cell_efficiency",
+            title: "Solar cell efficiency",
+            connections: [],
+          },
+          {
+            id: 1559,
+            url: "https://en.wikipedia.org/wiki/Utility",
+            title: "Utility",
+            connections: [],
+          },
+          {
+            id: 37153,
+            url: "https://en.wikipedia.org/wiki/Soiling_(solar_energy)",
+            title: "Soiling (solar energy)",
+            connections: [],
+          },
+          {
+            id: 3400,
+            url: "https://en.wikipedia.org/wiki/Power_inverter",
+            title: "Power inverter",
+            connections: [],
+          },
+          {
+            id: 24207,
+            url: "https://en.wikipedia.org/wiki/Organic_solar_cell",
+            title: "Organic solar cell",
+            connections: [],
+          },
+          {
+            id: 33092,
+            url: "https://en.wikipedia.org/wiki/Perovskite_solar_cell",
+            title: "Perovskite solar cell",
+            connections: [],
+          },
+          {
+            id: 23563,
+            url: "https://en.wikipedia.org/wiki/Multi-junction_solar_cell",
+            title: "Multi-junction solar cell",
+            connections: [],
+          },
+          {
+            id: 11397,
+            url: "https://en.wikipedia.org/wiki/Solar_cell",
+            title: "Solar cell",
+            connections: [],
+          },
+          {
+            id: 1160,
+            url: "https://en.wikipedia.org/wiki/Voltage",
+            title: "Voltage",
+            connections: [],
+          },
+          {
+            id: 201,
+            url: "https://en.wikipedia.org/wiki/Electric_current",
+            title: "Electric current",
+            connections: [],
+          },
+          {
+            id: 25724,
+            url: "https://en.wikipedia.org/wiki/Solar_micro-inverter",
+            title: "Solar micro-inverter",
+            connections: [],
+          },
+          {
+            id: 8376,
+            url: "https://en.wikipedia.org/wiki/Electricity_meter",
+            title: "Electricity meter",
+            connections: [],
+          },
+          {
+            id: 13099,
+            url: "https://en.wikipedia.org/wiki/Maximum_power_point_tracking",
+            title: "Maximum power point tracking",
+            connections: [],
+          },
+          {
+            id: 25644,
+            url: "https://en.wikipedia.org/wiki/Power_optimizer",
+            title: "Power optimizer",
+            connections: [],
+          },
+          {
+            id: 3166,
+            url: "https://en.wikipedia.org/wiki/Lithium-ion_battery",
+            title: "Lithium-ion battery",
+            connections: [],
+          },
+          {
+            id: 2231,
+            url: "https://en.wikipedia.org/wiki/Pulse-width_modulation",
+            title: "Pulse-width modulation",
+            connections: [],
+          },
+          {
+            id: 27842,
+            url: "https://en.wikipedia.org/wiki/Concentrator_photovoltaics",
+            title: "Concentrator photovoltaics",
+            connections: [],
+          },
+          {
+            id: 25166,
+            url: "https://en.wikipedia.org/wiki/Wind_turbine",
+            title: "Wind turbine",
+            connections: [],
+          },
+          {
+            id: 9420,
+            url: "https://en.wikipedia.org/wiki/Net_energy_gain",
+            title: "Net energy gain",
+            connections: [],
+          },
+          {
+            id: 831,
+            url: "https://en.wikipedia.org/wiki/Pump",
+            title: "Pump",
+            connections: [],
+          },
+          {
+            id: 2735,
+            url: "https://en.wikipedia.org/wiki/Interest_rate",
+            title: "Interest rate",
+            connections: [],
+          },
+          {
+            id: 19041,
+            url: "https://en.wikipedia.org/wiki/Efficient_energy_use",
+            title: "Efficient energy use",
+            connections: [],
+          },
+          {
+            id: 6692,
+            url: "https://en.wikipedia.org/wiki/Voltage_regulation",
+            title: "Voltage regulation",
+            connections: [],
+          },
+          {
+            id: 16842,
+            url: "https://en.wikipedia.org/wiki/Islanding",
+            title: "Islanding",
+            connections: [],
+          },
+          {
+            id: 1260,
+            url: "https://en.wikipedia.org/wiki/Electric_power_transmission",
+            title: "Electric power transmission",
+            connections: [],
+          },
+          {
+            id: 828,
+            url: "https://en.wikipedia.org/wiki/Photoelectric_effect",
+            title: "Photoelectric effect",
+            connections: [],
+          },
+          {
+            id: 12398,
+            url: "https://en.wikipedia.org/wiki/Thermophotovoltaic",
+            title: "Thermophotovoltaic",
+            connections: [],
+          },
+          {
+            id: 13288,
+            url: "https://en.wikipedia.org/wiki/Hybrid_solar_cell",
+            title: "Hybrid solar cell",
+            connections: [],
+          },
+          {
+            id: 26990,
+            url: "https://en.wikipedia.org/wiki/Plasmonic_solar_cell",
+            title: "Plasmonic solar cell",
+            connections: [],
+          },
+          {
+            id: 34716,
+            url: "https://en.wikipedia.org/wiki/Synchronverter",
+            title: "Synchronverter",
+            connections: [],
+          },
+          {
+            id: 23008,
+            url: "https://en.wikipedia.org/wiki/Solar_car_racing",
+            title: "Solar car racing",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 37061,
+        url: "https://en.wikipedia.org/wiki/Bifacial_solar_cells",
+        title: "Bifacial solar cells",
+        connections: [
+          {
+            id: 2441,
+            url: "https://en.wikipedia.org/wiki/Band_gap",
+            title: "Band gap",
+            connections: [],
+          },
+          {
+            id: 10906,
+            url: "https://en.wikipedia.org/wiki/Carrier_generation_and_recombination",
+            title: "Carrier generation and recombination",
+            connections: [],
+          },
+          {
+            id: 24856,
+            url: "https://en.wikipedia.org/wiki/Diffusion",
+            title: "Diffusion",
+            connections: [],
+          },
+          {
+            id: 25930,
+            url: "https://en.wikipedia.org/wiki/Transparent_conducting_film",
+            title: "Transparent conducting film",
+            connections: [],
+          },
+          {
+            id: 1504,
+            url: "https://en.wikipedia.org/wiki/Silicon_dioxide",
+            title: "Silicon dioxide",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 3244,
+        url: "https://en.wikipedia.org/wiki/Enceladus",
+        title: "Enceladus",
+        connections: [
+          {
+            id: 26204,
+            url: "https://en.wikipedia.org/wiki/Semi-major_and_semi-minor_axes",
+            title: "Semi-major and semi-minor axes",
+            connections: [],
+          },
+          {
+            id: 2494,
+            url: "https://en.wikipedia.org/wiki/Orbital_period",
+            title: "Orbital period",
+            connections: [],
+          },
+          {
+            id: 1884,
+            url: "https://en.wikipedia.org/wiki/Orbital_inclination",
+            title: "Orbital inclination",
+            connections: [],
+          },
+          {
+            id: 671,
+            url: "https://en.wikipedia.org/wiki/Mass",
+            title: "Mass",
+            connections: [],
+          },
+          {
+            id: 298,
+            url: "https://en.wikipedia.org/wiki/Density",
+            title: "Density",
+            connections: [],
+          },
+          {
+            id: 10035,
+            url: "https://en.wikipedia.org/wiki/Surface_gravity",
+            title: "Surface gravity",
+            connections: [],
+          },
+          {
+            id: 4901,
+            url: "https://en.wikipedia.org/wiki/G-force",
+            title: "G-force",
+            connections: [],
+          },
+          {
+            id: 32647,
+            url: "https://en.wikipedia.org/wiki/Moment_of_inertia_factor",
+            title: "Moment of inertia factor",
+            connections: [],
+          },
+          {
+            id: 1244,
+            url: "https://en.wikipedia.org/wiki/Escape_velocity",
+            title: "Escape velocity",
+            connections: [],
+          },
+          {
+            id: 1620,
+            url: "https://en.wikipedia.org/wiki/Atmospheric_pressure",
+            title: "Atmospheric pressure",
+            connections: [],
+          },
+          {
+            id: 736,
+            url: "https://en.wikipedia.org/wiki/Nitrogen",
+            title: "Nitrogen",
+            connections: [],
+          },
+          {
+            id: 13216,
+            url: "https://en.wikipedia.org/wiki/Plume_(fluid_dynamics)",
+            title: "Plume (fluid dynamics)",
+            connections: [],
+          },
+          {
+            id: 2304,
+            url: "https://en.wikipedia.org/wiki/Water_vapor",
+            title: "Water vapor",
+            connections: [],
+          },
+          {
+            id: 182,
+            url: "https://en.wikipedia.org/wiki/Comet",
+            title: "Comet",
+            connections: [],
+          },
+          {
+            id: 784,
+            url: "https://en.wikipedia.org/wiki/Orbital_resonance",
+            title: "Orbital resonance",
+            connections: [],
+          },
+          {
+            id: 1111,
+            url: "https://en.wikipedia.org/wiki/Tidal_force",
+            title: "Tidal force",
+            connections: [],
+          },
+          {
+            id: 15741,
+            url: "https://en.wikipedia.org/wiki/Tidal_heating",
+            title: "Tidal heating",
+            connections: [],
+          },
+          {
+            id: 341,
+            url: "https://en.wikipedia.org/wiki/Epsilon",
+            title: "Epsilon",
+            connections: [],
+          },
+          {
+            id: 674,
+            url: "https://en.wikipedia.org/wiki/Moon",
+            title: "Moon",
+            connections: [],
+          },
+          {
+            id: 2518,
+            url: "https://en.wikipedia.org/wiki/Ellipsoid",
+            title: "Ellipsoid",
+            connections: [],
+          },
+          {
+            id: 3809,
+            url: "https://en.wikipedia.org/wiki/Fracture",
+            title: "Fracture",
+            connections: [],
+          },
+          {
+            id: 5253,
+            url: "https://en.wikipedia.org/wiki/Shear_stress",
+            title: "Shear stress",
+            connections: [],
+          },
+          {
+            id: 2523,
+            url: "https://en.wikipedia.org/wiki/Lithosphere",
+            title: "Lithosphere",
+            connections: [],
+          },
+          {
+            id: 2257,
+            url: "https://en.wikipedia.org/wiki/Magnetometer",
+            title: "Magnetometer",
+            connections: [],
+          },
+          {
+            id: 3952,
+            url: "https://en.wikipedia.org/wiki/Mass_spectrometry",
+            title: "Mass spectrometry",
+            connections: [],
+          },
+          {
+            id: 1289,
+            url: "https://en.wikipedia.org/wiki/Geochemistry",
+            title: "Geochemistry",
+            connections: [],
+          },
+          {
+            id: 1766,
+            url: "https://en.wikipedia.org/wiki/Hydrostatic_equilibrium",
+            title: "Hydrostatic equilibrium",
+            connections: [],
+          },
+          {
+            id: 835,
+            url: "https://en.wikipedia.org/wiki/Propane",
+            title: "Propane",
+            connections: [],
+          },
+          {
+            id: 24732,
+            url: "https://en.wikipedia.org/wiki/Atomic_mass",
+            title: "Atomic mass",
+            connections: [],
+          },
+          {
+            id: 494,
+            url: "https://en.wikipedia.org/wiki/Hydrogen",
+            title: "Hydrogen",
+            connections: [],
+          },
+          {
+            id: 872,
+            url: "https://en.wikipedia.org/wiki/PH",
+            title: "PH",
+            connections: [],
+          },
+          {
+            id: 37,
+            url: "https://en.wikipedia.org/wiki/Amine",
+            title: "Amine",
+            connections: [],
+          },
+          {
+            id: 26,
+            url: "https://en.wikipedia.org/wiki/Amino_acid",
+            title: "Amino acid",
+            connections: [],
+          },
+          {
+            id: 5541,
+            url: "https://en.wikipedia.org/wiki/Sublimation_(phase_transition)",
+            title: "Sublimation (phase transition)",
+            connections: [],
+          },
+          {
+            id: 3124,
+            url: "https://en.wikipedia.org/wiki/Radioactive_decay",
+            title: "Radioactive decay",
+            connections: [],
+          },
+          {
+            id: 5569,
+            url: "https://en.wikipedia.org/wiki/Uranium-238",
+            title: "Uranium-238",
+            connections: [],
+          },
+          {
+            id: 5567,
+            url: "https://en.wikipedia.org/wiki/Uranium-235",
+            title: "Uranium-235",
+            connections: [],
+          },
+          {
+            id: 9672,
+            url: "https://en.wikipedia.org/wiki/Shear_modulus",
+            title: "Shear modulus",
+            connections: [],
+          },
+          {
+            id: 6441,
+            url: "https://en.wikipedia.org/wiki/Dissipation_factor",
+            title: "Dissipation factor",
+            connections: [],
+          },
+          {
+            id: 6064,
+            url: "https://en.wikipedia.org/wiki/Methanogen",
+            title: "Methanogen",
+            connections: [],
+          },
+          {
+            id: 346,
+            url: "https://en.wikipedia.org/wiki/Extraterrestrial_life",
+            title: "Extraterrestrial life",
+            connections: [],
+          },
+          {
+            id: 12621,
+            url: "https://en.wikipedia.org/wiki/Moons_of_Pluto",
+            title: "Moons of Pluto",
+            connections: [],
+          },
+          {
+            id: 15895,
+            url: "https://en.wikipedia.org/wiki/Irregular_moon",
+            title: "Irregular moon",
+            connections: [],
+          },
+          {
+            id: 2653,
+            url: "https://en.wikipedia.org/wiki/Gravity_assist",
+            title: "Gravity assist",
+            connections: [],
+          },
+          {
+            id: 7801,
+            url: "https://en.wikipedia.org/wiki/Rings_of_Jupiter",
+            title: "Rings of Jupiter",
+            connections: [],
+          },
+          {
+            id: 19677,
+            url: "https://en.wikipedia.org/wiki/Atmosphere_of_Titan",
+            title: "Atmosphere of Titan",
+            connections: [],
+          },
+          {
+            id: 10968,
+            url: "https://en.wikipedia.org/wiki/Water_(data_page)",
+            title: "Water (data page)",
+            connections: [],
+          },
+          {
+            id: 17234,
+            url: "https://en.wikipedia.org/wiki/Water_model",
+            title: "Water model",
+            connections: [],
+          },
+          {
+            id: 26446,
+            url: "https://en.wikipedia.org/wiki/Properties_of_water",
+            title: "Properties of water",
+            connections: [],
+          },
+          {
+            id: 1686,
+            url: "https://en.wikipedia.org/wiki/Hydronium",
+            title: "Hydronium",
+            connections: [],
+          },
+          {
+            id: 14721,
+            url: "https://en.wikipedia.org/wiki/Stratification_(water)",
+            title: "Stratification (water)",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 18212,
+        url: "https://en.wikipedia.org/wiki/Hapke_parameters",
+        title: "Hapke parameters",
+        connections: [],
+      },
+      {
+        id: 1339,
+        url: "https://en.wikipedia.org/wiki/Circular_polarization",
+        title: "Circular polarization",
+        connections: [
+          {
+            id: 5174,
+            url: "https://en.wikipedia.org/wiki/Classical_electromagnetism",
+            title: "Classical electromagnetism",
+            connections: [],
+          },
+          {
+            id: 1422,
+            url: "https://en.wikipedia.org/wiki/Polarization_(waves)",
+            title: "Polarization (waves)",
+            connections: [],
+          },
+          {
+            id: 364,
+            url: "https://en.wikipedia.org/wiki/Electromagnetic_field",
+            title: "Electromagnetic field",
+            connections: [],
+          },
+          {
+            id: 1159,
+            url: "https://en.wikipedia.org/wiki/Euclidean_vector",
+            title: "Euclidean vector",
+            connections: [],
+          },
+          {
+            id: 2940,
+            url: "https://en.wikipedia.org/wiki/Helix",
+            title: "Helix",
+            connections: [],
+          },
+          {
+            id: 3385,
+            url: "https://en.wikipedia.org/wiki/Right-hand_rule",
+            title: "Right-hand rule",
+            connections: [],
+          },
+          {
+            id: 1368,
+            url: "https://en.wikipedia.org/wiki/Elliptical_polarization",
+            title: "Elliptical polarization",
+            connections: [],
+          },
+          {
+            id: 1390,
+            url: "https://en.wikipedia.org/wiki/Linear_polarization",
+            title: "Linear polarization",
+            connections: [],
+          },
+          {
+            id: 20,
+            url: "https://en.wikipedia.org/wiki/Augustin-Jean_Fresnel",
+            title: "Augustin-Jean Fresnel",
+            connections: [],
+          },
+          {
+            id: 1421,
+            url: "https://en.wikipedia.org/wiki/Plane_wave",
+            title: "Plane wave",
+            connections: [],
+          },
+          {
+            id: 1199,
+            url: "https://en.wikipedia.org/wiki/Magnetic_field",
+            title: "Magnetic field",
+            connections: [],
+          },
+          {
+            id: 2239,
+            url: "https://en.wikipedia.org/wiki/Proportionality_(mathematics)",
+            title: "Proportionality (mathematics)",
+            connections: [],
+          },
+          {
+            id: 13274,
+            url: "https://en.wikipedia.org/wiki/In-phase_and_quadrature_components",
+            title: "In-phase and quadrature components",
+            connections: [],
+          },
+          {
+            id: 4370,
+            url: "https://en.wikipedia.org/wiki/Sine_wave",
+            title: "Sine wave",
+            connections: [],
+          },
+          {
+            id: 1769,
+            url: "https://en.wikipedia.org/wiki/Waveplate",
+            title: "Waveplate",
+            connections: [],
+          },
+          {
+            id: 2886,
+            url: "https://en.wikipedia.org/wiki/Birefringence",
+            title: "Birefringence",
+            connections: [],
+          },
+          {
+            id: 9755,
+            url: "https://en.wikipedia.org/wiki/FM_broadcasting",
+            title: "FM broadcasting",
+            connections: [],
+          },
+          {
+            id: 2320,
+            url: "https://en.wikipedia.org/wiki/Circular_dichroism",
+            title: "Circular dichroism",
+            connections: [],
+          },
+          {
+            id: 4361,
+            url: "https://en.wikipedia.org/wiki/Random_coil",
+            title: "Random coil",
+            connections: [],
+          },
+          {
+            id: 2321,
+            url: "https://en.wikipedia.org/wiki/Magnetic_circular_dichroism",
+            title: "Magnetic circular dichroism",
+            connections: [],
+          },
+          {
+            id: 31,
+            url: "https://en.wikipedia.org/wiki/Anisotropy",
+            title: "Anisotropy",
+            connections: [],
+          },
+          {
+            id: 12374,
+            url: "https://en.wikipedia.org/wiki/Electromagnetic_wave_equation",
+            title: "Electromagnetic wave equation",
+            connections: [],
+          },
+          {
+            id: 3145,
+            url: "https://en.wikipedia.org/wiki/Angular_frequency",
+            title: "Angular frequency",
+            connections: [],
+          },
+          {
+            id: 581,
+            url: "https://en.wikipedia.org/wiki/Jones_calculus",
+            title: "Jones calculus",
+            connections: [],
+          },
+          {
+            id: 5452,
+            url: "https://en.wikipedia.org/wiki/Dipole_antenna",
+            title: "Dipole antenna",
+            connections: [],
+          },
+          {
+            id: 5450,
+            url: "https://en.wikipedia.org/wiki/Helical_antenna",
+            title: "Helical antenna",
+            connections: [],
+          },
+          {
+            id: 16077,
+            url: "https://en.wikipedia.org/wiki/Photon_polarization",
+            title: "Photon polarization",
+            connections: [],
+          },
+          {
+            id: 29216,
+            url: "https://en.wikipedia.org/wiki/Spin_angular_momentum_of_light",
+            title: "Spin angular momentum of light",
+            connections: [],
+          },
+          {
+            id: 3201,
+            url: "https://en.wikipedia.org/wiki/Bioluminescence",
+            title: "Bioluminescence",
+            connections: [],
+          },
+          {
+            id: 1100,
+            url: "https://en.wikipedia.org/wiki/Total_internal_reflection",
+            title: "Total internal reflection",
+            connections: [],
+          },
+          {
+            id: 12038,
+            url: "https://en.wikipedia.org/wiki/Polarizer",
+            title: "Polarizer",
+            connections: [],
+          },
+          {
+            id: 16071,
+            url: "https://en.wikipedia.org/wiki/Sinusoidal_plane-wave_solutions_of_the_electromagnetic_wave_equation",
+            title:
+              "Sinusoidal plane-wave solutions of the electromagnetic wave equation",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 7013,
+        url: "https://en.wikipedia.org/wiki/Radar_cross-section",
+        title: "Radar cross-section",
+        connections: [
+          {
+            id: 3283,
+            url: "https://en.wikipedia.org/wiki/Mie_scattering",
+            title: "Mie scattering",
+            connections: [],
+          },
+          {
+            id: 934,
+            url: "https://en.wikipedia.org/wiki/Radar",
+            title: "Radar",
+            connections: [],
+          },
+          {
+            id: 14057,
+            url: "https://en.wikipedia.org/wiki/Directivity",
+            title: "Directivity",
+            connections: [],
+          },
+          {
+            id: 4135,
+            url: "https://en.wikipedia.org/wiki/Anechoic_chamber",
+            title: "Anechoic chamber",
+            connections: [],
+          },
+          {
+            id: 745,
+            url: "https://en.wikipedia.org/wiki/Numerical_analysis",
+            title: "Numerical analysis",
+            connections: [],
+          },
+          {
+            id: 13766,
+            url: "https://en.wikipedia.org/wiki/Computational_electromagnetics",
+            title: "Computational electromagnetics",
+            connections: [],
+          },
+          {
+            id: 310,
+            url: "https://en.wikipedia.org/wiki/Diffraction",
+            title: "Diffraction",
+            connections: [],
+          },
+          {
+            id: 10333,
+            url: "https://en.wikipedia.org/wiki/Rice_distribution",
+            title: "Rice distribution",
+            connections: [],
+          },
+          {
+            id: 2391,
+            url: "https://en.wikipedia.org/wiki/Log-normal_distribution",
+            title: "Log-normal distribution",
+            connections: [],
+          },
+          {
+            id: 1874,
+            url: "https://en.wikipedia.org/wiki/Monte_Carlo_method",
+            title: "Monte Carlo method",
+            connections: [],
+          },
+          {
+            id: 37619,
+            url: "https://en.wikipedia.org/wiki/Method_of_moments_(electromagnetics)",
+            title: "Method of moments (electromagnetics)",
+            connections: [],
+          },
+          {
+            id: 1465,
+            url: "https://en.wikipedia.org/wiki/Electrical_impedance",
+            title: "Electrical impedance",
+            connections: [],
+          },
+          {
+            id: 16401,
+            url: "https://en.wikipedia.org/wiki/Impedance_of_free_space",
+            title: "Impedance of free space",
+            connections: [],
+          },
+          {
+            id: 3481,
+            url: "https://en.wikipedia.org/wiki/Fock_space",
+            title: "Fock space",
+            connections: [],
+          },
+          {
+            id: 16563,
+            url: "https://en.wikipedia.org/wiki/Bistatic_radar",
+            title: "Bistatic radar",
+            connections: [],
+          },
+          {
+            id: 24902,
+            url: "https://en.wikipedia.org/wiki/Target_strength",
+            title: "Target strength",
+            connections: [],
+          },
+        ],
+      },
+      {
+        id: 11136,
+        url: "https://en.wikipedia.org/wiki/Bulk_density",
+        title: "Bulk density",
+        connections: [
+          {
+            id: 1157,
+            url: "https://en.wikipedia.org/wiki/Volume",
+            title: "Volume",
+            connections: [],
+          },
+          {
+            id: 33282,
+            url: "https://en.wikipedia.org/wiki/Void_(composites)",
+            title: "Void (composites)",
+            connections: [],
+          },
+          {
+            id: 24664,
+            url: "https://en.wikipedia.org/wiki/Porosity",
+            title: "Porosity",
+            connections: [],
+          },
+          {
+            id: 6814,
+            url: "https://en.wikipedia.org/wiki/Granular_material",
+            title: "Granular material",
+            connections: [],
+          },
+          {
+            id: 16885,
+            url: "https://en.wikipedia.org/wiki/Effective_porosity",
+            title: "Effective porosity",
+            connections: [],
+          },
+          {
+            id: 33791,
+            url: "https://en.wikipedia.org/wiki/Density_meter",
+            title: "Density meter",
+            connections: [],
+          },
+          {
+            id: 10976,
+            url: "https://en.wikipedia.org/wiki/Number_density",
+            title: "Number density",
+            connections: [],
+          },
+          {
+            id: 453,
+            url: "https://en.wikipedia.org/wiki/Geotechnical_engineering",
+            title: "Geotechnical engineering",
+            connections: [],
+          },
+          {
+            id: 7068,
+            url: "https://en.wikipedia.org/wiki/Permeability_(Earth_sciences)",
+            title: "Permeability (Earth sciences)",
+            connections: [],
+          },
+          {
+            id: 14434,
+            url: "https://en.wikipedia.org/wiki/Soil_consolidation",
+            title: "Soil consolidation",
+            connections: [],
+          },
+          {
+            id: 12312,
+            url: "https://en.wikipedia.org/wiki/California_bearing_ratio",
+            title: "California bearing ratio",
+            connections: [],
+          },
+          {
+            id: 13919,
+            url: "https://en.wikipedia.org/wiki/Direct_shear_test",
+            title: "Direct shear test",
+            connections: [],
+          },
+          {
+            id: 16605,
+            url: "https://en.wikipedia.org/wiki/Sieve_analysis",
+            title: "Sieve analysis",
+            connections: [],
+          },
+          {
+            id: 28762,
+            url: "https://en.wikipedia.org/wiki/Oedometer_test",
+            title: "Oedometer test",
+            connections: [],
+          },
+          {
+            id: 10357,
+            url: "https://en.wikipedia.org/wiki/Hydraulic_conductivity",
+            title: "Hydraulic conductivity",
+            connections: [],
+          },
+          {
+            id: 10382,
+            url: "https://en.wikipedia.org/wiki/Water_content",
+            title: "Water content",
+            connections: [],
+          },
+          {
+            id: 16986,
+            url: "https://en.wikipedia.org/wiki/Void_ratio",
+            title: "Void ratio",
+            connections: [],
+          },
+          {
+            id: 5815,
+            url: "https://en.wikipedia.org/wiki/Angle_of_repose",
+            title: "Angle of repose",
+            connections: [],
+          },
+          {
+            id: 10378,
+            url: "https://en.wikipedia.org/wiki/Specific_storage",
+            title: "Specific storage",
+            connections: [],
+          },
+          {
+            id: 18102,
+            url: "https://en.wikipedia.org/wiki/Shear_strength_(soil)",
+            title: "Shear strength (soil)",
+            connections: [],
+          },
+          {
+            id: 12856,
+            url: "https://en.wikipedia.org/wiki/Infiltration_(hydrology)",
+            title: "Infiltration (hydrology)",
+            connections: [],
+          },
+          {
+            id: 8842,
+            url: "https://en.wikipedia.org/wiki/Soil_mechanics",
+            title: "Soil mechanics",
+            connections: [],
+          },
+          {
+            id: 13458,
+            url: "https://en.wikipedia.org/wiki/Effective_stress",
+            title: "Effective stress",
+            connections: [],
+          },
+          {
+            id: 13457,
+            url: "https://en.wikipedia.org/wiki/Pore_water_pressure",
+            title: "Pore water pressure",
+            connections: [],
+          },
+          {
+            id: 17238,
+            url: "https://en.wikipedia.org/wiki/Lateral_earth_pressure",
+            title: "Lateral earth pressure",
+            connections: [],
+          },
+          {
+            id: 2529,
+            url: "https://en.wikipedia.org/wiki/Overburden_pressure",
+            title: "Overburden pressure",
+            connections: [],
+          },
+          {
+            id: 28244,
+            url: "https://en.wikipedia.org/wiki/Preconsolidation_pressure",
+            title: "Preconsolidation pressure",
+            connections: [],
+          },
+          {
+            id: 10542,
+            url: "https://en.wikipedia.org/wiki/S_wave",
+            title: "S wave",
+            connections: [],
+          },
+          {
+            id: 26388,
+            url: "https://en.wikipedia.org/wiki/Slope_stability_analysis",
+            title: "Slope stability analysis",
+            connections: [],
+          },
+          {
+            id: 28604,
+            url: "https://en.wikipedia.org/wiki/Sliding_criterion_(geotechnical_engineering)",
+            title: "Sliding criterion (geotechnical engineering)",
+            connections: [],
+          },
+          {
+            id: 16254,
+            url: "https://en.wikipedia.org/wiki/Bearing_capacity",
+            title: "Bearing capacity",
+            connections: [],
+          },
+          {
+            id: 38064,
+            url: "https://en.wikipedia.org/wiki/Stress_distribution_in_soil",
+            title: "Stress distribution in soil",
+            connections: [],
+          },
+          {
+            id: 5231,
+            url: "https://en.wikipedia.org/wiki/Hydrogeology",
+            title: "Hydrogeology",
+            connections: [],
+          },
+        ],
+      },
+    ],
+  };
+
+  return res.status(200).json(response);
+});
+
+app.listen(port, () => {
+  console.log(`Servidor rodando em http://localhost:${port}`);
+});
