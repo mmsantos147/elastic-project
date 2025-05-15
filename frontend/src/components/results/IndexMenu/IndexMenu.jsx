@@ -1,4 +1,4 @@
-import { Typography, Divider } from "antd";
+import { Typography, Divider, Row } from "antd";
 import { Content } from "antd/es/layout/layout";
 
 import COLORS from "../../../colors";
@@ -8,6 +8,7 @@ import { WhyIndexed } from "./WhyIndexed";
 import styled from "styled-components";
 import { t } from "i18next";
 import { useTranslation } from "react-i18next";
+import { GraphModal } from "../../graph/GraphModal";
 
 const { Paragraph } = Typography;
 
@@ -53,6 +54,17 @@ export const IndexMenu = () => {
 
       <AboutTheFont />
 
+
+      <DividerMarginBottom>
+        <DividerInformation>
+          Mapeamento de resultados
+        </DividerInformation>
+      </DividerMarginBottom>
+      
+      <div style={{width: "100%", height: "500px", border: "1px solid white", borderRadius: "10px"}} >
+        <GraphModal />
+      </div>
+
       <DividerMarginBottom>
         <DividerInformation>
           {t("more_information")}
@@ -62,6 +74,8 @@ export const IndexMenu = () => {
       <TitleParagraph>
         {t("your_search_about_this_result")}
       </TitleParagraph>
+
+      
 
       <WhyIndexed />
 
