@@ -1,7 +1,10 @@
 package com.elastic.aisearch.controller;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +36,8 @@ public class GraphController {
 
     @GetMapping("/{id}/{depth}")
     public ResponseEntity<GraphNodeDTO> fetchGraph(@PathVariable("id") Integer id, @PathVariable("depth") Integer depth) {
-        GraphNodeDTO graphNode = graphService.generateGraph(id, 0, depth, Collections.emptySet());
-        return ResponseEntity.ok(graphNode);
+        Set<Integer> visited = new HashSet<>();
+        GraphNodeDTO graph = graphService.generateGraph(id, 0, depth, visited);
+        return ResponseEntity.ok(graph);
     }
 }

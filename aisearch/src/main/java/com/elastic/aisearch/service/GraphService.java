@@ -66,6 +66,7 @@ public class GraphService {
             GraphNodeDTO child = generateGraph(neighbor.getId(), currentDepth + 1, maxDepth, visited);
             if (child != null) children.add(child);
         }
+        
     
         return new GraphNodeDTO(article.getId(), article.getUrl(), article.getTitle(), children);
     }
