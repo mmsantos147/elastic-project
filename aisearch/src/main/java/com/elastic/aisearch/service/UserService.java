@@ -2,6 +2,7 @@ package com.elastic.aisearch.service;
 
 import com.elastic.aisearch.dto.RegisterDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
+import com.elastic.aisearch.mappers.UserMapper;
 import com.elastic.aisearch.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     public List<User> getUser() {
         return userRepository.findAll();
@@ -36,10 +38,7 @@ public class UserService {
             throw new IllegalStateException("failed_registration");
         }
 
-        User user = new User();
-        user.setUserName(registerDTO.userName());
-        user.setEmail(registerDTO.email());
-        user.setPassword(BCrypt.hashpw(registerDTO.password(), BCrypt.gensalt()));
+        User user = userMapper.toObject(registerDTO);
         userRepository.save(user);
         return new SuccessMessageDTO(
                 "success_registration"

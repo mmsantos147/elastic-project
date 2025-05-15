@@ -3,6 +3,7 @@ package com.elastic.aisearch.service;
 import com.elastic.aisearch.dto.FavoriteDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.entity.Favorite;
+import com.elastic.aisearch.mappers.FavoriteMapper;
 import com.elastic.aisearch.repository.FavoriteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Service
 public class FavoriteService {
     private final FavoriteRepository favoriteRepository;
+    private final FavoriteMapper favoriteMapper;
 
     public List<Favorite> getFavorite(Integer id) {
         return favoriteRepository.findAllUserFavorite(id);
@@ -24,20 +26,14 @@ public class FavoriteService {
         if (favoriteUser.isPresent()) {
             throw new IllegalStateException("failed_setfavorite");
         }
-        Favorite favorite = new Favorite(
-                favoriteDTO.title(),
-                favoriteDTO.url(),
-                favoriteDTO.content(),
-                favoriteDTO.readingTime(),
-                favoriteDTO.date(),
-                favoriteDTO.elasticId());
+        Favorite favorite = favoriteMapper.toObject(favoriteDTO);
         favoriteRepository.save(favorite);
         return new SuccessMessageDTO("success_setfavorite");
     }
 
     public SuccessMessageDTO deleteFavoriteById(Integer id) {
         favoriteRepository.deleteById(id);
-        return  new SuccessMessageDTO("success_delete");
+        return new SuccessMessageDTO("success_delete");
     }
 
     public SuccessMessageDTO deleteFavoriteByUserId(Integer id) {

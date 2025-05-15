@@ -100,11 +100,11 @@ public class ElasticsearchService {
         return highlightBuilder.field(contentField);
     }
 
-    public Integer fromCalc(Integer page, Integer resultsPerPage) {
+    private Integer fromCalc(Integer page, Integer resultsPerPage) {
         return resultsPerPage * (page-1);
     }
 
-    public SearchRequest searchFilters(SearchDTO searchDTO, SearchRequest searchRequest, QueryBuilder queryBuilder, HighlightBuilder highlightBuilder, SuggestBuilder suggestBuilder) {
+    private SearchRequest searchFilters(SearchDTO searchDTO, SearchRequest searchRequest, QueryBuilder queryBuilder, HighlightBuilder highlightBuilder, SuggestBuilder suggestBuilder) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .query(queryBuilder)
                 .from(fromCalc(searchDTO.page(),searchDTO.resultsPerPage()))
@@ -183,6 +183,7 @@ public class ElasticsearchService {
 
             results.add(searchResultDTO);
         }
+
         Long hits = searchResponse.getHits().getTotalHits().value;
 
         List<SuggestionDTO> suggestions = jsonParser.suggestParser(searchResponse.getSuggest().toString());

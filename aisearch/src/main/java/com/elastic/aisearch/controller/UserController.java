@@ -57,18 +57,17 @@ public class UserController {
     }
 
     @PostMapping(path = "/login")
-    public SuccessLoginMessageDTO verifyUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<SuccessLoginMessageDTO> verifyUser(@RequestBody UserDTO userDTO) {
         if (!userService.searchUser(userDTO.email(), userDTO.password())) {
             throw new IllegalStateException("wrong_password");
         }
-        userSession.setUserEmail(userDTO.email());
         Optional<User> user = userService.getUserEmail(userDTO.email());
+        userSession.setUserEmail(userDTO.email());
         userSession.setUserId(user.get().getId());
         userSession.setUserName(user.get().getUserName());
-        return new SuccessLoginMessageDTO(
+        return ResponseEntity.ok().body(new SuccessLoginMessageDTO(
                 "success_login",
-                user.get().getUserName()
-        );
+                user.get().getUserName()));
     }
 
     @PostMapping(path = "/verify")

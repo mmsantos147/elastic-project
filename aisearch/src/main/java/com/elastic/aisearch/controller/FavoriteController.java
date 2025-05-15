@@ -3,6 +3,7 @@ package com.elastic.aisearch.controller;
 import com.elastic.aisearch.dto.FavoriteDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.entity.Favorite;
+import com.elastic.aisearch.mappers.FavoriteMapper;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.FavoriteService;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.Objects;
 public class FavoriteController {
     private final FavoriteService favoriteService;
     private final UserSession userSession;
+    private final FavoriteMapper favoriteMapper;
 
     @GetMapping()
     public List<FavoriteDTO> getFavorites() {
@@ -32,13 +34,7 @@ public class FavoriteController {
         }
 
         for (Favorite favorite: favoriteList) {
-            FavoriteDTO favoriteDTO  = new FavoriteDTO(
-                    favorite.getElasticId(),
-                    favorite.getTitle(),
-                    favorite.getUrl(),
-                    favorite.getContent(),
-                    favorite.getReadingTime(),
-                    favorite.getDate());
+            FavoriteDTO favoriteDTO  = favoriteMapper.toDTO(favorite);
             favorites.add(favoriteDTO);
         }
         return favorites;
@@ -51,7 +47,6 @@ public class FavoriteController {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<SuccessMessageDTO> removeFavorite(@PathVariable Integer id) {
-        favoriteService.deleteFavoriteById(id);
-        return ResponseEntity.ok().body(new SuccessMessageDTO("success_remove"));
+        return ResponseEntity.ok().body(favoriteService.deleteFavoriteById(id));
     }
 }

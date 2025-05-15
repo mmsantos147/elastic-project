@@ -3,6 +3,7 @@ package com.elastic.aisearch.controller;
 import com.elastic.aisearch.dto.HistoryDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.entity.History;
+import com.elastic.aisearch.mappers.HistoryMapper;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.HistoryService;
 
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HistoryController {
     private final HistoryService historyService;
     private final UserSession userSession;
+    private final HistoryMapper historyMapper;
 
     @DeleteMapping(path = "/all")
     public ResponseEntity<?> deleteAllById() {
@@ -50,7 +52,7 @@ public class HistoryController {
         }
 
         for (History history : historyList) {
-            HistoryDTO historyDTO = new HistoryDTO(history.getId(), history.getPrompt());
+            HistoryDTO historyDTO = historyMapper.toDTO(history);
             histories.add(historyDTO);
         }
         return histories;

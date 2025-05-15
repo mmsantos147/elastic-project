@@ -65,7 +65,7 @@ public class SearchController {
 
     @PostMapping("/suggestions")
     public ResponseEntity<List<String>> searchAsYouType(@RequestBody QueryDTO query) {
-        List<String> suggestion = new ArrayList<>();
+        List<String> suggestion;
         try {
             suggestion = elasticsearchService.searchAsYouType(query.query());
         } catch (Exception e) {
