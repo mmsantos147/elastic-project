@@ -2,6 +2,10 @@ package com.elastic.aisearch.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -15,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class GraphService {
-    
+
     private final ArticleMapper articleMapper;
     private final ArticleRepository articleRepository;
 
@@ -25,18 +29,23 @@ public class GraphService {
     }
 
     public void generateConnections(List<ArticleDTO> articleDTOs) {
-    for (ArticleDTO dto : articleDTOs) {
-        Article fromArticle = articleRepository.findById(dto.id())
-            .orElseThrow(() -> new RuntimeException("Article not found: " + dto.id()));
+        Map<Integer, Article> articleMap = articleRepository.findAll().stream()
+                .collect(Collectors.toMap(Article::getId, Function.identity()));
 
-        List<Article> connections = new ArrayList<>();
-        for (Integer connectedId : dto.connections()) {
-            articleRepository.findById(connectedId).ifPresent(connections::add);
+        for (ArticleDTO dto : articleDTOs) {
+            Article fromArticle = articleMap.get(dto.id());
+            if (fromArticle == null)
+                continue;
+
+            List<Article> connections = dto.connections().stream()
+                    .map(articleMap::get)
+                    .filter(Objects::nonNull)
+                    .toList();
+
+            fromArticle.setConnectedArticles(connections);
         }
 
-        fromArticle.setConnectedArticles(connections);
-        articleRepository.save(fromArticle);
+        articleRepository.saveAll(articleMap.values());
     }
-}
 
 }
