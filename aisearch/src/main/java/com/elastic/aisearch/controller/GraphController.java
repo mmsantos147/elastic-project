@@ -23,6 +23,7 @@ public class GraphController {
     @PostMapping("/bulk")
     public ResponseEntity<String> bulk(@RequestBody List<ArticleDTO> articleDTOs) {
         graphService.bulkArticles(articleDTOs); 
+        graphService.generateConnections(articleDTOs);
         return ResponseEntity.ok().body("OK");
     }
 }
