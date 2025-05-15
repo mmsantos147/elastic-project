@@ -51,13 +51,6 @@ public class ElasticsearchService {
     @Autowired
     private JsonParser jsonParser;
 
-    /**
-     * Executa uma busca no Elasticsearch baseada em uma string de consulta.
-     * 
-     * @param searchDTO A string de consulta
-     * @return Lista de resultados da busca
-     * @throws Exception Se ocorrer um erro durante o parsing ou a busca
-     */
     public SearchResponseDTO search(SearchDTO searchDTO) throws Exception {
 
         QueryNode queryNode = queryParser.parseQuery(searchDTO.search());
@@ -69,27 +62,7 @@ public class ElasticsearchService {
                 .size(1)
         );
 
-        HighlightBuilder highlightBuilder = new HighlightBuilder()
-                .preTags("**")
-                .postTags("**")
-                .numOfFragments(1)
-                .fragmentSize(1000);
-
-        BoolQueryBuilder highlightBool = QueryBuilders.boolQuery();
-        for (String phrase : queryNode.getMustInContent()) {
-            highlightBool.should(
-                    QueryBuilders.matchPhraseQuery("content", stripQuotes(phrase.trim()))
-                            .slop(1));
-        }
-
-        highlightBool.should(
-                QueryBuilders.matchPhraseQuery("content", stripQuotes(queryNode.getShouldContent().trim()))
-                        .slop(1));
-
-        HighlightBuilder.Field contentField = new HighlightBuilder.Field("content")
-                .highlightQuery(highlightBool);
-
-        highlightBuilder.field(contentField);
+        HighlightBuilder highlightBuilder = highlightBuilder(queryNode);
 
         QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode, searchDTO);
         SearchRequest searchRequest = new SearchRequest(indexName);
@@ -102,6 +75,31 @@ public class ElasticsearchService {
         return processSearchResults(searchResponse, searchDTO);
     }
 
+    public HighlightBuilder highlightBuilder(QueryNode queryNode) {
+        HighlightBuilder highlightBuilder = new HighlightBuilder()
+                .preTags("**")
+                .postTags("**")
+                .numOfFragments(1)
+                .fragmentSize(1000);
+
+        StringBuilder fullQueryBuilder = new StringBuilder();
+        for (String phrase : queryNode.getMustInContent()) {
+            fullQueryBuilder.append(phrase).append(" ");
+        }
+        fullQueryBuilder.append(queryNode.getShouldContent());
+
+        String fullQuery = stripQuotes(fullQueryBuilder.toString().trim());
+
+        MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("content", fullQuery)
+                .operator(Operator.OR);
+
+        HighlightBuilder.Field contentField = new HighlightBuilder.Field("content")
+                .highlightQuery(matchQuery);
+
+
+        return highlightBuilder.field(contentField);
+    }
+    
     public Integer fromCalc(Integer page, Integer resultsPerPage) {
         return resultsPerPage * (page-1);
     }
@@ -160,12 +158,6 @@ public class ElasticsearchService {
         return processSearchAsYouTypeDTO(response);
     }
 
-    /**
-     * Processa os resultados da busca e converte para objetos do domínio.
-     * 
-     * @param searchResponse A resposta da busca do Elasticsearch
-     * @return Lista de resultados processados
-     */
     private SearchResponseDTO processSearchResults(SearchResponse searchResponse, SearchDTO searchDTO) throws JsonProcessingException {
         List<SearchResultDTO> results = new ArrayList<>();
 
@@ -190,7 +182,7 @@ public class ElasticsearchService {
                     getIntegerValue(sourceAsMap, "reading_time"),
                     getStringValue(sourceAsMap, "dt_creation"),
                     hit.getExplanation().toString());
-                    
+
             results.add(searchResultDTO);
         }
         Long hits = searchResponse.getHits().getTotalHits().value;
