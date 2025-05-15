@@ -99,7 +99,7 @@ public class ElasticsearchService {
 
         return highlightBuilder.field(contentField);
     }
-    
+
     public Integer fromCalc(Integer page, Integer resultsPerPage) {
         return resultsPerPage * (page-1);
     }
@@ -111,7 +111,6 @@ public class ElasticsearchService {
                 .size(searchDTO.resultsPerPage())
                 .trackTotalHits(true)
                 .suggest(suggestBuilder)
-                .explain(true)
                 .highlighter(highlightBuilder);
 
         if (searchDTO.orderBy().equals(Filters.DATE_ASC)) {
@@ -180,8 +179,7 @@ public class ElasticsearchService {
                     getStringValue(sourceAsMap, "title"),
                     treatContent(content),
                     getIntegerValue(sourceAsMap, "reading_time"),
-                    getStringValue(sourceAsMap, "dt_creation"),
-                    hit.getExplanation().toString());
+                    getStringValue(sourceAsMap, "dt_creation"));
 
             results.add(searchResultDTO);
         }
