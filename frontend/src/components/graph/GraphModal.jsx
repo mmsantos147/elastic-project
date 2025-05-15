@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useGraphService } from '../../api/Graph.api';
+import { useSearchData } from '../../context/SearchContext';
 
 function parseGraphData(data) {
   const nodesMap = new Map();
@@ -29,21 +30,20 @@ function parseGraphData(data) {
 }
 
 export const GraphModal = () => {
-
+  const { indexMenuContent } = useSearchData();
   const fgRef = useRef();
   const [rawData, setRawData] = useState({});
-  const [size, setSize] = useState({ width: 0, height: 0 });
   const { nodes, links } = parseGraphData(rawData);
   const { getGraph } = useGraphService();
 
   useEffect(() => {
     const fetchGraph = async () => {
-      const data = await getGraph(1, 2);
+      const data = await getGraph(indexMenuContent.id, 2);
       setRawData(data);
     };
   
     fetchGraph();
-  }, []); 
+  }, [indexMenuContent.id]); 
 
   return (
     <div style={{
