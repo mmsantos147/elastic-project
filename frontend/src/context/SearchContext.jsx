@@ -103,6 +103,7 @@ export const SearchProvider = ({ children }) => {
     return () => es.close();
   }, []);
 
+  
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -113,7 +114,6 @@ export const SearchProvider = ({ children }) => {
     }
 
     executeSearch();
-    loadHistory();
   }, [searchData]);
 
   useEffect(() => {
@@ -136,6 +136,9 @@ export const SearchProvider = ({ children }) => {
       setSearchResults(response);
       setCurrenctAiAbstract(response.requestId);
       setCurrentRequestId(response.requestId);
+      
+      await loadHistory();
+
     } catch (error) {
       console.error("Erro ao buscar resultados:", error);
     } finally {
