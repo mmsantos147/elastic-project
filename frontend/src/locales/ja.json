@@ -41,7 +41,7 @@
   "check_out_other": "他の人をチェックしてください",
   "tips": "ヒント",
   "to_search_on_brand": "uaisearchで検索します",
-  "you_can_try_these_searches": "また、これらの検索を行うこともできます",
+  "you_can_try_these_searches": "これらの検索を行うこともできます",
   "artificial_intelligence_vision": "IAによって生成された表示",
   "show_more": "もっと見せてください",
   "show_less": "少ない",
@@ -99,7 +99,7 @@
   "reading_time_4": "nとm分の間の読み取り時間でコンテンツを検索します。",
   "created_at_1": "日付Nで作成されたコンテンツを求めます。注意：日付の形式は正確に必要です",
   "created_at_2": "日付後に作成されたコンテンツを探す。注意：日付の形式は正確にある必要があります",
-  "created_at_3": "日付前に作成されたコンテンツを探すN.注意：日付の形式は正確にある必要があります",
+  "created_at_3": "日付の前に作成されたコンテンツを探すN.注意：日付の形式は正確にある必要があります",
   "created_at_4": "日付nとMの間に作成されたコンテンツを探す：注意：日付の形式は正確にある必要があります",
   "search_tokens": "調査トークン",
   "search_tokens_description": "特別なオペレーターを使用して検索を絞り込むことができます。ここにいくつかの便利なヒントがあります",
@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "結果は、この国での研究に関連しているようです。",
   "united_states": "アメリカ合衆国",
   "how_search_works_question": "研究はどのように機能しますか？",
-  "tips_how_to_search": "検索方法のヒント"
+  "tips_how_to_search": "検索方法のヒント",
+  "article_not_found": "記事が見つかりません。おそらく、接続のマッピングは存在しません。",
+  "not_allowed": "あなたはこれをすることを許可されていません！",
+  "success_delete_favorite": "お気に入りは正常に削除されました！",
+  "success_setfavorite": "成功したお気に入りの記事！"
 }

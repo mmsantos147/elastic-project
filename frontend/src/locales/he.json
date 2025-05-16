@@ -13,7 +13,7 @@
   "score_asc": "הגדלת הרלוונטיות",
   "read_time_desc": "ירידה בזמן הקריאה",
   "read_time_asc": "הגדלת זמן הקריאה",
-  "date_desc": "הכי חדש הראשון",
+  "date_desc": "ראשית הכי חדש",
   "date_asc": "ראשית ישן יותר",
   "define": "לְהַגדִיר",
   "fast": "מָהִיר",
@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "נראה שהתוצאה רלוונטית למחקר במדינה זו:",
   "united_states": "אַרצוֹת הַבְּרִית",
   "how_search_works_question": "איך המחקר עובד?",
-  "tips_how_to_search": "טיפים כיצד לבצע חיפוש"
+  "tips_how_to_search": "טיפים כיצד לבצע חיפוש",
+  "article_not_found": "מאמר לא נמצא. ככל הנראה מיפוי של חיבורים אינו קיים.",
+  "not_allowed": "אסור לך לעשות זאת!",
+  "success_delete_favorite": "המועדף הוסר בהצלחה!",
+  "success_setfavorite": "מאמר מועדף מצליח!"
 }

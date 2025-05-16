@@ -85,7 +85,7 @@
   "success_logout": "ناجح!",
   "success_delete": "تم حذف التاريخ كله بنجاح!",
   "warning_part_1": "الانتباه: هذا الموقع بحت لأغراض الدراسة",
-  "warning_part_2": "هذا الموقع هو فقط لأغراض التوضيح.",
+  "warning_part_2": "هذا الموقع هو فقط لأغراض العرض التوضيحي.",
   "warning_part_3": "أبداً",
   "warning_part_4": "أدخل",
   "warning_part_5": "أوراق اعتماد حقيقية",
@@ -108,7 +108,7 @@
   "exact_search": "المراسلات الدقيقة",
   "exact_search_description": "استخدم عروض الأسعار للبحث عن عبارة أو مصطلح دقيق",
   "artificial_intelligence": "الذكاء الاصطناعي",
-  "exact_search_example": "يجد فقط النتائج التي تحتوي على هذا التعبير بالضبط",
+  "exact_search_example": "يجد النتائج فقط التي تحتوي على هذا التعبير بالضبط",
   "term_exclusion": "استبعاد الشروط",
   "term_exclusion_description_1": "ضع علامة أقل",
   "term_exclusion_description_2": "قبل كلمة لحذف النتائج التي تحتوي عليها",
@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "يبدو أن النتيجة ذات صلة بالبحث في هذا البلد:",
   "united_states": "الولايات المتحدة الأمريكية",
   "how_search_works_question": "كيف يعمل البحث؟",
-  "tips_how_to_search": "نصائح حول كيفية إجراء البحث"
+  "tips_how_to_search": "نصائح حول كيفية إجراء البحث",
+  "article_not_found": "لم يتم العثور على المادة. ربما لا يوجد رسم خرائط للاتصالات.",
+  "not_allowed": "لا يُسمح لك بذلك!",
+  "success_delete_favorite": "تمت إزالته المفضلة بنجاح!",
+  "success_setfavorite": "المقالة المفضلة الناجحة!"
 }

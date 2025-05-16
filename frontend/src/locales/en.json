@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "The result seems to be relevant to research in this country:",
   "united_states": "USA",
   "how_search_works_question": "How does the research work?",
-  "tips_how_to_search": "Tips on how to do a search"
+  "tips_how_to_search": "Tips on how to do a search",
+  "article_not_found": "Article not found. Probably the mapping of connections does not exist.",
+  "not_allowed": "You are not allowed to do this!",
+  "success_delete_favorite": "Favorite removed successfully!",
+  "success_setfavorite": "Successful favorite article!"
 }

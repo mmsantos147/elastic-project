@@ -72,7 +72,7 @@
   "success_login": "Giriş başarıyla yaptı!",
   "email_does_not_exists": "Bu e -posta mevcut değil",
   "failed_registration": "Bu e -posta zaten kayıtlı. Lütfen başka bir tane deneyin.",
-  "success_langset": "Başarılı Dil Değişti!",
+  "success_langset": "Başarılı Değişen Dil!",
   "any_date": "Herhangi bir tarih",
   "any_time": "Herhangi bir zaman",
   "unexpected_error": "Bilinmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyin!",
@@ -93,7 +93,7 @@
   "wikipedia": "Wikipedia",
   "in_title_description_1": "'X' kelimesinin başlıkta bulunmasını sağlar.",
   "in_title_description_2": "'X' kelimesinin başlıkta olmadığını garanti eder.",
-  "reading_time_1": "Tam olarak n dakikalarda okuma süresi ile içerik arar.",
+  "reading_time_1": "Tam olarak n dakikada okuma süresi ile içerik arar.",
   "reading_time_2": "N dakikadan büyük okuma süresi ile içeriği arayın.",
   "reading_time_3": "N dakikadan az okuma süresi ile içeriği arayın.",
   "reading_time_4": "N ve M dakikaları arasında okuma süresi ile içeriği arayın.",
@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "Sonuç, bu ülkedeki araştırmalarla ilgili görünüyor:",
   "united_states": "Amerika",
   "how_search_works_question": "Araştırma nasıl çalışır?",
-  "tips_how_to_search": "Bir arama nasıl yapılacağına dair ipuçları"
+  "tips_how_to_search": "Bir arama nasıl yapılacağına dair ipuçları",
+  "article_not_found": "Makale bulunamadı. Muhtemelen bağlantıların eşlenmesi mevcut değildir.",
+  "not_allowed": "Bunu yapmana izin verilmiyor!",
+  "success_delete_favorite": "Favori başarıyla kaldırıldı!",
+  "success_setfavorite": "Başarılı favori makale!"
 }

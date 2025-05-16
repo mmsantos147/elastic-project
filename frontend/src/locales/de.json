@@ -13,7 +13,7 @@
   "score_asc": "Zunehmende Relevanz",
   "read_time_desc": "Verringernde Lesezeit",
   "read_time_asc": "Zunehmende Lesezeit",
-  "date_desc": "Neuester zuerst",
+  "date_desc": "Neuestes zuerst",
   "date_asc": "Zuerst älter",
   "define": "Definieren",
   "fast": "Schnell",
@@ -40,7 +40,7 @@
   "need_help_ask": "Benötigen Sie Hilfe?",
   "check_out_other": "Überprüfen Sie andere",
   "tips": "Tipps",
-  "to_search_on_brand": "Bei uaisarch suchen",
+  "to_search_on_brand": "Suche bei uaisarch",
   "you_can_try_these_searches": "Sie können auch versuchen, diese Suchanfragen durchzuführen",
   "artificial_intelligence_vision": "Ansicht von IA erzeugt",
   "show_more": "Mehr zeigen",
@@ -100,7 +100,7 @@
   "created_at_1": "Sucht Inhalte, die am Datum erstellt wurden. N. Achtung: Das Format des Datums muss genau sein",
   "created_at_2": "Sucht Inhalte, die nach Datum N erstellt wurden. N. Achtung: Das Format des Datums sollte genau sein",
   "created_at_3": "Sucht Inhalte vor Datum N. Achtung: Das Format des Datums sollte genau sein",
-  "created_at_4": "Sucht Inhalte zwischen dem Datum N und M. Aufmerksamkeit: Das Format des Datums sollte genau sein",
+  "created_at_4": "Sucht Inhalte, die zwischen dem Datum N und M. Aufmerksamkeit erstellt wurden: Das Format des Datums sollte genau sein",
   "search_tokens": "Forschungstoken",
   "search_tokens_description": "Sie können Ihre Suche mit speziellen Operatoren verfeinern. Hier sind einige nützliche Tipps",
   "search_tokens_final": "Verwenden Sie diese Filter in Kombination mit kostenlosen Schlüsselwörtern, um genauere Ergebnisse zu erzielen",
@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "Das Ergebnis scheint für die Forschung in diesem Land relevant zu sein:",
   "united_states": "USA",
   "how_search_works_question": "Wie funktioniert die Forschung?",
-  "tips_how_to_search": "Tipps zum Durchführen einer Suche"
+  "tips_how_to_search": "Tipps zum Durchführen einer Suche",
+  "article_not_found": "Artikel nicht gefunden. Wahrscheinlich gibt es nicht die Zuordnung von Verbindungen.",
+  "not_allowed": "Sie dürfen das nicht tun!",
+  "success_delete_favorite": "Favorit erfolgreich entfernt!",
+  "success_setfavorite": "Erfolgreicher Lieblingsartikel!"
 }

@@ -95,7 +95,7 @@
   "in_title_description_2": "Garantit que le mot «x» n'est pas dans le titre.",
   "reading_time_1": "Cherche le contenu avec le temps de lecture exactement en n minutes.",
   "reading_time_2": "Recherchez le contenu avec un temps de lecture supérieur à n minutes.",
-  "reading_time_3": "Recherchez le contenu avec le temps de lecture moins de n minutes.",
+  "reading_time_3": "Recherchez le contenu avec un temps de lecture moins de n minutes.",
   "reading_time_4": "Recherchez le contenu avec le temps de lecture entre n et m minutes.",
   "created_at_1": "Cherche du contenu créé à la date N. Attention: le format de la date doit être exactement",
   "created_at_2": "Cherche du contenu créé après la date N. Attention: le format de la date doit être exactement",
@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "Le résultat semble être pertinent pour la recherche dans ce pays:",
   "united_states": "USA",
   "how_search_works_question": "Comment fonctionne la recherche?",
-  "tips_how_to_search": "Conseils sur la façon de faire une recherche"
+  "tips_how_to_search": "Conseils sur la façon de faire une recherche",
+  "article_not_found": "Article introuvable. La cartographie des connexions n'existe probablement pas.",
+  "not_allowed": "Vous n'êtes pas autorisé à faire cela!",
+  "success_delete_favorite": "Le favori a supprimé avec succès!",
+  "success_setfavorite": "Article préféré réussi!"
 }

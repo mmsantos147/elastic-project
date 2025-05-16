@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "Wynik wydaje się być istotny dla badań w tym kraju:",
   "united_states": "USA",
   "how_search_works_question": "Jak działa badania?",
-  "tips_how_to_search": "Wskazówki dotyczące wyszukiwania"
+  "tips_how_to_search": "Wskazówki dotyczące wyszukiwania",
+  "article_not_found": "Nie znaleziono artykułu. Prawdopodobnie nie istnieje mapowanie połączeń.",
+  "not_allowed": "Nie możesz tego robić!",
+  "success_delete_favorite": "Ulubiony usunięty pomyślnie!",
+  "success_setfavorite": "Udany ulubiony artykuł!"
 }

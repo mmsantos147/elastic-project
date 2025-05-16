@@ -72,7 +72,7 @@
   "success_login": "Đăng nhập được thực hiện thành công!",
   "email_does_not_exists": "Email này không tồn tại",
   "failed_registration": "Email này đã được đăng ký. Vui lòng thử một cái khác.",
-  "success_langset": "Ngôn ngữ thay đổi thành công!",
+  "success_langset": "Ngôn ngữ đã thay đổi thành công!",
   "any_date": "Bất kỳ ngày nào",
   "any_time": "Bất cứ lúc nào",
   "unexpected_error": "Một sai lầm chưa biết đã xảy ra. Hãy thử lại sau!",
@@ -96,7 +96,7 @@
   "reading_time_1": "Tìm kiếm nội dung với thời gian đọc chính xác ở n phút.",
   "reading_time_2": "Tìm kiếm nội dung với thời gian đọc lớn hơn n phút.",
   "reading_time_3": "Tìm kiếm nội dung với thời gian đọc ít hơn n phút.",
-  "reading_time_4": "Tìm kiếm nội dung với thời gian đọc giữa các phút N và m.",
+  "reading_time_4": "Tìm kiếm nội dung với thời gian đọc giữa các phút N và M.",
   "created_at_1": "Tìm kiếm nội dung được tạo vào ngày N. Chú ý: Định dạng của ngày phải chính xác",
   "created_at_2": "Tìm kiếm nội dung được tạo sau ngày N. Chú ý: Định dạng của ngày phải chính xác",
   "created_at_3": "Tìm kiếm nội dung được tạo trước ngày N. Chú ý: Định dạng của ngày phải chính xác",
@@ -118,7 +118,7 @@
   "course": "khóa học",
   "smart_search_example_1": "sẽ tìm kiếm nội dung đó",
   "smart_search_example_2": "Chứa chính xác",
-  "smart_search_example_3": "Có hơn 5 phút đọc",
+  "smart_search_example_3": "Có hơn 5 phút đọc sách",
   "smart_search_example_4": "Không đề cập đến từ \"khóa học\"",
   "tips_footer": "Luôn cố gắng bắt đầu với các thuật ngữ đơn giản và tinh chỉnh với các bộ lọc nếu kết quả quá rộng",
   "more_information": "Thêm thông tin",
@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "Kết quả dường như có liên quan đến nghiên cứu ở đất nước này:",
   "united_states": "Hoa Kỳ",
   "how_search_works_question": "Nghiên cứu hoạt động như thế nào?",
-  "tips_how_to_search": "Mẹo về cách thực hiện tìm kiếm"
+  "tips_how_to_search": "Mẹo về cách thực hiện tìm kiếm",
+  "article_not_found": "Bài viết không tìm thấy. Có lẽ ánh xạ các kết nối không tồn tại.",
+  "not_allowed": "Bạn không được phép làm điều này!",
+  "success_delete_favorite": "Yêu thích đã loại bỏ thành công!",
+  "success_setfavorite": "Bài viết yêu thích thành công!"
 }

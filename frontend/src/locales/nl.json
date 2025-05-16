@@ -116,7 +116,7 @@
   "smart_search": "Intelligente combinatie",
   "smart_search_description": "U kunt normale termen combineren met geavanceerde filters",
   "course": "cursus",
-  "smart_search_example_1": "zal op zoek zijn naar inhoud die",
+  "smart_search_example_1": "zal zo zoeken naar inhoud",
   "smart_search_example_2": "Precies bevatten",
   "smart_search_example_3": "Hebben meer dan 5 minuten lezen",
   "smart_search_example_4": "Noem het woord \"cursus\" niet",
@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "Het resultaat lijkt relevant te zijn voor onderzoek in dit land:",
   "united_states": "VS",
   "how_search_works_question": "Hoe werkt het onderzoek?",
-  "tips_how_to_search": "Tips over het zoeken naar een zoekopdracht"
+  "tips_how_to_search": "Tips over het zoeken naar een zoekopdracht",
+  "article_not_found": "Artikel niet gevonden. Waarschijnlijk bestaat het in kaart brengen van verbindingen niet.",
+  "not_allowed": "U mag dit niet doen!",
+  "success_delete_favorite": "Favoriet met succes verwijderd!",
+  "success_setfavorite": "Succesvol favoriete artikel!"
 }

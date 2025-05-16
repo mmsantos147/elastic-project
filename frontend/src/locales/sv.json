@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "Resultatet verkar vara relevant för forskning i detta land:",
   "united_states": "Usa",
   "how_search_works_question": "Hur fungerar forskningen?",
-  "tips_how_to_search": "Tips om hur man gör en sökning"
+  "tips_how_to_search": "Tips om hur man gör en sökning",
+  "article_not_found": "Artikel hittades inte. Förmodligen finns inte kartläggningen av anslutningar.",
+  "not_allowed": "Du får inte göra detta!",
+  "success_delete_favorite": "Favoriten tas bort framgångsrikt!",
+  "success_setfavorite": "Framgångsrik favoritartikel!"
 }

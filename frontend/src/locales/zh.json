@@ -40,7 +40,7 @@
   "need_help_ask": "需要帮助吗？",
   "check_out_other": "查看其他人",
   "tips": "尖端",
-  "to_search_on_brand": "在Uaisearch搜索",
+  "to_search_on_brand": "搜索Uaisearch",
   "you_can_try_these_searches": "您也可以尝试进行这些搜索",
   "artificial_intelligence_vision": "IA产生的视图",
   "show_more": "显示更多",
@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "结果似乎与这个国家的研究有关：",
   "united_states": "美国",
   "how_search_works_question": "研究如何工作？",
-  "tips_how_to_search": "有关如何进行搜索的提示"
+  "tips_how_to_search": "有关如何进行搜索的提示",
+  "article_not_found": "未找到文章。连接的映射可能不存在。",
+  "not_allowed": "您不允许这样做！",
+  "success_delete_favorite": "最喜欢的人成功地删除了！",
+  "success_setfavorite": "成功最喜欢的文章！"
 }

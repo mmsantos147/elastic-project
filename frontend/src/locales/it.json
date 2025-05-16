@@ -36,7 +36,7 @@
   "recent_searches": "Ricerche recenti",
   "search": "Per cercare",
   "search_on_brand": "Cerca a Uaisearch",
-  "your_search_dont_find_any_docs": "La tua ricerca non ha trovato nessun documento corrispondente",
+  "your_search_dont_find_any_docs": "La tua ricerca non ha trovato alcun documento corrispondente",
   "need_help_ask": "Hai bisogno di aiuto?",
   "check_out_other": "Dai un'occhiata agli altri",
   "tips": "suggerimenti",
@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "Il risultato sembra essere rilevante per la ricerca in questo paese:",
   "united_states": "U.S.A.",
   "how_search_works_question": "Come funziona la ricerca?",
-  "tips_how_to_search": "Suggerimenti su come fare una ricerca"
+  "tips_how_to_search": "Suggerimenti su come fare una ricerca",
+  "article_not_found": "Articolo non trovato. Probabilmente la mappatura delle connessioni non esiste.",
+  "not_allowed": "Non ti è permesso farlo!",
+  "success_delete_favorite": "Preferito rimosso con successo!",
+  "success_setfavorite": "Articolo preferito di successo!"
 }

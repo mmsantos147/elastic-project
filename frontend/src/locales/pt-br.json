@@ -146,5 +146,7 @@
     "how_search_works_question": "Como funciona a pesquisa?",
     "tips_how_to_search": "Dicas de como fazer uma pesquisa",
     "article_not_found": "Artigo não encontrado. Provavelmente o mapeamento de conexões não existe.",
-    "not_allowed": "Você não tem permissão para fazer isso!"
+    "not_allowed": "Você não tem permissão para fazer isso!",
+    "success_delete_favorite": "Favorito removido com sucesso!",
+    "success_setfavorite": "Artigo favoritado com sucesso!"
 } 

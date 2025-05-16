@@ -144,5 +144,9 @@
   "this_result_is_relevant_on": "O resultado parece ser relevante para pesquisas neste país:",
   "united_states": "Estados Unidos",
   "how_search_works_question": "¿Cómo funciona la investigación?",
-  "tips_how_to_search": "Consejos sobre cómo hacer una búsqueda"
+  "tips_how_to_search": "Consejos sobre cómo hacer una búsqueda",
+  "article_not_found": "Artículo no encontrado. Probablemente el mapeo de conexiones no existe.",
+  "not_allowed": "¡No se le permite hacer esto!",
+  "success_delete_favorite": "¡Favorito eliminado con éxito!",
+  "success_setfavorite": "¡Artículo favorito exitoso!"
 }
