@@ -8,6 +8,8 @@ import com.elastic.aisearch.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 import com.elastic.aisearch.entity.User;
+import com.elastic.aisearch.exceptions.UserDoesNotFound;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -61,4 +64,9 @@ public class UserService {
         }
         return BCrypt.checkpw(password, user.get().getPassword());
     }
+
+    public User fetchUserById(Integer id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserDoesNotFound("failed_fetch_user"));
+    }
+
 }

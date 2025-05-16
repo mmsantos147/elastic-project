@@ -18,6 +18,7 @@ import java.util.Optional;
 public class FavoriteService {
     private final FavoriteRepository favoriteRepository;
     private final FavoriteMapper favoriteMapper;
+    private final UserService userService;
 
     public List<Favorite> getFavorite(Integer id) {
         return favoriteRepository.findAllUserFavorite(id);
@@ -29,6 +30,7 @@ public class FavoriteService {
             throw new IllegalStateException("failed_setfavorite");
         }
         Favorite favorite = favoriteMapper.toObject(favoriteDTO);
+        favorite.setUser(userService.fetchUserById(id));
         favoriteRepository.save(favorite);
         return new SuccessMessageDTO("success_setfavorite");
     }
