@@ -20,6 +20,7 @@ public class FavoriteMapper {
 
     public FavoriteDTO toDTO(Favorite favorite) {
         return new FavoriteDTO(
+                favorite.getId(),
                 favorite.getElasticId(),
                 favorite.getTitle(),
                 favorite.getUrl(),
