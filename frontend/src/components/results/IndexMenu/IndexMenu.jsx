@@ -57,7 +57,7 @@ export const IndexMenu = () => {
 
       <DividerMarginBottom>
         <DividerInformation>
-          Mapeamento de resultados
+          {t("results_mapping")}
         </DividerInformation>
       </DividerMarginBottom>
       

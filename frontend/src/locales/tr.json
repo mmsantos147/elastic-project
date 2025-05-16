@@ -148,5 +148,6 @@
   "article_not_found": "Makale bulunamadı. Muhtemelen bağlantıların eşlenmesi mevcut değildir.",
   "not_allowed": "Bunu yapmana izin verilmiyor!",
   "success_delete_favorite": "Favori başarıyla kaldırıldı!",
-  "success_setfavorite": "Başarılı favori makale!"
+  "success_setfavorite": "Başarılı favori makale!",
+  "results_mapping": "Sonuçlar Haritalama"
 }

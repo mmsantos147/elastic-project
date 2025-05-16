@@ -148,5 +148,6 @@
   "article_not_found": "Nie znaleziono artykułu. Prawdopodobnie nie istnieje mapowanie połączeń.",
   "not_allowed": "Nie możesz tego robić!",
   "success_delete_favorite": "Ulubiony usunięty pomyślnie!",
-  "success_setfavorite": "Udany ulubiony artykuł!"
+  "success_setfavorite": "Udany ulubiony artykuł!",
+  "results_mapping": "Mapowanie wyników"
 }

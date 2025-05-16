@@ -148,5 +148,6 @@
   "article_not_found": "Artikel hittades inte. Förmodligen finns inte kartläggningen av anslutningar.",
   "not_allowed": "Du får inte göra detta!",
   "success_delete_favorite": "Favoriten tas bort framgångsrikt!",
-  "success_setfavorite": "Framgångsrik favoritartikel!"
+  "success_setfavorite": "Framgångsrik favoritartikel!",
+  "results_mapping": "Resultatkartläggning"
 }

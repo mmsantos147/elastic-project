@@ -148,5 +148,6 @@
   "article_not_found": "Bài viết không tìm thấy. Có lẽ ánh xạ các kết nối không tồn tại.",
   "not_allowed": "Bạn không được phép làm điều này!",
   "success_delete_favorite": "Yêu thích đã loại bỏ thành công!",
-  "success_setfavorite": "Bài viết yêu thích thành công!"
+  "success_setfavorite": "Bài viết yêu thích thành công!",
+  "results_mapping": "Bản đồ kết quả"
 }

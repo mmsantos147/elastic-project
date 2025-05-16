@@ -148,5 +148,6 @@
   "article_not_found": "未找到文章。连接的映射可能不存在。",
   "not_allowed": "您不允许这样做！",
   "success_delete_favorite": "最喜欢的人成功地删除了！",
-  "success_setfavorite": "成功最喜欢的文章！"
+  "success_setfavorite": "成功最喜欢的文章！",
+  "results_mapping": "结果映射"
 }

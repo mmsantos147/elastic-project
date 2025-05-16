@@ -148,5 +148,6 @@
   "article_not_found": "Artikel niet gevonden. Waarschijnlijk bestaat het in kaart brengen van verbindingen niet.",
   "not_allowed": "U mag dit niet doen!",
   "success_delete_favorite": "Favoriet met succes verwijderd!",
-  "success_setfavorite": "Succesvol favoriete artikel!"
+  "success_setfavorite": "Succesvol favoriete artikel!",
+  "results_mapping": "Resultaten Mapping"
 }

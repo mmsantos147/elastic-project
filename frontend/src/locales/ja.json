@@ -148,5 +148,6 @@
   "article_not_found": "記事が見つかりません。おそらく、接続のマッピングは存在しません。",
   "not_allowed": "あなたはこれをすることを許可されていません！",
   "success_delete_favorite": "お気に入りは正常に削除されました！",
-  "success_setfavorite": "成功したお気に入りの記事！"
+  "success_setfavorite": "成功したお気に入りの記事！",
+  "results_mapping": "結果マッピング"
 }

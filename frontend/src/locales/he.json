@@ -148,5 +148,6 @@
   "article_not_found": "מאמר לא נמצא. ככל הנראה מיפוי של חיבורים אינו קיים.",
   "not_allowed": "אסור לך לעשות זאת!",
   "success_delete_favorite": "המועדף הוסר בהצלחה!",
-  "success_setfavorite": "מאמר מועדף מצליח!"
+  "success_setfavorite": "מאמר מועדף מצליח!",
+  "results_mapping": "מיפוי תוצאות"
 }

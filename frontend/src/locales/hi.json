@@ -148,5 +148,6 @@
   "article_not_found": "लेख नहीं मिला। संभवतः कनेक्शन की मैपिंग मौजूद नहीं है।",
   "not_allowed": "आपको ऐसा करने की अनुमति नहीं है!",
   "success_delete_favorite": "पसंदीदा सफलतापूर्वक हटा दिया गया!",
-  "success_setfavorite": "सफल पसंदीदा लेख!"
+  "success_setfavorite": "सफल पसंदीदा लेख!",
+  "results_mapping": "परिणाम मानचित्रण"
 }

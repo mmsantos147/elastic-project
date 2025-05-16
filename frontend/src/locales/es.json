@@ -148,5 +148,6 @@
   "article_not_found": "Artículo no encontrado. Probablemente el mapeo de conexiones no existe.",
   "not_allowed": "¡No se le permite hacer esto!",
   "success_delete_favorite": "¡Favorito eliminado con éxito!",
-  "success_setfavorite": "¡Artículo favorito exitoso!"
+  "success_setfavorite": "¡Artículo favorito exitoso!",
+  "results_mapping": "Mapeo de resultados"
 }

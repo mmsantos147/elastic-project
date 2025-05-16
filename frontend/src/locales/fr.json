@@ -148,5 +148,6 @@
   "article_not_found": "Article introuvable. La cartographie des connexions n'existe probablement pas.",
   "not_allowed": "Vous n'êtes pas autorisé à faire cela!",
   "success_delete_favorite": "Le favori a supprimé avec succès!",
-  "success_setfavorite": "Article préféré réussi!"
+  "success_setfavorite": "Article préféré réussi!",
+  "results_mapping": "Cartographie des résultats"
 }

@@ -148,5 +148,6 @@
   "article_not_found": "Articolo non trovato. Probabilmente la mappatura delle connessioni non esiste.",
   "not_allowed": "Non ti è permesso farlo!",
   "success_delete_favorite": "Preferito rimosso con successo!",
-  "success_setfavorite": "Articolo preferito di successo!"
+  "success_setfavorite": "Articolo preferito di successo!",
+  "results_mapping": "Mappatura dei risultati"
 }

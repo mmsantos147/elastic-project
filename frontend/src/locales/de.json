@@ -148,5 +148,6 @@
   "article_not_found": "Artikel nicht gefunden. Wahrscheinlich gibt es nicht die Zuordnung von Verbindungen.",
   "not_allowed": "Sie dürfen das nicht tun!",
   "success_delete_favorite": "Favorit erfolgreich entfernt!",
-  "success_setfavorite": "Erfolgreicher Lieblingsartikel!"
+  "success_setfavorite": "Erfolgreicher Lieblingsartikel!",
+  "results_mapping": "Ergebnisse Mapping"
 }
