@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Keyboard from "react-simple-keyboard";
+import { useSearchData } from "../../context/SearchContext";
 
 const KeyboardWrapper = styled.div`
   margin-top: 10px;
@@ -33,7 +34,7 @@ const KeyboardWrapper = styled.div`
 
 export const VirtualKeyboard = ({}) => {
   const isMobile = window.innerWidth <= 768;
-  const { setInputValue } = useSearchBarData();
+  const { setInputValue } = useSearchData();
   return (
       <KeyboardWrapper >
         <Keyboard
