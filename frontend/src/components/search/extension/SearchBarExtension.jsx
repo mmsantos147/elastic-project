@@ -32,8 +32,6 @@ export const SearchBarExtension = () => {
   const { deleteItemFromHistory } = useHistoryService();
   const { t } = useTranslation();
 
-  console.log(historyContent.length)
-
   if (!inputOnFocus) return null;
 
   if (inputValue.length === 0 && historyContent.length > 0)

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useRef } from "react";
 import { useHistoryService } from "../api/History.api";
 import { useSearchService } from "../api/Search.api";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -10,6 +10,7 @@ export const SearchProvider = ({ children }) => {
   const location = useLocation();
   const { fetchHistory } = useHistoryService();
   const { searchAsYouType, search } = useSearchService();
+  const isInitialMount = useRef(true);
 
   const queryParams = new URLSearchParams(location.search);
   const initialSearch = queryParams.get("q") || "";
@@ -21,10 +22,10 @@ export const SearchProvider = ({ children }) => {
   const [suggestionContent, setSuggestionContent] = useState([]);
   const [historyContent, setHistoryContent] = useState([]);
 
-  const [isProcessingRequest, setIsProcessingRequest] = useState(true);
+  const [isProcessingRequest, setIsProcessingRequest] = useState(false);
 
-  const [isProcessingAiAbstract, setIsProcessingAiAbstract] = useState(true);
-  const [aiAbstract, setAiAbstract] = useState(true);
+  const [isProcessingAiAbstract, setIsProcessingAiAbstract] = useState(false);
+  const [aiAbstract, setAiAbstract] = useState({});
   const [currentAiAbstract, setCurrenctAiAbstract] = useState({});
 
   const [currentRequestId, setCurrentRequestId] = useState();
@@ -79,17 +80,14 @@ export const SearchProvider = ({ children }) => {
     )
       setExtensionVisible(true);
     else setExtensionVisible(false);
-  }, [historyContent.length, suggestionContent.length, inputOnFocus]);
+  }, [historyContent.length, suggestionContent.length, inputOnFocus, inputValue]);
 
   useEffect(() => {
     const es = new EventSource(`/v1/stream`);
 
     es.addEventListener("AiAbstract", (evt) => {
       try {
-        setIsProcessingAiAbstract(true);
-        console.log(evt.data);
         const data = JSON.parse(evt.data);
-        console.log(data);
         setAiAbstract(data);
         setIsProcessingAiAbstract(false);
       } catch (err) {
@@ -101,37 +99,43 @@ export const SearchProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setSearchResults({
-          hits: 0,
-          pages: 0,
-          timeTaken: 0.0,
-          results: [],
-          requestId: "",
-        });
-
-        setIsProcessingAiAbstract(true);
-        setIsProcessingRequest(true);
-        setAiAbstract({});
-        const response = await search(searchData);
-        setSearchResults(response);
-        setCurrenctAiAbstract(response.requestId);
-      } catch (error) {
-        console.error("Erro ao buscar resultados:", error);
-      } finally {
-        setIsProcessingRequest(false);
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      if (initialSearch) {
+        executeSearch();
       }
-    };
-    fetchData();
+      return;
+    }
+
+    executeSearch();
   }, [searchData]);
 
   useEffect(() => {
-        navigate(
-          { location: location.pathname, search: `?q=${searchData.search}` },
-          { replace: true }
-        );
+    if (!isInitialMount.current) {
+      navigate(
+        { pathname: location.pathname, search: `?q=${searchData.search}` },
+        { replace: true }
+      );
+    }
   }, [searchData.search]);
+
+  const executeSearch = async () => {
+    try {
+      setIsProcessingRequest(true);
+      setIsProcessingAiAbstract(true);
+      setAiAbstract({});
+      
+      const response = await search(searchData);
+      
+      setSearchResults(response);
+      setCurrenctAiAbstract(response.requestId);
+      setCurrentRequestId(response.requestId);
+    } catch (error) {
+      console.error("Erro ao buscar resultados:", error);
+    } finally {
+      setIsProcessingRequest(false);
+    }
+  };
 
   return (
     <SearchContext.Provider
@@ -166,7 +170,9 @@ export const SearchProvider = ({ children }) => {
         setIsIndexMenuOpen,
 
         indexMenuContent,
-        setIndexMenuContent
+        setIndexMenuContent,
+        
+        executeSearch, 
       }}
     >
       {children}
