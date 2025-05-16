@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface HistoryRepository extends JpaRepository<History, Integer> {
     @Query("select s from History s where s.user.id = ?1 ORDER BY s.id desc")
@@ -18,5 +19,5 @@ public interface HistoryRepository extends JpaRepository<History, Integer> {
     void deleteAllByUserId(Integer userId);
 
     @Query("select s from History s where s.id = ?1 and s.user.id = ?2")
-    Boolean verifyIdOwner(Integer histId, Integer userId);
+    Optional<History> verifyIdOwner(Integer histId, Integer userId);
 }
