@@ -7,6 +7,7 @@ export const useFavoriteSearch = () => {
 
   const favoriteItem = content => {
         makeRequest('post', '/favorite', {
+            id: "0",
             elasticId: content.id,
             title: content.title,
             url: content.url,
