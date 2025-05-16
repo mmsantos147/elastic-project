@@ -4,6 +4,7 @@ import com.elastic.aisearch.dto.FavoriteDTO;
 import com.elastic.aisearch.dto.Messages.FailMessageDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.entity.Favorite;
+import com.elastic.aisearch.exceptions.OperationNotAllowed;
 import com.elastic.aisearch.mappers.FavoriteMapper;
 import com.elastic.aisearch.repository.FavoriteRepository;
 import lombok.AllArgsConstructor;
@@ -35,12 +36,13 @@ public class FavoriteService {
         return new SuccessMessageDTO("success_setfavorite");
     }
 
-    public ResponseEntity<?> deleteFavoriteById(Integer id, Integer userId) {
-        if (!favoriteRepository.verifyIdOwner(id, userId).isPresent()) {
-            favoriteRepository.deleteById(id);
-            return ResponseEntity.ok().body(new SuccessMessageDTO("success_delete"));
+    public SuccessMessageDTO deleteFavoriteById(Integer id, Integer userId) {
+        if (favoriteRepository.verifyIdOwner(id, userId).isPresent()) {
+            throw new OperationNotAllowed("not_allowed");
         }
-        return ResponseEntity.ok().body(new FailMessageDTO("fail_delete_notowner"));
+        
+        favoriteRepository.deleteById(id);
+        return new SuccessMessageDTO("success_delete");
     }
 
     public SuccessMessageDTO deleteFavoriteByUserId(Integer id) {
