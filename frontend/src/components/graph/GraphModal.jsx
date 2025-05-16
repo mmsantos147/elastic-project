@@ -30,28 +30,32 @@ function parseGraphData(data) {
 }
 
 export const GraphModal = () => {
+  const calculateWidth = () => {
+    const width = window.innerWidth;
+    return width / 2.635 > 200 ? width / 2.635 : width;
+  };
+  
   const { indexMenuContent } = useSearchData();
   const fgRef = useRef();
   const [rawData, setRawData] = useState({});
   const { nodes, links } = parseGraphData(rawData);
   const { getGraph } = useGraphService();
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth/2.635);
+  const [windowWidth, setWindowWidth] = useState(calculateWidth());
+
+  const handleResize = () => {
+    setWindowWidth(calculateWidth());
+  };
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth/2.635 > 200) {
-        setWindowWidth(window.innerWidth/2.635)
-      } else {
-        setWindowWidth(window.innerWidth/1)
-      }
-    
-    };
-
     window.addEventListener("resize", handleResize);
-    
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    console.log("Largura atual:", windowWidth);
+  }, [windowWidth]);
 
   useEffect(() => {
     console.log("Largura atual:", windowWidth);
