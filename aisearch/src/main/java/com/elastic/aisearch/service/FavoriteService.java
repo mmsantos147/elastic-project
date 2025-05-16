@@ -37,12 +37,12 @@ public class FavoriteService {
     }
 
     public SuccessMessageDTO deleteFavoriteById(Integer id, Integer userId) {
-        if (favoriteRepository.verifyIdOwner(id, userId).isPresent()) {
+        if (!favoriteRepository.verifyIdOwner(id, userId).isPresent()) {
             throw new OperationNotAllowed("not_allowed");
         }
         
         favoriteRepository.deleteById(id);
-        return new SuccessMessageDTO("success_delete");
+        return new SuccessMessageDTO("success_delete_favorite");
     }
 
     public SuccessMessageDTO deleteFavoriteByUserId(Integer id) {

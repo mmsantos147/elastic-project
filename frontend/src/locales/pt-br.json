@@ -144,5 +144,7 @@
     "this_result_is_relevant_on": "O resultado parece ser relevante para pesquisas neste país:",
     "united_states": "Estados Unidos",
     "how_search_works_question": "Como funciona a pesquisa?",
-    "tips_how_to_search": "Dicas de como fazer uma pesquisa"
+    "tips_how_to_search": "Dicas de como fazer uma pesquisa",
+    "article_not_found": "Artigo não encontrado. Provavelmente o mapeamento de conexões não existe.",
+    "not_allowed": "Você não tem permissão para fazer isso!"
 } 
