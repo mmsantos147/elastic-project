@@ -36,7 +36,7 @@ public class FavoriteService {
     }
 
     public ResponseEntity<?> deleteFavoriteById(Integer id, Integer userId) {
-        if (favoriteRepository.verifyIdOwner(id, userId)) {
+        if (!favoriteRepository.verifyIdOwner(id, userId).isPresent()) {
             favoriteRepository.deleteById(id);
             return ResponseEntity.ok().body(new SuccessMessageDTO("success_delete"));
         }
