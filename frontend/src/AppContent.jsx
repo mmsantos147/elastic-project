@@ -13,9 +13,11 @@ import Register from "./view/Register";
 import { Tips } from "./view/Tips";
 import { SearchProvider } from "./context/SearchContext";
 import { Favorites } from "./view/Favorites";
+import { useAuthData } from "./context/AuthContext";
 
 const AppContent = () => {
   const { initSession } = useAuthService();
+  const { isLogged } = useAuthData();
 
   useEffect(() => {
     const initializeSession = async () => {
@@ -63,7 +65,10 @@ const AppContent = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               
-              <Route path="/favorites" element={<Favorites />} />
+              {isLogged && <Route path="/favorites" element={<Favorites />} />}
+              
+
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </BrowserRouter>
           <DefaultFooter />
