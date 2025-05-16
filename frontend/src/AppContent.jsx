@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ConfigProvider, Layout, theme } from "antd";
 import DefaultFooter from "./components/Footer";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Main from "./view/Main";
 import Search from "./view/Search";
 import VLibras from "@djpfs/react-vlibras";
@@ -67,7 +67,6 @@ const AppContent = () => {
               
               {isLogged && <Route path="/favorites" element={<Favorites />} />}
               
-
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </BrowserRouter>
