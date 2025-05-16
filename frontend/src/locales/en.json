@@ -149,5 +149,7 @@
   "not_allowed": "You are not allowed to do this!",
   "success_delete_favorite": "Favorite removed successfully!",
   "success_setfavorite": "Successful favorite article!",
-  "results_mapping": "Results Mapping"
+  "results_mapping": "Results Mapping",
+  "more_options_tooltip": "More information",
+  "tooltip_why_indexed": "To find exact correspondence for your research terms, put a word or phrase between quotes, \"this way\""
 }

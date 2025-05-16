@@ -126,9 +126,9 @@
   "site": "Site",
   "about_the_font": "Sur la source",
   "share_the_result": "Partager le résultat",
-  "share": "Partager",
+  "share": "Pour partager",
   "save_result": "Enregistrer le résultat",
-  "report_result": "Résultat du rapport",
+  "report_result": "Résultat de rapport",
   "feedback": "Retour",
   "visit_the_site": "Visitez le site",
   "your_search_about_this_result": "Vos recherches sur ce résultat",
@@ -149,5 +149,7 @@
   "not_allowed": "Vous n'êtes pas autorisé à faire cela!",
   "success_delete_favorite": "Le favori a supprimé avec succès!",
   "success_setfavorite": "Article préféré réussi!",
-  "results_mapping": "Cartographie des résultats"
+  "results_mapping": "Cartographie des résultats",
+  "more_options_tooltip": "Plus d'informations",
+  "tooltip_why_indexed": "Pour trouver une correspondance exacte pour vos termes de recherche, mettez un mot ou une phrase entre les citations, \"de cette façon\""
 }

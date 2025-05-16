@@ -149,5 +149,7 @@
   "not_allowed": "당신은 이것을 할 수 없습니다!",
   "success_delete_favorite": "좋아하는 것이 성공적으로 제거되었습니다!",
   "success_setfavorite": "성공적인 좋아하는 기사!",
-  "results_mapping": "결과 매핑"
+  "results_mapping": "결과 매핑",
+  "more_options_tooltip": "더 많은 정보",
+  "tooltip_why_indexed": "연구 용어에 대한 정확한 서신을 찾으려면 \"이 방식\"인 인용문 사이에 단어 나 구를 넣으십시오."
 }

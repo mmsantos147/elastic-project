@@ -149,5 +149,7 @@
   "not_allowed": "אסור לך לעשות זאת!",
   "success_delete_favorite": "המועדף הוסר בהצלחה!",
   "success_setfavorite": "מאמר מועדף מצליח!",
-  "results_mapping": "מיפוי תוצאות"
+  "results_mapping": "מיפוי תוצאות",
+  "more_options_tooltip": "מידע נוסף",
+  "tooltip_why_indexed": "כדי למצוא התכתבויות מדויקות למונחי המחקר שלך, שים מילה או ביטוי בין ציטוטים, \"בדרך זו\""
 }

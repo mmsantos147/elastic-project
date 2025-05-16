@@ -149,5 +149,7 @@
   "not_allowed": "U mag dit niet doen!",
   "success_delete_favorite": "Favoriet met succes verwijderd!",
   "success_setfavorite": "Succesvol favoriete artikel!",
-  "results_mapping": "Resultaten Mapping"
+  "results_mapping": "Resultaten Mapping",
+  "more_options_tooltip": "Meer informatie",
+  "tooltip_why_indexed": "Om exacte correspondentie voor uw onderzoeksvoorwaarden te vinden, plaatst u een woord of zin tussen citaten, \"op deze manier\""
 }

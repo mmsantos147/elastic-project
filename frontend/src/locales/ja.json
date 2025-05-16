@@ -149,5 +149,7 @@
   "not_allowed": "あなたはこれをすることを許可されていません！",
   "success_delete_favorite": "お気に入りは正常に削除されました！",
   "success_setfavorite": "成功したお気に入りの記事！",
-  "results_mapping": "結果マッピング"
+  "results_mapping": "結果マッピング",
+  "more_options_tooltip": "詳細情報",
+  "tooltip_why_indexed": "あなたの研究条件の正確な対応を見つけるには、引用符の間に単語またはフレーズを置いてください、「この方法」"
 }

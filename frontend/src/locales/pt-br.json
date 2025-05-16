@@ -150,5 +150,6 @@
     "success_delete_favorite": "Favorito removido com sucesso!",
     "success_setfavorite": "Artigo favoritado com sucesso!",
     "results_mapping": "Mapeamento de resultados",
-    "more_options_tooltip": "Mais informações"
+    "more_options_tooltip": "Mais informações",
+    "tooltip_why_indexed": "Para encontrar uma correspondência exata para seus termos de pesquisa, coloque uma palavra ou frase entre aspas, \"desta forma\""
 } 

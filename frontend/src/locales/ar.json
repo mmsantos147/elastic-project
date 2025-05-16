@@ -149,5 +149,7 @@
   "not_allowed": "لا يُسمح لك بذلك!",
   "success_delete_favorite": "تمت إزالته المفضلة بنجاح!",
   "success_setfavorite": "المقالة المفضلة الناجحة!",
-  "results_mapping": "نتائج رسم الخرائط"
+  "results_mapping": "نتائج رسم الخرائط",
+  "more_options_tooltip": "مزيد من المعلومات",
+  "tooltip_why_indexed": "للعثور على مراسلات دقيقة لمصطلحات البحث الخاصة بك ، ضع كلمة أو عبارة بين عروض الأسعار ، \"بهذه الطريقة\""
 }

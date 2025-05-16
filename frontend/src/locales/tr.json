@@ -149,5 +149,7 @@
   "not_allowed": "Bunu yapmana izin verilmiyor!",
   "success_delete_favorite": "Favori başarıyla kaldırıldı!",
   "success_setfavorite": "Başarılı favori makale!",
-  "results_mapping": "Sonuçlar Haritalama"
+  "results_mapping": "Sonuçlar Haritalama",
+  "more_options_tooltip": "Daha Fazla Bilgi",
+  "tooltip_why_indexed": "Araştırma terimleriniz için kesin bir yazışmayı bulmak için, \"Bu şekilde\" alıntılar arasına bir kelime veya ifade koyun."
 }

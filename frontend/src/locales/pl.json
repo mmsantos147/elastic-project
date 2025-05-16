@@ -149,5 +149,7 @@
   "not_allowed": "Nie możesz tego robić!",
   "success_delete_favorite": "Ulubiony usunięty pomyślnie!",
   "success_setfavorite": "Udany ulubiony artykuł!",
-  "results_mapping": "Mapowanie wyników"
+  "results_mapping": "Mapowanie wyników",
+  "more_options_tooltip": "Więcej informacji",
+  "tooltip_why_indexed": "Aby znaleźć dokładną korespondencję terminów badawczych, umieść słowo lub frazę między cytatami „w ten sposób”"
 }
