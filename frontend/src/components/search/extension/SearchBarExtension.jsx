@@ -6,6 +6,7 @@ import { SearchBarExtensionElement } from "./SearchBarExtensionElement";
 import { CloseOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { useSearchData } from "../../../context/SearchContext";
+import { useHistoryService } from "../../../api/History.api";
 
 
 const SearchBarExtensionWrapper = styled.div`
@@ -28,7 +29,7 @@ const DividerStyled = styled(Divider)`
 
 export const SearchBarExtension = () => {
   const { inputValue, inputOnFocus, historyContent, suggestionContent } = useSearchData();
-  const { }
+  const { deleteItemFromHistory } = useHistoryService();
   const { t } = useTranslation();
 
   console.log(historyContent.length)
