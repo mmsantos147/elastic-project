@@ -51,6 +51,10 @@ export const SearchProvider = ({ children }) => {
     requestId: "",
   });
 
+  const deleteFromHistoryComponent = (id) => {
+    setHistoryContent(historyContent.filter(item => item.id !== id))
+  }
+
   useEffect(() => {
     const loadHistory = async () => {
       try {
@@ -148,6 +152,7 @@ export const SearchProvider = ({ children }) => {
 
         historyContent,
         setHistoryContent,
+        deleteFromHistoryComponent,
 
         suggestionContent,
         setSuggestionContent,

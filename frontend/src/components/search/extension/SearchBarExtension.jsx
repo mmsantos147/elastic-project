@@ -28,7 +28,7 @@ const DividerStyled = styled(Divider)`
 `
 
 export const SearchBarExtension = () => {
-  const { inputValue, inputOnFocus, historyContent, suggestionContent } = useSearchData();
+  const { inputValue, inputOnFocus, historyContent, suggestionContent, deleteFromHistoryComponent } = useSearchData();
   const { deleteItemFromHistory } = useHistoryService();
   const { t } = useTranslation();
 
@@ -44,7 +44,7 @@ export const SearchBarExtension = () => {
         </DividerStyled>
         {historyContent.map((query) => (
           <SearchBarExtensionElement key={query.id} query={query.content}>
-            <CloseOutlined onClick={(e) => {deleteItemFromHistory(query.id);e.stopPropagation();}} />
+            <CloseOutlined onClick={(e) => {deleteItemFromHistory(query.id); deleteFromHistoryComponent(query.id); e.stopPropagation();}} />
           </SearchBarExtensionElement>
         ))}
         <SearchButtonExtension />
