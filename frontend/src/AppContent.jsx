@@ -12,6 +12,7 @@ import Login from "./view/Login";
 import Register from "./view/Register";
 import { Tips } from "./view/Tips";
 import { SearchProvider } from "./context/SearchContext";
+import { Favorites } from "./view/Favorites";
 
 const AppContent = () => {
   const { initSession } = useAuthService();
@@ -61,6 +62,8 @@ const AppContent = () => {
 
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              
+              <Route path="/favorites" element={<Favorites />} />
             </Routes>
           </BrowserRouter>
           <DefaultFooter />

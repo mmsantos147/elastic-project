@@ -8,6 +8,7 @@ import { IoLogOut } from "react-icons/io5";
 import { useAuthData } from "../../context/AuthContext";
 import COLORS from "../../colors";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const MenuItem = styled(Row)`
   padding: 15px;
@@ -17,7 +18,7 @@ const MenuItem = styled(Row)`
   text-decoration: none;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     background-color: rgb(20, 20, 20);
   }
 `;
@@ -43,13 +44,23 @@ export const LoggedMenuContent = () => {
       </Row>
       <Row
         align="center"
-        style={{ marginTop: "20px", marginBottom: "20px", fontSize: "30px", color: "white", textAlign: "center" }}
+        style={{
+          marginTop: "20px",
+          marginBottom: "20px",
+          fontSize: "30px",
+          color: "white",
+          textAlign: "center",
+        }}
       >
-        {i18n.language == "es" ? "¡" : ""}{t("hello")}, {username}!
+        {i18n.language == "es" ? "¡" : ""}
+        {t("hello")}, {username}!
       </Row>
-      <MenuItemTop>
-        <FaStar style={{ marginRight: "10px" }} /> {t("favorite_searches")}
-      </MenuItemTop>
+      <Link to="/favorites">
+        <MenuItemTop>
+          <FaStar style={{ marginRight: "10px" }} /> {t("favorite_searches")}
+        </MenuItemTop>
+      </Link>
+
       <MenuItem
         onClick={async () => {
           await deleteAllHistory();

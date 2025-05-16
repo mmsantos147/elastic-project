@@ -494,6 +494,63 @@ app.get("/v1/graph/14232/2", (req, res) => {
   })
 });
 
+app.get("/v1/favorite", (req, res) => {
+  const favoriteItems = [
+    {
+      id: 1,
+      title: "Inteligência Artificial: O que é e como funciona",
+      url: "https://wikipedia.org/wiki/Inteligencia_artificial",
+      source: "Wikipedia",
+      content:
+        "Inteligência artificial (IA) é a inteligência demonstrada por máquinas ao executar tarefas complexas associadas a seres inteligentes. Também é um campo de estudo acadêmico que desenvolve e pesquisa algoritmos e sistemas de computador capazes de realizar tarefas que normalmente requerem inteligência humana.",
+      date: "2023-10-15",
+      readTime: 8,
+    },
+    {
+      id: 2,
+      title: "Machine Learning: Fundamentos e Aplicações",
+      url: "https://wikipedia.org/wiki/Machine_Learning",
+      source: "Wikipedia",
+      content:
+        "Machine Learning é um subcampo da inteligência artificial que fornece aos sistemas a capacidade de aprender automaticamente e melhorar com a experiência, sem serem explicitamente programados. O aprendizado se concentra no desenvolvimento de programas que podem acessar dados e usá-los para aprender por si próprios.",
+      date: "2023-11-22",
+      readTime: 12,
+    },
+    {
+      id: 3,
+      title: "Blockchain: Revolucionando as Finanças Digitais",
+      url: "https://wikipedia.org/wiki/Blockchain",
+      source: "Wikipedia",
+      content:
+        "A tecnologia blockchain tem o potencial de transformar fundamentalmente a maneira como os mercados financeiros operam. Por ser um livro-razão distribuído e imutável, oferece maior transparência, segurança e eficiência para transações financeiras.",
+      date: "2024-01-10",
+      readTime: 15,
+    },
+    {
+      id: 4,
+      title: "Realidade Virtual na Educação Moderna",
+      url: "https://wikipedia.org/wiki/Realidade_Virtual",
+      source: "Wikipedia",
+      content:
+        "A realidade virtual (RV) está transformando as salas de aula tradicionais em ambientes de aprendizagem imersivos. Estudos recentes demonstram que o uso de RV na educação pode aumentar a retenção de informações e melhorar significativamente o engajamento dos alunos.",
+      date: "2023-12-05",
+      readTime: 10,
+    },
+    {
+      id: 5,
+      title: "Ciência de Dados: O Futuro da Análise de Informações",
+      url: "https://wikipedia.org/wiki/Ciencia_de_Dados",
+      source: "Wikipedia",
+      content:
+        "Ciência de dados é um campo interdisciplinar que utiliza métodos, processos, algoritmos e sistemas científicos para extrair conhecimento e insights de dados estruturados e não estruturados. Combina estatística, análise de dados, aprendizado de máquina e métodos relacionados.",
+      date: "2023-09-20",
+      readTime: 9,
+    },
+  ];
+
+  return res.status(200).json(favoriteItems)
+})
+
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });

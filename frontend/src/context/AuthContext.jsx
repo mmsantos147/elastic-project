@@ -1,15 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuthService } from "../api/Authorization.api";
 import { useWeatherService } from "../api/Weather.api";
+import { useFavoriteSearch } from "../api/Favorite.api";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const { verify, login: apiLogin, logout: apiLogout } = useAuthService();
+  const { getAllFavorites } = useFavoriteSearch();
   const { getWeatherCondition } = useWeatherService();
 
   const [isLogged, setIsLogged] = useState(false);
   const [username, setUsername] = useState("");
+  const [favoriteItems, setFavoriteItems] = useState([])
   const [weather, setWeather] = useState({
     id: 804,
     group: "Clouds",
@@ -23,6 +26,14 @@ export const AuthProvider = ({ children }) => {
     setIsLogged(data.logged);
     setUsername(data.logged ? data.username : "");
   };
+
+  useEffect(() => {
+    const loadFavorites = async () => {
+      const favorites = await getAllFavorites();
+      setFavoriteItems(favorites);
+    };
+    loadFavorites();
+  }, [])
 
   useEffect(() => {
     checkLogin();
@@ -49,14 +60,22 @@ export const AuthProvider = ({ children }) => {
     await checkLogin();
   };
 
+  
+
   return (
     <AuthContext.Provider
       value={{
         isLogged,
+        
         username,
+        
         weather,
+        
         login,
-        logout
+        logout,
+
+        favoriteItems,
+        setFavoriteItems
       }}
     >
       {children}
