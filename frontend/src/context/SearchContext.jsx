@@ -55,15 +55,16 @@ export const SearchProvider = ({ children }) => {
     setHistoryContent(historyContent.filter(item => item.id !== id))
   }
 
+  const loadHistory = async () => {
+    try {
+      const data = await fetchHistory();
+      if (!data.error) setHistoryContent(data);
+    } catch {
+      setHistoryContent([]);
+    }
+  };
+
   useEffect(() => {
-    const loadHistory = async () => {
-      try {
-        const data = await fetchHistory();
-        if (!data.error) setHistoryContent(data);
-      } catch {
-        setHistoryContent([]);
-      }
-    };
     loadHistory();
   }, []);
 
@@ -112,6 +113,7 @@ export const SearchProvider = ({ children }) => {
     }
 
     executeSearch();
+    loadHistory();
   }, [searchData]);
 
   useEffect(() => {
