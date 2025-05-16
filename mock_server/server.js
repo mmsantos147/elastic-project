@@ -75,7 +75,7 @@ app.post("/v1/search/suggestions", (req, res) => {
 });
 
 app.get("/v1/history", (req, res) => {
-  const history = [];
+  const history = [{"id":3,"content":""},{"id":2,"content":"teste"},{"id":1,"content":""}];
 
   return res.status(200).json(history);
 });

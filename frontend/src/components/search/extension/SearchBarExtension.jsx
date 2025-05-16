@@ -30,11 +30,11 @@ export const SearchBarExtension = () => {
   const { inputValue, inputOnFocus, historyContent, suggestionContent } = useSearchData();
   const { t } = useTranslation();
 
-  console.log(inputValue)
+  console.log(historyContent.length)
 
   if (!inputOnFocus) return null;
 
-  if (inputValue && inputValue.length === 0 && historyContent.length > 0)
+  if (inputValue.length === 0 && historyContent.length > 0)
     return (
       <SearchBarExtensionWrapper>
         <DividerStyled
