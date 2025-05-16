@@ -63,6 +63,7 @@ export const GraphModal = () => {
 
   useEffect(() => {
     const fetchGraph = async () => {
+      setIsLoading(true);
       const data = await getGraph(indexMenuContent.id, 2);
       setRawData(data);
       setIsLoading(false);
