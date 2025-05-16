@@ -9,6 +9,7 @@ import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 import { GraphModal } from "../../graph/GraphModal";
 import { useMediaQuery } from "react-responsive";
+import { MobileMenu } from "../../menu/mobile/MobileMenu";
 
 const { Paragraph } = Typography;
 
@@ -23,7 +24,7 @@ const SideMenu = styled(Content)`
   align-self: flex-start;
   max-height: calc(100vh - 60px);
   overflow-y: auto;
-  
+
   @media (max-width: 768px) {
     padding: 15px;
     border-radius: 20px;
@@ -33,15 +34,30 @@ const SideMenu = styled(Content)`
   }
 `;
 
+const SideMenuMobile = styled(Content)`
+  background: rgb(24, 24, 24);
+  max-width: 800px;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  padding: 30px;
+  overflow-y: auto;
+`;
+
 const SideMenuFooter = styled(Paragraph)`
-  color: ${COLORS.gray}
+  color: ${COLORS.gray};
 `;
 
 const DividerInformation = styled.div`
-  background-color: rgba(242,234,218,0.11);
+  background-color: rgba(242, 234, 218, 0.11);
   padding: 10px 100px 10px 100px;
   border-radius: 20px;
-  
+
   @media (max-width: 768px) {
     padding: 10px 20px;
   }
@@ -59,38 +75,63 @@ export const IndexMenu = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
+  if (isMobile) {
+    return (
+      <SideMenuMobile>
+        <IndexResultMenu />
+        <DividerMarginBottom />
+        <AboutTheFont />
+        <DividerMarginBottom>
+          <DividerInformation>{t("results_mapping")}</DividerInformation>
+        </DividerMarginBottom>
+        <div
+          style={{
+            width: "100%",
+            height: isMobile ? "300px" : "500px",
+            border: "1px solid white",
+            borderRadius: "10px",
+            display: "block",
+            position: "relative",
+          }}
+        >
+          <GraphModal />
+        </div>
+        <DividerMarginBottom>
+          <DividerInformation>{t("more_information")}</DividerInformation>
+        </DividerMarginBottom>
+        <TitleParagraph>{t("your_search_about_this_result")}</TitleParagraph>
+        <WhyIndexed />
+        <SideMenuFooter>{t("this_result_is_not_an_ad")}</SideMenuFooter>
+      </SideMenuMobile>
+    );
+  }
+
   return (
     <SideMenu>
       <IndexResultMenu />
       <DividerMarginBottom />
       <AboutTheFont />
       <DividerMarginBottom>
-        <DividerInformation>
-          {t("results_mapping")}
-        </DividerInformation>
+        <DividerInformation>{t("results_mapping")}</DividerInformation>
       </DividerMarginBottom>
-      <div style={{
-        width: "100%", 
-        height: isMobile ? "300px" : "500px", 
-        border: "1px solid white", 
-        borderRadius: "10px",
-        display: "block",
-        position: "relative"
-      }}>
+      <div
+        style={{
+          width: "100%",
+          height: isMobile ? "300px" : "500px",
+          border: "1px solid white",
+          borderRadius: "10px",
+          display: "block",
+          position: "relative",
+        }}
+      >
         <GraphModal />
       </div>
       <DividerMarginBottom>
-        <DividerInformation>
-          {t("more_information")}
-        </DividerInformation>
+        <DividerInformation>{t("more_information")}</DividerInformation>
       </DividerMarginBottom>
-      <TitleParagraph>
-        {t("your_search_about_this_result")}
-      </TitleParagraph>
+      <TitleParagraph>{t("your_search_about_this_result")}</TitleParagraph>
       <WhyIndexed />
-      <SideMenuFooter>
-        {t("this_result_is_not_an_ad")}
-      </SideMenuFooter>
+      <SideMenuFooter>{t("this_result_is_not_an_ad")}</SideMenuFooter>
     </SideMenu>
   );
 };

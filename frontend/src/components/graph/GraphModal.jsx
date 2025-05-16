@@ -39,7 +39,14 @@ export const GraphModal = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth/2.635);
 
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth/2.635);
+    const handleResize = () => {
+      if (window.innerWidth/2.635 > 200) {
+        setWindowWidth(window.innerWidth/2.635)
+      } else {
+        setWindowWidth(window.innerWidth/1)
+      }
+    
+    };
 
     window.addEventListener("resize", handleResize);
     
