@@ -37,7 +37,8 @@ public class HistoryController {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok().body(historyService.deleteHistory(id, userSession.getUserId()));
+        historyService.deleteHistory(id, userSession.getUserId());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping

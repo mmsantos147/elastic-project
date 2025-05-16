@@ -3,6 +3,7 @@ package com.elastic.aisearch.service;
 import com.elastic.aisearch.dto.Messages.FailMessageDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.entity.History;
+import com.elastic.aisearch.exceptions.OperationNotAllowed;
 import com.elastic.aisearch.repository.HistoryRepository;
 
 import lombok.AllArgsConstructor;
@@ -29,11 +30,12 @@ public class HistoryService {
         historyRepository.deleteAllByUserId(userId);
     }
 
-    public ResponseEntity<?> deleteHistory(Integer id, Integer userId) {
-        if (historyRepository.verifyIdOwner(id, userId)) {
-            historyRepository.deleteById(id);
-            return ResponseEntity.ok().body(new SuccessMessageDTO("success_delete"));
+    public void deleteHistory(Integer id, Integer userId) {
+        if (!historyRepository.verifyIdOwner(id, userId).isPresent()) {
+            throw new OperationNotAllowed("not_allowed");
         }
-        return ResponseEntity.ok().body(new FailMessageDTO("failed_delete_not_owner"));
+        
+        historyRepository.deleteById(id);
+        
     }
 }
