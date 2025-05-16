@@ -17,4 +17,7 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
 
     @Query("select s from Favorite s where s.elasticId =?1 and s.user.id =?2")
     Optional<Favorite> findFavoriteByUserId(Integer elasticId, Integer userId);
+
+    @Query("select s from Favorite s where s.id = ?1 and s.user.id = ?2")
+    Boolean verifyIdOwner(Integer favId, Integer userId);
 }

@@ -46,7 +46,7 @@ public class FavoriteController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<SuccessMessageDTO> removeFavorite(@PathVariable Integer id) {
-        return ResponseEntity.ok().body(favoriteService.deleteFavoriteById(id));
+    public ResponseEntity<?> removeFavorite(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(favoriteService.deleteFavoriteById(id, userSession.getUserId()));
     }
 }

@@ -16,4 +16,7 @@ public interface HistoryRepository extends JpaRepository<History, Integer> {
     @Transactional
     @Query("delete from History s where s.user.id =?1")
     void deleteAllByUserId(Integer userId);
+
+    @Query("select s from History s where s.id = ?1 and s.user.id = ?2")
+    Boolean verifyIdOwner(Integer histId, Integer userId);
 }

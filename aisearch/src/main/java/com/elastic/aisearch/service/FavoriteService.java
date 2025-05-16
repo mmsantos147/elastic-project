@@ -1,11 +1,13 @@
 package com.elastic.aisearch.service;
 
 import com.elastic.aisearch.dto.FavoriteDTO;
+import com.elastic.aisearch.dto.Messages.FailMessageDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.entity.Favorite;
 import com.elastic.aisearch.mappers.FavoriteMapper;
 import com.elastic.aisearch.repository.FavoriteRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,9 +33,12 @@ public class FavoriteService {
         return new SuccessMessageDTO("success_setfavorite");
     }
 
-    public SuccessMessageDTO deleteFavoriteById(Integer id) {
-        favoriteRepository.deleteById(id);
-        return new SuccessMessageDTO("success_delete");
+    public ResponseEntity<?> deleteFavoriteById(Integer id, Integer userId) {
+        if (favoriteRepository.verifyIdOwner(id, userId)) {
+            favoriteRepository.deleteById(id);
+            return ResponseEntity.ok().body(new SuccessMessageDTO("success_delete"));
+        }
+        return ResponseEntity.ok().body(new FailMessageDTO("fail_delete_notowner"));
     }
 
     public SuccessMessageDTO deleteFavoriteByUserId(Integer id) {
