@@ -59,6 +59,8 @@ const Search = () => {
           )}
         </Content>
 
+
+        
         <AnimatePresence>
           {isIndexMenuOpen && (
             <motion.div

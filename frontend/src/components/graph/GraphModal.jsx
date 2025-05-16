@@ -36,6 +36,20 @@ export const GraphModal = () => {
   const { nodes, links } = parseGraphData(rawData);
   const { getGraph } = useGraphService();
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth/2.635);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth/2.635);
+
+    window.addEventListener("resize", handleResize);
+    
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    console.log("Largura atual:", windowWidth);
+  }, [windowWidth]);
+
   useEffect(() => {
     const fetchGraph = async () => {
       const data = await getGraph(indexMenuContent.id, 2);
@@ -53,7 +67,7 @@ export const GraphModal = () => {
     }}>
       <ForceGraph2D
         ref={fgRef}
-        width={748}
+        width={windowWidth}
         height={500}
         graphData={{ nodes, links }}
         nodeLabel={(node) => node.title}
@@ -61,7 +75,7 @@ export const GraphModal = () => {
           if (typeof node.x !== 'number' || typeof node.y !== 'number') return;
 
           const label = node.title;
-          const fontSize = 12 / globalScale;
+          const fontSize = 14 / globalScale;
           ctx.font = `${fontSize}px Sans-Serif`;
 
           const textWidth = ctx.measureText(label).width;
