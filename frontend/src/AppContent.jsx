@@ -62,8 +62,8 @@ const AppContent = () => {
               <Route path="/search" element={<SearchProvider><Search /></SearchProvider>} />
               <Route path="/tips" element={<Tips />} />
 
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              {!isLogged && <Route path="/login" element={<Login />} /> }
+              {!isLogged && <Route path="/register" element={<Register />} /> }
               
               {isLogged && <Route path="/favorites" element={<Favorites />} />}
               
