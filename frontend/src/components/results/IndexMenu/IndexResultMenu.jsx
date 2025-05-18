@@ -9,7 +9,7 @@ import wikipediaLogo from "../../../assets/wikipedia_icon.png";
 import styled from "styled-components";
 import { useSearchData } from "../../../context/SearchContext";
 import { ApplyHighlighter } from "../ApplyHighlighter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ShareModal } from "./ShareModal";
 import { useNavigate } from "react-router-dom";
 import { useAuthData } from "../../../context/AuthContext";
@@ -41,8 +41,18 @@ export const IndexResultMenu = () => {
   const navigate = useNavigate();
   const { setIsIndexMenuOpen, indexMenuContent } = useSearchData();
   const { favoriteItem } = useFavoriteSearch();
-  const { isLogged } = useAuthData();
+  const { isLogged, verifyIfInFavorites } = useAuthData();
   const [ modalOpen, setModalOpen ] = useState(false);
+  const [ isAlreadyFavorited, setIsAlreadyFavorited ] = useState(false);
+
+  useEffect(() => {
+
+    if (verifyIfInFavorites(indexMenuContent.elasticId)) {
+      isAlreadyFavorited(true);
+    } else {
+      isAlreadyFavorited(false);
+    };
+  }, [indexMenuContent.elasticId]);
 
   return (
     <>
@@ -96,7 +106,8 @@ export const IndexResultMenu = () => {
         <OptionButton onClick={() => {setModalOpen(true)}}>
           <ShareAltOutlined/>{t("share")}
         </OptionButton>
-        <OptionButton onClick={() => {isLogged ? favoriteItem(indexMenuContent) : navigate("/login");}}>
+        <OptionButton onClick={() => {
+          isLogged ?  favoriteItem(indexMenuContent) : navigate("/login");}}>
           <StarOutlined/>{t("save_result")}
         </OptionButton>
         <OptionButton>{t("report_result")}</OptionButton>
