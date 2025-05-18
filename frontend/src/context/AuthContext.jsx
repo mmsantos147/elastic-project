@@ -79,7 +79,8 @@ export const AuthProvider = ({ children }) => {
         logout,
 
         favoriteItems,
-        setFavoriteItems
+        setFavoriteItems,
+        verifyIfInFavorites
       }}
     >
       {children}

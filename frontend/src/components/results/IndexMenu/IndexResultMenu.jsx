@@ -48,9 +48,9 @@ export const IndexResultMenu = () => {
   useEffect(() => {
 
     if (verifyIfInFavorites(indexMenuContent.elasticId)) {
-      isAlreadyFavorited(true);
+      setIsAlreadyFavorited(true);
     } else {
-      isAlreadyFavorited(false);
+      setIsAlreadyFavorited(false);
     };
   }, [indexMenuContent.elasticId]);
 
