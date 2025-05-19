@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.elasticsearch.ElasticsearchException;
+import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -33,6 +34,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.NoRouteToHostException;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,15 +81,38 @@ public class ElasticsearchService {
 
             SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
             return processSearchResults(searchResponse, searchDTO);
-        } catch (IOException | ElasticsearchException e) {
-            Throwable rootCause = ExceptionUtils.getRootCause(e);
-            if (rootCause instanceof ConnectException || rootCause instanceof SocketTimeoutException) {
-                log.error("Connection error Elasticsearch: {}", rootCause.getMessage());
-                throw new ElasticServiceUnavailable("failed_connection");
-            }
+        } catch (Exception e) {
+            handleElasticsearchException(e);
             throw e;
         }
+    }
 
+    private void handleElasticsearchException(Exception e) {
+
+        Throwable rootCause = ExceptionUtils.getRootCause(e);
+        log.debug("Root cause: {}", rootCause != null ? rootCause.getClass().getName() : "None");
+
+        if (rootCause instanceof SocketTimeoutException ||
+                rootCause instanceof NoRouteToHostException ||
+                rootCause instanceof SocketException ||
+                e instanceof ConnectException ||
+                e instanceof SocketTimeoutException ||
+                e instanceof NoRouteToHostException ||
+                e instanceof SocketException ||
+                (e instanceof ElasticsearchStatusException && ((ElasticsearchStatusException) e).status().getStatus() >= 500) ||
+
+                (e.getMessage() != null && (
+                        e.getMessage().contains("Connection refused") ||
+                                e.getMessage().contains("connect timed out") ||
+                                e.getMessage().contains("No route to host") ||
+                                e.getMessage().contains("Connection reset") ||
+                                e.getMessage().contains("Connection closed") ||
+                                e.getMessage().contains("no available nodes")
+                ))
+        ) {
+            log.error("Elasticsearch unavailable: {}", e.getMessage());
+            throw new ElasticServiceUnavailable("failed_elasticsearch_connection");
+        }
     }
 
     public HighlightBuilder highlightBuilder(QueryNode queryNode) {
@@ -151,24 +177,29 @@ public class ElasticsearchService {
     }
 
     public List<String> searchAsYouType(String query) throws Exception {
-        SearchRequest searchRequest = new SearchRequest("wikipedia");
-        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        try {
+            SearchRequest searchRequest = new SearchRequest("wikipedia");
+            SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 
-        sourceBuilder.fetchSource(new String[] { "title" }, null);
-        sourceBuilder.size(5);
+            sourceBuilder.fetchSource(new String[] { "title" }, null);
+            sourceBuilder.size(5);
 
-        MultiMatchQueryBuilder multiMatchQuery = QueryBuilders
-                .multiMatchQuery(query)
-                .type(MultiMatchQueryBuilder.Type.BOOL_PREFIX)
-                .field("title")
-                .field("title._2gram")
-                .field("title._3gram");
+            MultiMatchQueryBuilder multiMatchQuery = QueryBuilders
+                    .multiMatchQuery(query)
+                    .type(MultiMatchQueryBuilder.Type.BOOL_PREFIX)
+                    .field("title")
+                    .field("title._2gram")
+                    .field("title._3gram");
 
-        sourceBuilder.query(multiMatchQuery);
-        searchRequest.source(sourceBuilder);
+            sourceBuilder.query(multiMatchQuery);
+            searchRequest.source(sourceBuilder);
 
-        SearchResponse response = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
-        return processSearchAsYouTypeDTO(response);
+            SearchResponse response = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
+            return processSearchAsYouTypeDTO(response);
+        } catch (Exception e) {
+            handleElasticsearchException(e);
+            throw e;
+        }
     }
 
     private SearchResponseDTO processSearchResults(SearchResponse searchResponse, SearchDTO searchDTO) throws JsonProcessingException {
