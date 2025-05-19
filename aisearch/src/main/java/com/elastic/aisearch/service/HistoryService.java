@@ -31,7 +31,7 @@ public class HistoryService {
     }
 
     public void deleteHistory(Integer id, Integer userId) {
-        if (!historyRepository.verifyIdOwner(id, userId).isPresent()) {
+        if (historyRepository.verifyIdOwner(id, userId).isEmpty()) {
             throw new OperationNotAllowed("not_allowed");
         }
         

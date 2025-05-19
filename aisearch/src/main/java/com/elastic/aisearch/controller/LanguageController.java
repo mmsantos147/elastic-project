@@ -20,8 +20,8 @@ public class LanguageController {
     private final ChatGptService chatGptService;
 
     @PostMapping
-    public SuccessMessageDTO setLangUserSession(@RequestBody LanguageDTO language) {
-        userSession.setLanguage(language.language());
+    public SuccessMessageDTO setLangUserSession(@RequestBody LanguageDTO languageDTO) {
+        userSession.setLanguage(languageDTO.language());
         chatGptService.makeAiResume(userSession);
         return new SuccessMessageDTO(
                 "success_langset"

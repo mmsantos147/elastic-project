@@ -2,14 +2,18 @@ package com.elastic.aisearch.service;
 
 import com.elastic.aisearch.dto.*;
 import com.elastic.aisearch.elastic.QueryBuilderFactory;
+import com.elastic.aisearch.exceptions.ElasticServiceUnavailable;
 import com.elastic.aisearch.parser.QueryNode;
 import com.elastic.aisearch.parser.QueryParser;
 import com.elastic.aisearch.parser.JsonParser;
 import com.elastic.aisearch.utils.Filters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import com.fasterxml.jackson.databind.util.ExceptionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -27,6 +31,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,27 +58,35 @@ public class ElasticsearchService {
     private JsonParser jsonParser;
 
     public SearchResponseDTO search(SearchDTO searchDTO) throws Exception {
+        try {
+            QueryNode queryNode = queryParser.parseQuery(searchDTO.search());
 
-        QueryNode queryNode = queryParser.parseQuery(searchDTO.search());
+            SuggestBuilder suggestBuilder = new SuggestBuilder();
+            suggestBuilder.addSuggestion("content_suggest", SuggestBuilders
+                    .termSuggestion("content_suggest")
+                    .text(searchDTO.search())
+                    .size(1)
+            );
 
-        SuggestBuilder suggestBuilder = new SuggestBuilder();
-        suggestBuilder.addSuggestion("content_suggest", SuggestBuilders
-                .termSuggestion("content_suggest")
-                .text(searchDTO.search())
-                .size(1)
-        );
+            HighlightBuilder highlightBuilder = highlightBuilder(queryNode);
+            QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode, searchDTO);
 
-        HighlightBuilder highlightBuilder = highlightBuilder(queryNode);
+            SearchRequest searchRequest = new SearchRequest(indexName);
+            searchRequest = searchFilters(searchDTO, searchRequest, queryBuilder, highlightBuilder, suggestBuilder);
 
-        QueryBuilder queryBuilder = QueryBuilderFactory.buildQuery(queryNode, searchDTO);
-        SearchRequest searchRequest = new SearchRequest(indexName);
+            log.info("Query gerada nesse contexto: {}", searchRequest.toString());
 
-        searchRequest = searchFilters(searchDTO, searchRequest, queryBuilder, highlightBuilder, suggestBuilder);
+            SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
+            return processSearchResults(searchResponse, searchDTO);
+        } catch (IOException | ElasticsearchException e) {
+            Throwable rootCause = ExceptionUtils.getRootCause(e);
+            if (rootCause instanceof ConnectException || rootCause instanceof SocketTimeoutException) {
+                log.error("Connection error Elasticsearch: {}", rootCause.getMessage());
+                throw new ElasticServiceUnavailable("failed_connection");
+            }
+            throw e;
+        }
 
-        log.info("Query gerada nesse contexto: {}", searchRequest.toString());
-
-        SearchResponse searchResponse = elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
-        return processSearchResults(searchResponse, searchDTO);
     }
 
     public HighlightBuilder highlightBuilder(QueryNode queryNode) {

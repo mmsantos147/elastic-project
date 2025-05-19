@@ -2,6 +2,7 @@ package com.elastic.aisearch.controller;
 
 import com.elastic.aisearch.dto.Messages.FailMessageDTO;
 import com.elastic.aisearch.exceptions.ArticleDoesNotExists;
+import com.elastic.aisearch.exceptions.ElasticServiceUnavailable;
 import com.elastic.aisearch.exceptions.OperationNotAllowed;
 
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -25,5 +26,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ArticleDoesNotExists.class)
     public ResponseEntity<FailMessageDTO> articleNotFound(Exception e) {
         return ResponseEntity.status(404).body(new FailMessageDTO(e.getMessage()));
+    }
+
+    @ExceptionHandler(ElasticServiceUnavailable.class)
+    public ResponseEntity<FailMessageDTO> elasticSearchUnavailable(Exception e) {
+        return ResponseEntity.status(503).body(new FailMessageDTO(e.getMessage()));
     }
 }
