@@ -149,5 +149,7 @@
   "not_allowed": "您不允许这样做！",
   "success_delete_favorite": "最喜欢的人成功地删除了！",
   "success_setfavorite": "成功最喜欢的文章！",
-  "results_mapping": "结果映射"
+  "results_mapping": "结果映射",
+  "more_options_tooltip": "更多信息",
+  "tooltip_why_indexed": "要找到您的研究术语的确切信件，请在引号之间写一个单词或短语，“这种方式”"
 }

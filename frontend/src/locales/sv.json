@@ -149,5 +149,7 @@
   "not_allowed": "Du får inte göra detta!",
   "success_delete_favorite": "Favoriten tas bort framgångsrikt!",
   "success_setfavorite": "Framgångsrik favoritartikel!",
-  "results_mapping": "Resultatkartläggning"
+  "results_mapping": "Resultatkartläggning",
+  "more_options_tooltip": "Mer information",
+  "tooltip_why_indexed": "För att hitta exakt korrespondens för dina forskningsvillkor, lägg ett ord eller en fras mellan citat, \"på detta sätt\""
 }

@@ -149,5 +149,7 @@
   "not_allowed": "¡No se le permite hacer esto!",
   "success_delete_favorite": "¡Favorito eliminado con éxito!",
   "success_setfavorite": "¡Artículo favorito exitoso!",
-  "results_mapping": "Mapeo de resultados"
+  "results_mapping": "Mapeo de resultados",
+  "more_options_tooltip": "Más información",
+  "tooltip_why_indexed": "Para encontrar una correspondencia exacta para sus términos de investigación, coloque una palabra o frase entre citas, \"de esta manera\""
 }

@@ -19,9 +19,17 @@ const Search = () => {
   const { searchResults, isProcessingRequest, isIndexMenuOpen } =
     useSearchData();
   const screens = useBreakpoint();
-
+  
   const isMobile = !screens.md;
+  const isMedium = screens.md && !screens.lg;
+  
   const [toolsVisible, setToolsVisible] = useState(false);
+  
+  const getPaddingLeft = () => {
+    if (isMobile) return "15px";
+    if (isMedium) return "30px";
+    return "220px"; 
+  };
 
   return (
     <>
@@ -29,7 +37,6 @@ const Search = () => {
         toolsVisible={toolsVisible}
         setToolsVisible={setToolsVisible}
       />
-
       {toolsVisible && <FilterBar />}
       <Content
         style={{
@@ -39,11 +46,11 @@ const Search = () => {
       >
         <Content
           style={{
-            paddingLeft: isMobile ? "15px" : "220px",
+            paddingLeft: getPaddingLeft(),
             paddingRight: isMobile ? "15px" : "0",
             marginTop: isMobile ? "15px" : "30px",
             color: COLORS.white,
-            maxWidth: isMobile ? "100%" : "950px",
+            maxWidth: isMobile ? "100%" : isMedium ? "800px" : "950px",
           }}
         >
           {searchResults?.suggestions && <DidYouMean />}
@@ -58,9 +65,6 @@ const Search = () => {
             <EmptyResults />
           )}
         </Content>
-
-
-        
         <AnimatePresence>
           {isIndexMenuOpen && (
             <motion.div

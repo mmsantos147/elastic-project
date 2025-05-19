@@ -1,4 +1,4 @@
-import { Row, Col } from "antd";
+import { Row, Col, Tooltip } from "antd";
 import { FaClock, FaCalendar } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
 import wikipediaLogo from "../../assets/wikipedia_icon.png";
@@ -39,18 +39,21 @@ const SearchIndex = ({ content }) => {
                 {content.url}
               </div>
             </a>
-            <SlOptionsVertical
-              style={{ color: COLORS.white, cursor: "pointer" }}
-              onClick={() => {setIndexMenuContent(content); setIsIndexMenuOpen(true);}}
-            />
+            <Tooltip placement="top" title={t('more_options_tooltip')}>
+              <SlOptionsVertical
+                style={{ color: COLORS.white, cursor: "pointer", fontSize: "14px"}}
+                onClick={() => {
+                  setIndexMenuContent(content);
+                  setIsIndexMenuOpen(true);
+                }}
+              />
+            </Tooltip>
           </Row>
         </Col>
       </Row>
       <Row style={{ fontSize: "22px", marginBottom: "5px" }}>
         <a style={{ color: COLORS.purple }} href={content.url}>
-          <div
-            style={{ fontSize: "22px", marginBottom: "5px" }}
-          >
+          <div style={{ fontSize: "22px", marginBottom: "5px" }}>
             <ApplyHighlighter text={content.title} />
           </div>
         </a>
@@ -66,7 +69,8 @@ const SearchIndex = ({ content }) => {
             width: "100%",
           }}
         >
-          <ApplyHighlighter text={content.content} />...
+          <ApplyHighlighter text={content.content} />
+          ...
         </p>
       </Row>
       <Row>
@@ -81,7 +85,7 @@ const SearchIndex = ({ content }) => {
         <Col flex="auto" />
         <Col style={{ fontSize: "15px" }}>
           <FaClock style={{ verticalAlign: "middle", marginRight: "8px" }} />
-          {t("approximate_small")}. {content.reading_time} {t("minutes")}
+          {t("approximate_small")} {content.reading_time} {t("minutes")}
         </Col>
       </Row>
     </div>

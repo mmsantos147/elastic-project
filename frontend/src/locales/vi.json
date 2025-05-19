@@ -149,5 +149,7 @@
   "not_allowed": "Bạn không được phép làm điều này!",
   "success_delete_favorite": "Yêu thích đã loại bỏ thành công!",
   "success_setfavorite": "Bài viết yêu thích thành công!",
-  "results_mapping": "Bản đồ kết quả"
+  "results_mapping": "Bản đồ kết quả",
+  "more_options_tooltip": "Thêm thông tin",
+  "tooltip_why_indexed": "Để tìm sự tương ứng chính xác cho các điều khoản nghiên cứu của bạn, hãy đặt một từ hoặc cụm từ giữa các trích dẫn, \"theo cách này\""
 }

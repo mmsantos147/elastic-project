@@ -47,6 +47,10 @@ export const AuthProvider = ({ children }) => {
     updateWeather();
   }, []);
 
+  const verifyIfInFavorites = (id) => {
+    return favoriteItems.some(item => item.elasticId === id)
+  }
+
   const login = async (credentials) => {
     const response = await apiLogin(credentials);
     if (response.success) {
@@ -75,7 +79,8 @@ export const AuthProvider = ({ children }) => {
         logout,
 
         favoriteItems,
-        setFavoriteItems
+        setFavoriteItems,
+        verifyIfInFavorites
       }}
     >
       {children}

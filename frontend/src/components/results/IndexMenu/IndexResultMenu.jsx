@@ -9,7 +9,7 @@ import wikipediaLogo from "../../../assets/wikipedia_icon.png";
 import styled from "styled-components";
 import { useSearchData } from "../../../context/SearchContext";
 import { ApplyHighlighter } from "../ApplyHighlighter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ShareModal } from "./ShareModal";
 import { useNavigate } from "react-router-dom";
 import { useAuthData } from "../../../context/AuthContext";
@@ -41,8 +41,18 @@ export const IndexResultMenu = () => {
   const navigate = useNavigate();
   const { setIsIndexMenuOpen, indexMenuContent } = useSearchData();
   const { favoriteItem } = useFavoriteSearch();
-  const { isLogged } = useAuthData();
-  const [ modalOpen, setModalOpen ] = useState(false);
+  const { isLogged, verifyIfInFavorites } = useAuthData();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [isAlreadyFavorited, setIsAlreadyFavorited] = useState(false);
+  const isMobile = window.innerWidth <= 768;
+
+  useEffect(() => {
+    if (verifyIfInFavorites(indexMenuContent.elasticId)) {
+      setIsAlreadyFavorited(true);
+    } else {
+      setIsAlreadyFavorited(false);
+    }
+  }, [indexMenuContent.elasticId]);
 
   return (
     <>
@@ -82,7 +92,9 @@ export const IndexResultMenu = () => {
             borderRadius: "999px",
             boxShadow: "none",
           }}
-          onClick={() => {window.location.href=indexMenuContent.url}}
+          onClick={() => {
+            window.location.href = indexMenuContent.url;
+          }}
         >
           <strong>{t("visit_the_site")}</strong> <RightOutlined />
         </Button>
@@ -93,17 +105,36 @@ export const IndexResultMenu = () => {
       </IndexResume>
 
       <Row style={{ display: "flex", justifyContent: "space-between" }}>
-        <OptionButton onClick={() => {setModalOpen(true)}}>
-          <ShareAltOutlined/>{t("share")}
+        <OptionButton
+          onClick={() => {
+            setModalOpen(true);
+          }}
+        >
+          <ShareAltOutlined />
+          {t("share")}
         </OptionButton>
-        <OptionButton onClick={() => {isLogged ? favoriteItem(indexMenuContent) : navigate("/login");}}>
-          <StarOutlined/>{t("save_result")}
+        <OptionButton
+          onClick={() => {
+            isLogged ? favoriteItem(indexMenuContent) : navigate("/login");
+          }}
+        >
+          <StarOutlined />
+          {t("save_result")}
         </OptionButton>
-        <OptionButton>{t("report_result")}</OptionButton>
-        <OptionButton>{t("Feedback")}</OptionButton>
+
+        {!isMobile && (
+          <>
+            <OptionButton>{t("report_result")}</OptionButton>
+            <OptionButton>{t("Feedback")}</OptionButton>
+          </>
+        )}
       </Row>
 
-      <ShareModal open={modalOpen} setOpen={setModalOpen} url={indexMenuContent.url} />
+      <ShareModal
+        open={modalOpen}
+        setOpen={setModalOpen}
+        url={indexMenuContent.url}
+      />
     </>
   );
 };

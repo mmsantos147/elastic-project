@@ -149,5 +149,7 @@
   "not_allowed": "Non ti è permesso farlo!",
   "success_delete_favorite": "Preferito rimosso con successo!",
   "success_setfavorite": "Articolo preferito di successo!",
-  "results_mapping": "Mappatura dei risultati"
+  "results_mapping": "Mappatura dei risultati",
+  "more_options_tooltip": "Maggiori informazioni",
+  "tooltip_why_indexed": "Per trovare una corrispondenza esatta per i tuoi termini di ricerca, metti una parola o una frase tra citazioni, \"in questo modo\""
 }

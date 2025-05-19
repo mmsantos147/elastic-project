@@ -1,4 +1,4 @@
-import { Col, Divider, Row, Typography } from "antd";
+import { Col, Divider, Row, Tooltip, Typography } from "antd";
 import {
   InfoCircleOutlined,
   RightOutlined,
@@ -53,7 +53,7 @@ export const WhyIndexed = () => {
     <WhyIndexModal>
       <WhyIndexList>
         <WhyIndexItem>
-          {t("these")}{" "}<UnderlineDotted>{t("search_terms")}</UnderlineDotted>{" "}{t("show_up_in_results")}: <strong>Lorem</strong>, <strong>ipsum</strong>,{" "}
+          {t("these")}{" "}<UnderlineDotted><Tooltip placement="top" title={t("tooltip_why_indexed")}>{t("search_terms")}</Tooltip></UnderlineDotted>{" "}{t("show_up_in_results")}: <strong>Lorem</strong>, <strong>ipsum</strong>,{" "}
           <strong>dolor</strong>
         </WhyIndexItem>
         <WhyIndexItem>

@@ -149,5 +149,7 @@
   "not_allowed": "Sie dürfen das nicht tun!",
   "success_delete_favorite": "Favorit erfolgreich entfernt!",
   "success_setfavorite": "Erfolgreicher Lieblingsartikel!",
-  "results_mapping": "Ergebnisse Mapping"
+  "results_mapping": "Ergebnisse Mapping",
+  "more_options_tooltip": "Weitere Informationen",
+  "tooltip_why_indexed": "Um eine genaue Korrespondenz für Ihre Forschungsbegriffe zu finden, legen Sie ein Wort oder eine Phrase zwischen Zitaten \"auf diese Weise\" ein, um einen Wort oder eine Phrase zu erhalten, \"auf diese Weise\"."
 }
