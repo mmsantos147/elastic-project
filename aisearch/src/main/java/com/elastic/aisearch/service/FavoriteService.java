@@ -4,6 +4,7 @@ import com.elastic.aisearch.dto.FavoriteDTO;
 import com.elastic.aisearch.dto.Messages.FailMessageDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.entity.Favorite;
+import com.elastic.aisearch.exceptions.AlreadyFavorite;
 import com.elastic.aisearch.exceptions.OperationNotAllowed;
 import com.elastic.aisearch.mappers.FavoriteMapper;
 import com.elastic.aisearch.repository.FavoriteRepository;
@@ -25,11 +26,12 @@ public class FavoriteService {
         return favoriteRepository.findAllUserFavorite(id);
     }
 
-    public SuccessMessageDTO addFavorite(Integer id, FavoriteDTO favoriteDTO) {
+    public SuccessMessageDTO addFavorite(Integer id, FavoriteDTO favoriteDTO) throws AlreadyFavorite {
         Optional<Favorite> favoriteUser = favoriteRepository.findFavoriteByUserId(favoriteDTO.elasticId(), id);
         if (favoriteUser.isPresent()) {
-            throw new IllegalStateException("failed_setfavorite");
+            throw new AlreadyFavorite("failed_setfavorite");
         }
+
         Favorite favorite = favoriteMapper.toObject(favoriteDTO);
         favorite.setUser(userService.fetchUserById(id));
         favoriteRepository.save(favorite);

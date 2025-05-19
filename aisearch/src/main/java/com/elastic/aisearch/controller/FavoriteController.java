@@ -3,6 +3,7 @@ package com.elastic.aisearch.controller;
 import com.elastic.aisearch.dto.FavoriteDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.entity.Favorite;
+import com.elastic.aisearch.exceptions.AlreadyFavorite;
 import com.elastic.aisearch.mappers.FavoriteMapper;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.FavoriteService;
@@ -41,7 +42,7 @@ public class FavoriteController {
     }
 
     @PostMapping()
-    public ResponseEntity<SuccessMessageDTO> setFavorite(@RequestBody FavoriteDTO favoriteDTO) {
+    public ResponseEntity<SuccessMessageDTO> setFavorite(@RequestBody FavoriteDTO favoriteDTO) throws AlreadyFavorite {
         return ResponseEntity.ok().body(favoriteService.addFavorite(userSession.getUserId(), favoriteDTO));
     }
 

@@ -7,6 +7,9 @@ import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.dto.RegisterDTO;
 import com.elastic.aisearch.dto.UserDTO;
 import com.elastic.aisearch.entity.User;
+import com.elastic.aisearch.exceptions.EmailAlreadyExists;
+import com.elastic.aisearch.exceptions.EmailNotFound;
+import com.elastic.aisearch.exceptions.WrongPasswordException;
 import com.elastic.aisearch.security.UserSession;
 import com.elastic.aisearch.service.UserService;
 
@@ -47,19 +50,19 @@ public class UserController {
     }
 
     @PostMapping(path = "/register")
-    public SuccessMessageDTO registerNewUser(@RequestBody RegisterDTO registerDTO) {
+    public SuccessMessageDTO registerNewUser(@RequestBody RegisterDTO registerDTO) throws EmailAlreadyExists {
         return userService.addNewUser(registerDTO);
     }
 
     @DeleteMapping(path = "{userEmail}")
-    public void deleteUser(@PathVariable("userEmail") String email) {
+    public void deleteUser(@PathVariable("userEmail") String email) throws EmailNotFound {
         userService.deleteUser(email);
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<SuccessLoginMessageDTO> verifyUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<SuccessLoginMessageDTO> verifyUser(@RequestBody UserDTO userDTO) throws WrongPasswordException, EmailNotFound {
         if (!userService.searchUser(userDTO.email(), userDTO.password())) {
-            throw new IllegalStateException("wrong_password");
+            throw new WrongPasswordException("wrong_password");
         }
         Optional<User> user = userService.getUserEmail(userDTO.email());
         userSession.setUserEmail(userDTO.email());

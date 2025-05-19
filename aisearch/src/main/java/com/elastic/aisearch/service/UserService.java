@@ -2,6 +2,8 @@ package com.elastic.aisearch.service;
 
 import com.elastic.aisearch.dto.RegisterDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
+import com.elastic.aisearch.exceptions.EmailAlreadyExists;
+import com.elastic.aisearch.exceptions.EmailNotFound;
 import com.elastic.aisearch.mappers.UserMapper;
 import com.elastic.aisearch.repository.UserRepository;
 
@@ -35,10 +37,10 @@ public class UserService {
         return userRepository.findUserByEmail(email);
     }
 
-    public SuccessMessageDTO addNewUser(RegisterDTO registerDTO) {
+    public SuccessMessageDTO addNewUser(RegisterDTO registerDTO) throws EmailAlreadyExists {
         Optional<User> userEmail = userRepository.findUserByEmail(registerDTO.email());
         if (userEmail.isPresent()) {
-            throw new IllegalStateException("failed_registration");
+            throw new EmailAlreadyExists("failed_registration");
         }
 
         User user = userMapper.toObject(registerDTO);
@@ -48,19 +50,19 @@ public class UserService {
         );
     }
 
-    public void deleteUser(String email) {
+    public void deleteUser(String email) throws EmailNotFound {
         Optional<User> userEmail = userRepository.findUserByEmail(email);
         if(userEmail.isEmpty()) {
-            throw new IllegalStateException("email_does_not_exists");
+            throw new EmailNotFound("email_does_not_exists");
         }
 
         userRepository.deleteById(userEmail.get().getId());
     }
 
-    public Boolean searchUser(String email, String password) {
+    public Boolean searchUser(String email, String password) throws EmailNotFound {
         Optional<User> user = userRepository.findUserByEmail(email);
         if(user.isEmpty()) {
-            throw new IllegalStateException("email_does_not_exists");
+            throw new EmailNotFound("email_does_not_exists");
         }
         return BCrypt.checkpw(password, user.get().getPassword());
     }
