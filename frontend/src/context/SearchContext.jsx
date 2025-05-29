@@ -32,6 +32,8 @@ export const SearchProvider = ({ children }) => {
 
   const [isIndexMenuOpen, setIsIndexMenuOpen] = useState(false);
   const [indexMenuContent, setIndexMenuContent] = useState({});
+
+  const [whyIndexContent, setWhyIndexContent] = useState([]);
   
   const [searchData, setSearchData] = useState({
     search: initialSearch,
@@ -183,6 +185,9 @@ export const SearchProvider = ({ children }) => {
         setIndexMenuContent,
         
         executeSearch, 
+
+        setWhyIndexContent,
+        whyIndexContent
       }}
     >
       {children}

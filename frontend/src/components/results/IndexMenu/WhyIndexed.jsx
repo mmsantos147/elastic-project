@@ -8,6 +8,8 @@ import COLORS from "../../../colors";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSearchData } from "../../../context/SearchContext";
+import React from "react";
 
 const { Paragraph } = Typography;
 
@@ -31,12 +33,11 @@ const WhyIndexList = styled.ul`
 const StyledLink = styled(Link)`
   color: ${COLORS.gray} !important;
 
-  &:hover{ 
+  &:hover {
     color: rgb(127, 132, 138) !important;
     text-decoration: underline;
   }
-
-`
+`;
 
 const WhyIndexItem = styled.li`
   margin-left: 5px;
@@ -48,13 +49,29 @@ const UnderlineDotted = styled.strong`
 
 export const WhyIndexed = () => {
   const { t } = useTranslation();
-  
+  const { whyIndexContent } = useSearchData();
+
   return (
     <WhyIndexModal>
       <WhyIndexList>
         <WhyIndexItem>
-          {t("these")}{" "}<UnderlineDotted><Tooltip placement="top" title={t("tooltip_why_indexed")}>{t("search_terms")}</Tooltip></UnderlineDotted>{" "}{t("show_up_in_results")}: <strong>Lorem</strong>, <strong>ipsum</strong>,{" "}
-          <strong>dolor</strong>
+          {t("these")}{" "}
+          <UnderlineDotted>
+            <Tooltip placement="top" title={t("tooltip_why_indexed")}>
+              {t("search_terms")}
+            </Tooltip>
+          </UnderlineDotted>{" "}
+          {t("show_up_in_results")}:{" "}
+          {whyIndexContent && whyIndexContent.length > 0 ? (
+            whyIndexContent.map((term, index) => (
+              <React.Fragment key={index}>
+                <strong>{term}</strong>
+                {index < whyIndexContent.length - 1 && ", "}
+              </React.Fragment>
+            ))
+          ) : (
+            <span>Error.</span>
+          )}
         </WhyIndexItem>
         <WhyIndexItem>
           {t("the_results_is_on")}{" "}

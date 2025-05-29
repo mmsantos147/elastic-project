@@ -6,10 +6,27 @@ import COLORS from "../../colors";
 import { useTranslation } from "react-i18next";
 import { useSearchData } from "../../context/SearchContext";
 import { ApplyHighlighter } from "./ApplyHighlighter";
+import { useCallback, useState } from "react";
 
 const SearchIndex = ({ content }) => {
-  const { setIndexMenuContent, setIsIndexMenuOpen } = useSearchData();
+  const { setIndexMenuContent, setIsIndexMenuOpen, setWhyIndexContent } = useSearchData();
   const { t, i18n } = useTranslation();
+  const [ uniqueWhyIndexTokens, setUniqueWhyIndexTokens ] = useState([]);
+
+  const insertWithNoRepeat = useCallback((contentToInsert) => {
+    const lowerCaseContent = contentToInsert.toLowerCase();
+
+    setUniqueWhyIndexTokens((prevTokens) => {
+      const isAlreadyPresent = prevTokens.some(
+        (existingToken) => existingToken.toLowerCase() === lowerCaseContent
+      );
+
+      if (!isAlreadyPresent) {
+        return [...prevTokens, contentToInsert];
+      }
+      return prevTokens; 
+    });
+  }, []);
 
   return (
     <div style={{ marginBottom: "50px", width: "100%" }}>
@@ -44,6 +61,7 @@ const SearchIndex = ({ content }) => {
                 style={{ color: COLORS.white, cursor: "pointer", fontSize: "14px"}}
                 onClick={() => {
                   setIndexMenuContent(content);
+                  setWhyIndexContent(uniqueWhyIndexTokens);
                   setIsIndexMenuOpen(true);
                 }}
               />
@@ -54,7 +72,7 @@ const SearchIndex = ({ content }) => {
       <Row style={{ fontSize: "22px", marginBottom: "5px" }}>
         <a style={{ color: COLORS.purple }} href={content.url}>
           <div style={{ fontSize: "22px", marginBottom: "5px" }}>
-            <ApplyHighlighter text={content.title} />
+            <ApplyHighlighter text={content.title} onHighlight={insertWithNoRepeat} />
           </div>
         </a>
       </Row>
@@ -69,7 +87,7 @@ const SearchIndex = ({ content }) => {
             width: "100%",
           }}
         >
-          <ApplyHighlighter text={content.content} />
+          <ApplyHighlighter text={content.content} onHighlight={insertWithNoRepeat} />
           ...
         </p>
       </Row>
