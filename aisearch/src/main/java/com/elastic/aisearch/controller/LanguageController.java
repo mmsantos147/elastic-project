@@ -3,7 +3,6 @@ package com.elastic.aisearch.controller;
 import com.elastic.aisearch.dto.LanguageDTO;
 import com.elastic.aisearch.dto.Messages.SuccessMessageDTO;
 import com.elastic.aisearch.security.UserSession;
-import com.elastic.aisearch.service.ChatGptService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,12 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LanguageController {
     private final UserSession userSession;
-    private final ChatGptService chatGptService;
 
     @PostMapping
     public SuccessMessageDTO setLangUserSession(@RequestBody LanguageDTO languageDTO) {
         userSession.setLanguage(languageDTO.language());
-        chatGptService.makeAiResume(userSession);
         return new SuccessMessageDTO(
                 "success_langset"
         );

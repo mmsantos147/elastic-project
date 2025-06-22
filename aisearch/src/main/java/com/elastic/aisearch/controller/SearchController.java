@@ -24,7 +24,6 @@ public class SearchController {
 
     private final UserSession userSession;
     private final ElasticsearchService elasticsearchService;
-    private final ChatGptService chatGptService;
     private final HistoryService historyService;
     private final UserService userService;
 
@@ -46,7 +45,6 @@ public class SearchController {
 
             userSession.setTop3Results(top3);
             userSession.setLastRequestId(searchDTO.requestId());
-            chatGptService.makeAiResume(userSession);
 
             History history = new History();
             history.setPrompt(searchDTO.search());

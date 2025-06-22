@@ -1,14 +1,13 @@
 package com.elastic.aisearch.service;
 
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.elastic.aisearch.dto.AIAbstractDTO;
-import com.elastic.aisearch.dto.Messages.FailMessageDTO;
+import com.elastic.aisearch.dto.ToResumeDTO;
 import com.elastic.aisearch.parser.JsonParser;
 import com.elastic.aisearch.security.UserSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,10 +22,9 @@ import reactor.core.publisher.Mono;
 public class ChatGptService {
 
     private final WebClient openAiWebClient;
-    private final StreamService streamService;
     private final JsonParser jsonParser;
 
-    private Mono<String> processResume(String searchResults, String language) {
+    private Mono<String> processResume(ToResumeDTO toResume, String language) {
         Map<String, Object> requestBody = Map.of(
         "model", "gpt-4o-mini",
         "messages", List.of(
@@ -48,7 +46,7 @@ public class ChatGptService {
                         "Do not add any extra braces at the end. Respond with a single JSON object." +
                         "Never use a backslash (\\) in any JSON field. This will break the structure.\n" +
                         "Although the content may be in English, you should provide the summary in the specified language."),
-                Map.of("role", "user", "content", "Language: " + getLanguageByISO(language) + " Content: " + searchResults)
+                Map.of("role", "user", "content", "Language: " + getLanguageByISO(language) + " Content: " + toResume.toString())
                 )
         );
 
@@ -64,33 +62,22 @@ public class ChatGptService {
                 });
     }
 
-    public void makeAiResume(UserSession session) {
+    public AIAbstractDTO makeAiResume(UserSession session, ToResumeDTO toResume) {
         log.info("Chamada recebida para fazer resumo: Sessao " + session.getStreamId() +
                 " na linguagem " + session.getLanguage() +
                 " com o resultado " + session.getTop3Results());
 
-        String streamId = session.getStreamId();
-        String top3results = session.getTop3Results();
         String language = session.getLanguage();
         String requestId = session.getLastRequestId();
-        CompletableFuture.runAsync(() -> {
-            String aiResume = processResume(top3results, language).block();
-            AIAbstractDTO aiAbstractDTO;
+        String aiResume = processResume(toResume, language).block();
 
-            try {
-                System.out.println("Enviando para o chat GPT.");
-                aiAbstractDTO = jsonParser.aiAbstractParser(aiResume, requestId);
-                streamService.sendAiAbstractToUser(streamId, aiAbstractDTO);
-            } catch (JsonProcessingException exception) {
-                streamService.sendAiAbstractToUser(streamId, new FailMessageDTO("ai_abstract_error"));
-            }
-            
-            
-            
-        }).exceptionally(ex -> {
-            log.info("Um erro inesperado aconteceu: " + ex.getMessage());
-            return null;
-        });
+        try {
+            System.out.println("Enviando para o chat GPT.");
+            return jsonParser.aiAbstractParser(aiResume, requestId);
+        } catch (JsonProcessingException exception) {
+            throw new IllegalArgumentException("ai_abstract_error");
+        }
+        
     }
 
     private String getLanguageByISO(String language) {
