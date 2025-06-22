@@ -93,6 +93,7 @@ export const SearchProvider = ({ children }) => {
     const es = new EventSource(`/v1/stream`);
 
     es.addEventListener("AiAbstract", (evt) => {
+      console.log("Event recebido!");
       try {
         const data = JSON.parse(evt.data);
         setAiAbstract(data);
