@@ -11,7 +11,7 @@ export const SearchProvider = ({ children }) => {
   const location = useLocation();
   const { fetchHistory } = useHistoryService();
   const { searchAsYouType, search } = useSearchService();
-  const { makeResume } = useAiService(); 
+  const { makeResume } = useAiService();
   const isInitialMount = useRef(true);
 
   const queryParams = new URLSearchParams(location.search);
@@ -35,7 +35,7 @@ export const SearchProvider = ({ children }) => {
   const [indexMenuContent, setIndexMenuContent] = useState({});
 
   const [whyIndexContent, setWhyIndexContent] = useState([]);
-  
+
   const [searchData, setSearchData] = useState({
     search: initialSearch,
     page: 1,
@@ -55,8 +55,8 @@ export const SearchProvider = ({ children }) => {
   });
 
   const deleteFromHistoryComponent = (id) => {
-    setHistoryContent(historyContent.filter(item => item.id !== id))
-  }
+    setHistoryContent(historyContent.filter((item) => item.id !== id));
+  };
 
   const loadHistory = async () => {
     try {
@@ -88,7 +88,12 @@ export const SearchProvider = ({ children }) => {
     )
       setExtensionVisible(true);
     else setExtensionVisible(false);
-  }, [historyContent.length, suggestionContent.length, inputOnFocus, inputValue]);
+  }, [
+    historyContent.length,
+    suggestionContent.length,
+    inputOnFocus,
+    inputValue,
+  ]);
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -112,24 +117,42 @@ export const SearchProvider = ({ children }) => {
   }, [searchData.search]);
 
   useEffect(() => {
-    setIsProcessingAiAbstract(true)
-    if (searchResults && searchResults.results.length > 3) {
-      const result = makeResume({
-        content_1: "title: " + searchResults.results[0].title + "| url: " + searchResults.results[0].url + "| content: " + searchResults.results[0].content,
-        content_2: "title: " + searchResults.results[1].title + "| url: " + searchResults.results[1].url + "| content: " + searchResults.results[1].content,
-        content_3: "title: " + searchResults.results[2].title + "| url: " + searchResults.results[2].url + "| content: " + searchResults.results[2].content
-      
-      })
-      try {
-        console.log(result)
-        setAiAbstract(JSON.parse(result));
-        setIsProcessingAiAbstract(false);
-      } catch (error) { 
-        alert("Erro na criação do resumo!")
+    const makeResumeNow = async () => {
+      setIsProcessingAiAbstract(true);
+      if (searchResults && searchResults.results.length > 3) {
+        const result = await makeResume({
+          content_1:
+            "title: " +
+            searchResults.results[0].title +
+            "| url: " +
+            searchResults.results[0].url +
+            "| content: " +
+            searchResults.results[0].content,
+          content_2:
+            "title: " +
+            searchResults.results[1].title +
+            "| url: " +
+            searchResults.results[1].url +
+            "| content: " +
+            searchResults.results[1].content,
+          content_3:
+            "title: " +
+            searchResults.results[2].title +
+            "| url: " +
+            searchResults.results[2].url +
+            "| content: " +
+            searchResults.results[2].content,
+        });
+        try {
+          console.log(result);
+          setAiAbstract(JSON.parse(result));
+          setIsProcessingAiAbstract(false);
+        } catch (error) {
+          alert("Erro na criação do resumo!");
+        }
       }
-
-    }
-    
+    };
+    makeResumeNow();
   }, [searchResults]);
 
   const executeSearch = async () => {
@@ -137,14 +160,13 @@ export const SearchProvider = ({ children }) => {
       setIsProcessingRequest(true);
       setIsProcessingAiAbstract(true);
       setAiAbstract({});
-      
+
       const response = await search(searchData);
-      
+
       setSearchResults(response);
       setCurrentRequestId(response.requestId);
-      
-      await loadHistory();
 
+      await loadHistory();
     } catch (error) {
       console.error("Erro ao buscar resultados:", error);
     } finally {
@@ -187,11 +209,11 @@ export const SearchProvider = ({ children }) => {
 
         indexMenuContent,
         setIndexMenuContent,
-        
-        executeSearch, 
+
+        executeSearch,
 
         setWhyIndexContent,
-        whyIndexContent
+        whyIndexContent,
       }}
     >
       {children}
