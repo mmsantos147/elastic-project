@@ -113,13 +113,17 @@ export const SearchProvider = ({ children }) => {
 
   useEffect(() => {
     setIsProcessingAiAbstract(true)
-    const result = makeResume({
-      content_1: "title: " + searchResults.results[0].title + "| url: " + searchResults.results[0].url + "| content: " + searchResults.results[0].content,
-      content_2: "title: " + searchResults.results[1].title + "| url: " + searchResults.results[1].url + "| content: " + searchResults.results[1].content,
-      content_3: "title: " + searchResults.results[2].title + "| url: " + searchResults.results[2].url + "| content: " + searchResults.results[2].content
-    })
-    setIsProcessingAiAbstract(false);
-    setAiAbstract(JSON.parse(result));
+    if (searchResults && searchResults.results > 3) {
+      const result = makeResume({
+        content_1: "title: " + searchResults.results[0].title + "| url: " + searchResults.results[0].url + "| content: " + searchResults.results[0].content,
+        content_2: "title: " + searchResults.results[1].title + "| url: " + searchResults.results[1].url + "| content: " + searchResults.results[1].content,
+        content_3: "title: " + searchResults.results[2].title + "| url: " + searchResults.results[2].url + "| content: " + searchResults.results[2].content
+      
+      })
+      setAiAbstract(JSON.parse(result));
+      setIsProcessingAiAbstract(false);
+    }
+    
   }, [searchResults]);
 
   const executeSearch = async () => {
