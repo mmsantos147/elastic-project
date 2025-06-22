@@ -47,6 +47,8 @@ public class StreamService {
                 emitter.send(SseEmitter.event()
                         .name("AiAbstract")
                         .data(abstractDTO));
+
+                emitter.send(SseEmitter.event().comment(""));
                 System.out.println("Enviado com sucesso!");
 
             } catch (IOException e) {
