@@ -13,6 +13,8 @@ public class WebClientConfig {
 
     @Bean
     public WebClient openAiWebClient() {
+        System.out.println("Token de API recebida: " + openAiToken);
+
         return WebClient.builder()
             .baseUrl("https://api.openai.com/v1")
             .defaultHeader("Authorization", "Bearer " + openAiToken)

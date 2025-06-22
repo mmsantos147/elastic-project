@@ -26,7 +26,6 @@ export const SearchProvider = ({ children }) => {
 
   const [isProcessingAiAbstract, setIsProcessingAiAbstract] = useState(false);
   const [aiAbstract, setAiAbstract] = useState({});
-  const [currentAiAbstract, setCurrenctAiAbstract] = useState({});
 
   const [currentRequestId, setCurrentRequestId] = useState();
 
@@ -137,7 +136,6 @@ export const SearchProvider = ({ children }) => {
       const response = await search(searchData);
       
       setSearchResults(response);
-      setCurrenctAiAbstract(response.requestId);
       setCurrentRequestId(response.requestId);
       
       await loadHistory();
