@@ -113,7 +113,7 @@ export const SearchProvider = ({ children }) => {
 
   useEffect(() => {
     setIsProcessingAiAbstract(true)
-    if (searchResults && searchResults.results > 3) {
+    if (searchResults && searchResults.results.length > 3) {
       const result = makeResume({
         content_1: "title: " + searchResults.results[0].title + "| url: " + searchResults.results[0].url + "| content: " + searchResults.results[0].content,
         content_2: "title: " + searchResults.results[1].title + "| url: " + searchResults.results[1].url + "| content: " + searchResults.results[1].content,
