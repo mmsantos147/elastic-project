@@ -145,7 +145,7 @@ export const SearchProvider = ({ children }) => {
         });
         try {
           console.log(result);
-          setAiAbstract(JSON.parse(result));
+          setAiAbstract(result);
           setIsProcessingAiAbstract(false);
         } catch (error) {
           console.log(error);
