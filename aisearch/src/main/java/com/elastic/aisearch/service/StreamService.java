@@ -40,11 +40,14 @@ public class StreamService {
 
     public void sendAiAbstractToUser(String streamId, Object abstractDTO) {
         SseEmitter emitter = emitters.get(streamId);
+        System.out.println("Enviando stream.");
         if (emitter != null) {
             try {
+                System.out.println("Eviando para " + streamId + " o resumo " + abstractDTO.toString());
                 emitter.send(SseEmitter.event()
                         .name("AiAbstract")
                         .data(abstractDTO));
+
             } catch (IOException e) {
                 emitters.remove(streamId);
             }

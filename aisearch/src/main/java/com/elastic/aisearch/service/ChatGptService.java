@@ -78,6 +78,7 @@ public class ChatGptService {
             AIAbstractDTO aiAbstractDTO;
 
             try {
+                System.out.println("Enviando para o chat GPT.");
                 aiAbstractDTO = jsonParser.aiAbstractParser(aiResume, requestId);
                 streamService.sendAiAbstractToUser(streamId, aiAbstractDTO);
             } catch (JsonProcessingException exception) {
