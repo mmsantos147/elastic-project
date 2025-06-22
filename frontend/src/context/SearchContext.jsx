@@ -120,8 +120,14 @@ export const SearchProvider = ({ children }) => {
         content_3: "title: " + searchResults.results[2].title + "| url: " + searchResults.results[2].url + "| content: " + searchResults.results[2].content
       
       })
-      setAiAbstract(JSON.parse(result));
-      setIsProcessingAiAbstract(false);
+      try {
+        console.log(result)
+        setAiAbstract(JSON.parse(result));
+        setIsProcessingAiAbstract(false);
+      } catch (error) { 
+        alert("Erro na criação do resumo!")
+      }
+
     }
     
   }, [searchResults]);
