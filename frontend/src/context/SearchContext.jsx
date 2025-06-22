@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, useRef } from "react";
 import { useHistoryService } from "../api/History.api";
 import { useSearchService } from "../api/Search.api";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAiService } from "../api/AI.api";
 
 const SearchContext = createContext();
 
@@ -10,6 +11,7 @@ export const SearchProvider = ({ children }) => {
   const location = useLocation();
   const { fetchHistory } = useHistoryService();
   const { searchAsYouType, search } = useSearchService();
+  const { makeResume } = useAiService(); 
   const isInitialMount = useRef(true);
 
   const queryParams = new URLSearchParams(location.search);
@@ -89,24 +91,6 @@ export const SearchProvider = ({ children }) => {
   }, [historyContent.length, suggestionContent.length, inputOnFocus, inputValue]);
 
   useEffect(() => {
-    const es = new EventSource(`/v1/stream`);
-
-    es.addEventListener("AiAbstract", (evt) => {
-      console.log("Event recebido!");
-      try {
-        const data = JSON.parse(evt.data);
-        setAiAbstract(data);
-        setIsProcessingAiAbstract(false);
-      } catch (err) {
-        console.error("Erro parseando SSE:", err);
-      }
-    });
-
-    return () => es.close();
-  }, []);
-
-  
-  useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
       if (initialSearch) {
@@ -126,6 +110,17 @@ export const SearchProvider = ({ children }) => {
       );
     }
   }, [searchData.search]);
+
+  useEffect(() => {
+    setIsProcessingAiAbstract(true)
+    const result = makeResume({
+      content_1: "title: " + searchResults.results[0].title + "| url: " + searchResults.results[0].url + "| content: " + searchResults.results[0].content,
+      content_2: "title: " + searchResults.results[1].title + "| url: " + searchResults.results[1].url + "| content: " + searchResults.results[1].content,
+      content_3: "title: " + searchResults.results[2].title + "| url: " + searchResults.results[2].url + "| content: " + searchResults.results[2].content
+    })
+    setIsProcessingAiAbstract(false);
+    setAiAbstract(JSON.parse(result));
+  }, [searchResults]);
 
   const executeSearch = async () => {
     try {
