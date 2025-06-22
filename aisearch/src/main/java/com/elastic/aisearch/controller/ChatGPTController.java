@@ -23,7 +23,7 @@ public class ChatGPTController {
     private final ChatGptService chatGptService;
     private final UserSession userSession;
 
-    @PostMapping("/")
+    @PostMapping("/resume")
     public ResponseEntity<AIAbstractDTO> makeResume(@RequestBody ToResumeDTO dto) {
         return ResponseEntity.ok(chatGptService.makeAiResume(userSession, dto));
     }

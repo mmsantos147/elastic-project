@@ -4,7 +4,7 @@ import { ApiContext } from "../context/ApiContext";
 export const useAiService = () => {
   const { makeRequest } = useContext(ApiContext);
 
-  const makeResume = async (content) => makeRequest("post", "/ai", content);
+  const makeResume = async (content) => makeRequest("post", "/ai/resume", content);
 
     return { makeResume };
 };
