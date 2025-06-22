@@ -148,7 +148,7 @@ export const SearchProvider = ({ children }) => {
           setAiAbstract(JSON.parse(result));
           setIsProcessingAiAbstract(false);
         } catch (error) {
-          alert("Erro na criação do resumo!");
+          console.log(error);
         }
       }
     };
