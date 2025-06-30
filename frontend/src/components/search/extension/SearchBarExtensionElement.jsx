@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { SearchOutlined } from "@ant-design/icons";
 import COLORS from "../../../colors";
-import { useNavigate } from "react-router-dom";
-import { Col } from "antd";
 
 const ElementWrapper = styled.div`
   display: flex;
@@ -28,9 +26,8 @@ const ElementContent = styled.div`
 `;
 
 export const SearchBarExtensionElement = ({ query, children }) => {
-    const navigate = useNavigate();
     return (
-    <ElementWrapper onClick={() => {navigate(`/search?q=${query}`)}}> 
+    <ElementWrapper onClick={() => {window.location.href(`/search?q=${query}`)}}> 
       <ElementContent>
         <SearchOutlined style={{ color: COLORS.gray, paddingRight: "15px" }} />
         {query}
