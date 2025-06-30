@@ -109,7 +109,7 @@ const DefaultFooter = () => {
       
       <ProfilesContainer>
         <ProfileItem>
-          <StyledLink href="http://0x6a70.com/">
+          <StyledLink href="https://joaoragazzo.dev/">
             <strong>João Paulo M. Ragazzo</strong>
           </StyledLink>
           <SocialIcon href="https://github.com/joaoragazzo/">
