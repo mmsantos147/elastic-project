@@ -27,7 +27,7 @@ const ElementContent = styled.div`
 
 export const SearchBarExtensionElement = ({ query, children }) => {
     return (
-    <ElementWrapper onClick={() => {window.location.href(`/search?q=${query}`)}}> 
+    <ElementWrapper onClick={() => {window.location.href=`/search?q=${query}`}}> 
       <ElementContent>
         <SearchOutlined style={{ color: COLORS.gray, paddingRight: "15px" }} />
         {query}
