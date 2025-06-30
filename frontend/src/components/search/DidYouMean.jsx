@@ -10,7 +10,7 @@ const DidYouMeanBox = styled.div`
   font-size: 18px;
 `;
 
-const SuggestionLink = styled(Link)`
+const SuggestionLink = styled.a`
   color: ${COLORS.purple};
   text-decoration: none;
 
@@ -60,7 +60,7 @@ export const DidYouMean = () => {
     <DidYouMeanBox>
       {i18n.language == 'es' && "¿"}
       {t("did_you_mean")}{" "}
-      <SuggestionLink to={`/search?q=${encodeURIComponent(correctedText)}`}>
+      <SuggestionLink href={`/search?q=${encodeURIComponent(correctedText)}`}>
         {nodes}
       </SuggestionLink>{" "}
       ?
